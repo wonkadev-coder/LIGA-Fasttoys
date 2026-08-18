@@ -243,19 +243,47 @@ El correo pidiendo API sigue teniendo sentido para tener acceso **acordado y est
 
 ### Cómo se cuenta una vuelta
 
-**Un paso por meta no es una vuelta.** Copiado de su función `procesarTiempos`,
-está en `contarVueltasDelDia()` y cubierto por tests:
+El transpondedor **no cuenta vueltas: detecta pasos por meta**. Una vuelta se mide
+entre dos pasos, así que N pasos son N-1 vueltas: el primero no cierra ninguna, es
+el piloto saliendo de boxes.
+
+Copiado de su función `procesarTiempos`, está en `contarVueltasDelDia()` y cubierto
+por tests:
 
 - Solo cuentan los pasos por meta (`zona` 0); las demás zonas son sectores.
-- **El primer paso de cada piloto y día no cuenta**: es la vuelta de lanzamiento,
-  la salida de boxes.
+- **El primer paso de cada piloto y día no cuenta**: es la vuelta de lanzamiento.
 - Un paso solo cuenta si han pasado al menos `tiempomin` desde el anterior válido
   (45 s en el tramo 0 del DR7, consultado en vivo, no fijado a mano). Si no llega,
   se descarta sin mover la referencia: así se filtran las lecturas dobles.
 
 Contar pasos a secas daba **una vuelta de más por piloto y día** (25 de más en los
-primeros once días). El número que sale ahora es el mismo que ve el piloto en la
-pantalla del circuito, que es lo que hay que respetar.
+primeros once días).
+
+#### Decisión tomada: se descuenta una pasada por día, no por tanda
+
+Jorge lo decidió el 18/08/2026 con los números delante. La duda era razonable: un
+piloto no rueda del tirón, para en boxes varias veces. David Ramos hizo **15 tandas**
+el 15 de agosto, y al volver a pista después de cada parada, esa pasada le cuenta
+como vuelta aunque su "tiempo" incluya las dos horas parado.
+
+| Criterio | Total de la liga | David Ramos |
+|---|---|---|
+| **Una pasada menos por día** (el elegido, el de CronoLaps) | 1.199 | 286 |
+| Una pasada menos por tanda | 1.087 | 263 |
+| No descontar nada | 1.224 | 288 |
+
+Se eligió el de CronoLaps porque **es el número que el piloto ve en la pantalla del
+circuito**: cualquier otro obliga a explicar por qué la web da menos vueltas que el
+cronómetro oficial. Si algún día se cambia, la alternativa sería agrupar por tandas
+con el umbral `tanda` del tramo (140 s en el DR7) y restar una por tanda.
+
+#### Cuidado con la columna "Vueltas" de su web
+
+En su tabla de resultados esa columna **cambia de significado según el orden**. Con
+el orden por defecto (por tiempo) muestra `vuelta`: en qué vuelta marcó el piloto su
+mejor tiempo. Solo ordenando por vueltas muestra `vueltas`, el total del día.
+De ahí que David Ramos aparezca con un "13" el 15 de agosto: fue su mejor vuelta,
+no su cuenta. Su total ese día es 126, que es justo lo que calculamos.
 3. **`vehiculo` es el id de categoría.** Las seis del reglamento son exactamente las
    seis hijas de la categoría 18 ("Pit Bike"): 40 Pit Bike 90, 58 160 Series,
    59 Proto, 60 Master, 95 Z190 series, 160 Alevin 90. Están en `CATEGORIAS_LIGA`.
