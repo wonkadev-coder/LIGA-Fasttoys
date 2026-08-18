@@ -1,47 +1,43 @@
-# Publica la web en GitHub Pages en cada cambio de main.
+# Activa GitHub Pages en el repositorio, sin tener que tocar Settings a mano.
 #
-# Se encarga también de ACTIVAR Pages la primera vez (enablement: true), así no
-# hay que tocar Settings a mano. Si el despliegue falla con un error de permisos,
-# hay que ir una vez a Settings -> Actions -> General -> Workflow permissions
-# y marcar "Read and write permissions".
+# El camino habitual (configure-pages + deploy-pages) no sirve la primera vez:
+# esos pasos necesitan el entorno "github-pages", que no existe hasta que Pages
+# está activado, así que el job ni siquiera arranca. Esto lo activa por API.
+#
+# Una vez activado, GitHub reconstruye la web solo en cada push a main y este
+# workflow ya no hace falta.
 
-name: Publicar web
+name: Activar Pages
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
-  contents: read
   pages: write
-  id-token: write
-
-# Un despliegue cada vez, sin cancelar el que esté en curso.
-concurrency:
-  group: pages
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  publicar:
+  activar:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.despliegue.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Pedir a GitHub que publique main
+        run: |
+          codigo=$(curl -s -o /tmp/salida.json -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"source":{"branch":"main","path":"/"}}')
 
-      - name: Preparar (y activar) Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+          echo "Respuesta HTTP: $codigo"
+          cat /tmp/salida.json
 
-      # La web es estática: se sube el repositorio tal cual.
-      - name: Empaquetar el sitio
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
-      - name: Desplegar
-        id: despliegue
-        uses: actions/deploy-pages@v4
+          # 201 = activado. 409 = ya lo estaba. Ambos son buen resultado.
+          if [ "$codigo" = "201" ] || [ "$codigo" = "409" ]; then
+            echo "Pages activado y publicando desde main."
+          else
+            echo "No se ha podido activar automáticamente."
+            echo "Hazlo a mano en Settings -> Pages: Source = Deploy from a branch, Branch = main, carpeta / (root)."
+            exit 1
+          fi
