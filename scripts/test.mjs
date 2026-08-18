@@ -1,5 +1,8 @@
 // Tests de la lógica de ciclos y premios. Sin dependencias: node scripts/test.mjs
-import { calcularPiloto, calcularLiga, diaOperativo, buscarPiloto, CICLO } from './liga.mjs';
+import {
+  calcularPiloto, calcularLiga, diaOperativo, buscarPiloto, CICLO,
+  semanaIso, aplicarLimites,
+} from './liga.mjs';
 
 let fallos = 0;
 function comprueba(nombre, real, esperado) {
@@ -121,6 +124,57 @@ console.log('\nBúsqueda de pilotos');
   comprueba('por dorsal', buscarPiloto(datos, '21').id, 'ana-gil');
   comprueba('inexistente devuelve null', buscarPiloto(datos, 'nadie'), null);
 }
+
+console.log('\nLímite del reglamento: 100 vueltas al día, 200 a la semana');
+const TOPE = { maxVueltasDia: 100, maxVueltasSemana: 200 };
+{
+  const r = aplicarLimites([t(118, '2026-08-10')], TOPE);
+  comprueba('118 en un día se recortan a 100', r[0].computadas, 100);
+  comprueba('se descartan 18', r[0].descartadas, 18);
+  comprueba('la tanda conserva la cifra real', r[0].vueltas, 118);
+  comprueba('el motivo es el tope diario', r[0].limite, 'diario');
+}
+{
+  // Dos tandas el mismo día: el tope es del día, no de cada tanda.
+  const r = aplicarLimites([t(70, '2026-08-10'), t(70, '2026-08-10')], TOPE);
+  comprueba('la primera cuenta entera', r[0].computadas, 70);
+  comprueba('la segunda solo hasta agotar el cupo', r[1].computadas, 30);
+}
+{
+  // Lunes, martes y miércoles de la misma semana: 100+100 agotan las 200.
+  const r = aplicarLimites(
+    [t(100, '2026-08-10'), t(100, '2026-08-11'), t(100, '2026-08-12')], TOPE,
+  );
+  comprueba('los dos primeros días cuentan enteros', [r[0].computadas, r[1].computadas], [100, 100]);
+  comprueba('el tercero se queda a cero por el tope semanal', r[2].computadas, 0);
+  comprueba('y el motivo es semanal', r[2].limite, 'semanal');
+}
+{
+  // Domingo y lunes son semanas distintas: el cupo se renueva.
+  const r = aplicarLimites(
+    [t(100, '2026-08-15'), t(100, '2026-08-16'), t(100, '2026-08-17')], TOPE,
+  );
+  comprueba('sábado y domingo agotan la semana', [r[0].computadas, r[1].computadas], [100, 100]);
+  comprueba('el lunes estrena semana', r[2].computadas, 100);
+}
+{
+  const r = calcularPiloto(P, [t(118, '2026-08-10')], HITOS, TOPE);
+  comprueba('el total solo cuenta lo permitido', r.vueltasTotales, 100);
+  comprueba('el piloto acumula las descartadas', r.vueltasDescartadas, 18);
+  comprueba('el historial guarda lo registrado', r.historial[0].registradas, 118);
+}
+{
+  const r = calcularPiloto(P, [t(118, '2026-08-10')], HITOS); // sin límites
+  comprueba('sin reglamento no se recorta nada', r.vueltasTotales, 118);
+}
+
+console.log('\nSemanas ISO');
+comprueba('lunes 10 y domingo 16 son la misma semana',
+  semanaIso('2026-08-10') === semanaIso('2026-08-16'), true);
+comprueba('el lunes 17 ya es la siguiente',
+  semanaIso('2026-08-17') === semanaIso('2026-08-16'), false);
+comprueba('domingo 9 pertenece a la semana anterior',
+  semanaIso('2026-08-09') === semanaIso('2026-08-10'), false);
 
 console.log('\nDatos reales del repo');
 {

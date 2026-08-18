@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": true,
-  "actualizado": "2026-08-23",
+  "actualizado": "2026-08-16",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -97,118 +97,118 @@
   ],
   "tandas": [
     {
-      "fecha": "2026-08-02",
+      "fecha": "2026-08-08",
       "piloto": "piloto-1",
-      "vueltas": 118,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-02",
-      "piloto": "piloto-2",
       "vueltas": 96,
       "nota": "Jornada 1"
     },
     {
-      "fecha": "2026-08-02",
+      "fecha": "2026-08-08",
+      "piloto": "piloto-2",
+      "vueltas": 84,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-08",
       "piloto": "piloto-3",
-      "vueltas": 74,
+      "vueltas": 72,
       "nota": "Jornada 1"
     },
     {
-      "fecha": "2026-08-02",
+      "fecha": "2026-08-08",
       "piloto": "piloto-4",
-      "vueltas": 52,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-02",
-      "piloto": "piloto-5",
-      "vueltas": 41,
+      "vueltas": 58,
       "nota": "Jornada 1"
     },
     {
       "fecha": "2026-08-09",
       "piloto": "piloto-1",
-      "vueltas": 134,
-      "nota": "Jornada 2"
+      "vueltas": 88,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-09",
       "piloto": "piloto-2",
-      "vueltas": 112,
-      "nota": "Jornada 2"
+      "vueltas": 76,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-09",
       "piloto": "piloto-3",
-      "vueltas": 88,
-      "nota": "Jornada 2"
+      "vueltas": 61,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-09",
+      "piloto": "piloto-5",
+      "vueltas": 43,
+      "nota": "Debut"
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "piloto-1",
+      "vueltas": 100,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "piloto-2",
+      "vueltas": 91,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "piloto-3",
+      "vueltas": 78,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-15",
       "piloto": "piloto-4",
-      "vueltas": 63,
+      "vueltas": 64,
       "nota": "Jornada 2"
     },
     {
-      "fecha": "2026-08-09",
+      "fecha": "2026-08-15",
       "piloto": "piloto-6",
-      "vueltas": 29,
+      "vueltas": 38,
       "nota": "Debut"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-1",
-      "vueltas": 141,
-      "nota": "Jornada 3"
+      "vueltas": 92,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-2",
-      "vueltas": 127,
-      "nota": "Jornada 3"
+      "vueltas": 80,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-3",
-      "vueltas": 105,
-      "nota": "Jornada 3"
+      "vueltas": 66,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-4",
-      "vueltas": 71,
-      "nota": "Jornada 3"
+      "vueltas": 47,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-5",
-      "vueltas": 58,
-      "nota": "Jornada 3"
+      "vueltas": 51,
+      "nota": "Domingo"
     },
     {
       "fecha": "2026-08-16",
       "piloto": "piloto-6",
-      "vueltas": 44,
-      "nota": "Jornada 3"
-    },
-    {
-      "fecha": "2026-08-23",
-      "piloto": "piloto-1",
-      "vueltas": 129,
-      "nota": "Jornada 4"
-    },
-    {
-      "fecha": "2026-08-23",
-      "piloto": "piloto-2",
-      "vueltas": 143,
-      "nota": "Jornada 4"
-    },
-    {
-      "fecha": "2026-08-23",
-      "piloto": "piloto-3",
-      "vueltas": 97,
-      "nota": "Jornada 4"
+      "vueltas": 34,
+      "nota": "Domingo"
     }
   ]
 }

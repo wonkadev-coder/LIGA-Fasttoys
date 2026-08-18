@@ -18,6 +18,58 @@ export function guardarDatos(datos, ruta = RUTA_DATOS) {
   writeFileSync(ruta, JSON.stringify(datos, null, 2) + '\n', 'utf8');
 }
 
+/** Semana natural (lunes a domingo) en formato ISO: "2026-W33". */
+export function semanaIso(fechaIso) {
+  const [a, m, d] = fechaIso.split('-').map(Number);
+  const fecha = new Date(Date.UTC(a, m - 1, d));
+  // El jueves de la semana determina a qué año ISO pertenece.
+  const dia = (fecha.getUTCDay() + 6) % 7; // lunes = 0
+  fecha.setUTCDate(fecha.getUTCDate() - dia + 3);
+  const jueves = fecha.getTime();
+  const primerJueves = new Date(Date.UTC(fecha.getUTCFullYear(), 0, 4));
+  const diaPrimero = (primerJueves.getUTCDay() + 6) % 7;
+  primerJueves.setUTCDate(primerJueves.getUTCDate() - diaPrimero + 3);
+  const semana = 1 + Math.round((jueves - primerJueves.getTime()) / (7 * 86400000));
+  return `${fecha.getUTCFullYear()}-W${String(semana).padStart(2, '0')}`;
+}
+
+/**
+ * Aplica el tope del reglamento: máximo de vueltas diarias y semanales.
+ * El exceso se descarta pero la tanda conserva la cifra real, así que si
+ * cambia el límite basta con recalcular.
+ *
+ * Sin `limites` no recorta nada.
+ */
+export function aplicarLimites(tandasOrdenadas, limites) {
+  const porDia = new Map();
+  const porSemana = new Map();
+  const maxDia = limites?.maxVueltasDia ?? Infinity;
+  const maxSemana = limites?.maxVueltasSemana ?? Infinity;
+
+  return tandasOrdenadas.map((tanda) => {
+    const vueltas = Number(tanda.vueltas) || 0;
+    const semana = semanaIso(tanda.fecha);
+    const usadasDia = porDia.get(tanda.fecha) ?? 0;
+    const usadasSemana = porSemana.get(semana) ?? 0;
+
+    const cupoDia = Math.max(0, maxDia - usadasDia);
+    const cupoSemana = Math.max(0, maxSemana - usadasSemana);
+    const computadas = Math.min(vueltas, cupoDia, cupoSemana);
+
+    porDia.set(tanda.fecha, usadasDia + computadas);
+    porSemana.set(semana, usadasSemana + computadas);
+
+    const descartadas = vueltas - computadas;
+    return {
+      ...tanda,
+      vueltas,
+      computadas,
+      descartadas,
+      limite: descartadas > 0 ? (cupoDia <= cupoSemana ? 'diario' : 'semanal') : null,
+    };
+  });
+}
+
 /**
  * Recorre las tandas de un piloto en orden cronológico y devuelve su estado.
  *
@@ -27,19 +79,25 @@ export function guardarDatos(datos, ruta = RUTA_DATOS) {
  * Si se ordenara por ciclo, quien acaba de reiniciar tras las 999 caería al
  * último puesto. Es intencional. No lo simplifiques.
  */
-export function calcularPiloto(piloto, tandas, hitos) {
-  const suyas = tandas
-    .filter((t) => t.piloto === piloto.id)
-    .sort((a, b) => (a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0));
+export function calcularPiloto(piloto, tandas, hitos, limites = null) {
+  const suyas = aplicarLimites(
+    tandas
+      .filter((t) => t.piloto === piloto.id)
+      .sort((a, b) => (a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0)),
+    limites,
+  );
 
   let vueltasCiclo = 0;
   let vueltasTotales = 0;
   let ciclosCompletados = 0;
+  let vueltasDescartadas = 0;
   const historial = [];
 
   for (const tanda of suyas) {
-    const vueltas = Number(tanda.vueltas) || 0;
-    if (vueltas <= 0) continue;
+    // Solo cuentan las vueltas dentro del tope del reglamento.
+    const vueltas = tanda.computadas;
+    vueltasDescartadas += tanda.descartadas;
+    if (vueltas <= 0 && tanda.descartadas <= 0) continue;
 
     vueltasTotales += vueltas;
     vueltasCiclo += vueltas;
@@ -55,6 +113,9 @@ export function calcularPiloto(piloto, tandas, hitos) {
     historial.push({
       fecha: tanda.fecha,
       vueltas,
+      registradas: tanda.vueltas, // lo que hizo de verdad, antes del tope
+      descartadas: tanda.descartadas,
+      limite: tanda.limite,
       nota: tanda.nota ?? null,
       acumulado: vueltasTotales,
       cicloTrasTanda: vueltasCiclo,
@@ -89,6 +150,7 @@ export function calcularPiloto(piloto, tandas, hitos) {
     vueltasCiclo,
     vueltasTotales,
     ciclosCompletados,
+    vueltasDescartadas,
     premios,
     siguiente,
     // Progreso dentro del ciclo, solo para pintar la barra. Nunca se muestra
@@ -104,7 +166,7 @@ export function calcularPiloto(piloto, tandas, hitos) {
 export function calcularLiga(datos) {
   const hitos = [...datos.hitos].sort((a, b) => a.vueltas - b.vueltas);
   const pilotos = datos.pilotos
-    .map((p) => calcularPiloto(p, datos.tandas, hitos))
+    .map((p) => calcularPiloto(p, datos.tandas, hitos, datos.reglamento))
     .sort((a, b) => b.vueltasTotales - a.vueltasTotales || a.nombre.localeCompare(b.nombre, 'es'))
     .map((p, i) => ({ ...p, puesto: i + 1 }));
 

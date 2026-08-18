@@ -122,6 +122,18 @@ if (nuevos.length) {
   }
 }
 
+// El reglamento topa las vueltas: si se ha recortado algo, hay que decirlo en
+// el momento, no que lo descubra el piloto en la web.
+const recortes = liga.pilotos.flatMap((p) =>
+  p.historial
+    .filter((h) => h.fecha === fecha && h.descartadas > 0)
+    .map((h) => `${p.nombre}: hizo ${h.registradas}, el tope ${h.limite} deja ${h.vueltas} (-${h.descartadas})`),
+);
+if (recortes.length) {
+  console.log('\n  RECORTADO POR REGLAMENTO:');
+  for (const r of recortes) console.log('    ' + r);
+}
+
 // Lo importante del día: qué premios hay que entregar.
 const tocados = liga.pilotos.flatMap((p) =>
   p.premios
