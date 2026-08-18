@@ -1,0 +1,288 @@
+{
+  "origen": "cronolaps.es/tiempos — circuito 115 (Circuito DR7)",
+  "extraido": "2026-08-18",
+  "rango": [
+    "2026-08-08",
+    "2026-08-18"
+  ],
+  "criterio": "Solo las seis categorías del reglamento (hijas de la categoría 18, Pit Bike). Agrupado por día operativo 06:00-06:00 e idsocio.",
+  "pasosTotales": 3975,
+  "pasosDeLaLiga": 1224,
+  "tandas": [
+    {
+      "idsocio": "38716",
+      "socio": "Raul Paredes",
+      "dorsal": "15",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 61,
+      "mejorVuelta": 48.376,
+      "desde": "10:26",
+      "hasta": "15:06"
+    },
+    {
+      "idsocio": "98466",
+      "socio": "Ruben8",
+      "dorsal": "8",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 52,
+      "mejorVuelta": 58.657,
+      "desde": "10:32",
+      "hasta": "14:10"
+    },
+    {
+      "idsocio": "98467",
+      "socio": "Roberto79",
+      "dorsal": "79",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 51,
+      "mejorVuelta": 60.867,
+      "desde": "10:31",
+      "hasta": "14:14"
+    },
+    {
+      "idsocio": "98477",
+      "socio": "Shadow",
+      "dorsal": "0",
+      "categoria": "Pit Bike 90",
+      "fecha": "2026-08-09",
+      "vueltas": 73,
+      "mejorVuelta": 61.189,
+      "desde": "20:42",
+      "hasta": "22:26"
+    },
+    {
+      "idsocio": "98476",
+      "socio": "JOSEFH",
+      "dorsal": "18",
+      "categoria": "160 Series",
+      "fecha": "2026-08-09",
+      "vueltas": 65,
+      "mejorVuelta": 63.872,
+      "desde": "12:45",
+      "hasta": "19:01"
+    },
+    {
+      "idsocio": "98479",
+      "socio": "kevinsito07",
+      "dorsal": "7",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-12",
+      "vueltas": 43,
+      "mejorVuelta": 59.339,
+      "desde": "14:10",
+      "hasta": "17:25"
+    },
+    {
+      "idsocio": "98480",
+      "socio": "kike78",
+      "dorsal": "78",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-13",
+      "vueltas": 15,
+      "mejorVuelta": 78.253,
+      "desde": "12:09",
+      "hasta": "12:45"
+    },
+    {
+      "idsocio": "96269",
+      "socio": "DAVID RAMOS",
+      "dorsal": "19",
+      "categoria": "Master",
+      "fecha": "2026-08-15",
+      "vueltas": 127,
+      "mejorVuelta": 50.074,
+      "desde": "10:41",
+      "hasta": "22:19"
+    },
+    {
+      "idsocio": "62106",
+      "socio": "hector 24",
+      "dorsal": "24",
+      "categoria": "160 Series",
+      "fecha": "2026-08-15",
+      "vueltas": 46,
+      "mejorVuelta": 61.873,
+      "desde": "19:31",
+      "hasta": "22:52"
+    },
+    {
+      "idsocio": "93518",
+      "socio": "ANDRES MARTIN",
+      "dorsal": "15",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 45,
+      "mejorVuelta": 55.642,
+      "desde": "18:15",
+      "hasta": "21:57"
+    },
+    {
+      "idsocio": "74280",
+      "socio": "Alexei caldeira",
+      "dorsal": "93",
+      "categoria": "Proto",
+      "fecha": "2026-08-15",
+      "vueltas": 41,
+      "mejorVuelta": 55.326,
+      "desde": "18:13",
+      "hasta": "21:59"
+    },
+    {
+      "idsocio": "98512",
+      "socio": "Reca",
+      "dorsal": "13",
+      "categoria": "Alevin 90",
+      "fecha": "2026-08-15",
+      "vueltas": 40,
+      "mejorVuelta": 81.5,
+      "desde": "18:38",
+      "hasta": "22:44"
+    },
+    {
+      "idsocio": "98510",
+      "socio": "David11",
+      "dorsal": "11",
+      "categoria": "160 Series",
+      "fecha": "2026-08-15",
+      "vueltas": 39,
+      "mejorVuelta": 76.525,
+      "desde": "19:32",
+      "hasta": "22:45"
+    },
+    {
+      "idsocio": "64002",
+      "socio": "Alber",
+      "dorsal": "192",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 35,
+      "mejorVuelta": 58.862,
+      "desde": "19:20",
+      "hasta": "22:28"
+    },
+    {
+      "idsocio": "11097",
+      "socio": "Alejandro93",
+      "dorsal": "93",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 35,
+      "mejorVuelta": 45.226,
+      "desde": "19:47",
+      "hasta": "21:59"
+    },
+    {
+      "idsocio": "94565",
+      "socio": "DARIO FERNANDEZ",
+      "dorsal": "81",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 33,
+      "mejorVuelta": 56.512,
+      "desde": "19:48",
+      "hasta": "21:58"
+    },
+    {
+      "idsocio": "98477",
+      "socio": "Shadow",
+      "dorsal": "0",
+      "categoria": "Pit Bike 90",
+      "fecha": "2026-08-15",
+      "vueltas": 32,
+      "mejorVuelta": 60.252,
+      "desde": "20:22",
+      "hasta": "21:28"
+    },
+    {
+      "idsocio": "98511",
+      "socio": "Jose Alcañiz",
+      "dorsal": "27",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 30,
+      "mejorVuelta": 69.342,
+      "desde": "18:41",
+      "hasta": "21:38"
+    },
+    {
+      "idsocio": "80927",
+      "socio": "Juan diego Rodríguez morales",
+      "dorsal": "171",
+      "categoria": "Proto",
+      "fecha": "2026-08-15",
+      "vueltas": 28,
+      "mejorVuelta": 55.925,
+      "desde": "18:17",
+      "hasta": "21:55"
+    },
+    {
+      "idsocio": "84168",
+      "socio": "JOSE CARLOS LEON",
+      "dorsal": "39",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 27,
+      "mejorVuelta": 67.386,
+      "desde": "19:33",
+      "hasta": "21:41"
+    },
+    {
+      "idsocio": "98146",
+      "socio": "Lucca 80",
+      "dorsal": "80",
+      "categoria": "Alevin 90",
+      "fecha": "2026-08-15",
+      "vueltas": 18,
+      "mejorVuelta": 60.472,
+      "desde": "20:20",
+      "hasta": "21:28"
+    },
+    {
+      "idsocio": "98515",
+      "socio": "Pollo",
+      "dorsal": "36",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 15,
+      "mejorVuelta": 59.936,
+      "desde": "19:18",
+      "hasta": "21:24"
+    },
+    {
+      "idsocio": "10834",
+      "socio": "ruben#13",
+      "dorsal": "13",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 9,
+      "mejorVuelta": 55.606,
+      "desde": "21:51",
+      "hasta": "21:59"
+    },
+    {
+      "idsocio": "96269",
+      "socio": "DAVID RAMOS",
+      "dorsal": "19",
+      "categoria": "Master",
+      "fecha": "2026-08-16",
+      "vueltas": 161,
+      "mejorVuelta": 60.195,
+      "desde": "10:44",
+      "hasta": "17:10"
+    },
+    {
+      "idsocio": "98",
+      "socio": "DANIEL MUÑOZ",
+      "dorsal": "19",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-16",
+      "vueltas": 103,
+      "mejorVuelta": 48.888,
+      "desde": "11:00",
+      "hasta": "17:01"
+    }
+  ]
+}

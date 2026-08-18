@@ -1,7 +1,7 @@
 // Service worker de la Liga Fast Toys DR7.
 // VERSION la reescribe scripts/generar.mjs en cada actualización: al cambiar,
 // el móvil del piloto descarta la caché vieja y se trae la clasificación nueva.
-const VERSION = 'liga-dr7-2026-08-16-1319';
+const VERSION = 'liga-dr7-2026-08-18-1133';
 
 const ARCHIVOS = [
   './',

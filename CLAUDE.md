@@ -78,7 +78,8 @@ scripts/
   liga.mjs               Lógica pura: ciclos, hitos, arrastre, orden del ranking
   generar.mjs            Inyecta los datos calculados dentro de index.html
   tanda.mjs              Registrar vueltas / dar de alta pilotos
-  cronolaps.mjs          Ingesta desde el cronometrador
+  cronolaps.mjs          Descarga los pasos del cronometrador
+  importar.mjs           Carga un volcado de CronoLaps en liga.json
   servir.mjs             Servidor local para probar la PWA en el móvil
   logo.mjs               Incrusta el logo en base64
   pdf.mjs                Generador de PDF mínimo, sin dependencias
@@ -157,21 +158,58 @@ CronoLaps es el cronometrador oficial del circuito **y además patrocinador de l
 - Los fragmentos de URL de cronolaps.es son **JSON codificado en Base64**; se decodifican sin petición de red: `node scripts/cronolaps.mjs url "<url>"`.
 - Campos que expone su tabla: puesto, vueltas, dorsal, categoría, sector, tiempo.
 
-### Bloqueo actual
+### Ingesta resuelta (18/08/2026)
 
-Su web **pinta las tablas en el navegador con JavaScript**, así que el HTML servido llega vacío: el scraping directo no es viable. Se ha enviado un correo formal a CronoLaps solicitando acceso a API (campos necesarios, retención, entrega en tiempo real vs. fin de sesión, identificadores estables, RGPD y precio). **Pendiente de respuesta.**
+El bloqueo era el planteamiento, no la web. Sus tablas se pintan con JavaScript
+—por eso el HTML servido llega vacío y el scraping directo no servía—, pero por
+debajo hay un **endpoint JSON público**:
 
-Mientras tanto, la actualización es **manual**: capturas o listados por jornada que se transcriben con `scripts/tanda.mjs`.
+```
+GET /tiempos/tiempos/{circuito}/{fechaMs}/{sesion}/{cacheBuster}/
+```
 
-`scripts/cronolaps.mjs` ya tiene lista la conversión de pasos a tandas para cuando
-haya acceso: `node scripts/cronolaps.mjs csv pasos.csv` (simula) y `--aplicar` (escribe).
+`sesion` es la cookie `SESSION_CRONOLAPS`, que el servidor entrega con solo visitar
+`/tiempos/`. **No hace falta cuenta, login ni API de pago.** Cada elemento del array
+es un paso por meta:
 
-### Cuatro aprendizajes que condicionan el modelo de datos
+```json
+{ "circuito":"115", "vehiculo":"95", "fecha":"1786781042425", "tramo":"0",
+  "numero":"105998", "dorsal":"19", "idsocio":"85667", "genero":"M",
+  "socio":"Martin 19", "tiempo":"2637706092", "zona":"0", "eskart":"2" }
+```
 
-1. **El dorsal NO es un identificador estable** de piloto entre eventos. La ingesta automática debe casar por **ID de transpondedor** (campo `transpondedor` en cada piloto), nunca por dorsal.
-2. El **día operativo de CronoLaps va de 06:00 a 06:00**, no de medianoche a medianoche. Crítico para agrupar tandas correctamente. Implementado en `diaOperativo()`.
-3. Su sistema distingue **`VueltaDía`** de **`Vuelta`**. Afecta a la lógica de conteo: confirmar cuál trae el CSV antes de dar por buena una carga.
-4. Aunque los tiempos por vuelta **no se muestran al piloto**, conviene almacenarlos: permiten filtrar vueltas no válidas y dan margen a futuro.
+Descargar un rango y cargarlo:
+
+```bash
+node scripts/cronolaps.mjs descargar 2026-08-08 2026-08-18
+node scripts/importar.mjs datos/cronolaps-2026-08-08_2026-08-18.json --aplicar
+node scripts/generar.mjs
+```
+
+La carga es **idempotente**: no duplica tandas ya registradas (una por piloto y día
+operativo), así que se puede repetir sin miedo.
+
+El correo pidiendo API sigue teniendo sentido para tener acceso **acordado y estable**
+—esto depende de que no cambien su web—, pero ya no bloquea nada.
+
+### Aprendizajes que condicionan el modelo de datos
+
+1. **El dorsal NO es un identificador estable.** Confirmado con datos reales: en once
+   días de agosto hay cuatro dorsales llevados por dos pilotos distintos (#15, #19,
+   #93 y #13). La identidad es **`idsocio`** de CronoLaps, guardado en cada piloto.
+   Es mejor incluso que el transpondedor, porque viene en cada paso.
+2. El **día operativo va de 06:00 a 06:00**, no de medianoche a medianoche.
+   Implementado en `diaOperativo()`. Se aplica al timestamp de cada paso, no al día
+   por el que se consulta.
+3. **`vehiculo` es el id de categoría.** Las seis del reglamento son exactamente las
+   seis hijas de la categoría 18 ("Pit Bike"): 40 Pit Bike 90, 58 160 Series,
+   59 Proto, 60 Master, 95 Z190 series, 160 Alevin 90. Están en `CATEGORIAS_LIGA`.
+   El resto de lo que rueda en el DR7 (karts de alquiler sobre todo) se descarta.
+4. Los tiempos por vuelta **no vienen dados**: el campo `tiempo` es un acumulado. El
+   tiempo real se calcula como diferencia entre pasos consecutivos del mismo piloto,
+   descartando huecos de más de 10 minutos, que son paradas y no vueltas.
+5. Su sistema distingue **`VueltaDía`** de **`Vuelta`**. Aquí se cuenta un paso por
+   meta como una vuelta, que es lo que pide el reglamento.
 
 ## Hoja de ruta
 
@@ -179,8 +217,16 @@ Por orden, y **solo cuando haga falta**:
 
 1. ~~PWA de la pantalla del piloto~~ — hecha (manifest + service worker).
 2. ~~Vista pública del ranking~~ — hecha. El panel de organización es la CLI.
-3. **Si CronoLaps concede acceso**: cerrar el pipeline de ingesta (`cronolaps.mjs`) como script nocturno autónomo, y rellenar el campo `transpondedor` de cada piloto.
-4. **Backend**: deliberadamente aplazado hasta que el flujo manual resulte gravoso. A 10 pilotos, no lo es.
+3. ~~Pipeline de ingesta desde CronoLaps~~ — hecho. Queda pendiente decidir si se
+   automatiza como tarea nocturna; a una jornada por semana, ejecutarlo a mano basta.
+4. **Backend**: deliberadamente aplazado hasta que el flujo manual resulte gravoso.
+
+## Quién está en la liga
+
+Los pilotos salen de CronoLaps por **categoría**: todo el que rueda en el DR7 en una
+de las seis categorías del reglamento entra en la clasificación. A 18/08/2026 son 23,
+no los ~10 que se preveían. Si la liga exige inscripción previa, esto hay que
+filtrarlo: hoy no se filtra.
 
 ## Cómo trabajar en este repo
 

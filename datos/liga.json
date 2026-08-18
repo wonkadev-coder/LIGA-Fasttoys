@@ -1,6 +1,6 @@
 {
-  "datosDeEjemplo": true,
-  "actualizado": "2026-08-16",
+  "datosDeEjemplo": false,
+  "actualizado": "2026-08-18",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -59,156 +59,365 @@
   ],
   "pilotos": [
     {
-      "id": "piloto-1",
-      "nombre": "Piloto 1",
+      "id": "raul-paredes",
+      "nombre": "Raul Paredes",
+      "dorsal": 15,
+      "categoria": "Z190 series",
+      "idsocio": "38716",
+      "transpondedor": null
+    },
+    {
+      "id": "ruben8",
+      "nombre": "Ruben8",
+      "dorsal": 8,
+      "categoria": "Z190 series",
+      "idsocio": "98466",
+      "transpondedor": null
+    },
+    {
+      "id": "roberto79",
+      "nombre": "Roberto79",
+      "dorsal": 79,
+      "categoria": "Z190 series",
+      "idsocio": "98467",
+      "transpondedor": null
+    },
+    {
+      "id": "shadow",
+      "nombre": "Shadow",
+      "dorsal": 0,
+      "categoria": "Pit Bike 90",
+      "idsocio": "98477",
+      "transpondedor": null
+    },
+    {
+      "id": "josefh",
+      "nombre": "JOSEFH",
+      "dorsal": 18,
+      "categoria": "160 Series",
+      "idsocio": "98476",
+      "transpondedor": null
+    },
+    {
+      "id": "kevinsito07",
+      "nombre": "kevinsito07",
       "dorsal": 7,
+      "categoria": "Z190 series",
+      "idsocio": "98479",
       "transpondedor": null
     },
     {
-      "id": "piloto-2",
-      "nombre": "Piloto 2",
-      "dorsal": 21,
+      "id": "kike78",
+      "nombre": "kike78",
+      "dorsal": 78,
+      "categoria": "Z190 series",
+      "idsocio": "98480",
       "transpondedor": null
     },
     {
-      "id": "piloto-3",
-      "nombre": "Piloto 3",
-      "dorsal": 4,
+      "id": "david-ramos",
+      "nombre": "DAVID RAMOS",
+      "dorsal": 19,
+      "categoria": "Master",
+      "idsocio": "96269",
       "transpondedor": null
     },
     {
-      "id": "piloto-4",
-      "nombre": "Piloto 4",
-      "dorsal": 33,
+      "id": "hector-24",
+      "nombre": "hector 24",
+      "dorsal": 24,
+      "categoria": "160 Series",
+      "idsocio": "62106",
       "transpondedor": null
     },
     {
-      "id": "piloto-5",
-      "nombre": "Piloto 5",
-      "dorsal": 12,
+      "id": "andres-martin",
+      "nombre": "ANDRES MARTIN",
+      "dorsal": 15,
+      "categoria": "Z190 series",
+      "idsocio": "93518",
       "transpondedor": null
     },
     {
-      "id": "piloto-6",
-      "nombre": "Piloto 6",
-      "dorsal": 46,
+      "id": "alexei-caldeira",
+      "nombre": "Alexei caldeira",
+      "dorsal": 93,
+      "categoria": "Proto",
+      "idsocio": "74280",
+      "transpondedor": null
+    },
+    {
+      "id": "reca",
+      "nombre": "Reca",
+      "dorsal": 13,
+      "categoria": "Alevin 90",
+      "idsocio": "98512",
+      "transpondedor": null
+    },
+    {
+      "id": "david11",
+      "nombre": "David11",
+      "dorsal": 11,
+      "categoria": "160 Series",
+      "idsocio": "98510",
+      "transpondedor": null
+    },
+    {
+      "id": "alber",
+      "nombre": "Alber",
+      "dorsal": 192,
+      "categoria": "Z190 series",
+      "idsocio": "64002",
+      "transpondedor": null
+    },
+    {
+      "id": "alejandro93",
+      "nombre": "Alejandro93",
+      "dorsal": 93,
+      "categoria": "Z190 series",
+      "idsocio": "11097",
+      "transpondedor": null
+    },
+    {
+      "id": "dario-fernandez",
+      "nombre": "DARIO FERNANDEZ",
+      "dorsal": 81,
+      "categoria": "Z190 series",
+      "idsocio": "94565",
+      "transpondedor": null
+    },
+    {
+      "id": "jose-alcaniz",
+      "nombre": "Jose Alcañiz",
+      "dorsal": 27,
+      "categoria": "Z190 series",
+      "idsocio": "98511",
+      "transpondedor": null
+    },
+    {
+      "id": "juan-diego-rodriguez-morales",
+      "nombre": "Juan diego Rodríguez morales",
+      "dorsal": 171,
+      "categoria": "Proto",
+      "idsocio": "80927",
+      "transpondedor": null
+    },
+    {
+      "id": "jose-carlos-leon",
+      "nombre": "JOSE CARLOS LEON",
+      "dorsal": 39,
+      "categoria": "Z190 series",
+      "idsocio": "84168",
+      "transpondedor": null
+    },
+    {
+      "id": "lucca-80",
+      "nombre": "Lucca 80",
+      "dorsal": 80,
+      "categoria": "Alevin 90",
+      "idsocio": "98146",
+      "transpondedor": null
+    },
+    {
+      "id": "pollo",
+      "nombre": "Pollo",
+      "dorsal": 36,
+      "categoria": "Z190 series",
+      "idsocio": "98515",
+      "transpondedor": null
+    },
+    {
+      "id": "ruben-13",
+      "nombre": "ruben#13",
+      "dorsal": 13,
+      "categoria": "Z190 series",
+      "idsocio": "10834",
+      "transpondedor": null
+    },
+    {
+      "id": "daniel-munoz",
+      "nombre": "DANIEL MUÑOZ",
+      "dorsal": 19,
+      "categoria": "Z190 series",
+      "idsocio": "98",
       "transpondedor": null
     }
   ],
   "tandas": [
     {
       "fecha": "2026-08-08",
-      "piloto": "piloto-1",
-      "vueltas": 96,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-08",
-      "piloto": "piloto-2",
-      "vueltas": 84,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-08",
-      "piloto": "piloto-3",
-      "vueltas": 72,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-08",
-      "piloto": "piloto-4",
-      "vueltas": 58,
-      "nota": "Jornada 1"
-    },
-    {
-      "fecha": "2026-08-09",
-      "piloto": "piloto-1",
-      "vueltas": 88,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-09",
-      "piloto": "piloto-2",
-      "vueltas": 76,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-09",
-      "piloto": "piloto-3",
+      "piloto": "raul-paredes",
       "vueltas": 61,
-      "nota": "Domingo"
+      "nota": "CronoLaps",
+      "mejorVuelta": 48.376
+    },
+    {
+      "fecha": "2026-08-08",
+      "piloto": "ruben8",
+      "vueltas": 52,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.657
+    },
+    {
+      "fecha": "2026-08-08",
+      "piloto": "roberto79",
+      "vueltas": 51,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.867
     },
     {
       "fecha": "2026-08-09",
-      "piloto": "piloto-5",
+      "piloto": "shadow",
+      "vueltas": 73,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.189
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "josefh",
+      "vueltas": 65,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.872
+    },
+    {
+      "fecha": "2026-08-12",
+      "piloto": "kevinsito07",
       "vueltas": 43,
-      "nota": "Debut"
+      "nota": "CronoLaps",
+      "mejorVuelta": 59.339
+    },
+    {
+      "fecha": "2026-08-13",
+      "piloto": "kike78",
+      "vueltas": 15,
+      "nota": "CronoLaps",
+      "mejorVuelta": 78.253
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "piloto-1",
-      "vueltas": 100,
-      "nota": "Jornada 2"
+      "piloto": "david-ramos",
+      "vueltas": 127,
+      "nota": "CronoLaps",
+      "mejorVuelta": 50.074
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "piloto-2",
-      "vueltas": 91,
-      "nota": "Jornada 2"
+      "piloto": "hector-24",
+      "vueltas": 46,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.873
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "piloto-3",
-      "vueltas": 78,
-      "nota": "Jornada 2"
+      "piloto": "andres-martin",
+      "vueltas": 45,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.642
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "piloto-4",
-      "vueltas": 64,
-      "nota": "Jornada 2"
+      "piloto": "alexei-caldeira",
+      "vueltas": 41,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.326
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "piloto-6",
-      "vueltas": 38,
-      "nota": "Debut"
+      "piloto": "reca",
+      "vueltas": 40,
+      "nota": "CronoLaps",
+      "mejorVuelta": 81.5
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "david11",
+      "vueltas": 39,
+      "nota": "CronoLaps",
+      "mejorVuelta": 76.525
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "alber",
+      "vueltas": 35,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.862
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "alejandro93",
+      "vueltas": 35,
+      "nota": "CronoLaps",
+      "mejorVuelta": 45.226
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "dario-fernandez",
+      "vueltas": 33,
+      "nota": "CronoLaps",
+      "mejorVuelta": 56.512
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "shadow",
+      "vueltas": 32,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.252
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "jose-alcaniz",
+      "vueltas": 30,
+      "nota": "CronoLaps",
+      "mejorVuelta": 69.342
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "juan-diego-rodriguez-morales",
+      "vueltas": 28,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.925
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "jose-carlos-leon",
+      "vueltas": 27,
+      "nota": "CronoLaps",
+      "mejorVuelta": 67.386
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "lucca-80",
+      "vueltas": 18,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.472
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "pollo",
+      "vueltas": 15,
+      "nota": "CronoLaps",
+      "mejorVuelta": 59.936
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "ruben-13",
+      "vueltas": 9,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.606
     },
     {
       "fecha": "2026-08-16",
-      "piloto": "piloto-1",
-      "vueltas": 92,
-      "nota": "Domingo"
+      "piloto": "david-ramos",
+      "vueltas": 161,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.195
     },
     {
       "fecha": "2026-08-16",
-      "piloto": "piloto-2",
-      "vueltas": 80,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-16",
-      "piloto": "piloto-3",
-      "vueltas": 66,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-16",
-      "piloto": "piloto-4",
-      "vueltas": 47,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-16",
-      "piloto": "piloto-5",
-      "vueltas": 51,
-      "nota": "Domingo"
-    },
-    {
-      "fecha": "2026-08-16",
-      "piloto": "piloto-6",
-      "vueltas": 34,
-      "nota": "Domingo"
+      "piloto": "daniel-munoz",
+      "vueltas": 103,
+      "nota": "CronoLaps",
+      "mejorVuelta": 48.888
     }
   ]
 }
