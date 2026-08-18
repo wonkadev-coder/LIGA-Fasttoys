@@ -254,17 +254,23 @@ System.Drawing, que viene con Windows, así que no añade dependencias al proyec
 Los logos **no van en base64**: son ficheros normales que el service worker
 cachea. Meterlos dentro del HTML lo engordaba 160 KB sin ganar nada.
 
-Dos detalles de diseño que conviene no deshacer:
+Detalles de diseño que conviene no deshacer:
 
 - El logo de Fast Toys es **negro sobre blanco**, así que sobre el fondo oscuro
   de la app desaparecería. Va siempre dentro de un chip blanco (`.marca`,
   `.sello`, `.patro`). Por eso las tarjetas de patrocinador son claras: cada
   logo se lee con sus colores reales sin invertirlo ni recolorearlo.
+- El script **recorta el blanco sobrante** antes de escalar. Hace falta: el
+  original de LM es de 1920x280 con el dibujo metido en el tercio izquierdo, así
+  que sin recortar salía diminuto y descentrado.
+- Los logos se limitan con `max-width` / `max-height`, nunca con `width` fijo:
+  así ninguno se agranda por encima de su resolución real y no salen pixelados.
+  El de CronoLaps es de 92x35 y se ve algo más pequeño que el resto; es
+  preferible a estirarlo.
+- Las tarjetas usan `minmax(132px, 1fr)` para que los cinco patrocinadores
+  entren en una sola fila en escritorio y en dos en móvil.
 - Un patrocinador sin `logo` en `liga.json` no deja un hueco: se pinta su nombre
   con la tipografía de la casa (`.textual`).
 
-## Pendiente
-
-- **Faltan los logos de PMT y LM Exhausts**, los dos premios. Ahora salen como
-  texto. Se añaden dejando el fichero en `logos/` y apuntándolo en el campo
-  `logo` del patrocinador en `datos/liga.json`.
+Se guardan en PNG solo los logos que necesitan transparencia. Los que vienen de
+foto con fondo blanco van en JPEG: el de LM pasaba de 105 KB en PNG a 15 KB.

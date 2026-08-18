@@ -61,13 +61,13 @@
     {
       "nombre": "PMT",
       "rol": "Neumáticos",
-      "logo": null,
+      "logo": "logos/pmt.jpg",
       "web": ""
     },
     {
-      "nombre": "LM Exhausts",
+      "nombre": "LM Exhaust System",
       "rol": "Escapes",
-      "logo": null,
+      "logo": "logos/lm.jpg",
       "web": ""
     }
   ],

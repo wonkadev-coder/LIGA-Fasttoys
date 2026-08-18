@@ -12,6 +12,8 @@ const ARCHIVOS = [
   './logos/fasttoys.png',
   './logos/dr7.png',
   './logos/cronolaps.jpg',
+  './logos/pmt.jpg',
+  './logos/lm.jpg',
 ];
 
 self.addEventListener('install', (e) => {
