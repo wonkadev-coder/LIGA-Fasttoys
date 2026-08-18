@@ -62,6 +62,25 @@ Está cubierto por tests en `scripts/test.mjs`. Si tocas `calcularPiloto` o `cal
 
 Principio de diseño validado: mostrar **"faltan 55 vueltas para el escape LM"**, nunca un porcentaje abstracto.
 
+### Compartir en redes
+
+El botón "Compartir clasificación" dibuja una imagen **1080x1350** (el 4:5 de
+Instagram, el formato que más ocupa en el feed) con el podio, los diez primeros y
+la franja de patrocinadores. Es canvas puro, sin librerías.
+
+En el móvil abre el menú de compartir del sistema (`navigator.share` con ficheros);
+en escritorio, que no suele soportarlo, descarga el PNG para subirlo a mano.
+
+Dos cosas que no hay que quitar:
+
+- El **polyfill de `roundRect`**: no existe en Safari anterior a la 16 y sin él el
+  botón revienta en bastantes iPhone.
+- `textoAjustado()`: recorta los nombres largos con puntos suspensivos. Hay pilotos
+  como "Juan diego Rodríguez morales" que si no se salen de su caja.
+
+Los logos se dibujan sobre una franja blanca, por lo mismo que en la web: para que
+cada marca salga con sus colores reales.
+
 ## Cómo está montado (v2)
 
 Sigue sin backend, sin build y sin dependencias. Lo único que cambia respecto a v1

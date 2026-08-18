@@ -49,17 +49,62 @@
   header h1{margin:0;font-size:18px;line-height:1.15;letter-spacing:.01em}
   header .sub{margin:3px 0 0;color:var(--tenue);font-size:12.5px}
 
-  /* Odómetro del líder */
-  .odometro{
-    background:linear-gradient(160deg,var(--panel2),var(--panel));
+  /* Podio: las tres primeras posiciones, con la grada escalonada */
+  .podio{
+    background:linear-gradient(165deg,#1e242e,var(--panel));
     border:1px solid var(--linea); border-radius:var(--radio);
-    padding:16px 18px; margin:12px 0 18px;
+    padding:20px 14px 16px; margin:12px 0 12px;
   }
-  .odometro .et{color:var(--tenue);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em}
-  .odometro .fila{display:flex;align-items:baseline;gap:10px;margin-top:6px;flex-wrap:wrap}
-  .odometro .cifra{font-size:44px;font-weight:800;line-height:1;color:var(--ambar)}
-  .odometro .quien{font-size:15px;font-weight:600}
-  .odometro .pie{color:var(--tenue);font-size:12.5px;margin-top:8px}
+  .podio .et{
+    color:var(--tenue);font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.14em;text-align:center;font-weight:700;margin-bottom:16px;
+  }
+  .gradas{display:grid;grid-template-columns:1fr 1.16fr 1fr;gap:7px;align-items:end}
+  .grada{
+    background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;
+  }
+  .grada .cara{
+    width:100%;border-radius:11px 11px 0 0;padding:9px 5px 8px;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    background:var(--panel2);border:1px solid var(--linea);border-bottom:0;
+  }
+  .grada .medalla{font-size:17px;line-height:1}
+  .grada .nom{
+    font-size:12px;font-weight:700;width:100%;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .grada .cat2{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+  .grada .v{font-size:21px;font-weight:800;line-height:1.05}
+  .grada .vl{font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--tenue)}
+  /* La altura del cajón es lo que hace que se lea como un podio de verdad */
+  .grada .cajon{
+    width:100%;border-radius:0 0 4px 4px;display:grid;place-items:center;
+    font-size:15px;font-weight:800;color:#000;
+  }
+  .grada.p1 .cajon{height:44px;background:linear-gradient(180deg,var(--ambar),#e09600)}
+  .grada.p2 .cajon{height:30px;background:linear-gradient(180deg,#d7dee6,#aeb8c2)}
+  .grada.p3 .cajon{height:22px;background:linear-gradient(180deg,#cd8b4f,#a96a35)}
+  .grada.p1 .cara{border-color:rgba(255,179,0,.45);background:rgba(255,179,0,.08)}
+  .grada.p1 .v{color:var(--ambar);font-size:26px}
+  .grada:active{transform:scale(.98)}
+  .podio .pie{
+    color:var(--tenue);font-size:11.5px;text-align:center;margin-top:14px;
+    padding-top:12px;border-top:1px solid var(--linea);
+  }
+
+  /* Compartir */
+  .acciones{display:flex;gap:8px;margin:0 0 6px}
+  .btn{
+    flex:1 1 auto;background:var(--panel);border:1px solid var(--linea);
+    color:var(--texto);border-radius:11px;padding:11px 14px;font:inherit;
+    font-size:13.5px;font-weight:700;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn:hover{border-color:#3b4554}
+  .btn:disabled{opacity:.55;cursor:default}
+  .btn.destacado{background:var(--ambar);border-color:var(--ambar);color:#000}
 
   /* Barra de sección */
   h2.seccion{
@@ -231,16 +276,17 @@
 
   <!-- Vista: ranking público -->
   <main id="vistaRanking">
-    <section class="odometro">
-      <div class="et">Vueltas del líder</div>
-      <div class="fila">
-        <div class="cifra num" id="odoCifra">0</div>
-        <div class="quien" id="odoQuien"></div>
-      </div>
+    <section class="podio">
+      <div class="et">Clasificación por vueltas</div>
+      <div class="gradas" id="gradas"></div>
       <div class="pie" id="odoPie"></div>
     </section>
 
-    <h2 class="seccion">Clasificación</h2>
+    <div class="acciones">
+      <button class="btn destacado" id="btnCompartir">Compartir clasificación</button>
+    </div>
+
+    <h2 class="seccion" id="tituloResto">Resto de la clasificación</h2>
     <div id="listaPilotos"></div>
 
     <h2 class="seccion">Premios entregados</h2>
@@ -321,15 +367,37 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
     ? `Actualizado el ${fecha(LIGA.actualizado)}`
     : '';
 
-  // --- Odómetro ---
-  const lider = LIGA.resumen?.lider;
-  if (lider) {
-    $('odoCifra').textContent = n(lider.vueltasTotales);
-    $('odoQuien').textContent = lider.nombre;
+  // --- Podio ---
+  const MEDALLAS = ['🥇', '🥈', '🥉'];
+  const podio = LIGA.pilotos.slice(0, 3);
+
+  if (podio.length) {
+    // Orden visual 2-1-3: el cajón alto va en el centro, como en un podio real.
+    const colocacion = podio.length >= 3 ? [1, 0, 2] : podio.map((_, i) => i);
+    $('gradas').innerHTML = colocacion
+      .map((i) => {
+        const p = podio[i];
+        if (!p) return '';
+        return `<button class="grada p${p.puesto}" type="button" data-id="${p.id}">
+            <div class="cara">
+              <div class="medalla">${MEDALLAS[p.puesto - 1]}</div>
+              <div class="nom">${p.nombre}</div>
+              ${p.categoria ? `<div class="cat2">${p.categoria}</div>` : ''}
+              <div class="v num">${n(p.vueltasTotales)}</div>
+              <div class="vl">vueltas</div>
+            </div>
+            <div class="cajon">${p.puesto}</div>
+          </button>`;
+      })
+      .join('');
+
+    for (const g of document.querySelectorAll('.grada')) {
+      g.addEventListener('click', () => { location.hash = g.dataset.id; });
+    }
     $('odoPie').textContent =
       `${n(LIGA.resumen.totalVueltas)} vueltas entre ${LIGA.resumen.pilotosActivos} pilotos`;
   } else {
-    $('odoCifra').textContent = '0';
+    $('gradas').innerHTML = '';
     $('odoPie').textContent = 'Todavía no hay vueltas registradas.';
   }
 
@@ -347,9 +415,11 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
     }
   }
 
-  // --- Ranking ---
+  // --- Ranking: del 4º en adelante, los tres primeros ya están en el podio ---
   const lista = $('listaPilotos');
-  for (const p of LIGA.pilotos) {
+  const resto = LIGA.pilotos.slice(3);
+  if (!resto.length) $('tituloResto').classList.add('oculto');
+  for (const p of resto) {
     const card = document.createElement('button');
     card.className = 'piloto' + (p.puesto <= 3 ? ' p' + p.puesto : '');
     card.type = 'button';
@@ -475,6 +545,236 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
   addEventListener('hashchange', ruta);
   $('btnVolver').addEventListener('click', () => { location.hash = ''; });
   ruta();
+
+  // --- Tarjeta para redes -------------------------------------------------
+  // Se dibuja en un canvas 1080x1350 (el 4:5 de Instagram, que es el que más
+  // ocupa en el feed). Sin librerías: es todo API del navegador.
+
+  // roundRect no existe en Safari anterior a la 16, y muchos pilotos entran
+  // desde iPhone. Sin esto, el botón de compartir reventaría en esos móviles.
+  if (!CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+      const radios = Array.isArray(r) ? r : [r, r, r, r];
+      const [a, b, c2, d] = radios.map((v) => Math.min(v, w / 2, h / 2));
+      this.beginPath();
+      this.moveTo(x + a, y);
+      this.lineTo(x + w - b, y);
+      this.quadraticCurveTo(x + w, y, x + w, y + b);
+      this.lineTo(x + w, y + h - c2);
+      this.quadraticCurveTo(x + w, y + h, x + w - c2, y + h);
+      this.lineTo(x + d, y + h);
+      this.quadraticCurveTo(x, y + h, x, y + h - d);
+      this.lineTo(x, y + a);
+      this.quadraticCurveTo(x, y, x + a, y);
+      this.closePath();
+      return this;
+    };
+  }
+
+  const cargarImagen = (src) =>
+    new Promise((ok) => {
+      const img = new Image();
+      img.onload = () => ok(img);
+      img.onerror = () => ok(null); // un logo que falle no debe tumbar la tarjeta
+      img.src = src;
+    });
+
+  function textoAjustado(ctx, txt, max) {
+    let t = String(txt);
+    if (ctx.measureText(t).width <= max) return t;
+    while (t.length > 1 && ctx.measureText(t + '…').width > max) t = t.slice(0, -1);
+    return t + '…';
+  }
+
+  async function generarTarjeta() {
+    const W = 1080, H = 1350;
+    const lienzo = document.createElement('canvas');
+    lienzo.width = W; lienzo.height = H;
+    const c = lienzo.getContext('2d');
+
+    const AMBAR = '#ffb300', TENUE = '#8d99a8', BLANCO = '#eef2f7';
+
+    // Fondo
+    const fondo = c.createLinearGradient(0, 0, 0, H);
+    fondo.addColorStop(0, '#161c24');
+    fondo.addColorStop(1, '#0d0f12');
+    c.fillStyle = fondo;
+    c.fillRect(0, 0, W, H);
+    c.fillStyle = AMBAR;
+    c.fillRect(0, 0, W, 10);
+
+    // Cabecera con el logo sobre su chip blanco
+    const logo = await cargarImagen(LIGA.marca?.logo ?? 'logos/fasttoys.png');
+    let y = 66;
+    if (logo) {
+      const alto = 92, ancho = (logo.width / logo.height) * alto;
+      c.fillStyle = '#fff';
+      c.beginPath();
+      c.roundRect(60, y, ancho + 44, alto + 32, 18);
+      c.fill();
+      c.drawImage(logo, 60 + 22, y + 16, ancho, alto);
+    }
+    c.fillStyle = BLANCO;
+    c.font = '800 47px system-ui, sans-serif';
+    c.textAlign = 'right';
+    c.fillText('LIGA FAST TOYS', W - 60, y + 56);
+    c.fillStyle = AMBAR;
+    c.font = '800 30px system-ui, sans-serif';
+    c.fillText(`CIRCUITO ${(LIGA.temporada?.circuito ?? 'DR7').toUpperCase()}`, W - 60, y + 96);
+    c.textAlign = 'left';
+
+    y = 244;
+    c.fillStyle = TENUE;
+    c.font = '700 25px system-ui, sans-serif';
+    c.letterSpacing = '3px';
+    c.fillText('CLASIFICACIÓN POR VUELTAS', 60, y);
+    c.letterSpacing = '0px';
+    if (LIGA.actualizado) {
+      c.textAlign = 'right';
+      c.fillText(fecha(LIGA.actualizado).toUpperCase(), W - 60, y);
+      c.textAlign = 'left';
+    }
+
+    // Podio
+    const podio3 = LIGA.pilotos.slice(0, 3);
+    const alturas = [232, 172, 130];
+    const colores = [AMBAR, '#d7dee6', '#cd8b4f'];
+    const anchoCol = 300, hueco = 30;
+    const x0 = (W - (anchoCol * 3 + hueco * 2)) / 2;
+    const baseY = 700;
+    const ordenVisual = podio3.length >= 3 ? [1, 0, 2] : podio3.map((_, i) => i);
+
+    ordenVisual.forEach((idx, col) => {
+      const p = podio3[idx];
+      if (!p) return;
+      const x = x0 + col * (anchoCol + hueco);
+      const alto = alturas[p.puesto - 1];
+
+      c.fillStyle = colores[p.puesto - 1];
+      c.beginPath();
+      c.roundRect(x, baseY - alto, anchoCol, alto, [10, 10, 0, 0]);
+      c.fill();
+
+      c.fillStyle = '#000';
+      c.font = '800 74px system-ui, sans-serif';
+      c.textAlign = 'center';
+      c.fillText(String(p.puesto), x + anchoCol / 2, baseY - alto / 2 + 26);
+
+      // Datos del piloto, encima del cajón
+      let ty = baseY - alto - 118;
+      c.fillStyle = BLANCO;
+      c.font = '800 30px system-ui, sans-serif';
+      c.fillText(textoAjustado(c, p.nombre, anchoCol - 8), x + anchoCol / 2, ty);
+      if (p.categoria) {
+        c.fillStyle = TENUE;
+        c.font = '700 19px system-ui, sans-serif';
+        c.fillText(textoAjustado(c, p.categoria.toUpperCase(), anchoCol - 8), x + anchoCol / 2, ty + 28);
+      }
+      c.fillStyle = p.puesto === 1 ? AMBAR : BLANCO;
+      c.font = '800 54px system-ui, sans-serif';
+      c.fillText(n(p.vueltasTotales), x + anchoCol / 2, ty + 82);
+      c.textAlign = 'left';
+    });
+
+    // Del 4º en adelante
+    y = baseY + 66;
+    const resto3 = LIGA.pilotos.slice(3, 10);
+    for (const p of resto3) {
+      c.fillStyle = '#161a20';
+      c.beginPath();
+      c.roundRect(60, y - 34, W - 120, 54, 12);
+      c.fill();
+
+      c.fillStyle = TENUE;
+      c.font = '800 26px system-ui, sans-serif';
+      c.textAlign = 'center';
+      c.fillText(String(p.puesto), 100, y);
+
+      c.fillStyle = BLANCO;
+      c.font = '700 27px system-ui, sans-serif';
+      c.textAlign = 'left';
+      c.fillText(textoAjustado(c, p.nombre, 560), 140, y);
+
+      c.fillStyle = AMBAR;
+      c.font = '800 28px system-ui, sans-serif';
+      c.textAlign = 'right';
+      c.fillText(n(p.vueltasTotales), W - 84, y);
+      c.textAlign = 'left';
+      y += 62;
+    }
+
+    if (LIGA.pilotos.length > 10) {
+      c.fillStyle = TENUE;
+      c.font = '600 22px system-ui, sans-serif';
+      c.textAlign = 'center';
+      c.fillText(`y ${LIGA.pilotos.length - 10} pilotos más`, W / 2, y + 4);
+      c.textAlign = 'left';
+    }
+
+    // Franja de patrocinadores, sobre blanco para que se lean con su color
+    const franjaY = H - 176;
+    c.fillStyle = '#fff';
+    c.fillRect(0, franjaY, W, 108);
+
+    const conLogo = (LIGA.patrocinadores ?? []).filter((s) => s.logo);
+    const imgs = await Promise.all(conLogo.map((s) => cargarImagen(s.logo)));
+    const validos = imgs.filter(Boolean);
+    if (validos.length) {
+      const altoMax = 58, separacion = 46;
+      const anchos = validos.map((im) => (im.width / im.height) * altoMax);
+      const total = anchos.reduce((s, a) => s + a, 0) + separacion * (validos.length - 1);
+      const escala = Math.min(1, (W - 100) / total);
+      let px = (W - total * escala) / 2;
+      validos.forEach((im, i) => {
+        const a = anchos[i] * escala, h = altoMax * escala;
+        c.drawImage(im, px, franjaY + (108 - h) / 2, a, h);
+        px += a + separacion * escala;
+      });
+    }
+
+    c.fillStyle = TENUE;
+    c.font = '600 21px system-ui, sans-serif';
+    c.textAlign = 'center';
+    c.fillText('Cronometraje CronoLaps · Circuito DR7', W / 2, H - 30);
+
+    return new Promise((ok) => lienzo.toBlob(ok, 'image/png'));
+  }
+
+  const btn = $('btnCompartir');
+  // Sin clasificación no hay nada que compartir.
+  if (!LIGA.pilotos.length) btn.closest('.acciones').classList.add('oculto');
+  btn.addEventListener('click', async () => {
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Preparando…';
+    try {
+      const blob = await generarTarjeta();
+      const nombre = `liga-fast-toys-${LIGA.actualizado ?? 'clasificacion'}.png`;
+      const archivo = new File([blob], nombre, { type: 'image/png' });
+
+      // En el móvil abre el menú de compartir; en escritorio no suele existir,
+      // así que se descarga la imagen y ya se sube a mano.
+      if (navigator.canShare?.({ files: [archivo] })) {
+        await navigator.share({
+          files: [archivo],
+          title: 'Liga Fast Toys DR7',
+          text: `Clasificación de la Liga Fast Toys DR7 · ${n(LIGA.resumen.totalVueltas)} vueltas`,
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nombre;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (e) {
+      if (e?.name !== 'AbortError') alert('No he podido generar la imagen: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
 
   // --- Service worker (solo sirve por http/https, no con doble clic en el fichero) ---
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
