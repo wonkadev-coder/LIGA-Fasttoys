@@ -1,0 +1,200 @@
+{
+  "datosDeEjemplo": true,
+  "actualizado": "2026-08-23",
+  "temporada": {
+    "nombre": "Liga Fast Toys DR7",
+    "inicio": "2026-08-01",
+    "circuito": "DR7",
+    "categoria": "Pit bike"
+  },
+  "hitos": [
+    {
+      "vueltas": 500,
+      "premio": "Neumáticos PMT"
+    },
+    {
+      "vueltas": 750,
+      "premio": "Escape LM"
+    },
+    {
+      "vueltas": 999,
+      "premio": "Trofeo"
+    }
+  ],
+  "patrocinadores": [
+    {
+      "nombre": "Fast Toys",
+      "web": ""
+    },
+    {
+      "nombre": "CronoLaps",
+      "web": "https://cronolaps.es"
+    },
+    {
+      "nombre": "PMT",
+      "web": ""
+    },
+    {
+      "nombre": "LM Exhausts",
+      "web": ""
+    },
+    {
+      "nombre": "Circuito DR7",
+      "web": ""
+    }
+  ],
+  "pilotos": [
+    {
+      "id": "piloto-1",
+      "nombre": "Piloto 1",
+      "dorsal": 7,
+      "transpondedor": null
+    },
+    {
+      "id": "piloto-2",
+      "nombre": "Piloto 2",
+      "dorsal": 21,
+      "transpondedor": null
+    },
+    {
+      "id": "piloto-3",
+      "nombre": "Piloto 3",
+      "dorsal": 4,
+      "transpondedor": null
+    },
+    {
+      "id": "piloto-4",
+      "nombre": "Piloto 4",
+      "dorsal": 33,
+      "transpondedor": null
+    },
+    {
+      "id": "piloto-5",
+      "nombre": "Piloto 5",
+      "dorsal": 12,
+      "transpondedor": null
+    },
+    {
+      "id": "piloto-6",
+      "nombre": "Piloto 6",
+      "dorsal": 46,
+      "transpondedor": null
+    }
+  ],
+  "tandas": [
+    {
+      "fecha": "2026-08-02",
+      "piloto": "piloto-1",
+      "vueltas": 118,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-02",
+      "piloto": "piloto-2",
+      "vueltas": 96,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-02",
+      "piloto": "piloto-3",
+      "vueltas": 74,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-02",
+      "piloto": "piloto-4",
+      "vueltas": 52,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-02",
+      "piloto": "piloto-5",
+      "vueltas": 41,
+      "nota": "Jornada 1"
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "piloto-1",
+      "vueltas": 134,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "piloto-2",
+      "vueltas": 112,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "piloto-3",
+      "vueltas": 88,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "piloto-4",
+      "vueltas": 63,
+      "nota": "Jornada 2"
+    },
+    {
+      "fecha": "2026-08-09",
+      "piloto": "piloto-6",
+      "vueltas": 29,
+      "nota": "Debut"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-1",
+      "vueltas": 141,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-2",
+      "vueltas": 127,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-3",
+      "vueltas": 105,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-4",
+      "vueltas": 71,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-5",
+      "vueltas": 58,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-16",
+      "piloto": "piloto-6",
+      "vueltas": 44,
+      "nota": "Jornada 3"
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "piloto-1",
+      "vueltas": 129,
+      "nota": "Jornada 4"
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "piloto-2",
+      "vueltas": 143,
+      "nota": "Jornada 4"
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "piloto-3",
+      "vueltas": 97,
+      "nota": "Jornada 4"
+    }
+  ]
+}

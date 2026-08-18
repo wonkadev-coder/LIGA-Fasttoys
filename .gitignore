@@ -1,0 +1,14 @@
+# No hay dependencias: si aparece node_modules es que algo se ha colado.
+node_modules/
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Descargas de CronoLaps sin procesar (los datos buenos van en datos/liga.json)
+entrada/
+*.csv
+
+# Ajustes locales de Claude Code
+.claude/settings.local.json

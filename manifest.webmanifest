@@ -1,0 +1,15 @@
+{
+  "name": "Liga Fast Toys DR7",
+  "short_name": "Liga DR7",
+  "description": "Clasificación por vueltas de la Liga Fast Toys DR7.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0f12",
+  "theme_color": "#0d0f12",
+  "lang": "es",
+  "icons": [
+    { "src": "iconos/icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

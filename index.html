@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liga Fast Toys DR7</title>
+<meta name="description" content="Clasificación por vueltas de la Liga Fast Toys DR7, circuito DR7, categoría pit bike.">
+<meta name="theme-color" content="#0d0f12">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="iconos/icono.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Liga DR7">
+<style>
+  :root{
+    --fondo:#0d0f12; --panel:#161a20; --panel2:#1d222a; --linea:#2a313c;
+    --texto:#eef2f7; --tenue:#8d99a8; --ambar:#ffb300; --verde:#3ddc84;
+    --rojo:#ff4d4d; --azul:#4da3ff;
+    --radio:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--fondo); color:var(--texto);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:0 0 env(safe-area-inset-bottom);
+  }
+  .contenedor{max-width:760px;margin:0 auto;padding:0 14px 48px}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+  /* Aviso de datos de ejemplo */
+  .aviso{
+    background:var(--rojo); color:#fff; font-weight:700; text-align:center;
+    padding:10px 14px; font-size:14px; letter-spacing:.02em;
+    position:sticky; top:0; z-index:50;
+  }
+
+  /* Cabecera */
+  header{padding:22px 0 10px;display:flex;align-items:center;gap:14px}
+  header .logo{width:52px;height:52px;flex:0 0 auto}
+  header h1{margin:0;font-size:19px;line-height:1.15;letter-spacing:.01em}
+  header .sub{margin:3px 0 0;color:var(--tenue);font-size:12.5px}
+
+  /* Odómetro del líder */
+  .odometro{
+    background:linear-gradient(160deg,var(--panel2),var(--panel));
+    border:1px solid var(--linea); border-radius:var(--radio);
+    padding:16px 18px; margin:12px 0 18px;
+  }
+  .odometro .et{color:var(--tenue);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em}
+  .odometro .fila{display:flex;align-items:baseline;gap:10px;margin-top:6px;flex-wrap:wrap}
+  .odometro .cifra{font-size:44px;font-weight:800;line-height:1;color:var(--ambar)}
+  .odometro .quien{font-size:15px;font-weight:600}
+  .odometro .pie{color:var(--tenue);font-size:12.5px;margin-top:8px}
+
+  /* Barra de sección */
+  h2.seccion{
+    font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--tenue);
+    margin:24px 0 10px;font-weight:700;
+  }
+
+  /* Tarjeta de piloto en el ranking */
+  .piloto{
+    display:block;width:100%;text-align:left;cursor:pointer;
+    background:var(--panel); border:1px solid var(--linea); border-radius:var(--radio);
+    padding:14px; margin-bottom:10px; color:inherit; font:inherit;
+    transition:border-color .15s, transform .1s;
+  }
+  .piloto:hover{border-color:#3b4554}
+  .piloto:active{transform:scale(.995)}
+  .piloto .cab{display:flex;align-items:center;gap:12px}
+  .puesto{
+    width:30px;height:30px;flex:0 0 auto;border-radius:9px;background:var(--panel2);
+    display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--tenue);
+  }
+  .piloto.p1 .puesto{background:var(--ambar);color:#000}
+  .piloto.p2 .puesto{background:#c9d1d9;color:#000}
+  .piloto.p3 .puesto{background:#c47b3f;color:#000}
+  .nombre{font-weight:700;font-size:16px;flex:1 1 auto;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .dorsal{color:var(--tenue);font-size:12.5px;font-weight:600}
+  .totales{text-align:right;flex:0 0 auto}
+  .totales b{display:block;font-size:19px;line-height:1;font-weight:800}
+  .totales span{display:block;color:var(--tenue);font-size:10.5px;
+    text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+  /* Barra de ciclo con las tres marcas */
+  .barra{
+    position:relative;height:12px;border-radius:99px;background:var(--panel2);
+    margin:13px 0 0;overflow:hidden;
+  }
+  .barra .relleno{position:absolute;inset:0 auto 0 0;border-radius:99px;
+    background:linear-gradient(90deg,#ff8a00,var(--ambar))}
+  .barra .marca{position:absolute;top:0;bottom:0;width:2px;background:var(--fondo);opacity:.85}
+  .leyenda{display:flex;justify-content:space-between;margin-top:7px;gap:8px}
+  .falta{font-size:13px;font-weight:600;color:var(--ambar)}
+  .falta.completo{color:var(--verde)}
+  .ciclo{font-size:12px;color:var(--tenue)}
+
+  /* Estados de premio */
+  .premios{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
+  .premio{
+    font-size:11.5px;padding:4px 9px;border-radius:99px;border:1px solid var(--linea);
+    color:var(--tenue);display:inline-flex;align-items:center;gap:5px;
+  }
+  .premio.entregado{border-color:rgba(61,220,132,.45);color:var(--verde);background:rgba(61,220,132,.09)}
+  .premio.encurso{border-color:rgba(255,179,0,.5);color:var(--ambar);background:rgba(255,179,0,.09)}
+  .premio .x{font-weight:800}
+
+  /* Detalle del piloto: pizarra de boxes */
+  .pizarra .marcador{
+    background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:22px 18px;text-align:center;margin-bottom:14px;
+  }
+  .pizarra .marcador .et{color:var(--tenue);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em}
+  .pizarra .marcador .cifra{font-size:76px;font-weight:800;line-height:.95;margin:6px 0 2px}
+  .pizarra .marcador .de{color:var(--tenue);font-size:13px}
+  .pizarra .objetivo{
+    margin-top:16px;padding-top:14px;border-top:1px solid var(--linea);
+    font-size:17px;font-weight:700;
+  }
+  .pizarra .objetivo b{color:var(--ambar)}
+  .caja{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:14px;margin-bottom:14px}
+  .premio-fila{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--linea)}
+  .premio-fila:last-child{border-bottom:0}
+  .premio-fila .icono{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    background:var(--panel2);font-size:13px;flex:0 0 auto}
+  .premio-fila.entregado .icono{background:rgba(61,220,132,.15);color:var(--verde)}
+  .premio-fila.encurso .icono{background:rgba(255,179,0,.15);color:var(--ambar)}
+  .premio-fila .txt{flex:1 1 auto;min-width:0}
+  .premio-fila .txt b{display:block;font-size:14.5px}
+  .premio-fila .txt span{color:var(--tenue);font-size:12px}
+  .premio-fila .est{font-size:11.5px;color:var(--tenue);text-align:right;flex:0 0 auto}
+  .premio-fila.entregado .est{color:var(--verde)}
+  .premio-fila.encurso .est{color:var(--ambar)}
+
+  table.tandas{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.tandas th{text-align:left;color:var(--tenue);font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.1em;font-weight:700;padding:0 0 8px}
+  table.tandas th.d,table.tandas td.d{text-align:right}
+  table.tandas td{padding:9px 0;border-top:1px solid var(--linea)}
+  table.tandas td.v{font-weight:800;color:var(--ambar)}
+  table.tandas .nota{color:var(--tenue);font-size:11.5px;display:block}
+  .reinicio{color:var(--verde);font-size:11px;font-weight:700}
+
+  .volver{
+    background:none;border:1px solid var(--linea);color:var(--tenue);
+    border-radius:99px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;
+    margin:16px 0 4px;
+  }
+  .volver:hover{color:var(--texto);border-color:#3b4554}
+
+  /* Resumen de premios de la liga */
+  .contadores{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .contador{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);padding:13px}
+  .contador b{display:block;font-size:26px;font-weight:800;line-height:1;color:var(--ambar)}
+  .contador span{display:block;color:var(--tenue);font-size:11.5px;margin-top:5px}
+
+  /* Patrocinadores */
+  .patros{display:flex;flex-wrap:wrap;gap:8px}
+  .patro{background:var(--panel);border:1px solid var(--linea);border-radius:10px;
+    padding:9px 14px;font-size:13px;font-weight:600;color:var(--tenue);text-decoration:none}
+  .patro:hover{color:var(--texto)}
+
+  footer{color:var(--tenue);font-size:11.5px;text-align:center;margin-top:28px;line-height:1.7}
+
+  .oculto{display:none!important}
+  @media (min-width:600px){
+    .odometro .cifra{font-size:56px}
+    header h1{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<div id="aviso" class="aviso oculto">Datos de ejemplo. Los pilotos y las vueltas que se muestran son inventados.</div>
+
+<div class="contenedor">
+
+  <header>
+    <!-- LOGO:INICIO — sustituir por el logo de Fast Toys en base64 con: node scripts/logo.mjs ruta/al/logo.png -->
+    <svg class="logo" viewBox="0 0 64 64" fill="none" aria-label="Fast Toys">
+      <rect width="64" height="64" rx="14" fill="#ffb300"/>
+      <path d="M14 40h36M20 40l6-16h12l6 16" stroke="#0d0f12" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="45" r="5" fill="#0d0f12"/><circle cx="42" cy="45" r="5" fill="#0d0f12"/>
+    </svg>
+    <!-- LOGO:FIN -->
+    <div>
+      <h1 id="titulo">Liga Fast Toys DR7</h1>
+      <p class="sub" id="subtitulo">Circuito DR7 · Pit bike</p>
+    </div>
+  </header>
+
+  <!-- Vista: ranking público -->
+  <main id="vistaRanking">
+    <section class="odometro">
+      <div class="et">Vueltas del líder</div>
+      <div class="fila">
+        <div class="cifra num" id="odoCifra">0</div>
+        <div class="quien" id="odoQuien"></div>
+      </div>
+      <div class="pie" id="odoPie"></div>
+    </section>
+
+    <h2 class="seccion">Clasificación</h2>
+    <div id="listaPilotos"></div>
+
+    <h2 class="seccion">Premios entregados</h2>
+    <div class="contadores" id="contadores"></div>
+
+    <h2 class="seccion">Patrocinadores</h2>
+    <div class="patros" id="patros"></div>
+  </main>
+
+  <!-- Vista: pizarra del piloto -->
+  <main id="vistaPiloto" class="pizarra oculto">
+    <button class="volver" id="btnVolver">← Clasificación</button>
+    <section class="marcador">
+      <div class="et" id="pzNombre"></div>
+      <div class="cifra num" id="pzCiclo">0</div>
+      <div class="de">vueltas de este ciclo · de 999</div>
+      <div class="barra" id="pzBarra"><div class="relleno"></div></div>
+      <div class="objetivo" id="pzObjetivo"></div>
+    </section>
+
+    <div class="caja">
+      <h2 class="seccion" style="margin:0 0 6px">Premios</h2>
+      <div id="pzPremios"></div>
+    </div>
+
+    <div class="caja">
+      <h2 class="seccion" style="margin:0 0 10px">Historial de tandas</h2>
+      <table class="tandas">
+        <thead><tr><th>Fecha</th><th class="d">Vueltas</th><th class="d">Acumulado</th></tr></thead>
+        <tbody id="pzTandas"></tbody>
+      </table>
+    </div>
+
+    <div class="caja">
+      <div class="premio-fila" style="border:0;padding:0">
+        <div class="txt">
+          <b class="num" id="pzTotales">0</b>
+          <span>vueltas totales · puesto <span id="pzPuesto">–</span> de la liga</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div id="pieActualizado"></div>
+    <div>Cronometraje: CronoLaps · Circuito DR7</div>
+  </footer>
+</div>
+
+<script>
+/* LIGA:INICIO — generado por scripts/generar.mjs a partir de datos/liga.json. No editar a mano. */
+const LIGA = {"datosDeEjemplo":true,"actualizado":"2026-08-23","temporada":{"nombre":"Liga Fast Toys DR7","inicio":"2026-08-01","circuito":"DR7","categoria":"Pit bike"},"hitos":[{"vueltas":500,"premio":"Neumáticos PMT"},{"vueltas":750,"premio":"Escape LM"},{"vueltas":999,"premio":"Trofeo"}],"patrocinadores":[{"nombre":"Fast Toys","web":""},{"nombre":"CronoLaps","web":"https://cronolaps.es"},{"nombre":"PMT","web":""},{"nombre":"LM Exhausts","web":""},{"nombre":"Circuito DR7","web":""}],"resumen":{"totalVueltas":1722,"lider":{"id":"piloto-1","nombre":"Piloto 1","dorsal":7,"transpondedor":null,"vueltasCiclo":522,"vueltasTotales":522,"ciclosCompletados":0,"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"entregado","entregados":1,"faltan":0},{"vueltas":750,"premio":"Escape LM","estado":"en curso","entregados":0,"faltan":228},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":477}],"siguiente":{"vueltas":750,"premio":"Escape LM","faltan":228},"progresoCiclo":0.5225225225225225,"historial":[{"fecha":"2026-08-23","vueltas":129,"nota":"Jornada 4","acumulado":522,"cicloTrasTanda":522,"reinicios":0},{"fecha":"2026-08-16","vueltas":141,"nota":"Jornada 3","acumulado":393,"cicloTrasTanda":393,"reinicios":0},{"fecha":"2026-08-09","vueltas":134,"nota":"Jornada 2","acumulado":252,"cicloTrasTanda":252,"reinicios":0},{"fecha":"2026-08-02","vueltas":118,"nota":"Jornada 1","acumulado":118,"cicloTrasTanda":118,"reinicios":0}],"tandas":4,"ultimaTanda":"2026-08-23","puesto":1},"premiosEntregados":[{"vueltas":500,"premio":"Neumáticos PMT","entregados":1},{"vueltas":750,"premio":"Escape LM","entregados":0},{"vueltas":999,"premio":"Trofeo","entregados":0}],"trofeos":0,"pilotosActivos":6},"pilotos":[{"id":"piloto-1","nombre":"Piloto 1","dorsal":7,"puesto":1,"vueltasCiclo":522,"vueltasTotales":522,"ciclosCompletados":0,"siguiente":{"vueltas":750,"premio":"Escape LM","faltan":228},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"entregado","entregados":1,"faltan":0},{"vueltas":750,"premio":"Escape LM","estado":"en curso","entregados":0,"faltan":228},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":477}],"historial":[{"fecha":"2026-08-23","vueltas":129,"nota":"Jornada 4","acumulado":522,"cicloTrasTanda":522,"reinicios":0},{"fecha":"2026-08-16","vueltas":141,"nota":"Jornada 3","acumulado":393,"cicloTrasTanda":393,"reinicios":0},{"fecha":"2026-08-09","vueltas":134,"nota":"Jornada 2","acumulado":252,"cicloTrasTanda":252,"reinicios":0},{"fecha":"2026-08-02","vueltas":118,"nota":"Jornada 1","acumulado":118,"cicloTrasTanda":118,"reinicios":0}]},{"id":"piloto-2","nombre":"Piloto 2","dorsal":21,"puesto":2,"vueltasCiclo":478,"vueltasTotales":478,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Neumáticos PMT","faltan":22},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"en curso","entregados":0,"faltan":22},{"vueltas":750,"premio":"Escape LM","estado":"bloqueado","entregados":0,"faltan":272},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":521}],"historial":[{"fecha":"2026-08-23","vueltas":143,"nota":"Jornada 4","acumulado":478,"cicloTrasTanda":478,"reinicios":0},{"fecha":"2026-08-16","vueltas":127,"nota":"Jornada 3","acumulado":335,"cicloTrasTanda":335,"reinicios":0},{"fecha":"2026-08-09","vueltas":112,"nota":"Jornada 2","acumulado":208,"cicloTrasTanda":208,"reinicios":0},{"fecha":"2026-08-02","vueltas":96,"nota":"Jornada 1","acumulado":96,"cicloTrasTanda":96,"reinicios":0}]},{"id":"piloto-3","nombre":"Piloto 3","dorsal":4,"puesto":3,"vueltasCiclo":364,"vueltasTotales":364,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Neumáticos PMT","faltan":136},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"en curso","entregados":0,"faltan":136},{"vueltas":750,"premio":"Escape LM","estado":"bloqueado","entregados":0,"faltan":386},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":635}],"historial":[{"fecha":"2026-08-23","vueltas":97,"nota":"Jornada 4","acumulado":364,"cicloTrasTanda":364,"reinicios":0},{"fecha":"2026-08-16","vueltas":105,"nota":"Jornada 3","acumulado":267,"cicloTrasTanda":267,"reinicios":0},{"fecha":"2026-08-09","vueltas":88,"nota":"Jornada 2","acumulado":162,"cicloTrasTanda":162,"reinicios":0},{"fecha":"2026-08-02","vueltas":74,"nota":"Jornada 1","acumulado":74,"cicloTrasTanda":74,"reinicios":0}]},{"id":"piloto-4","nombre":"Piloto 4","dorsal":33,"puesto":4,"vueltasCiclo":186,"vueltasTotales":186,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Neumáticos PMT","faltan":314},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"en curso","entregados":0,"faltan":314},{"vueltas":750,"premio":"Escape LM","estado":"bloqueado","entregados":0,"faltan":564},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":813}],"historial":[{"fecha":"2026-08-16","vueltas":71,"nota":"Jornada 3","acumulado":186,"cicloTrasTanda":186,"reinicios":0},{"fecha":"2026-08-09","vueltas":63,"nota":"Jornada 2","acumulado":115,"cicloTrasTanda":115,"reinicios":0},{"fecha":"2026-08-02","vueltas":52,"nota":"Jornada 1","acumulado":52,"cicloTrasTanda":52,"reinicios":0}]},{"id":"piloto-5","nombre":"Piloto 5","dorsal":12,"puesto":5,"vueltasCiclo":99,"vueltasTotales":99,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Neumáticos PMT","faltan":401},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"en curso","entregados":0,"faltan":401},{"vueltas":750,"premio":"Escape LM","estado":"bloqueado","entregados":0,"faltan":651},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":900}],"historial":[{"fecha":"2026-08-16","vueltas":58,"nota":"Jornada 3","acumulado":99,"cicloTrasTanda":99,"reinicios":0},{"fecha":"2026-08-02","vueltas":41,"nota":"Jornada 1","acumulado":41,"cicloTrasTanda":41,"reinicios":0}]},{"id":"piloto-6","nombre":"Piloto 6","dorsal":46,"puesto":6,"vueltasCiclo":73,"vueltasTotales":73,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Neumáticos PMT","faltan":427},"premios":[{"vueltas":500,"premio":"Neumáticos PMT","estado":"en curso","entregados":0,"faltan":427},{"vueltas":750,"premio":"Escape LM","estado":"bloqueado","entregados":0,"faltan":677},{"vueltas":999,"premio":"Trofeo","estado":"bloqueado","entregados":0,"faltan":926}],"historial":[{"fecha":"2026-08-16","vueltas":44,"nota":"Jornada 3","acumulado":73,"cicloTrasTanda":73,"reinicios":0},{"fecha":"2026-08-09","vueltas":29,"nota":"Debut","acumulado":29,"cicloTrasTanda":29,"reinicios":0}]}]};
+/* LIGA:FIN */
+</script>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const n = (v) => (v ?? 0).toLocaleString('es-ES');
+  const CICLO = 999;
+
+  const fecha = (iso) => {
+    if (!iso) return '';
+    const [a, m, d] = iso.split('-');
+    return `${d}/${m}/${a.slice(2)}`;
+  };
+
+  // --- Aviso de datos de ejemplo ---
+  if (LIGA.datosDeEjemplo) $('aviso').classList.remove('oculto');
+
+  // --- Cabecera ---
+  if (LIGA.temporada) {
+    $('titulo').textContent = LIGA.temporada.nombre || 'Liga Fast Toys DR7';
+    $('subtitulo').textContent = `Circuito ${LIGA.temporada.circuito} · ${LIGA.temporada.categoria}`;
+  }
+  $('pieActualizado').textContent = LIGA.actualizado
+    ? `Actualizado el ${fecha(LIGA.actualizado)}`
+    : '';
+
+  // --- Odómetro ---
+  const lider = LIGA.resumen?.lider;
+  if (lider) {
+    $('odoCifra').textContent = n(lider.vueltasTotales);
+    $('odoQuien').textContent = lider.nombre;
+    $('odoPie').textContent =
+      `${n(LIGA.resumen.totalVueltas)} vueltas entre ${LIGA.resumen.pilotosActivos} pilotos`;
+  } else {
+    $('odoCifra').textContent = '0';
+    $('odoPie').textContent = 'Todavía no hay vueltas registradas.';
+  }
+
+  // --- Barra de ciclo con las tres marcas ---
+  function pintarBarra(el, vueltasCiclo) {
+    el.innerHTML = '<div class="relleno"></div>';
+    el.querySelector('.relleno').style.width =
+      Math.min(100, (vueltasCiclo / CICLO) * 100) + '%';
+    for (const h of LIGA.hitos) {
+      if (h.vueltas >= CICLO) continue; // el final de la barra ya es el corte
+      const m = document.createElement('div');
+      m.className = 'marca';
+      m.style.left = (h.vueltas / CICLO) * 100 + '%';
+      el.appendChild(m);
+    }
+  }
+
+  // --- Ranking ---
+  const lista = $('listaPilotos');
+  for (const p of LIGA.pilotos) {
+    const card = document.createElement('button');
+    card.className = 'piloto' + (p.puesto <= 3 ? ' p' + p.puesto : '');
+    card.type = 'button';
+
+    const falta = p.siguiente
+      ? `Faltan <span class="num">${n(p.siguiente.faltan)}</span> vueltas para ${p.siguiente.premio}`
+      : 'Ciclo completado';
+
+    card.innerHTML = `
+      <div class="cab">
+        <div class="puesto num">${p.puesto}</div>
+        <div class="nombre">${p.nombre} <span class="dorsal">#${p.dorsal}</span></div>
+        <div class="totales">
+          <b class="num">${n(p.vueltasTotales)}</b>
+          <span>totales</span>
+        </div>
+      </div>
+      <div class="barra"></div>
+      <div class="leyenda">
+        <div class="falta${p.siguiente ? '' : ' completo'}">${falta}</div>
+        <div class="ciclo num">${n(p.vueltasCiclo)}/999</div>
+      </div>
+      <div class="premios">${p.premios.map(pr =>
+        `<span class="premio ${pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : ''}">
+           ${pr.premio}${pr.entregados > 1 ? ` <span class="x">×${pr.entregados}</span>` : ''}
+         </span>`).join('')}</div>`;
+
+    pintarBarra(card.querySelector('.barra'), p.vueltasCiclo);
+    card.addEventListener('click', () => { location.hash = p.id; });
+    lista.appendChild(card);
+  }
+
+  // --- Contadores de premios ---
+  $('contadores').innerHTML = (LIGA.resumen?.premiosEntregados || [])
+    .map(h => `<div class="contador"><b class="num">${h.entregados}</b><span>${h.premio}</span></div>`)
+    .join('');
+
+  // --- Patrocinadores ---
+  $('patros').innerHTML = (LIGA.patrocinadores || [])
+    .map(s => s.web
+      ? `<a class="patro" href="${s.web}" target="_blank" rel="noopener">${s.nombre}</a>`
+      : `<span class="patro">${s.nombre}</span>`)
+    .join('');
+
+  // --- Pizarra del piloto ---
+  function pintarPiloto(p) {
+    $('pzNombre').textContent = `${p.nombre} · #${p.dorsal}`;
+    $('pzCiclo').textContent = n(p.vueltasCiclo);
+    pintarBarra($('pzBarra'), p.vueltasCiclo);
+
+    $('pzObjetivo').innerHTML = p.siguiente
+      ? `Faltan <b class="num">${n(p.siguiente.faltan)}</b> vueltas para ${p.siguiente.premio}`
+      : 'Ciclo completado';
+
+    $('pzPremios').innerHTML = p.premios.map(pr => {
+      const clase = pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : '';
+      const icono = pr.estado === 'entregado' ? '✓' : pr.estado === 'en curso' ? '▸' : '🔒';
+      const estado = pr.estado === 'entregado'
+        ? (pr.entregados > 1 ? `Entregado ×${pr.entregados}` : 'Entregado')
+        : pr.estado === 'en curso'
+          ? `Faltan ${n(pr.faltan)}`
+          : `Faltan ${n(pr.faltan)}`;
+      return `<div class="premio-fila ${clase}">
+          <div class="icono">${icono}</div>
+          <div class="txt"><b>${pr.premio}</b><span>${n(pr.vueltas)} vueltas del ciclo</span></div>
+          <div class="est">${estado}</div>
+        </div>`;
+    }).join('');
+
+    $('pzTandas').innerHTML = p.historial.length
+      ? p.historial.map(t => `<tr>
+            <td>${fecha(t.fecha)}${t.nota ? `<span class="nota">${t.nota}</span>` : ''}
+              ${t.reinicios ? `<span class="reinicio">Ciclo completado ✓</span>` : ''}</td>
+            <td class="d v num">+${n(t.vueltas)}</td>
+            <td class="d num">${n(t.acumulado)}</td>
+          </tr>`).join('')
+      : '<tr><td colspan="3" style="color:var(--tenue)">Sin tandas registradas.</td></tr>';
+
+    $('pzTotales').textContent = n(p.vueltasTotales) + ' vueltas';
+    $('pzPuesto').textContent = p.puesto;
+  }
+
+  // --- Navegación por hash (permite abrir la PWA directa en un piloto) ---
+  function ruta() {
+    const id = location.hash.replace('#', '');
+    const p = LIGA.pilotos.find(x => x.id === id);
+    if (p) {
+      pintarPiloto(p);
+      $('vistaRanking').classList.add('oculto');
+      $('vistaPiloto').classList.remove('oculto');
+      document.title = `${p.nombre} · Liga Fast Toys DR7`;
+    } else {
+      $('vistaPiloto').classList.add('oculto');
+      $('vistaRanking').classList.remove('oculto');
+      document.title = 'Liga Fast Toys DR7';
+    }
+    scrollTo(0, 0);
+  }
+  addEventListener('hashchange', ruta);
+  $('btnVolver').addEventListener('click', () => { location.hash = ''; });
+  ruta();
+
+  // --- Service worker (solo sirve por http/https, no con doble clic en el fichero) ---
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
+})();
+</script>
+</body>
+</html>
