@@ -1,11 +1,8 @@
-# Activa GitHub Pages en el repositorio, sin tener que tocar Settings a mano.
+# Activa GitHub Pages y deja escrito el resultado en diagnostico-pages.txt.
 #
-# El camino habitual (configure-pages + deploy-pages) no sirve la primera vez:
-# esos pasos necesitan el entorno "github-pages", que no existe hasta que Pages
-# está activado, así que el job ni siquiera arranca. Esto lo activa por API.
-#
-# Una vez activado, GitHub reconstruye la web solo en cada push a main y este
-# workflow ya no hace falta.
+# El fichero se commitea al repositorio para poder leer qué contestó la API sin
+# tener que entrar en los registros de Actions. Cuando Pages esté activo, este
+# workflow se puede borrar junto con el fichero.
 
 name: Activar Pages
 
@@ -13,31 +10,45 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - 'diagnostico-pages.txt'   # evita que el propio commit lo vuelva a lanzar
 
 permissions:
   pages: write
-  contents: read
+  contents: write
 
 jobs:
   activar:
     runs-on: ubuntu-latest
     steps:
-      - name: Pedir a GitHub que publique main
+      - uses: actions/checkout@v4
+
+      - name: Intentar activar Pages
         run: |
-          codigo=$(curl -s -o /tmp/salida.json -w "%{http_code}" -X POST \
+          codigo=$(curl -s -o /tmp/respuesta.json -w "%{http_code}" -X POST \
             -H "Authorization: Bearer ${{ github.token }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/pages" \
             -d '{"source":{"branch":"main","path":"/"}}')
 
-          echo "Respuesta HTTP: $codigo"
-          cat /tmp/salida.json
+          {
+            echo "fecha: $(date -u)"
+            echo "http: $codigo"
+            echo "respuesta:"
+            cat /tmp/respuesta.json
+            echo
+            echo "permisos del token para este job:"
+            curl -s -I -H "Authorization: Bearer ${{ github.token }}" \
+              "https://api.github.com/repos/${{ github.repository }}" \
+              | grep -i "x-accepted-github-permissions\|x-oauth-scopes" || echo "(sin cabeceras de permisos)"
+          } > diagnostico-pages.txt
 
-          # 201 = activado. 409 = ya lo estaba. Ambos son buen resultado.
-          if [ "$codigo" = "201" ] || [ "$codigo" = "409" ]; then
-            echo "Pages activado y publicando desde main."
-          else
-            echo "No se ha podido activar automáticamente."
-            echo "Hazlo a mano en Settings -> Pages: Source = Deploy from a branch, Branch = main, carpeta / (root)."
-            exit 1
-          fi
+          cat diagnostico-pages.txt
+
+      - name: Dejar el diagnóstico en el repositorio
+        run: |
+          git config user.name "Liga Fast Toys (bot)"
+          git config user.email "actions@github.com"
+          git add diagnostico-pages.txt
+          git commit -m "Diagnóstico de la activación de Pages" || echo "sin cambios"
+          git push || echo "PUSH FALLIDO: el token tampoco puede escribir en el repositorio"
