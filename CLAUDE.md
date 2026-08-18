@@ -81,6 +81,8 @@ scripts/
   tanda.mjs              Registrar vueltas / dar de alta pilotos
   cronolaps.mjs          Descarga los pasos del cronometrador
   importar.mjs           Carga un volcado de CronoLaps en liga.json
+  actualizar.mjs         Ciclo completo desatendido (descarga + carga + web)
+  programar.ps1          Programa la actualización diaria en Windows
   servir.mjs             Servidor local para probar la PWA en el móvil
   preparar-logos.ps1     Optimiza los logos y genera los iconos (paso puntual)
   pdf.mjs                Generador de PDF mínimo, sin dependencias
@@ -179,7 +181,16 @@ es un paso por meta:
   "socio":"Martin 19", "tiempo":"2637706092", "zona":"0", "eskart":"2" }
 ```
 
-Descargar un rango y cargarlo:
+Todo el ciclo de una vez (lo normal):
+
+```bash
+node scripts/actualizar.mjs --dias 3
+```
+
+Descarga, carga, regenera la web y avisa de los premios que hay que entregar.
+Añade `--publicar` para que además haga commit y push.
+
+Por partes, cuando interese revisar antes de aplicar:
 
 ```bash
 node scripts/cronolaps.mjs descargar 2026-08-08 2026-08-18
@@ -187,8 +198,29 @@ node scripts/importar.mjs datos/cronolaps-2026-08-08_2026-08-18.json --aplicar
 node scripts/generar.mjs
 ```
 
-La carga es **idempotente**: no duplica tandas ya registradas (una por piloto y día
-operativo), así que se puede repetir sin miedo.
+Todo es **idempotente**: una tanda por piloto y día operativo, así que repetirlo no
+duplica nada. Por eso `actualizar.mjs` repasa varios días a la vez: si un día falla,
+el siguiente lo recupera solo. Una tanda ya registrada solo se actualiza si venía de
+CronoLaps y la cifra ha cambiado (jornada en curso); **las tandas metidas a mano no
+se pisan nunca**.
+
+### Actualización desatendida
+
+Dos formas, según si el equipo va a estar encendido:
+
+```bash
+powershell -ExecutionPolicy Bypass -File scripts/programar.ps1 -Publicar
+```
+
+Tarea diaria de Windows a las 07:00 — después del corte de las 06:00, así la jornada
+anterior ya está cerrada. Necesita el ordenador encendido; si está apagado, se lanza
+al arrancar.
+
+`.github/workflows/actualizar.yml` hace lo mismo en la nube y no depende del equipo,
+pero exige que el repositorio esté en GitHub y dar permiso de escritura al workflow
+(Settings → Actions → General → Workflow permissions → *Read and write*).
+
+Cada ejecución deja rastro en `datos/actualizaciones.log`.
 
 El correo pidiendo API sigue teniendo sentido para tener acceso **acordado y estable**
 —esto depende de que no cambien su web—, pero ya no bloquea nada.
@@ -202,6 +234,28 @@ El correo pidiendo API sigue teniendo sentido para tener acceso **acordado y est
 2. El **día operativo va de 06:00 a 06:00**, no de medianoche a medianoche.
    Implementado en `diaOperativo()`. Se aplica al timestamp de cada paso, no al día
    por el que se consulta.
+   **Al pedir un día al endpoint hay que mandar su MEDIANOCHE**: el servidor toma ese
+   instante como arranque de la jornada y devuelve hasta las 06:00 del día siguiente.
+   Con cualquier otra hora mezcla dos jornadas. Por eso `diasEntre()` vive en
+   `cronolaps.mjs` y la usan todos: tenerla duplicada ya provocó ese fallo una vez.
+   Por lo mismo, **no uses `diaOperativo()` para etiquetar un día consultado**: como
+   las 00:00 son anteriores al corte, devolvería la jornada anterior.
+
+### Cómo se cuenta una vuelta
+
+**Un paso por meta no es una vuelta.** Copiado de su función `procesarTiempos`,
+está en `contarVueltasDelDia()` y cubierto por tests:
+
+- Solo cuentan los pasos por meta (`zona` 0); las demás zonas son sectores.
+- **El primer paso de cada piloto y día no cuenta**: es la vuelta de lanzamiento,
+  la salida de boxes.
+- Un paso solo cuenta si han pasado al menos `tiempomin` desde el anterior válido
+  (45 s en el tramo 0 del DR7, consultado en vivo, no fijado a mano). Si no llega,
+  se descarta sin mover la referencia: así se filtran las lecturas dobles.
+
+Contar pasos a secas daba **una vuelta de más por piloto y día** (25 de más en los
+primeros once días). El número que sale ahora es el mismo que ve el piloto en la
+pantalla del circuito, que es lo que hay que respetar.
 3. **`vehiculo` es el id de categoría.** Las seis del reglamento son exactamente las
    seis hijas de la categoría 18 ("Pit Bike"): 40 Pit Bike 90, 58 160 Series,
    59 Proto, 60 Master, 95 Z190 series, 160 Alevin 90. Están en `CATEGORIAS_LIGA`.

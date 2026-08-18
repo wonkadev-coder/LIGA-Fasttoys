@@ -1,0 +1,56 @@
+# Actualización diaria de la clasificación, en la nube.
+#
+# Frente al Programador de tareas de Windows, esto no depende de que el
+# ordenador esté encendido. Requiere que el repositorio esté en GitHub.
+#
+# Para activarlo: Settings -> Actions -> General -> Workflow permissions
+# -> "Read and write permissions", para que el bot pueda commitear.
+
+name: Actualizar clasificación
+
+on:
+  schedule:
+    # 05:15 UTC = 07:15 en España (verano). Después del corte de las 06:00
+    # del día operativo de CronoLaps, así la jornada anterior ya está cerrada.
+    - cron: '15 5 * * *'
+  workflow_dispatch:      # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-liga
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # El proyecto no tiene dependencias: no hace falta npm install.
+      - name: Comprobar la lógica de ciclos y premios
+        run: node scripts/test.mjs
+
+      - name: Descargar de CronoLaps y regenerar
+        run: node scripts/actualizar.mjs --dias 3
+        env:
+          TZ: Europe/Madrid   # el día operativo se calcula en hora local
+
+      - name: Publicar si hay cambios
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name "Liga Fast Toys (bot)"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Actualización automática de la clasificación
+
+          Descargado de CronoLaps por la tarea diaria."
+          git push

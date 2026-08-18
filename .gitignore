@@ -12,3 +12,4 @@ entrada/
 
 # Ajustes locales de Claude Code
 .claude/settings.local.json
+datos/actualizaciones.log
