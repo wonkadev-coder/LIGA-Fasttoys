@@ -3,22 +3,36 @@
   "actualizado": "2026-08-23",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
-    "inicio": "2026-08-01",
+    "inicio": "2026-08-08",
     "circuito": "DR7",
-    "categoria": "Pit bike"
+    "categoria": "Pit bike",
+    "categoriasAdmitidas": [
+      "Pit Bike 90",
+      "160 series",
+      "Proto",
+      "Master",
+      "Z190 series",
+      "Alevín 90"
+    ]
+  },
+  "reglamento": {
+    "eventos": "Eventos semanales. La liga empieza el sábado 8 de agosto.",
+    "criterio": "Los premios son por número de vueltas, no por tiempos.",
+    "maxVueltasDia": 100,
+    "maxVueltasSemana": 200
   },
   "hitos": [
     {
       "vueltas": 500,
-      "premio": "Neumáticos PMT"
+      "premio": "Juego de neumáticos PMT"
     },
     {
       "vueltas": 750,
-      "premio": "Escape LM"
+      "premio": "Escape completo LM"
     },
     {
       "vueltas": 999,
-      "premio": "Trofeo"
+      "premio": "Premio sorpresa"
     }
   ],
   "patrocinadores": [

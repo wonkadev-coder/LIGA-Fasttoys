@@ -4,20 +4,41 @@ Aplicación web pública de clasificación por vueltas de la Liga Fast Toys DR7.
 
 ## Contexto de negocio
 
-- Liga de **conteo de vueltas** disputada exclusivamente en el **circuito DR7**, categoría pit bike.
-- Todos los pilotos compiten en un **único ranking unificado** (no hay subcategorías).
-- Arranque de la liga: **1 de agosto de 2026**.
+Fuente: reglamento manuscrito de la organización, transcrito a `datos/liga.json`
+y publicado en `documentos/reglamento-liga-fast-toys.pdf`.
+
+- Liga de **conteo de vueltas** disputada exclusivamente en el **circuito DR7**.
+- Arranque de la liga: **sábado 8 de agosto de 2026**. **Eventos semanales.**
 - Escala actual: **~10 pilotos**. Cualquier decisión técnica debe ser proporcional a esa escala.
+
+### Categorías admitidas
+
+Se admiten seis categorías de pit bike: **Pit Bike 90, 160 series, Proto, Master,
+Z190 series y Alevín 90**.
+
+Son categorías de **moto admitida**, no divisiones de la clasificación: todos los
+pilotos compiten en un **único ranking unificado**. Tiene sentido porque los premios
+se cobran por hitos de vueltas, no por posición, así que no compiten entre sí por un
+puesto. Si algún día se quisieran rankings por categoría, habría que añadir el campo
+`categoria` a cada piloto.
+
+### Límite de vueltas
+
+**Máximo de 100 vueltas diarias o 200 semanales.** Está registrado en
+`datos/liga.json` (`reglamento.maxVueltasDia` / `maxVueltasSemana`) y sale en el PDF,
+pero **todavía no se valida al registrar tandas**: `scripts/tanda.mjs` acepta
+cualquier cifra. Pendiente de decidir si el exceso se recorta o solo se avisa.
 
 ### Sistema de premios (hitos, no posiciones)
 
-El piloto acumula vueltas y cobra premio al alcanzar cada hito del ciclo:
+El piloto acumula vueltas y cobra premio al alcanzar cada hito del ciclo.
+Los premios son **por número de vueltas, no por tiempos**:
 
 | Hito | Premio |
 |---|---|
-| 500 vueltas | Neumáticos PMT |
-| 750 vueltas | Escape LM |
-| 999 vueltas | Trofeo |
+| 500 vueltas | Juego de neumáticos PMT |
+| 750 vueltas | Escape completo LM |
+| 999 vueltas | Premio sorpresa |
 
 Al llegar a 999 el contador **se reinicia a cero** y empieza un ciclo nuevo.
 Las vueltas sobrantes **se arrastran** al ciclo siguiente.
@@ -49,6 +70,7 @@ es que los datos ya no se editan a mano dentro del HTML.
 ```
 index.html               La web entera: ranking público + pizarra del piloto. Autocontenida.
 datos/liga.json          FUENTE DE VERDAD. Se edita esto, nunca el HTML.
+documentos/              PDF del reglamento (generado, no editar a mano)
 manifest.webmanifest     PWA
 sw.js                    Service worker (VERSION la reescribe el generador)
 iconos/icono.svg         Icono provisional
@@ -59,8 +81,13 @@ scripts/
   cronolaps.mjs          Ingesta desde el cronometrador
   servir.mjs             Servidor local para probar la PWA en el móvil
   logo.mjs               Incrusta el logo en base64
+  pdf.mjs                Generador de PDF mínimo, sin dependencias
+  reglamento.mjs         Construye el PDF del reglamento desde liga.json
   test.mjs               Tests de la lógica de ciclos
 ```
+
+El PDF del reglamento **se genera**, no se escribe: sale de `datos/liga.json`, así que
+no puede acabar contradiciendo a la web. Si cambia un premio, se regenera y ya está.
 
 ### El modelo de datos son eventos, no contadores
 
@@ -95,6 +122,12 @@ Regenerar la web sin registrar nada (tras editar el JSON a mano):
 
 ```bash
 node scripts/generar.mjs
+```
+
+Regenerar el PDF del reglamento (tras tocar premios, categorías o límites):
+
+```bash
+node scripts/reglamento.mjs
 ```
 
 Probar la PWA en el móvil (mismo wifi):
