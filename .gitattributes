@@ -1,0 +1,18 @@
+# Git está configurado con core.autocrlf=true en Windows y convierte saltos de
+# línea en los ficheros que cree de texto. En un PDF o un PNG eso los corrompe,
+# y no se nota hasta que alguien clona el repo y abre el fichero.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.ico   binary
+*.webp  binary
+
+# El resto sí es texto: normalizar a LF dentro del repositorio.
+*.html  text eol=lf
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.svg   text eol=lf
+*.webmanifest text eol=lf
