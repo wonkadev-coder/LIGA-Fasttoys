@@ -35,25 +35,39 @@
       "premio": "Premio sorpresa"
     }
   ],
+  "marca": {
+    "logo": "logos/fasttoys.png",
+    "alt": "Fast Toys"
+  },
   "patrocinadores": [
     {
       "nombre": "Fast Toys",
-      "web": ""
-    },
-    {
-      "nombre": "CronoLaps",
-      "web": "https://cronolaps.es"
-    },
-    {
-      "nombre": "PMT",
-      "web": ""
-    },
-    {
-      "nombre": "LM Exhausts",
+      "rol": "Organiza",
+      "logo": "logos/fasttoys.png",
       "web": ""
     },
     {
       "nombre": "Circuito DR7",
+      "rol": "Circuito",
+      "logo": "logos/dr7.png",
+      "web": "http://www.circuitodr7.com/"
+    },
+    {
+      "nombre": "CronoLaps",
+      "rol": "Cronometraje",
+      "logo": "logos/cronolaps.jpg",
+      "web": "https://cronolaps.es"
+    },
+    {
+      "nombre": "PMT",
+      "rol": "Neumáticos",
+      "logo": null,
+      "web": ""
+    },
+    {
+      "nombre": "LM Exhausts",
+      "rol": "Escapes",
+      "logo": null,
       "web": ""
     }
   ],

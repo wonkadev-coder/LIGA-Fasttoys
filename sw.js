@@ -7,7 +7,11 @@ const ARCHIVOS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './iconos/icono.svg',
+  './iconos/icono-192.png',
+  './iconos/icono-512.png',
+  './logos/fasttoys.png',
+  './logos/dr7.png',
+  './logos/cronolaps.jpg',
 ];
 
 self.addEventListener('install', (e) => {

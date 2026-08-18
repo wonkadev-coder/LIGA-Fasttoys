@@ -68,12 +68,13 @@ Sigue sin backend, sin build y sin dependencias. Lo único que cambia respecto a
 es que los datos ya no se editan a mano dentro del HTML.
 
 ```
-index.html               La web entera: ranking público + pizarra del piloto. Autocontenida.
+index.html               La web entera: ranking público + pizarra del piloto.
 datos/liga.json          FUENTE DE VERDAD. Se edita esto, nunca el HTML.
 documentos/              PDF del reglamento (generado, no editar a mano)
+logos/                   Logos de la liga y patrocinadores (*-original.* + optimizados)
+iconos/                  Iconos de la PWA (generados desde el logo de Fast Toys)
 manifest.webmanifest     PWA
 sw.js                    Service worker (VERSION la reescribe el generador)
-iconos/icono.svg         Icono provisional
 scripts/
   liga.mjs               Lógica pura: ciclos, hitos, arrastre, orden del ranking
   generar.mjs            Inyecta los datos calculados dentro de index.html
@@ -81,7 +82,7 @@ scripts/
   cronolaps.mjs          Descarga los pasos del cronometrador
   importar.mjs           Carga un volcado de CronoLaps en liga.json
   servir.mjs             Servidor local para probar la PWA en el móvil
-  logo.mjs               Incrusta el logo en base64
+  preparar-logos.ps1     Optimiza los logos y genera los iconos (paso puntual)
   pdf.mjs                Generador de PDF mínimo, sin dependencias
   reglamento.mjs         Construye el PDF del reglamento desde liga.json
   test.mjs               Tests de la lógica de ciclos
@@ -238,7 +239,32 @@ filtrarlo: hoy no se filtra.
 - Idioma de la interfaz, del código y de los commits: **español**.
 - Jorge es quien decide y quien opera. El papel de Claude es diseño, prototipado, arquitectura y redacción.
 
+## Logos
+
+Los originales viven en `logos/*-original.*` y no se tocan. De ahí salen las
+versiones optimizadas y los iconos de la PWA:
+
+```bash
+powershell -ExecutionPolicy Bypass -File scripts/preparar-logos.ps1
+```
+
+Es un paso puntual: solo hay que repetirlo cuando cambie un logo original. Usa
+System.Drawing, que viene con Windows, así que no añade dependencias al proyecto.
+
+Los logos **no van en base64**: son ficheros normales que el service worker
+cachea. Meterlos dentro del HTML lo engordaba 160 KB sin ganar nada.
+
+Dos detalles de diseño que conviene no deshacer:
+
+- El logo de Fast Toys es **negro sobre blanco**, así que sobre el fondo oscuro
+  de la app desaparecería. Va siempre dentro de un chip blanco (`.marca`,
+  `.sello`, `.patro`). Por eso las tarjetas de patrocinador son claras: cada
+  logo se lee con sus colores reales sin invertirlo ni recolorearlo.
+- Un patrocinador sin `logo` en `liga.json` no deja un hueco: se pinta su nombre
+  con la tipografía de la casa (`.textual`).
+
 ## Pendiente
 
-- El **logo de Fast Toys** es provisional (un SVG genérico). Sustituirlo con `node scripts/logo.mjs ruta/al/logo.png`.
-- Los pilotos y las vueltas cargados son **inventados**. No hay ni un solo dato real todavía.
+- **Faltan los logos de PMT y LM Exhausts**, los dos premios. Ahora salen como
+  texto. Se añaden dejando el fichero en `logos/` y apuntándolo en el campo
+  `logo` del patrocinador en `datos/liga.json`.
