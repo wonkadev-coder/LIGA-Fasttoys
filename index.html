@@ -338,7 +338,7 @@ const LIGA = {"datosDeEjemplo":true,"actualizado":"2026-08-23","temporada":{"nom
       </div>
       <div class="premios">${p.premios.map(pr =>
         `<span class="premio ${pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : ''}">
-           ${pr.premio}${pr.entregados > 1 ? ` <span class="x">×${pr.entregados}</span>` : ''}
+           ${pr.premio}${pr.entregados > 0 ? ` <span class="x">×${pr.entregados}</span>` : ''}
          </span>`).join('')}</div>`;
 
     pintarBarra(card.querySelector('.barra'), p.vueltasCiclo);
@@ -370,11 +370,13 @@ const LIGA = {"datosDeEjemplo":true,"actualizado":"2026-08-23","temporada":{"nom
 
     $('pzPremios').innerHTML = p.premios.map(pr => {
       const clase = pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : '';
-      const icono = pr.estado === 'entregado' ? '✓' : pr.estado === 'en curso' ? '▸' : '🔒';
+      const icono = pr.estado === 'entregado' ? '✓' : pr.estado === 'en curso' ? '▸' : pr.entregados > 0 ? '✓' : '🔒';
+      // Tras reiniciar el ciclo, un premio ya ganado vuelve a estar "por conseguir"
+      // en el ciclo nuevo. El piloto tiene que seguir viendo que ya lo tiene.
       const estado = pr.estado === 'entregado'
         ? (pr.entregados > 1 ? `Entregado ×${pr.entregados}` : 'Entregado')
-        : pr.estado === 'en curso'
-          ? `Faltan ${n(pr.faltan)}`
+        : pr.entregados > 0
+          ? `Ya lo tienes ×${pr.entregados} · faltan ${n(pr.faltan)}`
           : `Faltan ${n(pr.faltan)}`;
       return `<div class="premio-fila ${clase}">
           <div class="icono">${icono}</div>
