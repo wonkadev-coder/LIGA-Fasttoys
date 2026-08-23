@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-18",
+  "actualizado": "2026-08-23",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -255,6 +255,14 @@
       "categoria": "Z190 series",
       "idsocio": "98",
       "transpondedor": null
+    },
+    {
+      "id": "ruben-57",
+      "nombre": "RUBEN 57",
+      "dorsal": 57,
+      "categoria": "Z190 series",
+      "idsocio": "11099",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -432,6 +440,13 @@
       "vueltas": 102,
       "nota": "CronoLaps",
       "mejorVuelta": 48.888
+    },
+    {
+      "fecha": "2026-08-22",
+      "piloto": "ruben-57",
+      "vueltas": 71,
+      "nota": "CronoLaps",
+      "mejorVuelta": 56.294
     }
   ]
 }
