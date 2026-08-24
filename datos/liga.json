@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-23",
+  "actualizado": "2026-08-24",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -263,6 +263,46 @@
       "categoria": "Z190 series",
       "idsocio": "11099",
       "transpondedor": null
+    },
+    {
+      "id": "alba",
+      "nombre": "Alba",
+      "dorsal": 30,
+      "categoria": "Z190 series",
+      "idsocio": "87211",
+      "transpondedor": null
+    },
+    {
+      "id": "alba-98521",
+      "nombre": "Alba",
+      "dorsal": 30,
+      "categoria": "Z190 series",
+      "idsocio": "98521",
+      "transpondedor": null
+    },
+    {
+      "id": "rafita",
+      "nombre": "Rafita",
+      "dorsal": 98,
+      "categoria": "Master",
+      "idsocio": "84179",
+      "transpondedor": null
+    },
+    {
+      "id": "jvc23",
+      "nombre": "JVC23",
+      "dorsal": 23,
+      "categoria": "160 Series",
+      "idsocio": "98522",
+      "transpondedor": null
+    },
+    {
+      "id": "lucas21",
+      "nombre": "LUCAS21",
+      "dorsal": 21,
+      "categoria": "160 Series",
+      "idsocio": "98523",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -447,6 +487,41 @@
       "vueltas": 71,
       "nota": "CronoLaps",
       "mejorVuelta": 56.294
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "alba",
+      "vueltas": 56,
+      "nota": "CronoLaps",
+      "mejorVuelta": 57.588
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "alba-98521",
+      "vueltas": 39,
+      "nota": "CronoLaps",
+      "mejorVuelta": 57.565
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "rafita",
+      "vueltas": 81,
+      "nota": "CronoLaps",
+      "mejorVuelta": 57.428
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "jvc23",
+      "vueltas": 33,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.202
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "lucas21",
+      "vueltas": 63,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.872
     }
   ]
 }
