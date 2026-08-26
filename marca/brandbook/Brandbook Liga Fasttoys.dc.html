@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-c66d742c-34a9-4b9d-8a19-668d588fd0e5/styles.css">
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-padding-top: 64px; }
+  a.navlink { color: var(--color-text); text-decoration: none; }
+  a.navlink:hover { color: var(--color-accent); }
+</style>
+</helmet>
+
+<nav style="position: sticky; top: 0; z-index: 40; background: var(--color-bg); border-bottom: 2px solid var(--color-divider); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 32px; flex-wrap: wrap;">
+  <div style="font-family: var(--font-heading); font-weight: 800; font-size: 14px; letter-spacing: 0.06em;">FASTTOYS<span style="color: var(--color-accent);">.</span> MANUAL DE MARCA</div>
+  <div style="display: flex; gap: 18px; flex-wrap: wrap; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;">
+    <a class="navlink" href="#liga">01 Liga</a>
+    <a class="navlink" href="#logo">02 Logo</a>
+    <a class="navlink" href="#color">03 Color</a>
+    <a class="navlink" href="#tipografia">04 Tipografía</a>
+    <a class="navlink" href="#iconos">05 Iconos</a>
+    <a class="navlink" href="#ui">06 UI</a>
+    <a class="navlink" href="#foto">07 Fotografía</a>
+    <a class="navlink" href="#aplicaciones">08 Aplicaciones</a>
+    <a class="navlink" href="#patrocinadores">09 Patrocinadores</a>
+  </div>
+</nav>
+
+<header style="background: #201e1d; color: #f3f2f2; padding: 88px 32px 72px;">
+  <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;">
+    <div>
+      <div style="color: #ff563c; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; margin-bottom: 20px;">Liga Fasttoys — Circuito DR7</div>
+      <h1 style="font-size: clamp(56px, 8vw, 104px); line-height: 0.96; letter-spacing: -0.02em; margin: 0 0 28px; color: #f3f2f2;">Manual<br>de marca</h1>
+      <div style="display: flex; gap: 32px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #9b9797;">
+        <span>v1.0</span><span>Agosto 2026</span><span>Español</span>
+      </div>
+    </div>
+    <img src="uploads/assets-1787672724611-carl.png" alt="Logo Fasttoys" style="width: 300px; max-width: 34vw;">
+  </div>
+</header>
+
+<main style="max-width: 1200px; margin: 0 auto; padding: 0 32px;">
+
+  <section id="liga" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">01</span>
+      <h2 style="margin: 0;">La liga</h2>
+    </div>
+    <p style="max-width: 640px; font-size: 17px;">La Liga Fasttoys es una competición exclusiva de PitBikes —de 90cc a OPEN— disputada únicamente en el Circuito DR7. La clasificación es semanal y cuenta una sola cosa: el número de vueltas completadas. No hay cronos, no hay pole. El primero en alcanzar cada objetivo de vueltas se lleva el premio.</p>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--color-divider); margin-top: 32px;">
+      <div style="padding: 20px 20px 20px 0; border-right: 2px solid var(--color-divider);">
+        <h6 style="color: var(--color-accent);">Máquinas</h6>
+        <div style="font-family: var(--font-heading); font-weight: 800; font-size: 22px;">PitBikes 90cc – OPEN</div>
+      </div>
+      <div style="padding: 20px; border-right: 2px solid var(--color-divider);">
+        <h6 style="color: var(--color-accent);">Sede única</h6>
+        <div style="font-family: var(--font-heading); font-weight: 800; font-size: 22px;">Circuito DR7</div>
+      </div>
+      <div style="padding: 20px; border-right: 2px solid var(--color-divider);">
+        <h6 style="color: var(--color-accent);">Clasificación</h6>
+        <div style="font-family: var(--font-heading); font-weight: 800; font-size: 22px;">Semanal</div>
+      </div>
+      <div style="padding: 20px;">
+        <h6 style="color: var(--color-accent);">Métrica</h6>
+        <div style="font-family: var(--font-heading); font-weight: 800; font-size: 22px;">Vueltas, no tiempos</div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px;">
+      <div>
+        <h4>Reglamento de vueltas</h4>
+        <table class="table" style="width: 100%; font-variant-numeric: tabular-nums;">
+          <thead><tr><th style="text-align: left;">Regla</th><th style="text-align: right;">Límite</th></tr></thead>
+          <tbody>
+            <tr><td>Máximo diario</td><td style="text-align: right; font-weight: 600;">100 vueltas</td></tr>
+            <tr><td>Máximo semanal</td><td style="text-align: right; font-weight: 600;">200 vueltas</td></tr>
+            <tr><td>Meta final</td><td style="text-align: right; font-weight: 600;">999 vueltas → marcador a cero</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Objetivos y premios</h4>
+        <div style="display: flex; flex-direction: column; border-top: 2px solid var(--color-divider);">
+          <div style="display: grid; grid-template-columns: 90px 1fr auto; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--color-divider); align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 24px; color: var(--color-accent-700);">500</span>
+            <span>Juego de neumáticos PMT</span>
+            <span class="text-muted" style="font-size: 13px;">205 €</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 90px 1fr auto; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--color-divider); align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 24px; color: var(--color-accent-700);">750</span>
+            <span>Escape completo LM</span>
+            <span class="text-muted" style="font-size: 13px;">320 €</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 90px 1fr auto; gap: 16px; padding: 14px 0; border-bottom: 2px solid var(--color-divider); align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 24px; color: var(--color-accent-700);">999</span>
+            <span>Secreto</span>
+            <span class="text-muted" style="font-size: 13px;">???</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div style="background: var(--color-accent); color: #fff; padding: 72px 32px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(40px, 6vw, 84px); line-height: 1.0; letter-spacing: -0.02em;">Cuentan las vueltas.<br>No el tiempo.</div>
+  </div>
+</div>
+
+<main style="max-width: 1200px; margin: 0 auto; padding: 0 32px;">
+
+  <section id="logo" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">02</span>
+      <h2 style="margin: 0;">Logo y usos</h2>
+    </div>
+    <p style="max-width: 640px;">El logotipo Fasttoys es una pieza cerrada: la caligrafía inclinada dentro de su marco es indivisible. No se redibuja, no se recompone y no se separa del marco.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider); margin-top: 24px;">
+      <div style="background: #fff; padding: 40px; display: grid; place-items: center; min-height: 240px;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="Logo positivo" style="width: 200px;">
+      </div>
+      <div style="background: #201e1d; padding: 40px; display: grid; place-items: center; min-height: 240px;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="Logo negativo" style="width: 200px; filter: invert(1);">
+      </div>
+      <div style="background: var(--color-accent); padding: 40px; display: grid; place-items: center; min-height: 240px;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="Logo sobre rojo" style="width: 200px; filter: invert(1);">
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-neutral-700); margin-top: 8px;">
+      <div>Positivo — fondos claros</div><div style="padding-left: 8px;">Negativo — fondos oscuros</div><div style="padding-left: 8px;">Sobre rojo — solo versión negativa</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px;">
+      <div>
+        <h4>Área de protección</h4>
+        <p style="font-size: 14px;" class="text-muted">Margen mínimo alrededor del logo: la altura de la letra T en todas las direcciones. Nada invade ese espacio.</p>
+        <div style="border: 1px dashed var(--color-neutral-500); display: inline-block; padding: 36px; margin-top: 8px;">
+          <img src="uploads/assets-1787672724611-carl.png" alt="Área de protección" style="width: 160px;">
+        </div>
+      </div>
+      <div>
+        <h4>Tamaño mínimo</h4>
+        <p style="font-size: 14px;" class="text-muted">Digital: 96 px de ancho. Impresión: 24 mm. Por debajo, la caligrafía pierde el trazo.</p>
+        <div style="display: flex; align-items: flex-end; gap: 24px; margin-top: 8px;">
+          <div><img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 96px;"><div class="text-muted" style="font-size: 11px; margin-top: 4px;">96 px</div></div>
+          <div><img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 160px;"><div class="text-muted" style="font-size: 11px; margin-top: 4px;">160 px</div></div>
+        </div>
+      </div>
+    </div>
+    <h4 style="margin-top: 48px;">Usos incorrectos</h4>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider);">
+      <div style="background: var(--color-surface); padding: 28px; display: grid; place-items: center; min-height: 160px; overflow: hidden;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 130px; transform: rotate(-12deg);">
+      </div>
+      <div style="background: var(--color-surface); padding: 28px; display: grid; place-items: center; min-height: 160px; overflow: hidden;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 130px; transform: scaleX(1.6);">
+      </div>
+      <div style="background: var(--color-surface); padding: 28px; display: grid; place-items: center; min-height: 160px;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 130px; filter: sepia(1) saturate(9) hue-rotate(-42deg);">
+      </div>
+      <div style="background: var(--color-surface); padding: 28px; display: grid; place-items: center; min-height: 160px;">
+        <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 130px; box-shadow: 8px 8px 0 var(--color-neutral-500);">
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; font-size: 12px; color: var(--color-accent-700); font-weight: 600; margin-top: 8px;">
+      <div>✕ No rotar</div><div style="padding-left: 8px;">✕ No deformar</div><div style="padding-left: 8px;">✕ No colorear</div><div style="padding-left: 8px;">✕ No añadir sombras</div>
+    </div>
+  </section>
+
+  <section id="color" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">03</span>
+      <h2 style="margin: 0;">Paleta de color</h2>
+    </div>
+    <p style="max-width: 640px;">Tres colores, sin excepciones. La marca es tinta sobre pista: el rojo racing se reserva para la acción principal y el énfasis pequeño.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider); margin-top: 24px;">
+      <div style="background: #201e1d; color: #f3f2f2; padding: 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between;">
+        <h5 style="color: #f3f2f2; margin: 0;">Negro tinta</h5>
+        <div style="font-size: 12px; font-variant-numeric: tabular-nums;">#201E1D<br><span style="opacity: 0.6;">Texto, portadas, placas</span></div>
+      </div>
+      <div style="background: #f3f2f2; padding: 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between;">
+        <h5 style="margin: 0;">Blanco pista</h5>
+        <div style="font-size: 12px; font-variant-numeric: tabular-nums;">#F3F2F2<br><span class="text-muted">Fondo de todo</span></div>
+      </div>
+      <div style="background: #ec3013; color: #fff; padding: 24px; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between;">
+        <h5 style="color: #fff; margin: 0;">Rojo racing</h5>
+        <div style="font-size: 12px; font-variant-numeric: tabular-nums;">#EC3013<br><span style="opacity: 0.75;">Acción, énfasis, banderas</span></div>
+      </div>
+    </div>
+    <h4 style="margin-top: 40px;">Proporción de uso</h4>
+    <div style="display: flex; height: 44px; border: 2px solid var(--color-divider);">
+      <div style="flex: 65; background: #f3f2f2; display: flex; align-items: center; padding: 0 12px; font-size: 11px; letter-spacing: 0.06em;">BLANCO 65%</div>
+      <div style="flex: 28; background: #201e1d; color: #f3f2f2; display: flex; align-items: center; padding: 0 12px; font-size: 11px; letter-spacing: 0.06em;">NEGRO 28%</div>
+      <div style="flex: 7; background: #ec3013; color: #fff; display: flex; align-items: center; padding: 0 10px; font-size: 11px;">7%</div>
+    </div>
+    <h4 style="margin-top: 40px;">Rampa del rojo</h4>
+    <p class="text-muted" style="font-size: 14px; max-width: 640px;">Pasos 100–300 para fondos teñidos y hovers; 500 como base; 700–900 para texto rojo sobre claro y estados pulsados.</p>
+    <div style="display: grid; grid-template-columns: repeat(9, 1fr); border: 2px solid var(--color-divider);">
+      <div style="background: var(--color-accent-100); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px;">100</div>
+      <div style="background: var(--color-accent-200); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px;">200</div>
+      <div style="background: var(--color-accent-300); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px;">300</div>
+      <div style="background: var(--color-accent-400); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px;">400</div>
+      <div style="background: var(--color-accent-500); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; color: #fff;">500</div>
+      <div style="background: var(--color-accent-600); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; color: #fff;">600</div>
+      <div style="background: var(--color-accent-700); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; color: #fff;">700</div>
+      <div style="background: var(--color-accent-800); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; color: #fff;">800</div>
+      <div style="background: var(--color-accent-900); height: 72px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; color: #fff;">900</div>
+    </div>
+  </section>
+
+  <section id="tipografia" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">04</span>
+      <h2 style="margin: 0;">Tipografía</h2>
+    </div>
+    <p style="max-width: 640px;">Una sola familia: <strong>Archivo</strong>. Grotesca, condensable y con números rotundos — todo lo que necesita un marcador de vueltas. Tres pesos, nada más.</p>
+    <div style="border: 2px solid var(--color-divider); padding: 40px; margin-top: 24px;">
+      <div style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(48px, 7vw, 92px); line-height: 1; letter-spacing: -0.02em;">Archivo 0123456789</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px;">
+      <div>
+        <h4>Escala</h4>
+        <div style="border-top: 2px solid var(--color-divider);">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--color-divider);"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 42px;">Titular H1</span><span class="text-muted" style="font-size: 12px;">42 / 800</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--color-divider);"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 32px;">Sección H2</span><span class="text-muted" style="font-size: 12px;">32 / 800</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--color-divider);"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 25px;">Bloque H3</span><span class="text-muted" style="font-size: 12px;">25 / 800</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--color-divider);"><span style="font-size: 15px;">Cuerpo de texto</span><span class="text-muted" style="font-size: 12px;">15 / 400</span></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 2px solid var(--color-divider);"><span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Etiqueta / kicker</span><span class="text-muted" style="font-size: 12px;">11 / 600</span></div>
+        </div>
+      </div>
+      <div>
+        <h4>Números de marcador</h4>
+        <p class="text-muted" style="font-size: 14px;">Todo dato de vueltas usa cifras tabulares (<code>font-variant-numeric: tabular-nums</code>) para que las columnas no bailen al actualizarse.</p>
+        <div style="border: 2px solid var(--color-divider); padding: 24px; font-family: var(--font-heading); font-weight: 800; font-variant-numeric: tabular-nums; font-size: 56px; line-height: 1.1;">
+          500<br>750<br><span style="color: var(--color-accent);">999</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="iconos" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">05</span>
+      <h2 style="margin: 0;">Iconografía</h2>
+    </div>
+    <p style="max-width: 640px;">Set <a href="https://lucide.dev">Lucide</a>, trazo de 2 px, sin rellenos. En tinta por defecto; en rojo solo cuando el icono es la acción principal.</p>
+    <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider); margin-top: 24px;">
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="flag" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">flag</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="rotate-ccw" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">rotate-ccw</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="trophy" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">trophy</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="gauge" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">gauge</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="calendar" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">calendar</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="user" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">user</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="target" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">target</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="medal" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">medal</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="clipboard-list" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">clipboard-list</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="timer-off" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">timer-off</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="wrench" style="width: 26px; height: 26px;"></i><span style="font-size: 11px;" class="text-muted">wrench</span></div>
+      <div style="background: var(--color-bg); padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start;"><i data-lucide="zap" style="width: 26px; height: 26px; color: var(--color-accent);"></i><span style="font-size: 11px;" class="text-muted">zap · acción</span></div>
+    </div>
+  </section>
+
+  <section id="ui" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">06</span>
+      <h2 style="margin: 0;">Componentes UI de la app</h2>
+    </div>
+    <p style="max-width: 640px;">Bordes de 2 px, cero radios, etiquetas de botón alineadas a la izquierda. Las pantallas heredan la retícula del manual: la estructura se ve, no se decora. Los datos de vueltas llegan de CronoLaps (transponder en cada moto), sin edición manual, y la clasificación se publica al final de cada día — la app siempre indica «Actualizado hoy · dato oficial CronoLaps».</p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; border: 2px solid var(--color-divider); padding: 24px; margin-top: 24px;">
+      <button class="btn btn-primary">Inscribirme</button>
+      <button class="btn btn-secondary">Ver clasificación</button>
+      <span class="tag tag-accent">EN PISTA</span>
+      <span class="tag tag-neutral">SEMANA {{ numeroSemana }}</span>
+      <input class="input" placeholder="Dorsal del piloto" style="max-width: 200px;">
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px;">
+      <div>
+        <h6 style="margin-bottom: 12px;">Clasificación semanal</h6>
+        <div style="border: 2px solid #201e1d; background: #f3f2f2;">
+          <div style="background: #201e1d; color: #f3f2f2; padding: 14px 16px; display: flex; justify-content: space-between; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 15px;">CLASIFICACIÓN</span>
+            <span style="font-size: 11px; color: #ff563c;">SEMANA {{ numeroSemana }}</span>
+          </div>
+          <sc-for list="{{ pilotos }}" as="p" hint-placeholder-count="6">
+            <div style="display: grid; grid-template-columns: 32px 44px 1fr auto; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--color-divider); align-items: baseline; font-variant-numeric: tabular-nums;">
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 15px; color: {{ p.posColor }};">{{ p.pos }}</span>
+              <span style="font-size: 12px;" class="text-muted">#{{ p.dorsal }}</span>
+              <span style="font-size: 14px; font-weight: 600;">{{ p.nombre }}</span>
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 15px;">{{ p.vueltas }}</span>
+            </div>
+          </sc-for>
+          <div style="padding: 10px 16px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;" class="text-muted">Vueltas acumuladas · máx 200/semana</div>
+        </div>
+      </div>
+      <div>
+        <h6 style="margin-bottom: 12px;">Contador de vueltas</h6>
+        <div style="border: 2px solid #201e1d; background: #201e1d; color: #f3f2f2; padding: 24px 20px; display: flex; flex-direction: column; gap: 18px;">
+          <div style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #9b9797;">Tus vueltas totales</div>
+          <div style="font-family: var(--font-heading); font-weight: 800; font-size: 88px; line-height: 1; font-variant-numeric: tabular-nums;">{{ vueltasDemo }}</div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px;"><span>OBJETIVO 500</span><span style="color: #ff563c;">faltan {{ vueltasRestantes }}</span></div>
+            <div style="height: 10px; background: #444141;"><div style="height: 10px; background: #ec3013; width: {{ progresoPct }};"></div></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-top: 1px solid #444141; padding-top: 14px; font-variant-numeric: tabular-nums;">
+            <div><div style="font-size: 10px; color: #9b9797; letter-spacing: 0.08em;">HOY</div><div style="font-family: var(--font-heading); font-weight: 800; font-size: 20px;">78<span style="color: #9b9797; font-size: 13px;">/100</span></div></div>
+            <div><div style="font-size: 10px; color: #9b9797; letter-spacing: 0.08em;">SEMANA</div><div style="font-family: var(--font-heading); font-weight: 800; font-size: 20px;">142<span style="color: #9b9797; font-size: 13px;">/200</span></div></div>
+          </div>
+          <div style="font-size: 10px; color: #9b9797;">A las 999 vueltas el marcador vuelve a cero.</div>
+        </div>
+      </div>
+      <div>
+        <h6 style="margin-bottom: 12px;">Premios</h6>
+        <div style="border: 2px solid #201e1d; background: #f3f2f2; display: flex; flex-direction: column;">
+          <div style="padding: 18px 16px; border-bottom: 1px solid var(--color-divider);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums;">500</span><span class="tag tag-accent">1ER PREMIO</span></div>
+            <div style="font-size: 13px; margin-top: 6px;">Juego de neumáticos PMT</div>
+            <div class="text-muted" style="font-size: 11px;">Valorado en 205 €</div>
+          </div>
+          <div style="padding: 18px 16px; border-bottom: 1px solid var(--color-divider);">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums;">750</span><span class="tag tag-neutral">2º PREMIO</span></div>
+            <div style="font-size: 13px; margin-top: 6px;">Escape completo LM</div>
+            <div class="text-muted" style="font-size: 11px;">Valorado en 320 €</div>
+          </div>
+          <div style="padding: 18px 16px; background: #201e1d; color: #f3f2f2;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-family: var(--font-heading); font-weight: 800; font-size: 26px; font-variant-numeric: tabular-nums; color: #ff563c;">999</span><span style="font-size: 11px; letter-spacing: 0.1em;">3ER PREMIO</span></div>
+            <div style="font-family: var(--font-heading); font-weight: 800; font-size: 20px; margin-top: 6px;">SECRETO</div>
+            <div style="font-size: 11px; color: #9b9797;">Se revela al primero que llegue.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider); margin-top: 40px;">
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="user" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Perfil de piloto</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Dorsal, moto y cilindrada, vueltas históricas, objetivos alcanzados y premios ganados.</p>
+      </div>
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="calendar" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Calendario</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Aperturas del Circuito DR7, cierre de cada semana de clasificación y eventos especiales.</p>
+      </div>
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="clipboard-list" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Inscripción</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Alta en la app o presencial en DR7: nombre, dorsal, cilindrada (90cc–OPEN) y reglamento.</p>
+      </div>
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="bell" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Notificaciones</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Objetivo alcanzado, te adelantan en la clasificación, cierre de semana publicado.</p>
+      </div>
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="history" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Historial</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Temporadas anteriores: vueltas totales, objetivos conseguidos y ganadores de cada premio.</p>
+      </div>
+      <div style="background: var(--color-bg); padding: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;"><i data-lucide="shield" style="width: 18px; height: 18px;"></i><h5 style="margin: 0;">Panel staff DR7</h5></div>
+        <p class="text-muted" style="font-size: 13px; margin: 0;">Altas presenciales, publicación del cierre diario y gestión de premios y transponders.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="foto" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">07</span>
+      <h2 style="margin: 0;">Fotografía</h2>
+    </div>
+    <p style="max-width: 640px;">Toda la fotografía se publica en blanco y negro de alto contraste. Acción en pista, detalle mecánico y podios — nunca posados de estudio, nunca color.</p>
+    <div style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: 220px 220px; gap: 2px; margin-top: 24px;">
+      <div class="grayscale" style="grid-row: span 2; min-width: 0; min-height: 0; overflow: hidden;"><image-slot id="foto-pista" shape="rect" placeholder="Foto: acción en pista (PitBike en curva)" style="width: 100%; height: 100%;"></image-slot></div>
+      <div class="grayscale" style="min-width: 0; min-height: 0; overflow: hidden;"><image-slot id="foto-mecanica" shape="rect" placeholder="Foto: detalle mecánico" style="width: 100%; height: 100%;"></image-slot></div>
+      <div class="grayscale" style="min-width: 0; min-height: 0; overflow: hidden;"><image-slot id="foto-podio" shape="rect" placeholder="Foto: entrega de premios" style="width: 100%; height: 100%;"></image-slot></div>
+    </div>
+    <div class="text-muted" style="font-size: 12px; margin-top: 8px;">Tratamiento: <code>grayscale(1) contrast(1.08)</code> — arrastra fotos reales sobre los marcos.</div>
+  </section>
+
+  <section id="aplicaciones" style="padding: 56px 0; border-bottom: 2px solid var(--color-divider);">
+    <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+      <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">08</span>
+      <h2 style="margin: 0;">Aplicaciones</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+      <div>
+        <h6 style="margin-bottom: 12px;">Placa dorsal</h6>
+        <div style="border: 2px solid #201e1d; background: #fff; aspect-ratio: 4/3; display: flex; flex-direction: column; justify-content: space-between; padding: 16px;">
+          <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 72px;">
+          <div style="font-family: var(--font-heading); font-weight: 800; font-size: 96px; line-height: 0.9; font-variant-numeric: tabular-nums;">27</div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;"><span>M. Herrera</span><span style="color: var(--color-accent);">DR7</span></div>
+        </div>
+      </div>
+      <div>
+        <h6 style="margin-bottom: 12px;">Post de resultados</h6>
+        <div style="border: 2px solid #201e1d; background: #201e1d; color: #f3f2f2; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;"><img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 64px; filter: invert(1);"><span style="font-size: 10px; color: #ff563c; letter-spacing: 0.1em;">SEMANA {{ numeroSemana }}</span></div>
+          <div style="font-family: var(--font-heading); font-weight: 800; font-size: 28px; line-height: 1.05;">Clasificación<br>semanal</div>
+          <div style="font-variant-numeric: tabular-nums; font-size: 13px; display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; justify-content: space-between;"><span>1 · M. Herrera</span><span style="font-weight: 600;">198</span></div>
+            <div style="display: flex; justify-content: space-between; color: #9b9797;"><span>2 · J. Sanz</span><span>184</span></div>
+            <div style="display: flex; justify-content: space-between; color: #9b9797;"><span>3 · A. Costa</span><span>171</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h6 style="margin-bottom: 12px;">Pegatina</h6>
+        <div style="border: 2px solid #201e1d; background: var(--color-accent); aspect-ratio: 4/3; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: 16px;">
+          <img src="uploads/assets-1787672724611-carl.png" alt="" style="width: 140px; filter: invert(1);">
+          <div style="color: #fff; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;">Circuito DR7 · Liga de PitBikes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ mostrarPatrocinadores }}" hint-placeholder-val="{{ true }}">
+    <section id="patrocinadores" style="padding: 56px 0;">
+      <div style="display: flex; gap: 16px; align-items: baseline; margin-bottom: 24px;">
+        <span style="color: var(--color-accent); font-family: var(--font-heading); font-weight: 800; font-size: 14px;">09</span>
+        <h2 style="margin: 0;">Patrocinadores y sede</h2>
+      </div>
+      <p style="max-width: 640px;">Los logos de partners aparecen siempre en blanco y negro dentro de la app y el material de la liga, sobre celda propia y separados por reglas de 2 px. Nunca se mezclan con el rojo racing.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--color-divider); border: 2px solid var(--color-divider); margin-top: 24px;">
+        <div style="background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+          <div class="grayscale"><img src="uploads/assets-1787672724603-3mk8.png" alt="Circuito DR7" style="height: 72px; width: auto;"></div>
+          <div><h5 style="margin: 0 0 2px;">Circuito DR7</h5><span class="text-muted" style="font-size: 12px;">Sede oficial de la liga</span></div>
+        </div>
+        <div style="background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+          <div class="grayscale"><img src="uploads/assets-1787672727785-4cpf.jpg" alt="CronoLaps" style="height: 40px; width: auto;"></div>
+          <div><h5 style="margin: 0 0 2px;">CronoLaps</h5><span class="text-muted" style="font-size: 12px;">Fuente oficial de datos · transponder por moto</span></div>
+        </div>
+        <div style="background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+          <div class="grayscale"><img src="uploads/assets-1787672724616-m3mc.jpg" alt="LM Exhaust System" style="height: 72px; width: auto;"></div>
+          <div><h5 style="margin: 0 0 2px;">LM Exhaust System</h5><span class="text-muted" style="font-size: 12px;">Premios · escapes de competición</span></div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+</main>
+
+<footer style="border-top: 2px solid var(--color-divider); padding: 24px 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;" class="text-muted">
+  <span>Liga Fasttoys · Manual de marca v1.0</span>
+  <span>Circuito DR7 · Agosto 2026</span>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;numeroSemana&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 34, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 1, &quot;max&quot;: 52, &quot;section&quot;: &quot;Datos de ejemplo&quot;},
+  &quot;vueltasDemo&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 342, &quot;tsType&quot;: &quot;number&quot;, &quot;min&quot;: 0, &quot;max&quot;: 999, &quot;step&quot;: 1, &quot;section&quot;: &quot;Datos de ejemplo&quot;},
+  &quot;mostrarPatrocinadores&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Secciones&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const numeroSemana = this.props.numeroSemana ?? 34;
+    const vueltasDemo = Math.max(0, Math.min(999, this.props.vueltasDemo ?? 342));
+    const objetivo = vueltasDemo < 500 ? 500 : vueltasDemo < 750 ? 750 : 999;
+    const pilotos = [
+      { pos: 1, dorsal: 27, nombre: 'M. Herrera', vueltas: 198, posColor: '#ec3013' },
+      { pos: 2, dorsal: 14, nombre: 'J. Sanz', vueltas: 184, posColor: '#201e1d' },
+      { pos: 3, dorsal: 88, nombre: 'A. Costa', vueltas: 171, posColor: '#201e1d' },
+      { pos: 4, dorsal: 5, nombre: 'R. Molina', vueltas: 156, posColor: '#201e1d' },
+      { pos: 5, dorsal: 61, nombre: 'D. Ferrer', vueltas: 149, posColor: '#201e1d' },
+      { pos: 6, dorsal: 33, nombre: 'P. Ibáñez', vueltas: 120, posColor: '#201e1d' }
+    ];
+    return {
+      numeroSemana,
+      vueltasDemo,
+      vueltasRestantes: objetivo - vueltasDemo,
+      progresoPct: Math.round((vueltasDemo / objetivo) * 100) + '%',
+      pilotos,
+      mostrarPatrocinadores: this.props.mostrarPatrocinadores ?? true
+    };
+  }
+  componentDidMount() { this._icons(); }
+  componentDidUpdate() { this._icons(); }
+  _icons() { if (window.lucide) window.lucide.createIcons(); }
+}
+</script>
+</body>
+</html>

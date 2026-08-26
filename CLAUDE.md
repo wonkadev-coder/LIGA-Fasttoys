@@ -340,6 +340,24 @@ filtrarlo: hoy no se filtra.
 - Idioma de la interfaz, del código y de los commits: **español**.
 - Jorge es quien decide y quien opera. El papel de Claude es diseño, prototipado, arquitectura y redacción.
 
+## Marca
+
+`marca/` es la **norma** de identidad; `logos/` son los activos que consume la
+web. El manual de marca vive en `marca/brandbook/` (paquete de handoff, agosto
+2026) y `marca/README.md` lo resume: tokens de color, tipografía Archivo, radio
+0, bordes de 2 px, iconos Lucide y fotografía en blanco y negro.
+
+Dos cosas antes de tocar nada de diseño:
+
+- **La web actual no sigue el manual todavía.** `index.html` es oscura, con
+  cuatro acentos y radios de 14 px; el manual pide fondo claro, un solo acento
+  (`#EC3013`) y cero radios. Alinearla es un rediseño consciente, no un retoque.
+- El handoff trae **reglas de negocio marcadas como confirmadas que contradicen
+  lo implementado** — sobre todo que el reinicio de las 999 sea global y no por
+  piloto. Están listadas como decisiones pendientes al final de
+  `marca/README.md`. **No las implementes sin que Jorge las confirme**: cambian
+  el modelo de datos y rompen la "Regla crítica de ranking".
+
 ## Logos
 
 Los originales viven en `logos/*-original.*` y no se tocan. De ahí salen las
