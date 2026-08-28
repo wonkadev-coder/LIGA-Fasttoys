@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-27",
+  "actualizado": "2026-08-28",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -311,6 +311,54 @@
       "categoria": "Z190 series",
       "idsocio": "93517",
       "transpondedor": null
+    },
+    {
+      "id": "javier-moreno-del-barrio",
+      "nombre": "Javier Moreno Del Barrio",
+      "dorsal": 8,
+      "categoria": "Master",
+      "idsocio": "18870",
+      "transpondedor": null
+    },
+    {
+      "id": "navarrete",
+      "nombre": "NAVARRETE",
+      "dorsal": 44,
+      "categoria": "160 Series",
+      "idsocio": "98528",
+      "transpondedor": null
+    },
+    {
+      "id": "alberto",
+      "nombre": "ALBERTO",
+      "dorsal": 16,
+      "categoria": "Pit Bike 90",
+      "idsocio": "98530",
+      "transpondedor": null
+    },
+    {
+      "id": "harry",
+      "nombre": "HARRY",
+      "dorsal": 24,
+      "categoria": "Z190 series",
+      "idsocio": "71118",
+      "transpondedor": null
+    },
+    {
+      "id": "javier18",
+      "nombre": "JAVIER18",
+      "dorsal": 18,
+      "categoria": "Z190 series",
+      "idsocio": "98531",
+      "transpondedor": null
+    },
+    {
+      "id": "manu",
+      "nombre": "MANU",
+      "dorsal": 22,
+      "categoria": "Z190 series",
+      "idsocio": "98529",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -537,6 +585,48 @@
       "vueltas": 52,
       "nota": "CronoLaps",
       "mejorVuelta": 61.502
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "javier-moreno-del-barrio",
+      "vueltas": 79,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.658
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "navarrete",
+      "vueltas": 77,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.889
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "alberto",
+      "vueltas": 19,
+      "nota": "CronoLaps",
+      "mejorVuelta": 93.425
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "harry",
+      "vueltas": 21,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.795
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "javier18",
+      "vueltas": 18,
+      "nota": "CronoLaps",
+      "mejorVuelta": 65.182
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "manu",
+      "vueltas": 15,
+      "nota": "CronoLaps",
+      "mejorVuelta": 67.682
     }
   ]
 }
