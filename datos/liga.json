@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-28",
+  "actualizado": "2026-08-29",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -359,6 +359,30 @@
       "categoria": "Z190 series",
       "idsocio": "98529",
       "transpondedor": null
+    },
+    {
+      "id": "sergio",
+      "nombre": "SERGIO",
+      "dorsal": 4,
+      "categoria": "Z190 series",
+      "idsocio": "98539",
+      "transpondedor": null
+    },
+    {
+      "id": "souto",
+      "nombre": "SOUTO",
+      "dorsal": 12,
+      "categoria": "Z190 series",
+      "idsocio": "98540",
+      "transpondedor": null
+    },
+    {
+      "id": "nieto",
+      "nombre": "NIETO",
+      "dorsal": 15,
+      "categoria": "160 Series",
+      "idsocio": "98545",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -603,30 +627,65 @@
     {
       "fecha": "2026-08-28",
       "piloto": "alberto",
-      "vueltas": 19,
+      "vueltas": 32,
       "nota": "CronoLaps",
-      "mejorVuelta": 93.425
+      "mejorVuelta": 91.284
     },
     {
       "fecha": "2026-08-28",
       "piloto": "harry",
-      "vueltas": 21,
+      "vueltas": 44,
       "nota": "CronoLaps",
-      "mejorVuelta": 63.795
+      "mejorVuelta": 63.635
     },
     {
       "fecha": "2026-08-28",
       "piloto": "javier18",
-      "vueltas": 18,
+      "vueltas": 22,
       "nota": "CronoLaps",
       "mejorVuelta": 65.182
     },
     {
       "fecha": "2026-08-28",
       "piloto": "manu",
-      "vueltas": 15,
+      "vueltas": 24,
       "nota": "CronoLaps",
-      "mejorVuelta": 67.682
+      "mejorVuelta": 66.491
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "navarrete",
+      "vueltas": 55,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.038
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "sergio",
+      "vueltas": 27,
+      "nota": "CronoLaps",
+      "mejorVuelta": 73.5
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "souto",
+      "vueltas": 32,
+      "nota": "CronoLaps",
+      "mejorVuelta": 66.973
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "david11",
+      "vueltas": 14,
+      "nota": "CronoLaps",
+      "mejorVuelta": 78.704
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "nieto",
+      "vueltas": 2,
+      "nota": "CronoLaps",
+      "mejorVuelta": 88.888
     }
   ]
 }
