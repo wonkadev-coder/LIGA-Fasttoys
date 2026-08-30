@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-29",
+  "actualizado": "2026-08-30",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -383,6 +383,14 @@
       "categoria": "160 Series",
       "idsocio": "98545",
       "transpondedor": null
+    },
+    {
+      "id": "m-ivansan",
+      "nombre": "M_IvanSan",
+      "dorsal": 21,
+      "categoria": "Z190 series",
+      "idsocio": "78947",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -655,37 +663,44 @@
     {
       "fecha": "2026-08-29",
       "piloto": "navarrete",
-      "vueltas": 55,
+      "vueltas": 66,
       "nota": "CronoLaps",
       "mejorVuelta": 61.038
     },
     {
       "fecha": "2026-08-29",
       "piloto": "sergio",
-      "vueltas": 27,
+      "vueltas": 72,
       "nota": "CronoLaps",
-      "mejorVuelta": 73.5
+      "mejorVuelta": 71.183
     },
     {
       "fecha": "2026-08-29",
       "piloto": "souto",
-      "vueltas": 32,
+      "vueltas": 53,
       "nota": "CronoLaps",
-      "mejorVuelta": 66.973
+      "mejorVuelta": 66.623
     },
     {
       "fecha": "2026-08-29",
       "piloto": "david11",
-      "vueltas": 14,
+      "vueltas": 58,
       "nota": "CronoLaps",
-      "mejorVuelta": 78.704
+      "mejorVuelta": 76.954
     },
     {
       "fecha": "2026-08-29",
       "piloto": "nieto",
-      "vueltas": 2,
+      "vueltas": 32,
       "nota": "CronoLaps",
-      "mejorVuelta": 88.888
+      "mejorVuelta": 77.882
+    },
+    {
+      "fecha": "2026-08-30",
+      "piloto": "m-ivansan",
+      "vueltas": 40,
+      "nota": "CronoLaps",
+      "mejorVuelta": 65.219
     }
   ]
 }
