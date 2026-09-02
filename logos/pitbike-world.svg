@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512" role="img" aria-label="Pitbike World">
+  <title>Pitbike World</title>
+  <!--
+    La corona de la transmisión, con los dientes alternos en rojo formando el
+    damero de meta.
+
+    Geometría, elegida probando el dibujo a 26 px, que es el tamaño de la barra
+    de navegación:
+      · aro de radio 26 y trazo 9  -> ocupa de 21,5 a 30,5
+      · ocho dientes de 13x18 a radio 37,5 -> ocupan de 28,5 a 46,5
+
+    El aro es fino a propósito: con trazo 12 el hueco central se cerraba al
+    reducir y la pieza se leía como un disco. Y los dientes sobresalen 13 sobre
+    el aro (antes 10) para que el perfil dentado siga leyéndose pequeño.
+  -->
+  <g fill="#f3f2f2">
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(0 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(90 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(180 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(270 50 50)"/>
+  </g>
+  <g fill="#ff563c">
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(45 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(135 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(225 50 50)"/>
+    <rect x="43.5" y="3.5" width="13" height="18" transform="rotate(315 50 50)"/>
+  </g>
+  <circle cx="50" cy="50" r="26" fill="none" stroke="#f3f2f2" stroke-width="9"/>
+</svg>
