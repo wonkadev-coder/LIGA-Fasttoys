@@ -1,4 +1,4 @@
-// Carga un volcado de CronoLaps en datos/liga.json.
+// Carga un volcado de CronoLaps en datos/campeonatos/<campeonato>.json.
 //
 //   node scripts/importar.mjs datos/cronolaps-2026-08.json          (simula)
 //   node scripts/importar.mjs datos/cronolaps-2026-08.json --aplicar
@@ -77,7 +77,9 @@ console.log(`  ${altas.length} pilotos nuevos, ${nuevas.length} tandas nuevas` +
 if (altas.length) {
   console.log('\n  Altas:');
   for (const p of altas) {
-    console.log(`    ${p.nombre.padEnd(30)} #${String(p.dorsal ?? '-').padStart(3)}  ${p.categoria.padEnd(12)} socio ${p.idsocio}`);
+    // La categoría puede venir vacía: un inscrito puede rodar en una categoría
+    // fuera del reglamento y la lista de inscritos manda sobre el filtro.
+    console.log(`    ${p.nombre.padEnd(30)} #${String(p.dorsal ?? '-').padStart(3)}  ${(p.categoria ?? '—').padEnd(12)} socio ${p.idsocio}`);
   }
 }
 
@@ -94,7 +96,7 @@ if (chocan.length) {
 }
 
 if (!aplicar) {
-  console.log('\n  Simulación. Añade --aplicar para escribir en datos/liga.json.\n');
+  console.log('\n  Simulación. Añade --aplicar para escribir en datos/campeonatos/<campeonato>.json.\n');
   process.exit(0);
 }
 

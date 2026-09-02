@@ -1,21 +1,94 @@
 // Lógica de la Liga Fast Toys DR7. Cálculo puro, sin efectos secundarios.
 // Todo se deriva de las tandas: nunca se escriben contadores a mano.
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
-export const RUTA_DATOS = join(RAIZ, 'datos', 'liga.json');
+export const RUTA_PILOTOS = join(RAIZ, 'datos', 'pilotos.json');
+export const DIR_CAMPEONATOS = join(RAIZ, 'datos', 'campeonatos');
 
-export const CICLO = 999; // al alcanzarlo el contador se reinicia y las sobrantes se arrastran
+/** Ciclo por defecto si el campeonato no dice otra cosa. */
+export const CICLO = 999;
 
-export function leerDatos(ruta = RUTA_DATOS) {
-  return JSON.parse(readFileSync(ruta, 'utf8'));
+// La identidad del piloto es GLOBAL (datos/pilotos.json). Cada campeonato
+// (datos/campeonatos/*.json) dice quién está inscrito, con qué dorsal y bajo
+// qué reglamento, así que un mismo piloto puede correr en varios.
+export function leerPilotos(ruta = RUTA_PILOTOS) {
+  return JSON.parse(readFileSync(ruta, 'utf8')).pilotos;
 }
 
-export function guardarDatos(datos, ruta = RUTA_DATOS) {
-  writeFileSync(ruta, JSON.stringify(datos, null, 2) + '\n', 'utf8');
+export function guardarPilotos(pilotos, ruta = RUTA_PILOTOS) {
+  writeFileSync(ruta, JSON.stringify({ pilotos }, null, 2) + '\n', 'utf8');
+}
+
+/** El que se opera si no se dice otro. */
+export const CAMPEONATO_POR_DEFECTO = 'fast-toys-dr7';
+
+/**
+ * Campeonato y censo unidos en un solo objeto, que es como lo esperan los
+ * scripts de operación (tanda, importar, actualizar, generar).
+ *
+ * Es un puente deliberado: por dentro los datos están separados —identidad en
+ * `pilotos.json`, reglas e inscripciones en el campeonato—, pero fuera se sigue
+ * viendo un objeto plano con `pilotos` y `tandas`. `guardarDatos()` deshace la
+ * unión, así que dar de alta un piloto lo mete en el censo y en los inscritos
+ * de ese campeonato a la vez.
+ */
+export function leerDatos(id = CAMPEONATO_POR_DEFECTO) {
+  const campeonato = leerCampeonato(id);
+  const porId = new Map(leerPilotos().map((p) => [p.id, p]));
+  const pilotos = (campeonato.inscritos ?? []).map(({ piloto, ...enElCampeonato }) => ({
+    ...(porId.get(piloto) ?? { id: piloto, nombre: piloto, externos: {} }),
+    ...enElCampeonato,
+    idsocio: porId.get(piloto)?.externos?.cronolaps ?? null,
+  }));
+  return { ...campeonato, pilotos };
+}
+
+export function guardarDatos(datos) {
+  const censo = leerPilotos();
+  const porId = new Map(censo.map((p) => [p.id, p]));
+
+  for (const p of datos.pilotos) {
+    const ficha = porId.get(p.id) ?? { id: p.id, nombre: p.nombre, externos: {} };
+    ficha.nombre = p.nombre;
+    if (p.nombreReal) ficha.nombreReal = p.nombreReal;
+    // El idsocio de CronoLaps es un id externo, no la identidad del piloto.
+    if (p.idsocio) ficha.externos = { ...ficha.externos, cronolaps: String(p.idsocio) };
+    if (!porId.has(p.id)) { censo.push(ficha); porId.set(p.id, ficha); }
+  }
+  guardarPilotos(censo);
+
+  const { pilotos, ...campeonato } = datos;
+  campeonato.inscritos = pilotos.map((p) => ({
+    piloto: p.id,
+    dorsal: p.dorsal ?? null,
+    categoria: p.categoria ?? null,
+  }));
+  guardarCampeonato(campeonato);
+}
+
+/** Ids de todos los campeonatos que hay en datos/campeonatos/. */
+export function listarCampeonatos(dir = DIR_CAMPEONATOS) {
+  return readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5));
+}
+
+export function rutaCampeonato(id, dir = DIR_CAMPEONATOS) {
+  return join(dir, `${id}.json`);
+}
+
+export function leerCampeonato(id, dir = DIR_CAMPEONATOS) {
+  return JSON.parse(readFileSync(rutaCampeonato(id, dir), 'utf8'));
+}
+
+export function guardarCampeonato(campeonato, dir = DIR_CAMPEONATOS) {
+  writeFileSync(
+    rutaCampeonato(campeonato.id, dir),
+    JSON.stringify(campeonato, null, 2) + '\n',
+    'utf8',
+  );
 }
 
 /** Semana natural (lunes a domingo) en formato ISO: "2026-W33". */
@@ -31,6 +104,23 @@ export function semanaIso(fechaIso) {
   primerJueves.setUTCDate(primerJueves.getUTCDate() - diaPrimero + 3);
   const semana = 1 + Math.round((jueves - primerJueves.getTime()) / (7 * 86400000));
   return `${fecha.getUTCFullYear()}-W${String(semana).padStart(2, '0')}`;
+}
+
+/**
+ * Lunes y domingo de una semana ISO, a partir de su clave ('2026-W33').
+ *
+ * El 4 de enero cae siempre en la semana 1, así que su lunes es el ancla desde
+ * la que se cuentan las demás.
+ */
+export function rangoSemanaIso(clave) {
+  const [anio, semana] = clave.split('-W').map(Number);
+  const cuatro = new Date(Date.UTC(anio, 0, 4));
+  const dia = (cuatro.getUTCDay() + 6) % 7; // lunes = 0
+  const lunesSemana1 = new Date(cuatro.getTime() - dia * 86400000);
+  const lunes = new Date(lunesSemana1.getTime() + (semana - 1) * 7 * 86400000);
+  const domingo = new Date(lunes.getTime() + 6 * 86400000);
+  const iso = (d) => d.toISOString().slice(0, 10);
+  return { desde: iso(lunes), hasta: iso(domingo) };
 }
 
 /**
@@ -79,7 +169,7 @@ export function aplicarLimites(tandasOrdenadas, limites) {
  * Si se ordenara por ciclo, quien acaba de reiniciar tras las 999 caería al
  * último puesto. Es intencional. No lo simplifiques.
  */
-export function calcularPiloto(piloto, tandas, hitos, limites = null) {
+export function calcularPiloto(piloto, tandas, hitos, limites = null, ciclo = CICLO) {
   const suyas = aplicarLimites(
     tandas
       .filter((t) => t.piloto === piloto.id)
@@ -104,8 +194,8 @@ export function calcularPiloto(piloto, tandas, hitos, limites = null) {
 
     // Una sola tanda puede cruzar el corte más de una vez si es muy larga.
     let reiniciosEnTanda = 0;
-    while (vueltasCiclo >= CICLO) {
-      vueltasCiclo -= CICLO;
+    while (vueltasCiclo >= ciclo) {
+      vueltasCiclo -= ciclo;
       ciclosCompletados++;
       reiniciosEnTanda++;
     }
@@ -145,6 +235,25 @@ export function calcularPiloto(piloto, tandas, hitos, limites = null) {
     ? { vueltas: enCurso.vueltas, premio: enCurso.premio, faltan: enCurso.faltan }
     : null;
 
+  historial.reverse(); // más reciente primero
+
+  // Vueltas válidas por semana ISO. La liga es semanal y los topes también,
+  // así que este reparto alimenta tanto la clasificación de la semana como
+  // las celdas de cupo de la pizarra.
+  const semanas = {};
+  for (const h of historial) {
+    const s = semanaIso(h.fecha);
+    semanas[s] = (semanas[s] ?? 0) + h.vueltas;
+  }
+
+  const ultimaJornada = historial[0] ?? null;
+  const semanaUltima = ultimaJornada
+    ? (() => {
+        const clave = semanaIso(ultimaJornada.fecha);
+        return { semana: clave, ...rangoSemanaIso(clave), vueltas: semanas[clave] };
+      })()
+    : null;
+
   return {
     ...piloto,
     vueltasCiclo,
@@ -155,18 +264,23 @@ export function calcularPiloto(piloto, tandas, hitos, limites = null) {
     siguiente,
     // Progreso dentro del ciclo, solo para pintar la barra. Nunca se muestra
     // como porcentaje al piloto: se muestra "faltan N vueltas para X".
-    progresoCiclo: vueltasCiclo / CICLO,
-    historial: historial.reverse(), // más reciente primero
+    progresoCiclo: vueltasCiclo / ciclo,
+    ciclo,
+    historial,
+    semanas,
+    ultimaJornada,
+    semanaUltima,
     tandas: historial.length,
-    ultimaTanda: historial[0]?.fecha ?? null,
+    ultimaTanda: ultimaJornada?.fecha ?? null,
   };
 }
 
 /** Clasificación completa, ordenada por vueltasTotales (ver regla crítica). */
 export function calcularLiga(datos) {
   const hitos = [...datos.hitos].sort((a, b) => a.vueltas - b.vueltas);
+  const ciclo = datos.reglamento?.ciclo ?? CICLO;
   const pilotos = datos.pilotos
-    .map((p) => calcularPiloto(p, datos.tandas, hitos, datos.reglamento))
+    .map((p) => calcularPiloto(p, datos.tandas, hitos, datos.reglamento, ciclo))
     .sort((a, b) => b.vueltasTotales - a.vueltasTotales || a.nombre.localeCompare(b.nombre, 'es'))
     .map((p, i) => ({ ...p, puesto: i + 1 }));
 
@@ -183,6 +297,8 @@ export function calcularLiga(datos) {
     ...datos,
     hitos,
     pilotos,
+    semanas: semanasDeLaLiga(pilotos),
+    semana: ultimaSemana(pilotos),
     resumen: {
       totalVueltas,
       lider: pilotos[0] ?? null,
@@ -191,6 +307,89 @@ export function calcularLiga(datos) {
       pilotosActivos: pilotos.filter((p) => p.vueltasTotales > 0).length,
     },
   };
+}
+
+/**
+ * Clasificación de un campeonato de vueltas, uniendo el censo global con los
+ * inscritos de ese campeonato.
+ *
+ * El censo aporta la identidad (id, apodo, nombre real, ids externos) y el
+ * campeonato aporta lo suyo: dorsal y categoría, que pueden cambiar de un
+ * campeonato a otro.
+ */
+export function calcularCampeonato(campeonato, censo = leerPilotos()) {
+  const porId = new Map(censo.map((p) => [p.id, p]));
+  const pilotos = (campeonato.inscritos ?? []).map(({ piloto, ...enElCampeonato }) => {
+    const ficha = porId.get(piloto);
+    if (!ficha) {
+      throw new Error(
+        `El campeonato "${campeonato.id}" inscribe a "${piloto}", que no está en datos/pilotos.json`,
+      );
+    }
+    return {
+      ...ficha,
+      ...enElCampeonato,
+      idsocio: ficha.externos?.cronolaps ?? null,
+    };
+  });
+  return calcularLiga({ ...campeonato, pilotos });
+}
+
+/**
+ * Clasificación de una semana ISO concreta.
+ *
+ * Cuenta vueltas **válidas**, ya recortadas por los topes del reglamento, no
+ * las registradas: es lo que de verdad puntúa.
+ */
+export function clasificacionSemana(pilotos, clave) {
+  const clasificacion = pilotos
+    .filter((p) => (p.semanas?.[clave] ?? 0) > 0)
+    .map((p) => ({
+      id: p.id,
+      nombre: p.nombre,
+      dorsal: p.dorsal ?? null,
+      categoria: p.categoria ?? null,
+      vueltas: p.semanas[clave],
+    }))
+    .sort((a, b) => b.vueltas - a.vueltas || a.nombre.localeCompare(b.nombre, 'es'))
+    .map((p, i) => ({ ...p, puesto: i + 1 }));
+
+  if (!clasificacion.length) return null;
+
+  return {
+    semana: clave,
+    numero: Number(clave.split('-W')[1]),
+    ...rangoSemanaIso(clave),
+    vueltas: clasificacion.reduce((s, p) => s + p.vueltas, 0),
+    pilotos: clasificacion,
+  };
+}
+
+/**
+ * Todas las semanas con actividad, de la más reciente a la más antigua.
+ *
+ * Solo las que tienen vueltas: si la liga para dos semanas no queremos dos
+ * desplegables vacíos en la web.
+ */
+export function semanasDeLaLiga(pilotos) {
+  const claves = new Set();
+  for (const p of pilotos) for (const s of Object.keys(p.semanas ?? {})) claves.add(s);
+  return [...claves]
+    .sort()
+    .reverse()
+    .map((clave) => clasificacionSemana(pilotos, clave))
+    .filter(Boolean);
+}
+
+/**
+ * Clasificación de la última semana con actividad.
+ *
+ * La última con vueltas, no la semana en curso: si la liga lleva unos días
+ * parada, "la semana en curso" sería una tabla de ceros. Se muestra siempre
+ * con su rango de fechas para que no se confunda con hoy.
+ */
+export function ultimaSemana(pilotos) {
+  return semanasDeLaLiga(pilotos)[0] ?? null;
 }
 
 /** Día operativo de CronoLaps: de 06:00 a 06:00, no de medianoche a medianoche. */

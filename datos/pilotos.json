@@ -1,0 +1,298 @@
+{
+  "pilotos": [
+    {
+      "id": "raul-paredes",
+      "nombre": "Raul Paredes",
+      "nombreReal": "Raul Paredes",
+      "externos": {
+        "cronolaps": "38716"
+      }
+    },
+    {
+      "id": "ruben8",
+      "nombre": "Ruben8",
+      "nombreReal": "Rubén Escribano",
+      "externos": {
+        "cronolaps": "98466"
+      }
+    },
+    {
+      "id": "roberto79",
+      "nombre": "Roberto79",
+      "nombreReal": "Roberto Escribano",
+      "externos": {
+        "cronolaps": "98467"
+      }
+    },
+    {
+      "id": "josefh",
+      "nombre": "JOSEFH",
+      "nombreReal": "Jose M. Fernández",
+      "externos": {
+        "cronolaps": "98476"
+      }
+    },
+    {
+      "id": "kevinsito07",
+      "nombre": "kevinsito07",
+      "nombreReal": "Kevin Barrios Velázquez",
+      "externos": {
+        "cronolaps": "98479"
+      }
+    },
+    {
+      "id": "kike78",
+      "nombre": "kike78",
+      "nombreReal": "Enrique Porras García",
+      "externos": {
+        "cronolaps": "98480"
+      }
+    },
+    {
+      "id": "alber",
+      "nombre": "Alber",
+      "nombreReal": "Alberto Gramaje",
+      "externos": {
+        "cronolaps": "64002"
+      }
+    },
+    {
+      "id": "ruben-57",
+      "nombre": "RUBEN 57",
+      "nombreReal": "Rubén Fernández",
+      "externos": {
+        "cronolaps": "11099"
+      }
+    },
+    {
+      "id": "rafita",
+      "nombre": "Rafita",
+      "nombreReal": "Rafael Ortiz",
+      "externos": {
+        "cronolaps": "84179"
+      }
+    },
+    {
+      "id": "lucas21",
+      "nombre": "LUCAS21",
+      "nombreReal": "Lucas Madrigal",
+      "externos": {
+        "cronolaps": "98523"
+      }
+    },
+    {
+      "id": "alba-98521",
+      "nombre": "Alba",
+      "nombreReal": "Alba Magro",
+      "externos": {
+        "cronolaps": "98521"
+      }
+    },
+    {
+      "id": "jvc23",
+      "nombre": "JVC23",
+      "nombreReal": "Javier Velazco",
+      "externos": {
+        "cronolaps": "98522"
+      }
+    },
+    {
+      "id": "javier-moreno-del-barrio",
+      "nombre": "Javier Moreno Del Barrio",
+      "nombreReal": "Javier Moreno",
+      "externos": {
+        "cronolaps": "18870"
+      }
+    },
+    {
+      "id": "navarrete",
+      "nombre": "NAVARRETE",
+      "nombreReal": "David Navarrete",
+      "externos": {
+        "cronolaps": "98528"
+      }
+    },
+    {
+      "id": "harry",
+      "nombre": "HARRY",
+      "nombreReal": "Ángel Ortega",
+      "externos": {
+        "cronolaps": "71118"
+      }
+    },
+    {
+      "id": "alberto",
+      "nombre": "ALBERTO",
+      "nombreReal": "Alberto Vacas",
+      "externos": {
+        "cronolaps": "98530"
+      }
+    },
+    {
+      "id": "manu",
+      "nombre": "MANU",
+      "nombreReal": "Manuel Vacas",
+      "externos": {
+        "cronolaps": "98529"
+      }
+    },
+    {
+      "id": "javier18",
+      "nombre": "JAVIER18",
+      "nombreReal": "Javier Vacas",
+      "externos": {
+        "cronolaps": "98531"
+      }
+    },
+    {
+      "id": "sergio",
+      "nombre": "SERGIO",
+      "nombreReal": "Sergio Pérez",
+      "externos": {
+        "cronolaps": "98539"
+      }
+    },
+    {
+      "id": "souto",
+      "nombre": "SOUTO",
+      "nombreReal": "Alberto Souto",
+      "externos": {
+        "cronolaps": "98540"
+      }
+    },
+    {
+      "id": "nieto",
+      "nombre": "NIETO",
+      "nombreReal": "Alejandro Nieto",
+      "externos": {
+        "cronolaps": "98545"
+      }
+    },
+    {
+      "id": "m-ivansan",
+      "nombre": "M_IvanSan",
+      "nombreReal": "Iván Sánchez",
+      "externos": {
+        "cronolaps": "78947"
+      }
+    },
+    {
+      "id": "elias8",
+      "nombre": "ELIAS8",
+      "nombreReal": "Elías Moreno",
+      "externos": {
+        "cronolaps": "38703"
+      }
+    },
+    {
+      "id": "david-garrido",
+      "nombre": "David Garrido",
+      "externos": {}
+    },
+    {
+      "id": "roi-garayalde",
+      "nombre": "ROI GARAYALDE",
+      "externos": {}
+    },
+    {
+      "id": "ismael-luna",
+      "nombre": "ISMAEL LUNA",
+      "externos": {}
+    },
+    {
+      "id": "sebastian-pena",
+      "nombre": "SEBASTIAN PEÑA",
+      "externos": {}
+    },
+    {
+      "id": "ruben-cataluna",
+      "nombre": "RUBÉN CATALUÑA",
+      "externos": {}
+    },
+    {
+      "id": "manel-mas",
+      "nombre": "MANEL MAS",
+      "externos": {}
+    },
+    {
+      "id": "daniel-martinez",
+      "nombre": "DANIEL MARTINEZ",
+      "externos": {}
+    },
+    {
+      "id": "ismael-ruiz",
+      "nombre": "ISMAEL RUIZ",
+      "externos": {}
+    },
+    {
+      "id": "eduard-cortina",
+      "nombre": "EDUARD CORTINA",
+      "externos": {}
+    },
+    {
+      "id": "santi-tubert",
+      "nombre": "SANTI TUBERT",
+      "externos": {}
+    },
+    {
+      "id": "alvaro-alguacil",
+      "nombre": "ALVARO ALGUACIL",
+      "externos": {}
+    },
+    {
+      "id": "carlos-mata",
+      "nombre": "CARLOS MATA",
+      "externos": {}
+    },
+    {
+      "id": "pere-pros",
+      "nombre": "PERE PROS",
+      "externos": {}
+    },
+    {
+      "id": "marc-recio",
+      "nombre": "MARC RECIO",
+      "externos": {}
+    },
+    {
+      "id": "christian-navarro",
+      "nombre": "CHRISTIAN NAVARRO",
+      "externos": {}
+    },
+    {
+      "id": "dafne-martinez",
+      "nombre": "DAFNE MARTÍNEZ",
+      "externos": {}
+    },
+    {
+      "id": "xavier-moreno",
+      "nombre": "XAVIER MORENO",
+      "externos": {}
+    },
+    {
+      "id": "said-benslaiman",
+      "nombre": "SAID BENSLAIMAN",
+      "externos": {}
+    },
+    {
+      "id": "elsa-boix",
+      "nombre": "ELSA BOIX",
+      "externos": {}
+    },
+    {
+      "id": "enrique-ereza",
+      "nombre": "ENRIQUE EREZA",
+      "externos": {}
+    },
+    {
+      "id": "ignasi-de-argacha",
+      "nombre": "IGNASI DE ARGACHA",
+      "externos": {}
+    },
+    {
+      "id": "sergio-monzo",
+      "nombre": "SERGIO MONZO",
+      "externos": {}
+    }
+  ]
+}

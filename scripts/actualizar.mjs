@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import { RAIZ, leerDatos, guardarDatos, calcularLiga, diaOperativo } from './liga.mjs';
 import {
   obtenerSesion, tiemposMinimos, descargarDia, tandasDelDia, diasEntre,
+  inscritosDeLaLiga,
 } from './cronolaps.mjs';
 import { generar } from './generar.mjs';
 
@@ -50,11 +51,13 @@ try {
   const sesion = await obtenerSesion();
   const tmin = await tiemposMinimos(sesion);
   const dias = diasEntre(desde, hasta);
+  // Solo entran los inscritos; sin lista, todo el que ruede una pit bike.
+  const inscritos = inscritosDeLaLiga(leerDatos());
 
   const tandas = [];
   for (const dia of dias) {
     const pasos = await descargarDia(dia.getTime(), sesion);
-    const { tandas: delDia } = tandasDelDia(pasos, tmin);
+    const { tandas: delDia } = tandasDelDia(pasos, tmin, inscritos);
     tandas.push(...delDia);
     if (delDia.length) {
       // Ojo: aquí NO vale diaOperativo(dia). `dia` es la medianoche del día

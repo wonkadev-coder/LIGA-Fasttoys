@@ -1,15 +1,59 @@
-# Liga Fast Toys DR7
+# Pitbike World
 
-Aplicación web pública de clasificación por vueltas de la Liga Fast Toys DR7.
+Aplicación web pública de clasificaciones de **campeonatos de pit bikes**.
+Empieza con dos y está pensada para crecer a más, en España y fuera (Italia,
+Francia).
 
-## Contexto de negocio
+> **AVISO: este documento está a medias.** El proyecto dejó de ser una app de
+> una sola liga el 02/09/2026 y buena parte de lo que sigue todavía lo cuenta
+> como si lo fuera. Las secciones de Fast Toys son correctas **como
+> descripción de ese campeonato**, no del proyecto. Falta reescribirlo.
 
-Fuente: reglamento manuscrito de la organización, transcrito a `datos/liga.json`
-y publicado en `documentos/reglamento-liga-fast-toys.pdf`.
+## Los dos formatos de competición
+
+No comparten nada salvo el censo de pilotos. Son dos motores de cálculo y dos
+juegos de pantallas.
+
+| | Liga Fast Toys DR7 | Copa Catalana de Pit Bikes |
+|---|---|---|
+| Formato | `vueltas` | `carreras` |
+| Se gana | Acumulando vueltas hasta los hitos | Sumando puntos por posición |
+| Datos | API de CronoLaps, automática | PDF de la organización, a mano |
+| Cálculo | `scripts/liga.mjs` | `scripts/carreras.mjs` |
+| Muestra tiempos | **No, nunca** | Sí: pole y vuelta rápida |
+
+## Cómo están organizados los datos
+
+```
+datos/
+  pilotos.json              Censo GLOBAL. La identidad del piloto vive aquí.
+  campeonatos/
+    fast-toys-dr7.json      Reglas, inscritos y tandas
+    copa-catalana.json      Reglas, inscritos y pruebas
+```
+
+**La identidad del piloto es global y el campeonato solo dice quién está
+inscrito.** Cada ficha del censo lleva su `id`, su apodo, su nombre real y sus
+ids externos (`externos.cronolaps`); el campeonato aporta dorsal, categoría,
+marca y equipo, que pueden cambiar de uno a otro. Así el mismo piloto puede
+correr en varios campeonatos y tener una sola ficha.
+
+El `idsocio` de CronoLaps es **un id externo, no la identidad**: en la Copa
+Catalana no existe.
+
+`leerDatos()` / `guardarDatos()` en `scripts/liga.mjs` son un puente: unen censo
+y campeonato en el objeto plano que esperan los scripts de operación, y lo
+separan al guardar.
+
+## Contexto de negocio: Liga Fast Toys DR7
+
+Fuente: reglamento manuscrito de la organización, transcrito a
+`datos/campeonatos/fast-toys-dr7.json` y publicado en
+`documentos/reglamento-liga-fast-toys.pdf`.
 
 - Liga de **conteo de vueltas** disputada exclusivamente en el **circuito DR7**.
 - Arranque de la liga: **sábado 8 de agosto de 2026**. **Eventos semanales.**
-- Escala actual: **~10 pilotos**. Cualquier decisión técnica debe ser proporcional a esa escala.
+- Escala actual: 24 inscritos.
 
 ### Categorías admitidas
 
@@ -25,9 +69,13 @@ puesto. Si algún día se quisieran rankings por categoría, habría que añadir
 ### Límite de vueltas
 
 **Máximo de 100 vueltas diarias o 200 semanales.** Está registrado en
-`datos/liga.json` (`reglamento.maxVueltasDia` / `maxVueltasSemana`) y sale en el PDF,
-pero **todavía no se valida al registrar tandas**: `scripts/tanda.mjs` acepta
-cualquier cifra. Pendiente de decidir si el exceso se recorta o solo se avisa.
+`datos/liga.json` (`reglamento.maxVueltasDia` / `maxVueltasSemana`), sale en el PDF
+y **se aplica**: `aplicarLimites()` en `scripts/liga.mjs` recorta el exceso, y el
+manual de marca lo confirma ("el excedente no cuenta").
+
+La tanda **conserva la cifra real** en `registradas` y guarda lo recortado en
+`descartadas`, así que en la web sale "Hiciste 160; el tope diario deja 100".
+Ni se pierde el dato ni se engaña al piloto. Cubierto por tests.
 
 ### Sistema de premios (hitos, no posiciones)
 
@@ -43,6 +91,34 @@ Los premios son **por número de vueltas, no por tiempos**:
 Al llegar a 999 el contador **se reinicia a cero** y empieza un ciclo nuevo.
 Las vueltas sobrantes **se arrastran** al ciclo siguiente.
 
+### Solo vueltas. Nunca tiempo.
+
+Decidido por Jorge el 27/08/2026, y va más allá de no mostrar tiempos por vuelta:
+**no se hacen proyecciones a fecha**. Nada de "a tu ritmo llegarás al PMT el 20 de
+septiembre". La única métrica que ve el piloto es la vuelta.
+
+Las tandas guardan `mejorVuelta` porque viene de CronoLaps, pero **el generador no
+lo pasa al HTML** y ahí tiene que seguir. Si algún día aparece un tiempo en la
+interfaz, es un fallo.
+
+### Clasificación de la semana
+
+La liga es semanal, así que además del acumulado se publica la **última semana con
+actividad** — no la semana en curso: la web se regenera una vez al día y con la liga
+parada unos días saldría una tabla de ceros. Siempre con su rango de fechas a la
+vista, para que no se confunda con hoy.
+
+Se publican **todas las semanas con vueltas**, de la más reciente a la más antigua,
+en la pestaña "Semanales": un `<details>` por semana, la última abierta. Las semanas
+sin actividad no se pintan, para no dejar desplegables vacíos.
+
+Se calcula en `semanasDeLaLiga()` sobre el reparto por semana ISO que guarda cada
+piloto en `semanas`. Cuenta **vueltas válidas, ya recortadas por los topes**, no las
+registradas. `ultimaSemana()` es solo la primera de esa lista.
+
+Por lo mismo, la pizarra del piloto etiqueta su cupo como **"última jornada"** y no
+como "hoy": el dato puede tener días.
+
 ### Regla crítica de ranking
 
 Se guardan **dos contadores por piloto**:
@@ -56,17 +132,50 @@ Está cubierto por tests en `scripts/test.mjs`. Si tocas `calcularPiloto` o `cal
 
 ## Audiencias
 
-1. **Piloto** — móvil, PWA (añadir a pantalla de inicio). Pantalla tipo *pizarra de boxes*: contador grande, barra de ciclo con las tres marcas, estado de cada premio (entregado / en curso / bloqueado) e historial de tandas con vueltas sumadas y acumulado.
+1. **Piloto** — móvil, PWA (añadir a pantalla de inicio). Pantalla tipo *pizarra de boxes*: contador grande, barra de ciclo con las tres marcas, cupo consumido de la última jornada y de su semana, distancia con el piloto de delante, estado de cada premio (entregado / en curso / bloqueado) e historial de tandas.
 2. **Organización** — se opera desde la línea de comandos (ver más abajo), no hay panel web.
 3. **Público** — ranking sin login, pensado para compartir en redes y dar visibilidad a patrocinadores.
 
 Principio de diseño validado: mostrar **"faltan 55 vueltas para el escape LM"**, nunca un porcentaje abstracto.
+
+### Las tres secciones de la vista pública
+
+Decidido por Jorge el 27/08/2026: con 30 pilotos, todo en una página era un scroll
+interminable. La vista pública se reparte en tres secciones, con el hash como router
+(`#general`, `#semanas`, `#premios`), que convive con el del piloto (`#david-ramos`).
+
+- **General** — podio, una línea con el premio más cercano de toda la liga y la
+  clasificación completa en **filas compactas**. El detalle rico (barra, premios,
+  historial, rival) vive en la pizarra del piloto, no repetido en cada fila.
+- **Semanales** — un desplegable por semana con vueltas, la última abierta.
+- **Premios** — los tres hitos con cuántos se han entregado y **quién está más
+  cerca** de cada uno. Sin esto la pestaña serían tres ceros hasta que alguien
+  llegue a 500.
+
+**General abre por defecto**: el tráfico llega de enlaces compartidos en redes y
+entra preguntando quién va ganando.
+
+Se navega con una **barra inferior fija** (`.navbar`), como en una app nativa:
+siempre visible, bajo el pulgar y con `env(safe-area-inset-bottom)` para que en
+iPhone no la tape la barra de gestos. Los iconos son del set Lucide —`flag`,
+`calendar`, `trophy`— dibujados como SVG en línea, con trazo de 2 px y sin relleno.
+
+**No la conviertas en un menú de hamburguesa.** Se valoró el 29/08/2026 y se
+descartó: con tres destinos, esconderlos cuesta un toque y entierra las semanales,
+que es justo lo que se acababa de arreglar. Además la esquina superior izquierda es
+la peor para el pulgar. El contenedor reserva 86 px abajo para que la barra no tape
+el contenido.
 
 ### Compartir en redes
 
 El botón "Compartir clasificación" dibuja una imagen **1080x1350** (el 4:5 de
 Instagram, el formato que más ocupa en el feed) con el podio, los diez primeros y
 la franja de patrocinadores. Es canvas puro, sin librerías.
+
+`generarTarjeta(clave)` sirve para las dos: **sin clave** dibuja el acumulado, el que
+reparte premios; **con la clave de una semana** (`'2026-W34'`) dibuja esa semana. Cada
+desplegable de la pestaña "Semanales" comparte la suya, no siempre la última. Cambia
+la fuente de datos y el rótulo; el resto del dibujo es el mismo.
 
 En el móvil abre el menú de compartir del sistema (`navigator.share` con ficheros);
 en escritorio, que no suele soportarlo, descarga el PNG para subirlo a mano.
@@ -78,8 +187,9 @@ Dos cosas que no hay que quitar:
 - `textoAjustado()`: recorta los nombres largos con puntos suspensivos. Hay pilotos
   como "Juan diego Rodríguez morales" que si no se salen de su caja.
 
-Los logos se dibujan sobre una franja blanca, por lo mismo que en la web: para que
-cada marca salga con sus colores reales.
+Los logos se dibujan sobre una franja blanca, por lo mismo que en la web: son
+dibujo negro y sobre el fondo de tinta desaparecerían. Van **en blanco y negro**,
+como pide el manual, con `c.filter = 'grayscale(1) contrast(1.08)'`.
 
 ## Cómo está montado (v2)
 
@@ -325,10 +435,50 @@ Por orden, y **solo cuando haga falta**:
 
 ## Quién está en la liga
 
-Los pilotos salen de CronoLaps por **categoría**: todo el que rueda en el DR7 en una
-de las seis categorías del reglamento entra en la clasificación. A 18/08/2026 son 23,
-no los ~10 que se preveían. Si la liga exige inscripción previa, esto hay que
-filtrarlo: hoy no se filtra.
+**La liga es cerrada: participan los inscritos.** Corregido el 01/09/2026 con las
+clasificaciones oficiales que publica [@fast_toys_pitbikes](https://www.instagram.com/fast_toys_pitbikes/)
+delante. Antes se daba por abierta y era falso: de los 40 pilotos que salían por
+categoría, la organización solo cuenta a 24.
+
+El censo vive en `datos/liga.json` → **`inscritos`**, un objeto `idsocio -> nombre
+real`. Es la única fuente de quién compite.
+
+**La lista manda sobre la categoría.** `tandasDelDia()` filtra por `inscritos` si
+existe y por `CATEGORIAS_LIGA` solo si no existe. Hace falta porque hay un inscrito
+—Elías Moreno, 2.º— que rueda en **"Cambio menos de 125"** (categoría 24), que
+cuelga de MOTOS CIRCUITO VELOCIDAD y no es una pit bike. Filtrando por categoría se
+quedaba fuera.
+
+Consecuencia: **la categoría de un piloto puede venir vacía**. `importar.mjs` y la
+web lo contemplan.
+
+Si un piloto nuevo aparece en CronoLaps, **no entra solo**: hay que añadir su
+`idsocio` a `inscritos`. Es deliberado.
+
+### Los nombres son apodos, no nombres reales
+
+En la web se muestra el `socio` de CronoLaps —"M_IvanSan", "Rafita", "kike78"—,
+que es el apodo que cada uno se pone. Decidido por Jorge el 01/09/2026: **de momento
+se quedan los apodos**. Los nombres reales están guardados en `inscritos` para
+cuando se quiera cambiar.
+
+CronoLaps **no expone el nombre real**: su API pública solo da `idsocio` y `socio`.
+No hay endpoint de perfil (probados `socios`, `socio`, `pilotos`, `perfil`,
+`usuario`: todos 404).
+
+### Lo que no cuadra con la clasificación oficial
+
+Una sola cosa, y es de ellos: **Alejandro Nieto (nuestro "NIETO")**. Su gráfica dice
+21 vueltas; CronoLaps dice **32**, rodadas el 29 de agosto. Se mantiene el 32, que es
+el dato del cronómetro. Eso explica la única diferencia de total: 1.332 frente a
+1.321.
+
+**David Garrido** (14.º, 47 vueltas) **no aparece en CronoLaps en ninguna fecha**.
+Está dado de alta a mano, con una tanda que lo dice en la `nota`. Si algún día
+aparece su `idsocio`, hay que sustituirla.
+
+Sus gráficas se montan a mano y tienen erratas: la del 25 de agosto lleva las filas
+desordenadas (Kevin Barrios con 42 por debajo de Javier Velasco con 33).
 
 ## Cómo trabajar en este repo
 
@@ -347,16 +497,31 @@ web. El manual de marca vive en `marca/brandbook/` (paquete de handoff, agosto
 2026) y `marca/README.md` lo resume: tokens de color, tipografía Archivo, radio
 0, bordes de 2 px, iconos Lucide y fotografía en blanco y negro.
 
-Dos cosas antes de tocar nada de diseño:
+La web **ya sigue el manual**: un solo acento (`#EC3013`), radio 0, reglas de
+2 px, Archivo, cifras tabulares en todo dato de vueltas y logos de patrocinador
+en blanco y negro.
 
-- **La web actual no sigue el manual todavía.** `index.html` es oscura, con
-  cuatro acentos y radios de 14 px; el manual pide fondo claro, un solo acento
-  (`#EC3013`) y cero radios. Alinearla es un rediseño consciente, no un retoque.
-- El handoff trae **reglas de negocio marcadas como confirmadas que contradicen
-  lo implementado** — sobre todo que el reinicio de las 999 sea global y no por
-  piloto. Están listadas como decisiones pendientes al final de
-  `marca/README.md`. **No las implementes sin que Jorge las confirme**: cambian
-  el modelo de datos y rompen la "Regla crítica de ranking".
+Con **dos desviaciones deliberadas, decididas por Jorge**. La primera: el manual
+pide blanco pista de fondo y la app va sobre **fondo oscuro**, porque en claro no se
+leía bien. No es saltarse el sistema — el propio manual define su juego sobre oscuro
+para la tarjeta del contador (`#201E1D` de fondo, `#F3F2F2` de texto, `#9B9797`
+atenuado, `#444141` de pista y `#FF563C` de acento), y es ese juego el que se
+aplica a toda la app. Sobre oscuro **el acento sube a `#FF563C`**: `#EC3013` se
+reserva para rellenos.
+
+**La segunda: oro, plata y bronce en el podio** (29/08/2026). El manual admite tres
+colores y ninguno más, pero el 2.º y el 3.º salían idénticos —los dos con el cajón
+blanco— y solo los distinguía la altura. Se resolvió con el metal **como filo de
+4 px, nunca como relleno**: `--oro:#E8B33A`, `--plata:#C8CDD2`, `--bronce:#C2803F`.
+El bloque del cajón sigue siendo de la paleta de la casa, así que la página conserva
+un solo acento. Mismo criterio en la imagen de compartir. Se descartó pintar los
+cajones enteros de metal, que habría dejado la identidad en cuatro acentos.
+
+El handoff trae además **reglas de negocio marcadas como confirmadas que
+contradicen lo implementado** — sobre todo que el reinicio de las 999 sea global
+y no por piloto. Están listadas como decisiones pendientes al final de
+`marca/README.md`. **No las implementes sin que Jorge las confirme**: cambian el
+modelo de datos y rompen la "Regla crítica de ranking".
 
 ## Logos
 
@@ -377,8 +542,11 @@ Detalles de diseño que conviene no deshacer:
 
 - El logo de Fast Toys es **negro sobre blanco**, así que sobre el fondo oscuro
   de la app desaparecería. Va siempre dentro de un chip blanco (`.marca`,
-  `.sello`, `.patro`). Por eso las tarjetas de patrocinador son claras: cada
-  logo se lee con sus colores reales sin invertirlo ni recolorearlo.
+  `.sello`, `.patro`), cuadrado desde el rediseño. Por eso las tarjetas de
+  patrocinador son claras: sin celda blanca no se vería ninguno.
+- Los logos de patrocinador van **en blanco y negro**, como manda el manual. Es
+  una línea, `filter:grayscale(1) contrast(1.08)` en `.patro img`: quitarla los
+  devuelve a color.
 - El script **recorta el blanco sobrante** antes de escalar. Hace falta: el
   original de LM es de 1920x280 con el dibujo metido en el tercio izquierdo, así
   que sin recortar salía diminuto y descentrado.

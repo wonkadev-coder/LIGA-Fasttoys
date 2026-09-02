@@ -9,9 +9,9 @@ Publica el estado actual de la liga.
    una clasificación con la lógica de ciclos rota.
 
 2. Ejecuta `node scripts/generar.mjs` para asegurar que `index.html` refleja
-   `datos/liga.json`.
+   `datos/campeonatos/<campeonato>.json`.
 
-3. Comprueba `datosDeEjemplo` en `datos/liga.json`. Si sigue en `true`, avisa a Jorge
+3. Comprueba `datosDeEjemplo` en `datos/campeonatos/<campeonato>.json`. Si sigue en `true`, avisa a Jorge
    de que la web saldrá con la banda roja de datos ficticios y **pregunta** si quiere
    publicar igualmente.
 

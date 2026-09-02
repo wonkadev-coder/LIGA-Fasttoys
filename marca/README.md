@@ -184,6 +184,10 @@ porque **algunas contradicen lo que hay implementado**.
 Ninguna de estas está resuelta. Están anotadas para que Jorge decida; **no se
 toca el código hasta entonces**.
 
+Los topes de 100/200 **ya no están en esta lista**: `aplicarLimites()` en
+`scripts/liga.mjs` recorta el excedente, justo como pide el handoff, y está
+cubierto por tests. `CLAUDE.md` decía lo contrario y se ha corregido.
+
 ### 1. El reinicio de las 999: ¿global o por piloto?
 
 El choque de fondo, y afecta al modelo de datos, no a la UI.
@@ -200,48 +204,59 @@ al último puesto (ver "Regla crítica de ranking" en `CLAUDE.md`, con tests en
 `scripts/test.mjs`). Con temporada global ese problema desaparece —todos
 reinician a la vez— pero hace falta un concepto de temporada que hoy no existe.
 
-### 2. Los topes de 100/200: ¿recortan o solo avisan?
-
-El handoff lo da por cerrado —"el excedente no cuenta"—, pero en `CLAUDE.md`
-figura como pendiente y `scripts/tanda.mjs` acepta hoy cualquier cifra. Si se
-confirma, va en `scripts/liga.mjs`.
-
-### 3. Las categorías
+### 2. Las categorías
 
 El handoff habla de "90cc–OPEN" en genérico; el reglamento vigente define seis
 categorías concretas (Pit Bike 90, 160 series, Proto, Master, Z190 series y
 Alevín 90) y `CATEGORIAS_LIGA` filtra por ellas al importar de CronoLaps.
 ¿"OPEN" es una categoría nueva o una forma corta de decir "las seis"?
 
-### 4. La edición manual de tandas
+### 3. La edición manual de tandas
 
 "Sin edición manual de vueltas" choca con `scripts/tanda.mjs`, que existe para
 eso y protege esas tandas de ser pisadas por la ingesta. Hace falta al menos
 para corregir errores del cronometrador.
 
-### 5. Login, panel de staff y notificaciones
+### 4. Login, panel de staff y notificaciones
 
 Las tres exigen backend, aplazado deliberadamente hasta que el flujo manual
 resulte gravoso (punto 4 de la hoja de ruta). Ninguna es viable con el
 planteamiento actual de web estática sin dependencias.
 
-### 6. El desempate por timestamp
+### 5. El desempate por timestamp
 
 No está implementado. El dato existe en los pasos de CronoLaps, así que es
 factible, pero hoy no se guarda a qué hora se cruzó cada objetivo.
 
-## Distancia entre el manual y la web actual
+## Lo que la web ya aplica
 
-Trabajo de rediseño, no decisiones. `index.html` hoy:
+`index.html` sigue el sistema: un solo acento, radio 0, reglas de 2 px, Archivo,
+cifras tabulares en todo dato de vueltas y logos de patrocinador en blanco y
+negro. La pizarra del piloto es el mockup «contador de vueltas» del manual.
 
-| | Manual | `index.html` |
+**Con dos desviaciones deliberadas, decididas por Jorge.** La primera: el manual
+pide blanco pista de fondo y la app va sobre **fondo oscuro**, porque en claro no
+se leía bien. No es saltarse el sistema: el manual define su propio juego sobre oscuro
+para la tarjeta del contador, y es ese el que se aplica a toda la app.
+
+**La segunda: oro, plata y bronce en el podio** (29/08/2026). El manual admite tres
+colores y ninguno más, pero el 2.º y el 3.º salían idénticos —los dos con el cajón
+blanco— y solo los distinguía la altura. Se resolvió con el metal **como filo de
+4 px, nunca como relleno**: `--oro:#E8B33A`, `--plata:#C8CDD2`, `--bronce:#C2803F`.
+El bloque del cajón sigue siendo de la paleta de la casa, así que la página conserva
+un solo acento. Mismo criterio en la imagen de compartir. Se descartó pintar los
+cajones enteros de metal, que habría dejado la identidad en cuatro acentos.
+
+| | Sobre claro (manual) | Sobre oscuro (la app) |
 |---|---|---|
-| Fondo | `#F3F2F2` claro | `--fondo:#0d0f12` oscuro |
-| Acento | Uno: `#EC3013` | Cuatro: ámbar, verde, rojo, azul |
-| Radios | 0 | `--radio:14px` |
-| Tipografía | Archivo | Sin cargar |
-| Logos de partner | Blanco y negro | A color sobre chip blanco |
+| Fondo | `#F3F2F2` | `#201E1D` |
+| Superficie | `#EAE9E9` | `#2D2B2B` |
+| Texto | `#201E1D` | `#F3F2F2` |
+| Atenuado | `#7D7979` | `#9B9797` |
+| Divisor | `#D8D6D5` | `#444141` |
+| Acento en texto | `#AE1800` | `#FF563C` |
+| Acento en relleno | `#EC3013` | `#EC3013` |
 
-El último es el único que contradice una decisión ya razonada y escrita en
-`CLAUDE.md` (se eligió el color para que cada marca se lea con sus colores
-reales). Hay que quedarse con un criterio.
+Los dos únicos elementos que siguen siendo claros son los que no pueden dejar de
+serlo: el chip del logo de Fast Toys y las celdas de patrocinador. Los logos son
+dibujo negro y sobre tinta desaparecerían.

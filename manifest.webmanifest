@@ -1,17 +1,32 @@
 {
-  "name": "Liga Fast Toys DR7",
-  "short_name": "Liga DR7",
-  "description": "Clasificación por vueltas de la Liga Fast Toys DR7.",
+  "name": "Pitbike World",
+  "short_name": "Pitbike World",
+  "description": "Clasificaciones de los campeonatos de pit bikes.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0d0f12",
-  "theme_color": "#0d0f12",
+  "background_color": "#201e1d",
+  "theme_color": "#201e1d",
   "lang": "es",
   "icons": [
-    { "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "iconos/pitbike-world-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "iconos/pitbike-world-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "iconos/pitbike-world-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

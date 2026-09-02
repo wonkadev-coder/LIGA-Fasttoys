@@ -1,4 +1,4 @@
-// Genera el PDF del reglamento a partir de datos/liga.json.
+// Genera el PDF del reglamento a partir de datos/campeonatos/<campeonato>.json.
 //
 //   node scripts/reglamento.mjs
 //

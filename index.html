@@ -3,260 +3,412 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Liga Fast Toys DR7</title>
-<meta name="description" content="Clasificación por vueltas de la Liga Fast Toys DR7, circuito DR7, categoría pit bike.">
-<meta name="theme-color" content="#0d0f12">
+<title>Pitbike World</title>
+<meta name="description" content="Clasificaciones de los campeonatos de pit bikes: Liga Fast Toys DR7 y Copa Catalana.">
+<meta name="theme-color" content="#201e1d">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="iconos/icono-192.png" type="image/png">
-<link rel="apple-touch-icon" href="iconos/icono-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap">
+<link rel="icon" href="iconos/pitbike-world-192.png" type="image/png">
+<link rel="apple-touch-icon" href="iconos/pitbike-world-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Liga DR7">
+<meta name="apple-mobile-web-app-title" content="Pitbike World">
 <style>
+  /* Sistema del manual de marca (marca/README.md) sobre fondo oscuro.
+     El manual pide blanco pista de fondo, pero define además su juego sobre
+     oscuro para la tarjeta del contador: tinta #201e1d, texto #f3f2f2,
+     atenuado #9b9797, pista #444141 y acento #ff563c. Es ese juego el que se
+     aplica aquí a toda la app. Lo que no cambia: un solo acento rojo, radio 0,
+     reglas de 2 px, Archivo y cifras tabulares. */
   :root{
-    --fondo:#0d0f12; --panel:#161a20; --panel2:#1d222a; --linea:#2a313c;
-    --texto:#eef2f7; --tenue:#8d99a8; --ambar:#ffb300; --verde:#3ddc84;
-    --rojo:#ff4d4d; --azul:#4da3ff;
-    --radio:14px;
+    --fondo:#201e1d; --superficie:#2d2b2b; --texto:#f3f2f2;
+    --rojo:#ec3013; --rojo-hover:#dd2b0f; --rojo-claro:#ff563c;
+    --divisor:#444141; --tenue:#9b9797;
+    /* Oro, plata y bronce. Desviación consciente del manual, decidida por
+       Jorge: solo como filo de 4 px sobre el cajón, nunca como relleno. El
+       bloque sigue siendo de la paleta de la casa. */
+    --oro:#e8b33a; --plata:#c8cdd2; --bronce:#c2803f;
+    --regla:2px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     background:var(--fondo); color:var(--texto);
-    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15px; line-height:1.55; font-weight:400;
     -webkit-font-smoothing:antialiased;
     padding:0 0 env(safe-area-inset-bottom);
   }
-  .contenedor{max-width:760px;margin:0 auto;padding:0 14px 48px}
+  .contenedor{max-width:760px;margin:0 auto;
+    padding:0 14px calc(86px + env(safe-area-inset-bottom))}
+  /* Cifras tabulares en todo dato de vueltas: las columnas no bailan al
+     actualizarse. Lo pide el manual. */
   .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  :focus-visible{outline:2px solid var(--rojo-claro);outline-offset:2px}
 
   /* Aviso de datos de ejemplo */
   .aviso{
-    background:var(--rojo); color:#fff; font-weight:700; text-align:center;
-    padding:10px 14px; font-size:14px; letter-spacing:.02em;
+    background:var(--rojo); color:#fff; font-weight:800; text-align:center;
+    padding:11px 14px; font-size:12px; text-transform:uppercase; letter-spacing:.08em;
     position:sticky; top:0; z-index:50;
   }
 
   /* Cabecera */
-  header{padding:20px 0 12px;display:flex;align-items:center;gap:14px}
-  /* El logo de Fast Toys es negro sobre blanco: sobre el fondo oscuro
-     necesita su propio chip claro para no desaparecer. */
-  header .marca{
-    background:#fff;border-radius:11px;padding:7px 10px;flex:0 0 auto;
-    display:grid;place-items:center;box-shadow:0 2px 12px rgba(0,0,0,.35);
+  header{
+    padding:20px 0 16px; display:flex; align-items:center; gap:14px;
+    border-bottom:var(--regla) solid var(--texto);
   }
-  header .marca img{display:block;height:34px;width:auto}
-  header h1{margin:0;font-size:18px;line-height:1.15;letter-spacing:.01em}
-  header .sub{margin:3px 0 0;color:var(--tenue);font-size:12.5px}
+  /* El logo de Fast Toys es negro sobre blanco: sobre el fondo oscuro necesita
+     su propio chip claro para no desaparecer. Cuadrado, que el manual no
+     admite radios. */
+  header .marca{
+    background:#fff; padding:8px 11px; flex:0 0 auto; display:grid; place-items:center;
+  }
+  header .marca img{display:block;height:32px;width:auto}
+  header h1{
+    margin:0; font-size:25px; font-weight:800; line-height:1.12;
+    letter-spacing:-.015em;
+  }
+  header .sub{
+    margin:4px 0 0; color:var(--tenue); font-size:11px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.08em;
+  }
 
-  /* Podio: las tres primeras posiciones, con la grada escalonada */
+  /* Podio: las tres primeras posiciones */
   .podio{
-    background:linear-gradient(165deg,#1e242e,var(--panel));
-    border:1px solid var(--linea); border-radius:var(--radio);
-    padding:20px 14px 16px; margin:12px 0 12px;
+    border:var(--regla) solid var(--divisor); background:var(--superficie);
+    padding:18px 14px 14px; margin:18px 0 14px;
   }
   .podio .et{
-    color:var(--tenue);font-size:10.5px;text-transform:uppercase;
-    letter-spacing:.14em;text-align:center;font-weight:700;margin-bottom:16px;
+    color:var(--texto); font-size:11px; text-transform:uppercase;
+    letter-spacing:.08em; font-weight:600; margin-bottom:16px;
+    padding-bottom:9px; border-bottom:1px solid var(--divisor);
   }
-  .gradas{display:grid;grid-template-columns:1fr 1.16fr 1fr;gap:7px;align-items:end}
+  .gradas{display:grid;grid-template-columns:1fr 1.16fr 1fr;gap:8px;align-items:end}
   .grada{
     background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;
     display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0;
   }
   .grada .cara{
-    width:100%;border-radius:11px 11px 0 0;padding:9px 5px 8px;
-    display:flex;flex-direction:column;align-items:center;gap:2px;
-    background:var(--panel2);border:1px solid var(--linea);border-bottom:0;
+    width:100%; padding:10px 5px 9px; display:flex; flex-direction:column;
+    align-items:center; gap:2px;
+    background:var(--fondo); border:var(--regla) solid var(--divisor); border-bottom:0;
   }
-  .grada .medalla{font-size:17px;line-height:1}
+  /* El puesto en texto, no en emoji: el manual no admite adornos de color */
+  .grada .medalla{
+    font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--tenue); line-height:1;
+  }
   .grada .nom{
-    font-size:12px;font-weight:700;width:100%;
+    font-size:13px;font-weight:800;width:100%;line-height:1.15;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   }
-  .grada .cat2{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);
+  .grada .cat2{font-size:9px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--tenue);font-weight:600;
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
-  .grada .v{font-size:21px;font-weight:800;line-height:1.05}
-  .grada .vl{font-size:8.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--tenue)}
+  .grada .v{font-size:23px;font-weight:800;line-height:1.05;margin-top:3px}
+  .grada .vl{font-size:9px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--tenue);font-weight:600}
   /* La altura del cajón es lo que hace que se lea como un podio de verdad */
   .grada .cajon{
-    width:100%;border-radius:0 0 4px 4px;display:grid;place-items:center;
-    font-size:15px;font-weight:800;color:#000;
+    width:100%; display:grid; place-items:center;
+    font-size:15px; font-weight:800; color:var(--fondo); background:var(--texto);
   }
-  .grada.p1 .cajon{height:44px;background:linear-gradient(180deg,var(--ambar),#e09600)}
-  .grada.p2 .cajon{height:30px;background:linear-gradient(180deg,#d7dee6,#aeb8c2)}
-  .grada.p3 .cajon{height:22px;background:linear-gradient(180deg,#cd8b4f,#a96a35)}
-  .grada.p1 .cara{border-color:rgba(255,179,0,.45);background:rgba(255,179,0,.08)}
-  .grada.p1 .v{color:var(--ambar);font-size:26px}
-  .grada:active{transform:scale(.98)}
+  /* El filo metálico es lo único que distingue oro, plata y bronce: el cajón
+     se queda en la paleta de la casa. Antes el 2.º y el 3.º eran idénticos. */
+  .grada .cajon{border-top:4px solid transparent}
+  .grada.p1 .cajon{height:50px;background:var(--rojo);color:#fff;border-top-color:var(--oro)}
+  .grada.p2 .cajon{height:36px;border-top-color:var(--plata)}
+  .grada.p3 .cajon{height:28px;border-top-color:var(--bronce)}
+  .grada.p1 .cara{border-color:var(--rojo)}
+  .grada.p1 .v{color:var(--rojo-claro);font-size:28px}
   .podio .pie{
-    color:var(--tenue);font-size:11.5px;text-align:center;margin-top:14px;
-    padding-top:12px;border-top:1px solid var(--linea);
+    color:var(--tenue); font-size:11px; font-weight:600; text-transform:uppercase;
+    letter-spacing:.08em; margin-top:14px; padding-top:11px;
+    border-top:1px solid var(--divisor);
   }
 
   /* Compartir */
   .acciones{display:flex;gap:8px;margin:0 0 6px}
+  /* Etiqueta a la izquierda SIEMPRE, nunca centrada: lo pide el manual */
   .btn{
-    flex:1 1 auto;background:var(--panel);border:1px solid var(--linea);
-    color:var(--texto);border-radius:11px;padding:11px 14px;font:inherit;
-    font-size:13.5px;font-weight:700;cursor:pointer;
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    flex:1 1 auto; background:transparent; border:var(--regla) solid var(--texto);
+    color:var(--texto); padding:12px 14px; font:inherit; font-size:14px;
+    font-weight:800; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:flex-start; gap:8px;
   }
-  .btn:hover{border-color:#3b4554}
-  .btn:disabled{opacity:.55;cursor:default}
-  .btn.destacado{background:var(--ambar);border-color:var(--ambar);color:#000}
+  .btn:hover{background:rgba(243,242,242,.1)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.destacado{background:var(--rojo);border-color:var(--rojo);color:#fff}
+  .btn.destacado:hover{background:var(--rojo-hover);border-color:var(--rojo-hover)}
+
+  /* Barra de navegación inferior. Fija, siempre visible y bajo el pulgar,
+     como la de una app nativa. El safe-area es para que en iPhone no la tape
+     la barra de gestos. */
+  .navbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    background:var(--fondo);border-top:var(--regla) solid var(--texto);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .pest{
+    background:none;border:0;border-top:3px solid transparent;margin-top:-3px;
+    color:var(--tenue);padding:10px 4px 9px;font:inherit;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  }
+  /* Iconos Lucide: trazo de 2 px y sin rellenos, como manda el manual. */
+  .pest svg{
+    width:22px;height:22px;display:block;fill:none;stroke:currentColor;
+    stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  }
+  .pest:hover{color:var(--texto)}
+  .pest.activa{color:var(--rojo-claro);border-top-color:var(--rojo)}
+
+  /* Selector de campeonato. Va arriba y no en la barra inferior: elegir
+     campeonato es cambiar de competición entera, no de sección. */
+  .selector{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:10px;margin:16px 0 4px}
+  .camp{
+    background:var(--superficie);border:var(--regla) solid var(--divisor);
+    color:var(--tenue);padding:11px 12px;font:inherit;cursor:pointer;text-align:left;
+    display:flex;flex-direction:column;gap:3px;
+  }
+  .camp:hover{border-color:var(--tenue)}
+  .camp.activo{border-color:var(--rojo);color:var(--texto)}
+  .camp .nom{font-size:13px;font-weight:800;line-height:1.2}
+  .camp .det{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--tenue)}
+
+  /* Una prueba: cabecera, pole por categoría, vuelta rápida y las mangas. */
+  .prueba{border:var(--regla) solid var(--divisor);margin-bottom:10px}
+  .prueba > summary{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 12px;cursor:pointer;list-style:none;
+    font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .prueba > summary::-webkit-details-marker{display:none}
+  .prueba[open]{border-color:var(--texto)}
+  .prueba[open] > summary{background:var(--texto);color:var(--fondo)}
+  .prueba > summary .rango{font-weight:600;color:var(--tenue);letter-spacing:.04em}
+  .prueba[open] > summary .rango{color:var(--fondo);opacity:.7}
+  .prueba .cuerpo{border-top:1px solid var(--divisor);padding:14px 12px}
+  .cronos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .crono{border:1px solid var(--divisor);padding:10px 11px;background:var(--superficie)}
+  .crono .k{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--tenue);display:block}
+  .crono .q{font-size:13px;font-weight:800;display:block;margin-top:5px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .crono .t{font-size:16px;font-weight:800;color:var(--rojo-claro);display:block;margin-top:3px;
+    font-variant-numeric:tabular-nums}
+  .crono.rapida .t{color:var(--texto)}
+
+  /* Una frase, la que engancha: a cuánto está el primer premio. */
+  .gancho{
+    margin:12px 0 14px;font-size:14px;color:var(--tenue);
+    border-left:var(--regla) solid var(--rojo);padding-left:11px;
+  }
+  .gancho b{color:var(--rojo-claro);font-weight:800}
+
+  /* Tabla compacta. Es la fila del manual —puesto, dorsal, nombre, vueltas— y
+     se usa igual en la general y en cada semana. El detalle del piloto (barra,
+     premios, historial) vive en su pizarra, no repetido en cada fila. */
+  .tabla{border:var(--regla) solid var(--divisor)}
+  /* Cabecera de columnas al estilo de las gráficas que publica la
+     organización en Instagram: banda roja, POS. / PILOTO / VUELTAS. */
+  .cabtabla{
+    display:grid;grid-template-columns:34px 46px 1fr auto;gap:8px;
+    padding:8px 12px;background:var(--rojo);color:#fff;
+    font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+  }
+  .cabtabla .der{text-align:right}
+  .fila{
+    display:grid;grid-template-columns:34px 46px 1fr auto;align-items:center;gap:8px;
+    padding:10px 12px;border:0;border-bottom:1px solid var(--divisor);
+    width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;
+    background:var(--superficie);
+  }
+  .fila:last-child{border-bottom:0}
+  .fila:nth-of-type(even){background:var(--fondo)}
+  .fila:hover{background:var(--divisor)}
+  .fila .pos{font-weight:800;font-size:14px;color:var(--rojo-claro)}
+  .fila.p1 .pos{font-size:16px}
+  .fila .dor{font-size:11px;font-weight:600;color:var(--tenue)}
+  .fila .nom{font-size:14px;font-weight:600;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .fila .vt{font-size:17px;font-weight:800}
+
+  /* Desplegable de cada semana. <details> nativo: sin JavaScript de más y con
+     el teclado funcionando solo. */
+  .sem{border:var(--regla) solid var(--divisor);margin-bottom:10px}
+  .sem[open]{border-color:var(--texto)}
+  .sem > summary{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:11px 12px;cursor:pointer;list-style:none;
+    font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .sem > summary::-webkit-details-marker{display:none}
+  .sem[open] > summary{background:var(--texto);color:var(--fondo)}
+  .sem > summary .rango{font-weight:600;color:var(--tenue);letter-spacing:.04em}
+  .sem[open] > summary .rango{color:var(--fondo);opacity:.7}
+  /* inline-block: sobre un inline el transform no se aplica y la flecha
+     nunca giraba. */
+  .sem > summary .flecha{font-weight:800;display:inline-block;transition:transform .12s}
+  .sem[open] > summary .flecha{transform:rotate(90deg)}
+  .sem .cuerpo{border-top:1px solid var(--divisor)}
+  .sem .tabla{border:0}
+  .piesem{
+    padding:10px 12px;border-top:1px solid var(--divisor);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--tenue);
+  }
+  .piesem .btn{flex:0 0 auto;padding:7px 11px;font-size:12px}
+
+  /* Premios: los tres hitos del reglamento con quién está más cerca. */
+  .hito{border:var(--regla) solid var(--divisor);background:var(--superficie);
+    padding:14px;margin-bottom:10px}
+  .hito .cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .hito .cifra{font-size:34px;font-weight:800;line-height:1}
+  .hito.entregado .cifra{color:var(--rojo-claro)}
+  .hito .tag{
+    font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+    border:1px solid var(--divisor);padding:3px 8px;color:var(--tenue);
+  }
+  .hito.entregado .tag{border-color:var(--rojo);color:var(--rojo-claro)}
+  .hito .nombre2{font-size:17px;font-weight:800;margin-top:8px}
+  .hito .quien{font-size:13px;color:var(--tenue);margin-top:6px}
+  .hito .quien b{color:var(--texto);font-weight:800}
+  .hito .barra{margin-top:12px}
+  .notaciclo{font-size:12px;color:var(--tenue);margin:14px 0 0;
+    border-left:var(--regla) solid var(--divisor);padding-left:11px}
+
+  /* Cupo del reglamento: cuánto de los topes se consumió. Va etiquetado con la
+     fecha real del dato, nunca «hoy»: la web se regenera una vez al día. */
+  .cupos{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:18px;
+    background:var(--divisor);border-top:1px solid var(--divisor)}
+  .cupo{background:var(--superficie);padding:12px 2px 2px}
+  .cupo .k{font-size:9.5px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--tenue);display:block}
+  .cupo .v{font-size:24px;font-weight:800;line-height:1.1;display:block;margin-top:4px}
+  .cupo .v i{font-style:normal;font-size:14px;color:var(--tenue)}
+  .cupo.lleno .v{color:var(--rojo-claro)}
+  .cupo .d{font-size:10.5px;color:var(--tenue);display:block;margin-top:2px}
 
   /* Barra de sección */
   h2.seccion{
-    font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--tenue);
-    margin:24px 0 10px;font-weight:700;
+    font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--texto); margin:28px 0 12px; font-weight:600;
+    padding-bottom:8px; border-bottom:var(--regla) solid var(--texto);
   }
 
-  /* Tarjeta de piloto en el ranking */
-  .piloto{
-    display:block;width:100%;text-align:left;cursor:pointer;
-    background:var(--panel); border:1px solid var(--linea); border-radius:var(--radio);
-    padding:14px; margin-bottom:10px; color:inherit; font:inherit;
-    transition:border-color .15s, transform .1s;
-  }
-  .piloto:hover{border-color:#3b4554}
-  .piloto:active{transform:scale(.995)}
-  .piloto .cab{display:flex;align-items:center;gap:12px}
-  .puesto{
-    width:30px;height:30px;flex:0 0 auto;border-radius:9px;background:var(--panel2);
-    display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--tenue);
-  }
-  .piloto.p1 .puesto{background:var(--ambar);color:#000}
-  .piloto.p2 .puesto{background:#c9d1d9;color:#000}
-  .piloto.p3 .puesto{background:#c47b3f;color:#000}
-  .nombre{flex:1 1 auto;min-width:0}
-  .nombre b{display:block;font-weight:700;font-size:15.5px;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .meta{display:flex;align-items:center;gap:7px;margin-top:3px}
-  .dorsal{color:var(--tenue);font-size:12px;font-weight:700}
-  .cat{
-    font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;
-    color:#9fb4cc;background:rgba(77,163,255,.13);border:1px solid rgba(77,163,255,.22);
-    padding:2px 7px;border-radius:99px;white-space:nowrap;
-  }
-  .totales{text-align:right;flex:0 0 auto}
-  .totales b{display:block;font-size:19px;line-height:1;font-weight:800}
-  .totales span{display:block;color:var(--tenue);font-size:10.5px;
-    text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-
-  /* Barra de ciclo con las tres marcas */
+  /* Barra de ciclo. Rectangular, sin radios. La usan la pizarra del piloto y
+     el panel de premios. */
   .barra{
-    position:relative;height:12px;border-radius:99px;background:var(--panel2);
-    margin:13px 0 0;overflow:hidden;
+    position:relative;height:10px;background:var(--divisor);
+    margin:14px 0 0;overflow:hidden;
   }
-  .barra .relleno{position:absolute;inset:0 auto 0 0;border-radius:99px;
-    background:linear-gradient(90deg,#ff8a00,var(--ambar))}
-  .barra .marca{position:absolute;top:0;bottom:0;width:2px;background:var(--fondo);opacity:.85}
-  .leyenda{display:flex;justify-content:space-between;margin-top:7px;gap:8px}
-  .falta{font-size:13px;font-weight:600;color:var(--ambar)}
-  .falta.completo{color:var(--verde)}
-  .ciclo{font-size:12px;color:var(--tenue)}
+  .barra .relleno{position:absolute;inset:0 auto 0 0;background:var(--rojo)}
+  .barra .marca{position:absolute;top:0;bottom:0;width:2px;background:var(--fondo)}
 
-  /* Estados de premio */
-  .premios{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
-  .premio{
-    font-size:11.5px;padding:4px 9px;border-radius:99px;border:1px solid var(--linea);
-    color:var(--tenue);display:inline-flex;align-items:center;gap:5px;
-  }
-  .premio.entregado{border-color:rgba(61,220,132,.45);color:var(--verde);background:rgba(61,220,132,.09)}
-  .premio.encurso{border-color:rgba(255,179,0,.5);color:var(--ambar);background:rgba(255,179,0,.09)}
-  .premio .x{font-weight:800}
+  /* Distancia con el piloto de delante */
+  .rival{font-size:12px;color:var(--tenue);margin-top:7px}
+  .rival .num{color:var(--texto);font-weight:800}
 
-  /* Detalle del piloto: pizarra de boxes */
+  /* Detalle del piloto: pizarra de boxes.
+     Es el mockup «contador de vueltas» del manual, tal cual. */
   .pizarra .marcador{
-    background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);
-    padding:22px 18px;text-align:center;margin-bottom:14px;
+    background:var(--superficie);color:var(--texto);
+    border:var(--regla) solid var(--texto);
+    padding:24px 18px;margin-bottom:14px;
   }
-  .pizarra .marcador .et{color:var(--tenue);font-size:11.5px;text-transform:uppercase;letter-spacing:.12em}
-  .pizarra .marcador .cifra{font-size:76px;font-weight:800;line-height:.95;margin:6px 0 2px}
-  .pizarra .marcador .de{color:var(--tenue);font-size:13px}
+  .pizarra .marcador .et{
+    color:var(--tenue);font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.1em;font-weight:600;
+  }
+  .pizarra .marcador .cifra{font-size:88px;font-weight:800;line-height:.95;margin:8px 0 2px}
+  .pizarra .marcador .de{color:var(--tenue);font-size:12px;font-weight:600}
+  .pizarra .marcador .barra{background:var(--divisor)}
+  .pizarra .marcador .barra .marca{background:var(--superficie)}
   .pizarra .objetivo{
-    margin-top:16px;padding-top:14px;border-top:1px solid var(--linea);
-    font-size:17px;font-weight:700;
+    margin-top:18px;padding-top:14px;border-top:1px solid var(--divisor);
+    font-size:16px;font-weight:600;
   }
-  .pizarra .objetivo b{color:var(--ambar)}
-  .caja{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);
+  .pizarra .objetivo b{color:var(--rojo-claro);font-weight:800}
+  .caja{background:var(--superficie);border:var(--regla) solid var(--divisor);
     padding:14px;margin-bottom:14px}
-  .premio-fila{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--linea)}
+  .premio-fila{display:flex;align-items:center;gap:11px;padding:10px 0;
+    border-bottom:1px solid var(--divisor)}
   .premio-fila:last-child{border-bottom:0}
-  .premio-fila .icono{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
-    background:var(--panel2);font-size:13px;flex:0 0 auto}
-  .premio-fila.entregado .icono{background:rgba(61,220,132,.15);color:var(--verde)}
-  .premio-fila.encurso .icono{background:rgba(255,179,0,.15);color:var(--ambar)}
+  .premio-fila .icono{width:26px;height:26px;display:grid;place-items:center;
+    background:var(--fondo);font-size:13px;flex:0 0 auto;color:var(--tenue)}
+  .premio-fila.entregado .icono{background:var(--texto);color:var(--fondo)}
+  .premio-fila.encurso .icono{background:var(--rojo);color:#fff}
   .premio-fila .txt{flex:1 1 auto;min-width:0}
-  .premio-fila .txt b{display:block;font-size:14.5px}
+  .premio-fila .txt b{display:block;font-size:15px;font-weight:800}
   .premio-fila .txt span{color:var(--tenue);font-size:12px}
-  .premio-fila .est{font-size:11.5px;color:var(--tenue);text-align:right;flex:0 0 auto}
-  .premio-fila.entregado .est{color:var(--verde)}
-  .premio-fila.encurso .est{color:var(--ambar)}
+  .premio-fila .est{font-size:10px;color:var(--tenue);text-align:right;flex:0 0 auto;
+    text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+  .premio-fila.entregado .est{color:var(--texto)}
+  .premio-fila.encurso .est{color:var(--rojo-claro)}
 
-  table.tandas{width:100%;border-collapse:collapse;font-size:13.5px}
-  table.tandas th{text-align:left;color:var(--tenue);font-size:10.5px;text-transform:uppercase;
-    letter-spacing:.1em;font-weight:700;padding:0 0 8px}
+  table.tandas{width:100%;border-collapse:collapse;font-size:14px}
+  table.tandas th{text-align:left;color:var(--tenue);font-size:10px;text-transform:uppercase;
+    letter-spacing:.08em;font-weight:600;padding:0 0 8px;
+    border-bottom:var(--regla) solid var(--texto)}
   table.tandas th.d,table.tandas td.d{text-align:right}
-  table.tandas td{padding:9px 0;border-top:1px solid var(--linea)}
-  table.tandas td.v{font-weight:800;color:var(--ambar)}
-  table.tandas .nota{color:var(--tenue);font-size:11.5px;display:block}
-  .reinicio{color:var(--verde);font-size:11px;font-weight:700}
-  .recorte{color:var(--azul);font-size:11px;font-weight:600;display:block}
+  table.tandas td{padding:10px 0;border-bottom:1px solid var(--divisor)}
+  table.tandas tr:last-child td{border-bottom:0}
+  table.tandas td.v{font-weight:800}
+  table.tandas .nota{color:var(--tenue);font-size:11px;display:block}
+  .reinicio{color:var(--rojo-claro);font-size:11px;font-weight:600}
+  .recorte{color:var(--tenue);font-size:11px;font-weight:400;display:block}
 
   .volver{
-    background:none;border:1px solid var(--linea);color:var(--tenue);
-    border-radius:99px;padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;
-    margin:16px 0 4px;
+    background:none;border:var(--regla) solid var(--divisor);color:var(--texto);
+    padding:8px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;
+    margin:16px 0 6px;
   }
-  .volver:hover{color:var(--texto);border-color:#3b4554}
+  .volver:hover{border-color:var(--texto)}
 
-  /* Resumen de premios de la liga */
-  .contadores{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-  .contador{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);padding:13px}
-  .contador b{display:block;font-size:26px;font-weight:800;line-height:1;color:var(--ambar)}
-  .contador span{display:block;color:var(--tenue);font-size:11.5px;margin-top:5px}
-
-  /* Patrocinadores: tarjeta clara para que cada logo se lea con su color real */
-  /* 132px hace que los cinco quepan en una fila en escritorio y en dos en
-     móvil. Con 148px el quinto se descolgaba solo en una fila aparte. */
+  /* Patrocinadores. Celda blanca porque los logos son dibujo negro: sobre el
+     fondo oscuro desaparecerían. El manual los quiere en blanco y negro, y de
+     eso se encarga el grayscale: quitar esa línea los devuelve a color. */
   .patros{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px}
   .patro{
-    background:#fff;border-radius:var(--radio);padding:16px 14px 12px;
+    background:#fff;padding:18px 14px 14px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:10px;text-decoration:none;min-height:104px;
-    border:1px solid rgba(255,255,255,.08);
-    transition:transform .15s, box-shadow .15s;
+    gap:10px;text-decoration:none;min-height:108px;
+    border:var(--regla) solid var(--divisor);
   }
-  a.patro:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+  a.patro:hover{border-color:var(--texto)}
   /* max-* y no width/height: los logos nunca se agrandan por encima de su
-     resolución real, así que ninguno sale pixelado. El 88% deja aire lateral
-     a los muy apaisados, como el de PMT. */
-  .patro img{display:block;max-width:88%;max-height:46px;width:auto;object-fit:contain}
+     resolución real, así que ninguno sale pixelado. */
+  .patro img{display:block;max-width:88%;max-height:44px;width:auto;object-fit:contain;
+    filter:grayscale(1) contrast(1.08)}
   /* Sin logo todavía: el nombre en la tipografía de la casa, no un hueco vacío */
-  .patro .textual{
-    font-size:19px;font-weight:800;color:#111;letter-spacing:-.01em;text-align:center;
-  }
+  .patro .textual{font-size:19px;font-weight:800;color:#201e1d;
+    letter-spacing:-.015em;text-align:center}
   .patro .rol{
-    font-size:9.5px;text-transform:uppercase;letter-spacing:.13em;
-    color:#6b7280;font-weight:700;
+    font-size:9px;text-transform:uppercase;letter-spacing:.08em;
+    color:#7d7979;font-weight:600;
   }
 
   footer{
-    color:var(--tenue);font-size:11.5px;text-align:center;line-height:1.7;
-    margin-top:34px;padding-top:22px;border-top:1px solid var(--linea);
+    color:var(--tenue);font-size:11px;text-align:center;line-height:1.7;
+    margin-top:34px;padding-top:22px;border-top:var(--regla) solid var(--divisor);
+    font-weight:600;text-transform:uppercase;letter-spacing:.08em;
   }
   footer .sello{
-    background:#fff;border-radius:9px;padding:6px 9px;display:inline-grid;
-    place-items:center;margin-bottom:11px;opacity:.9;
+    background:#fff;padding:7px 10px;
+    display:inline-grid;place-items:center;margin-bottom:12px;
   }
-  footer .sello img{display:block;height:26px;width:auto}
+  footer .sello img{display:block;height:24px;width:auto}
 
   .oculto{display:none!important}
   @media (min-width:600px){
-    .odometro .cifra{font-size:56px}
-    header h1{font-size:22px}
+    header h1{font-size:32px}
+    .pizarra .marcador .cifra{font-size:104px}
   }
 </style>
 </head>
@@ -267,30 +419,72 @@
 <div class="contenedor">
 
   <header>
-    <div class="marca"><img id="marcaLogo" src="logos/fasttoys.png" alt="Fast Toys"></div>
+    <div class="marca"><img id="marcaLogo" src="logos/pitbike-world.svg" alt="Pitbike World"></div>
     <div>
-      <h1 id="titulo">Liga Fast Toys DR7</h1>
+      <h1 id="titulo">Pitbike World</h1>
       <p class="sub" id="subtitulo">Circuito DR7 · Pit bike</p>
     </div>
   </header>
 
-  <!-- Vista: ranking público -->
+  <!-- Vista: ranking público, repartido en tres pestañas -->
+  <!-- Selector de campeonato. Solo sale si hay más de uno. -->
+  <nav class="selector oculto" id="selector" aria-label="Campeonato"></nav>
+
   <main id="vistaRanking">
-    <section class="podio">
-      <div class="et">Clasificación por vueltas</div>
-      <div class="gradas" id="gradas"></div>
-      <div class="pie" id="odoPie"></div>
+    <!-- General: quién va ganando. Es la que abre por defecto porque el
+         tráfico llega de enlaces compartidos y entra con esa pregunta. -->
+    <section id="panelGeneral" role="tabpanel">
+      <section class="podio">
+        <div class="et">Clasificación por vueltas</div>
+        <div class="gradas" id="gradas"></div>
+        <div class="pie" id="odoPie"></div>
+      </section>
+
+      <p class="gancho" id="gancho"></p>
+
+      <div class="acciones">
+        <button class="btn destacado" id="btnCompartir">Compartir clasificación</button>
+      </div>
+
+      <h2 class="seccion" id="tituloResto">Clasificación completa</h2>
+      <div class="tabla" id="tablaGeneral"></div>
     </section>
 
-    <div class="acciones">
-      <button class="btn destacado" id="btnCompartir">Compartir clasificación</button>
-    </div>
+    <!-- Semanales: un desplegable por semana con vueltas, la más reciente
+         abierta. Las semanas sin actividad no se pintan. -->
+    <section id="panelSemanas" class="oculto" role="tabpanel">
+      <h2 class="seccion">Clasificaciones semanales</h2>
+      <div id="listaSemanas"></div>
+    </section>
 
-    <h2 class="seccion" id="tituloResto">Resto de la clasificación</h2>
-    <div id="listaPilotos"></div>
+    <!-- Premios: los hitos del reglamento y quién está más cerca de cada uno. -->
+    <section id="panelPremios" class="oculto" role="tabpanel">
+      <h2 class="seccion">Premios de la liga</h2>
+      <div id="listaPremios"></div>
+      <p class="notaciclo" id="notaCiclo"></p>
+    </section>
 
-    <h2 class="seccion">Premios entregados</h2>
-    <div class="contadores" id="contadores"></div>
+    <!-- Campeonatos por carreras: la general por puntos, las pruebas con su
+         pole y su vuelta rápida, y las categorías. -->
+    <section id="panelCarrerasGeneral" class="oculto" role="tabpanel">
+      <section class="podio">
+        <div class="et">Clasificación por puntos</div>
+        <div class="gradas" id="gradasPuntos"></div>
+        <div class="pie" id="piePuntos"></div>
+      </section>
+      <h2 class="seccion">Clasificación general</h2>
+      <div class="tabla" id="tablaPuntos"></div>
+    </section>
+
+    <section id="panelPruebas" class="oculto" role="tabpanel">
+      <h2 class="seccion">Pruebas</h2>
+      <div id="listaPruebas"></div>
+    </section>
+
+    <section id="panelCategorias" class="oculto" role="tabpanel">
+      <h2 class="seccion">Categorías</h2>
+      <div id="listaCategorias"></div>
+    </section>
 
     <h2 class="seccion">Patrocinadores</h2>
     <div class="patros" id="patros"></div>
@@ -305,6 +499,7 @@
       <div class="de">vueltas de este ciclo · de 999</div>
       <div class="barra" id="pzBarra"><div class="relleno"></div></div>
       <div class="objetivo" id="pzObjetivo"></div>
+      <div class="cupos" id="pzCupos"></div>
     </section>
 
     <div class="caja">
@@ -325,6 +520,7 @@
         <div class="txt">
           <b class="num" id="pzTotales">0</b>
           <span>vueltas totales · puesto <span id="pzPuesto">–</span> de la liga</span>
+          <div class="rival" id="pzRival"></div>
         </div>
       </div>
     </div>
@@ -333,13 +529,31 @@
   <footer>
     <div class="sello"><img src="logos/fasttoys.png" alt="Fast Toys"></div>
     <div id="pieActualizado"></div>
-    <div>Cronometraje: CronoLaps · Circuito DR7</div>
+    <div>Pitbike World</div>
   </footer>
 </div>
 
+<!-- Navegación principal. Barra inferior, como una app nativa: siempre a la
+     vista y bajo el pulgar. Con hamburguesa las semanales se volverían a
+     esconder, que es justo lo que acabábamos de arreglar. -->
+<nav class="navbar" id="navbar" role="tablist" aria-label="Secciones">
+  <button class="pest" type="button" role="tab" data-vista="general">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>
+    <span>General</span>
+  </button>
+  <button class="pest" type="button" role="tab" data-vista="semanas">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+    <span>Semanales</span>
+  </button>
+  <button class="pest" type="button" role="tab" data-vista="premios">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+    <span>Premios</span>
+  </button>
+</nav>
+
 <script>
-/* LIGA:INICIO — generado por scripts/generar.mjs a partir de datos/liga.json. No editar a mano. */
-const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"nombre":"Liga Fast Toys DR7","inicio":"2026-08-08","circuito":"DR7","categoria":"Pit bike","categoriasAdmitidas":["Pit Bike 90","160 series","Proto","Master","Z190 series","Alevín 90"]},"hitos":[{"vueltas":500,"premio":"Juego de neumáticos PMT"},{"vueltas":750,"premio":"Escape completo LM"},{"vueltas":999,"premio":"Premio sorpresa"}],"marca":{"logo":"logos/fasttoys.png","alt":"Fast Toys"},"patrocinadores":[{"nombre":"Fast Toys","rol":"Organiza","logo":"logos/fasttoys.png","web":""},{"nombre":"Circuito DR7","rol":"Circuito","logo":"logos/dr7.png","web":"http://www.circuitodr7.com/"},{"nombre":"CronoLaps","rol":"Cronometraje","logo":"logos/cronolaps.jpg","web":"https://cronolaps.es"},{"nombre":"PMT","rol":"Neumáticos","logo":"logos/pmt.jpg","web":""},{"nombre":"LM Exhaust System","rol":"Escapes","logo":"logos/lm.jpg","web":""}],"resumen":{"totalVueltas":1111,"lider":{"id":"david-ramos","nombre":"DAVID RAMOS","dorsal":19,"categoria":"Master","idsocio":"96269","transpondedor":null,"vueltasCiclo":200,"vueltasTotales":200,"ciclosCompletados":0,"vueltasDescartadas":86,"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":300},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":550},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":799}],"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":300},"progresoCiclo":0.2002002002002002,"historial":[{"fecha":"2026-08-16","vueltas":100,"registradas":160,"descartadas":60,"limite":"diario","nota":"CronoLaps","acumulado":200,"cicloTrasTanda":200,"reinicios":0},{"fecha":"2026-08-15","vueltas":100,"registradas":126,"descartadas":26,"limite":"diario","nota":"CronoLaps","acumulado":100,"cicloTrasTanda":100,"reinicios":0}],"tandas":2,"ultimaTanda":"2026-08-16","puesto":1},"premiosEntregados":[{"vueltas":500,"premio":"Juego de neumáticos PMT","entregados":0},{"vueltas":750,"premio":"Escape completo LM","entregados":0},{"vueltas":999,"premio":"Premio sorpresa","entregados":0}],"trofeos":0,"pilotosActivos":23},"pilotos":[{"id":"david-ramos","nombre":"DAVID RAMOS","dorsal":19,"categoria":"Master","puesto":1,"vueltasCiclo":200,"vueltasTotales":200,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":300},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":300},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":550},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":799}],"historial":[{"fecha":"2026-08-16","vueltas":100,"registradas":160,"descartadas":60,"limite":"diario","nota":"CronoLaps","acumulado":200,"cicloTrasTanda":200,"reinicios":0},{"fecha":"2026-08-15","vueltas":100,"registradas":126,"descartadas":26,"limite":"diario","nota":"CronoLaps","acumulado":100,"cicloTrasTanda":100,"reinicios":0}]},{"id":"shadow","nombre":"Shadow","dorsal":0,"categoria":"Pit Bike 90","puesto":2,"vueltasCiclo":103,"vueltasTotales":103,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":397},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":397},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":647},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":896}],"historial":[{"fecha":"2026-08-15","vueltas":31,"registradas":31,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":103,"cicloTrasTanda":103,"reinicios":0},{"fecha":"2026-08-09","vueltas":72,"registradas":72,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":72,"cicloTrasTanda":72,"reinicios":0}]},{"id":"daniel-munoz","nombre":"DANIEL MUÑOZ","dorsal":19,"categoria":"Z190 series","puesto":3,"vueltasCiclo":100,"vueltasTotales":100,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":400},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":400},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":650},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":899}],"historial":[{"fecha":"2026-08-16","vueltas":100,"registradas":102,"descartadas":2,"limite":"diario","nota":"CronoLaps","acumulado":100,"cicloTrasTanda":100,"reinicios":0}]},{"id":"josefh","nombre":"JOSEFH","dorsal":18,"categoria":"160 Series","puesto":4,"vueltasCiclo":64,"vueltasTotales":64,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":436},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":436},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":686},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":935}],"historial":[{"fecha":"2026-08-09","vueltas":64,"registradas":64,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":64,"cicloTrasTanda":64,"reinicios":0}]},{"id":"raul-paredes","nombre":"Raul Paredes","dorsal":15,"categoria":"Z190 series","puesto":5,"vueltasCiclo":60,"vueltasTotales":60,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":440},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":440},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":690},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":939}],"historial":[{"fecha":"2026-08-08","vueltas":60,"registradas":60,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":60,"cicloTrasTanda":60,"reinicios":0}]},{"id":"ruben8","nombre":"Ruben8","dorsal":8,"categoria":"Z190 series","puesto":6,"vueltasCiclo":51,"vueltasTotales":51,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":449},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":449},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":699},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":948}],"historial":[{"fecha":"2026-08-08","vueltas":51,"registradas":51,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":51,"cicloTrasTanda":51,"reinicios":0}]},{"id":"roberto79","nombre":"Roberto79","dorsal":79,"categoria":"Z190 series","puesto":7,"vueltasCiclo":50,"vueltasTotales":50,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":450},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":450},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":700},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":949}],"historial":[{"fecha":"2026-08-08","vueltas":50,"registradas":50,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":50,"cicloTrasTanda":50,"reinicios":0}]},{"id":"hector-24","nombre":"hector 24","dorsal":24,"categoria":"160 Series","puesto":8,"vueltasCiclo":45,"vueltasTotales":45,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":455},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":455},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":705},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":954}],"historial":[{"fecha":"2026-08-15","vueltas":45,"registradas":45,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":45,"cicloTrasTanda":45,"reinicios":0}]},{"id":"andres-martin","nombre":"ANDRES MARTIN","dorsal":15,"categoria":"Z190 series","puesto":9,"vueltasCiclo":44,"vueltasTotales":44,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":456},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":456},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":706},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":955}],"historial":[{"fecha":"2026-08-15","vueltas":44,"registradas":44,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":44,"cicloTrasTanda":44,"reinicios":0}]},{"id":"kevinsito07","nombre":"kevinsito07","dorsal":7,"categoria":"Z190 series","puesto":10,"vueltasCiclo":42,"vueltasTotales":42,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":458},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":458},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":708},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":957}],"historial":[{"fecha":"2026-08-12","vueltas":42,"registradas":42,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":42,"cicloTrasTanda":42,"reinicios":0}]},{"id":"alexei-caldeira","nombre":"Alexei caldeira","dorsal":93,"categoria":"Proto","puesto":11,"vueltasCiclo":40,"vueltasTotales":40,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":460},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":460},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":710},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":959}],"historial":[{"fecha":"2026-08-15","vueltas":40,"registradas":40,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":40,"cicloTrasTanda":40,"reinicios":0}]},{"id":"reca","nombre":"Reca","dorsal":13,"categoria":"Alevin 90","puesto":12,"vueltasCiclo":39,"vueltasTotales":39,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":461},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":461},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":711},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":960}],"historial":[{"fecha":"2026-08-15","vueltas":39,"registradas":39,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":39,"cicloTrasTanda":39,"reinicios":0}]},{"id":"david11","nombre":"David11","dorsal":11,"categoria":"160 Series","puesto":13,"vueltasCiclo":38,"vueltasTotales":38,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":462},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":462},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":712},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":961}],"historial":[{"fecha":"2026-08-15","vueltas":38,"registradas":38,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":38,"cicloTrasTanda":38,"reinicios":0}]},{"id":"alber","nombre":"Alber","dorsal":192,"categoria":"Z190 series","puesto":14,"vueltasCiclo":34,"vueltasTotales":34,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":466},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":466},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":716},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":965}],"historial":[{"fecha":"2026-08-15","vueltas":34,"registradas":34,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":34,"cicloTrasTanda":34,"reinicios":0}]},{"id":"alejandro93","nombre":"Alejandro93","dorsal":93,"categoria":"Z190 series","puesto":15,"vueltasCiclo":34,"vueltasTotales":34,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":466},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":466},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":716},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":965}],"historial":[{"fecha":"2026-08-15","vueltas":34,"registradas":34,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":34,"cicloTrasTanda":34,"reinicios":0}]},{"id":"dario-fernandez","nombre":"DARIO FERNANDEZ","dorsal":81,"categoria":"Z190 series","puesto":16,"vueltasCiclo":32,"vueltasTotales":32,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":468},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":468},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":718},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":967}],"historial":[{"fecha":"2026-08-15","vueltas":32,"registradas":32,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":32,"cicloTrasTanda":32,"reinicios":0}]},{"id":"jose-alcaniz","nombre":"Jose Alcañiz","dorsal":27,"categoria":"Z190 series","puesto":17,"vueltasCiclo":29,"vueltasTotales":29,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":471},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":471},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":721},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":970}],"historial":[{"fecha":"2026-08-15","vueltas":29,"registradas":29,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":29,"cicloTrasTanda":29,"reinicios":0}]},{"id":"juan-diego-rodriguez-morales","nombre":"Juan diego Rodríguez morales","dorsal":171,"categoria":"Proto","puesto":18,"vueltasCiclo":27,"vueltasTotales":27,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":473},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":473},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":723},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":972}],"historial":[{"fecha":"2026-08-15","vueltas":27,"registradas":27,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":27,"cicloTrasTanda":27,"reinicios":0}]},{"id":"jose-carlos-leon","nombre":"JOSE CARLOS LEON","dorsal":39,"categoria":"Z190 series","puesto":19,"vueltasCiclo":26,"vueltasTotales":26,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":474},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":474},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":724},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":973}],"historial":[{"fecha":"2026-08-15","vueltas":26,"registradas":26,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":26,"cicloTrasTanda":26,"reinicios":0}]},{"id":"lucca-80","nombre":"Lucca 80","dorsal":80,"categoria":"Alevin 90","puesto":20,"vueltasCiclo":17,"vueltasTotales":17,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":483},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":483},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":733},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":982}],"historial":[{"fecha":"2026-08-15","vueltas":17,"registradas":17,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":17,"cicloTrasTanda":17,"reinicios":0}]},{"id":"kike78","nombre":"kike78","dorsal":78,"categoria":"Z190 series","puesto":21,"vueltasCiclo":14,"vueltasTotales":14,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":486},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":486},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":736},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":985}],"historial":[{"fecha":"2026-08-13","vueltas":14,"registradas":14,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":14,"cicloTrasTanda":14,"reinicios":0}]},{"id":"pollo","nombre":"Pollo","dorsal":36,"categoria":"Z190 series","puesto":22,"vueltasCiclo":14,"vueltasTotales":14,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":486},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":486},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":736},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":985}],"historial":[{"fecha":"2026-08-15","vueltas":14,"registradas":14,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":14,"cicloTrasTanda":14,"reinicios":0}]},{"id":"ruben-13","nombre":"ruben#13","dorsal":13,"categoria":"Z190 series","puesto":23,"vueltasCiclo":8,"vueltasTotales":8,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":492},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":492},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":742},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":991}],"historial":[{"fecha":"2026-08-15","vueltas":8,"registradas":8,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":8,"cicloTrasTanda":8,"reinicios":0}]}]};
+/* LIGA:INICIO — generado por scripts/generar.mjs a partir de datos/campeonatos/<campeonato>.json. No editar a mano. */
+const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"id":"copa-catalana","nombre":"Copa Catalana de Pit Bikes","formato":"carreras","pais":"ES","sede":"Cataluña","color":"#EC3013","actualizado":"2026-03-15","muestraTiempos":true,"datosDeEjemplo":false,"temporada":{"nombre":"Copa Catalana de Pit Bikes","inicio":"2026-03-14"},"marca":null,"patrocinadores":[],"resumen":{"pruebas":1,"inscritos":21,"lider":{"id":"roi-garayalde","nombre":"ROI GARAYALDE","externos":{},"dorsal":13,"categoria":null,"marca":"YCF","equipo":"TAR ZK JUNEDA","puntos":45,"poles":0,"victorias":1,"posiciones":[1,1],"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":2,"posicionGeneral":2,"puntos":20},{"prueba":"zkj","manga":2,"orden":2,"posicion":1,"posicionGeneral":1,"puntos":25}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":45,"mangas":[{"manga":1,"posicion":2,"puntos":20},{"manga":2,"posicion":1,"puntos":25}]}],"puntosMangas":45,"descartados":0,"puesto":1},"puntosRepartidos":281},"puntuacion":[25,20,16,13,11,10,9,8,7,6,5,4,3,2,1],"puntoPole":1,"listaCategorias":["Rookies","Master"],"general":[{"id":"roi-garayalde","nombre":"ROI GARAYALDE","dorsal":13,"categoria":null,"marca":"YCF","equipo":"TAR ZK JUNEDA","puesto":1,"puntos":45,"puntosMangas":45,"poles":0,"victorias":1,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":2,"posicionGeneral":2,"puntos":20},{"prueba":"zkj","manga":2,"orden":2,"posicion":1,"posicionGeneral":1,"puntos":25}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":45,"mangas":[{"manga":1,"posicion":2,"puntos":20},{"manga":2,"posicion":1,"puntos":25}]}]},{"id":"ismael-luna","nombre":"ISMAEL LUNA","dorsal":97,"categoria":null,"marca":"IMR","equipo":null,"puesto":2,"puntos":36,"puntosMangas":36,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":3,"posicionGeneral":3,"puntos":16},{"prueba":"zkj","manga":2,"orden":2,"posicion":2,"posicionGeneral":2,"puntos":20}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":36,"mangas":[{"manga":1,"posicion":3,"puntos":16},{"manga":2,"posicion":2,"puntos":20}]}]},{"id":"sebastian-pena","nombre":"SEBASTIAN PEÑA","dorsal":11,"categoria":null,"marca":"SHARK","equipo":"SHARK TEAM RACING","puesto":3,"puntos":29,"puntosMangas":29,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":4,"posicionGeneral":4,"puntos":13},{"prueba":"zkj","manga":2,"orden":2,"posicion":3,"posicionGeneral":3,"puntos":16}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":29,"mangas":[{"manga":1,"posicion":4,"puntos":13},{"manga":2,"posicion":3,"puntos":16}]}]},{"id":"ruben-cataluna","nombre":"RUBÉN CATALUÑA","dorsal":193,"categoria":"Master","marca":"RACER","equipo":"TWINBOOTS F. TOYS","puesto":4,"puntos":29,"puntosMangas":29,"poles":0,"victorias":1,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":1,"posicionGeneral":1,"puntos":25},{"prueba":"zkj","manga":2,"orden":2,"posicion":12,"posicionGeneral":12,"puntos":4}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":29,"mangas":[{"manga":1,"posicion":1,"puntos":25},{"manga":2,"posicion":12,"puntos":4}]}]},{"id":"manel-mas","nombre":"MANEL MAS","dorsal":17,"categoria":null,"marca":"PGR","equipo":"MASRACING","puesto":5,"puntos":24,"puntosMangas":24,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":5,"posicionGeneral":5,"puntos":11},{"prueba":"zkj","manga":2,"orden":2,"posicion":4,"posicionGeneral":4,"puntos":13}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":24,"mangas":[{"manga":1,"posicion":5,"puntos":11},{"manga":2,"posicion":4,"puntos":13}]}]},{"id":"daniel-martinez","nombre":"DANIEL MARTINEZ","dorsal":92,"categoria":"Rookies","marca":null,"equipo":null,"puesto":6,"puntos":19,"puntosMangas":19,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":6,"posicionGeneral":6,"puntos":10},{"prueba":"zkj","manga":2,"orden":2,"posicion":7,"posicionGeneral":7,"puntos":9}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":19,"mangas":[{"manga":1,"posicion":6,"puntos":10},{"manga":2,"posicion":7,"puntos":9}]}]},{"id":"ismael-ruiz","nombre":"ISMAEL RUIZ","dorsal":16,"categoria":null,"marca":"SHARK","equipo":null,"puesto":7,"puntos":16,"puntosMangas":16,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":10,"posicionGeneral":10,"puntos":6},{"prueba":"zkj","manga":2,"orden":2,"posicion":6,"posicionGeneral":6,"puntos":10}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":16,"mangas":[{"manga":1,"posicion":10,"puntos":6},{"manga":2,"posicion":6,"puntos":10}]}]},{"id":"eduard-cortina","nombre":"EDUARD CORTINA","dorsal":84,"categoria":"Master","marca":"IMR","equipo":"TCR RACING TEAM","puesto":8,"puntos":15,"puntosMangas":15,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":7,"posicionGeneral":7,"puntos":9},{"prueba":"zkj","manga":2,"orden":2,"posicion":10,"posicionGeneral":10,"puntos":6}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":15,"mangas":[{"manga":1,"posicion":7,"puntos":9},{"manga":2,"posicion":10,"puntos":6}]}]},{"id":"santi-tubert","nombre":"SANTI TUBERT","dorsal":27,"categoria":"Master","marca":"SIGMA","equipo":"TCR RACING TEAM","puesto":9,"puntos":14,"puntosMangas":14,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":9,"posicionGeneral":9,"puntos":7},{"prueba":"zkj","manga":2,"orden":2,"posicion":9,"posicionGeneral":9,"puntos":7}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":14,"mangas":[{"manga":1,"posicion":9,"puntos":7},{"manga":2,"posicion":9,"puntos":7}]}]},{"id":"alvaro-alguacil","nombre":"ALVARO ALGUACIL","dorsal":44,"categoria":"Rookies","marca":"MALCOR","equipo":null,"puesto":10,"puntos":13,"puntosMangas":13,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":11,"posicionGeneral":11,"puntos":5},{"prueba":"zkj","manga":2,"orden":2,"posicion":8,"posicionGeneral":8,"puntos":8}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":13,"mangas":[{"manga":1,"posicion":11,"puntos":5},{"manga":2,"posicion":8,"puntos":8}]}]},{"id":"carlos-mata","nombre":"CARLOS MATA","dorsal":881,"categoria":"Master","marca":"MALCOR","equipo":null,"puesto":11,"puntos":13,"puntosMangas":13,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":8,"posicionGeneral":8,"puntos":8},{"prueba":"zkj","manga":2,"orden":2,"posicion":11,"posicionGeneral":11,"puntos":5}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":13,"mangas":[{"manga":1,"posicion":8,"puntos":8},{"manga":2,"posicion":11,"puntos":5}]}]},{"id":"pere-pros","nombre":"PERE PROS","dorsal":7,"categoria":"Master","marca":"SIGMA","equipo":null,"puesto":12,"puntos":11,"puntosMangas":11,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":2,"orden":2,"posicion":5,"posicionGeneral":5,"puntos":11}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":11,"mangas":[{"manga":2,"posicion":5,"puntos":11}]}]},{"id":"marc-recio","nombre":"MARC RECIO","dorsal":17,"categoria":"Rookies","marca":"SIGMA","equipo":"TCR RACING TEAM","puesto":13,"puntos":6,"puntosMangas":6,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":12,"posicionGeneral":12,"puntos":4},{"prueba":"zkj","manga":2,"orden":2,"posicion":14,"posicionGeneral":14,"puntos":2}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":6,"mangas":[{"manga":1,"posicion":12,"puntos":4},{"manga":2,"posicion":14,"puntos":2}]}]},{"id":"christian-navarro","nombre":"CHRISTIAN NAVARRO","dorsal":61,"categoria":null,"marca":"SHARK","equipo":"CH61RACING","puesto":14,"puntos":3,"puntosMangas":3,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":2,"orden":2,"posicion":13,"posicionGeneral":13,"puntos":3}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":3,"mangas":[{"manga":2,"posicion":13,"puntos":3}]}]},{"id":"dafne-martinez","nombre":"DAFNE MARTÍNEZ","dorsal":7,"categoria":null,"marca":"SIGMA","equipo":"TEAM DAFNE7","puesto":15,"puntos":3,"puntosMangas":3,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":14,"posicionGeneral":14,"puntos":2},{"prueba":"zkj","manga":2,"orden":2,"posicion":15,"posicionGeneral":15,"puntos":1}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":3,"mangas":[{"manga":1,"posicion":14,"puntos":2},{"manga":2,"posicion":15,"puntos":1}]}]},{"id":"xavier-moreno","nombre":"XAVIER MORENO","dorsal":23,"categoria":"Rookies","marca":"PGR","equipo":null,"puesto":16,"puntos":3,"puntosMangas":3,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":13,"posicionGeneral":13,"puntos":3},{"prueba":"zkj","manga":2,"orden":2,"posicion":16,"posicionGeneral":16,"puntos":0}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":3,"mangas":[{"manga":1,"posicion":13,"puntos":3},{"manga":2,"posicion":16,"puntos":0}]}]},{"id":"elsa-boix","nombre":"ELSA BOIX","dorsal":28,"categoria":null,"marca":"MALCOR","equipo":null,"puesto":17,"puntos":1,"puntosMangas":1,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":15,"posicionGeneral":15,"puntos":1}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":1,"mangas":[{"manga":1,"posicion":15,"puntos":1}]}]},{"id":"said-benslaiman","nombre":"SAID BENSLAIMAN","dorsal":20,"categoria":null,"marca":"SHARK","equipo":"POPTEAM","puesto":18,"puntos":1,"puntosMangas":0,"poles":1,"victorias":0,"vueltasRapidas":0,"mangas":[],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":1,"mangas":[],"pole":true}]},{"id":"ignasi-de-argacha","nombre":"IGNASI DE ARGACHA","dorsal":69,"categoria":"Rookies","marca":"MALCOR","equipo":null,"puesto":19,"puntos":0,"puntosMangas":0,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":16,"posicionGeneral":16,"puntos":0},{"prueba":"zkj","manga":2,"orden":2,"posicion":17,"posicionGeneral":17,"puntos":0}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":0,"mangas":[{"manga":1,"posicion":16,"puntos":0},{"manga":2,"posicion":17,"puntos":0}]}]},{"id":"sergio-monzo","nombre":"SERGIO MONZO","dorsal":12,"categoria":"Rookies","marca":"RACER","equipo":"TWINBOOTS F. TOYS","puesto":20,"puntos":0,"puntosMangas":0,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":17,"posicionGeneral":17,"puntos":0},{"prueba":"zkj","manga":2,"orden":2,"posicion":18,"posicionGeneral":18,"puntos":0}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":0,"mangas":[{"manga":1,"posicion":17,"puntos":0},{"manga":2,"posicion":18,"puntos":0}]}]},{"id":"enrique-ereza","nombre":"ENRIQUE EREZA","dorsal":93,"categoria":"Master","marca":"MALCOR","equipo":"POPTEAM","puesto":21,"puntos":0,"puntosMangas":0,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[],"historial":[]}],"categorias":[{"categoria":"Rookies","pilotos":[{"id":"daniel-martinez","nombre":"DANIEL MARTINEZ","dorsal":92,"categoria":"Rookies","marca":null,"equipo":null,"puesto":1,"puntos":51,"puntosMangas":50,"poles":1,"victorias":2,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":1,"posicionGeneral":6,"puntos":25},{"prueba":"zkj","manga":2,"orden":2,"posicion":1,"posicionGeneral":7,"puntos":25}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":51,"mangas":[{"manga":1,"posicion":1,"puntos":25},{"manga":2,"posicion":1,"puntos":25}],"pole":true}]},{"id":"alvaro-alguacil","nombre":"ALVARO ALGUACIL","dorsal":44,"categoria":"Rookies","marca":"MALCOR","equipo":null,"puesto":2,"puntos":40,"puntosMangas":40,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":2,"posicionGeneral":11,"puntos":20},{"prueba":"zkj","manga":2,"orden":2,"posicion":2,"posicionGeneral":8,"puntos":20}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":40,"mangas":[{"manga":1,"posicion":2,"puntos":20},{"manga":2,"posicion":2,"puntos":20}]}]},{"id":"marc-recio","nombre":"MARC RECIO","dorsal":17,"categoria":"Rookies","marca":"SIGMA","equipo":"TCR RACING TEAM","puesto":3,"puntos":32,"puntosMangas":32,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":3,"posicionGeneral":12,"puntos":16},{"prueba":"zkj","manga":2,"orden":2,"posicion":3,"posicionGeneral":14,"puntos":16}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":32,"mangas":[{"manga":1,"posicion":3,"puntos":16},{"manga":2,"posicion":3,"puntos":16}]}]},{"id":"xavier-moreno","nombre":"XAVIER MORENO","dorsal":23,"categoria":"Rookies","marca":"PGR","equipo":null,"puesto":4,"puntos":26,"puntosMangas":26,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":4,"posicionGeneral":13,"puntos":13},{"prueba":"zkj","manga":2,"orden":2,"posicion":4,"posicionGeneral":16,"puntos":13}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":26,"mangas":[{"manga":1,"posicion":4,"puntos":13},{"manga":2,"posicion":4,"puntos":13}]}]},{"id":"ignasi-de-argacha","nombre":"IGNASI DE ARGACHA","dorsal":69,"categoria":"Rookies","marca":"MALCOR","equipo":null,"puesto":5,"puntos":22,"puntosMangas":22,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":5,"posicionGeneral":16,"puntos":11},{"prueba":"zkj","manga":2,"orden":2,"posicion":5,"posicionGeneral":17,"puntos":11}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":22,"mangas":[{"manga":1,"posicion":5,"puntos":11},{"manga":2,"posicion":5,"puntos":11}]}]},{"id":"sergio-monzo","nombre":"SERGIO MONZO","dorsal":12,"categoria":"Rookies","marca":"RACER","equipo":"TWINBOOTS F. TOYS","puesto":6,"puntos":20,"puntosMangas":20,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":6,"posicionGeneral":17,"puntos":10},{"prueba":"zkj","manga":2,"orden":2,"posicion":6,"posicionGeneral":18,"puntos":10}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":20,"mangas":[{"manga":1,"posicion":6,"puntos":10},{"manga":2,"posicion":6,"puntos":10}]}]}]},{"categoria":"Master","pilotos":[{"id":"eduard-cortina","nombre":"EDUARD CORTINA","dorsal":84,"categoria":"Master","marca":"IMR","equipo":"TCR RACING TEAM","puesto":1,"puntos":36,"puntosMangas":36,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":2,"posicionGeneral":7,"puntos":20},{"prueba":"zkj","manga":2,"orden":2,"posicion":3,"posicionGeneral":10,"puntos":16}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":36,"mangas":[{"manga":1,"posicion":2,"puntos":20},{"manga":2,"posicion":3,"puntos":16}]}]},{"id":"ruben-cataluna","nombre":"RUBÉN CATALUÑA","dorsal":193,"categoria":"Master","marca":"RACER","equipo":"TWINBOOTS F. TOYS","puesto":2,"puntos":36,"puntosMangas":36,"poles":0,"victorias":1,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":1,"posicionGeneral":1,"puntos":25},{"prueba":"zkj","manga":2,"orden":2,"posicion":5,"posicionGeneral":12,"puntos":11}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":36,"mangas":[{"manga":1,"posicion":1,"puntos":25},{"manga":2,"posicion":5,"puntos":11}]}]},{"id":"santi-tubert","nombre":"SANTI TUBERT","dorsal":27,"categoria":"Master","marca":"SIGMA","equipo":"TCR RACING TEAM","puesto":3,"puntos":33,"puntosMangas":33,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":4,"posicionGeneral":9,"puntos":13},{"prueba":"zkj","manga":2,"orden":2,"posicion":2,"posicionGeneral":9,"puntos":20}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":33,"mangas":[{"manga":1,"posicion":4,"puntos":13},{"manga":2,"posicion":2,"puntos":20}]}]},{"id":"carlos-mata","nombre":"CARLOS MATA","dorsal":881,"categoria":"Master","marca":"MALCOR","equipo":null,"puesto":4,"puntos":29,"puntosMangas":29,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":1,"orden":1,"posicion":3,"posicionGeneral":8,"puntos":16},{"prueba":"zkj","manga":2,"orden":2,"posicion":4,"posicionGeneral":11,"puntos":13}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":29,"mangas":[{"manga":1,"posicion":3,"puntos":16},{"manga":2,"posicion":4,"puntos":13}]}]},{"id":"pere-pros","nombre":"PERE PROS","dorsal":7,"categoria":"Master","marca":"SIGMA","equipo":null,"puesto":5,"puntos":26,"puntosMangas":25,"poles":1,"victorias":1,"vueltasRapidas":0,"mangas":[{"prueba":"zkj","manga":2,"orden":2,"posicion":1,"posicionGeneral":5,"puntos":25}],"historial":[{"prueba":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","puntos":26,"mangas":[{"manga":2,"posicion":1,"puntos":25}],"pole":true}]},{"id":"enrique-ereza","nombre":"ENRIQUE EREZA","dorsal":93,"categoria":"Master","marca":"MALCOR","equipo":"POPTEAM","puesto":6,"puntos":0,"puntosMangas":0,"poles":0,"victorias":0,"vueltasRapidas":0,"mangas":[],"historial":[]}]}],"pruebas":[{"id":"zkj","nombre":"I GP Zona Karting Juneda","fecha":"2026-03-15","circuito":"Zona Karting Juneda (1 km)","mangas":2,"poles":[{"categoria":"General","piloto":"said-benslaiman","tiempo":"47.004","nombre":"SAID BENSLAIMAN"},{"categoria":"Rookies","piloto":"daniel-martinez","tiempo":null,"nombre":"DANIEL MARTINEZ"},{"categoria":"Master","piloto":"pere-pros","tiempo":null,"nombre":"PERE PROS"}],"vueltaRapida":{"piloto":"pere-pros","tiempo":"47.560","velocidad":"75.6 km/h","manga":1,"nombre":"PERE PROS"}}]},{"id":"fast-toys-dr7","nombre":"Liga Fast Toys DR7","formato":"vueltas","pais":"ES","sede":"Circuito DR7 · Tarancón","color":"#EC3013","actualizado":"2026-09-01","muestraTiempos":false,"datosDeEjemplo":false,"temporada":{"nombre":"Liga Fast Toys DR7","inicio":"2026-08-08","circuito":"DR7","categoria":"Pit bike","categoriasAdmitidas":["Pit Bike 90","160 series","Proto","Master","Z190 series","Alevín 90"]},"marca":{"logo":"logos/fasttoys.png","alt":"Fast Toys"},"patrocinadores":[{"nombre":"Fast Toys","rol":"Organiza","logo":"logos/fasttoys.png","web":""},{"nombre":"Circuito DR7","rol":"Circuito","logo":"logos/dr7.png","web":"http://www.circuitodr7.com/"},{"nombre":"CronoLaps","rol":"Cronometraje","logo":"logos/cronolaps.jpg","web":"https://cronolaps.es"},{"nombre":"LM Exhaust System","rol":"Escapes","logo":"logos/lm.jpg","web":""}],"resumen":{"totalVueltas":1332,"lider":{"id":"navarrete","nombre":"NAVARRETE","nombreReal":"David Navarrete","externos":{"cronolaps":"98528"},"dorsal":44,"categoria":"160 Series","idsocio":"98528","vueltasCiclo":143,"vueltasTotales":143,"ciclosCompletados":0,"vueltasDescartadas":0,"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":357},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":607},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":856}],"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":357},"progresoCiclo":0.14314314314314314,"ciclo":999,"historial":[{"fecha":"2026-08-29","vueltas":66,"registradas":66,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":143,"cicloTrasTanda":143,"reinicios":0},{"fecha":"2026-08-28","vueltas":77,"registradas":77,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":77,"cicloTrasTanda":77,"reinicios":0}],"semanas":{"2026-W35":143},"ultimaJornada":{"fecha":"2026-08-29","vueltas":66,"registradas":66,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":143,"cicloTrasTanda":143,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":143},"tandas":2,"ultimaTanda":"2026-08-29","puesto":1},"premiosEntregados":[{"vueltas":500,"premio":"Juego de neumáticos PMT","entregados":0},{"vueltas":750,"premio":"Escape completo LM","entregados":0},{"vueltas":999,"premio":"Premio sorpresa","entregados":0}],"trofeos":0,"pilotosActivos":24},"hitos":[{"vueltas":500,"premio":"Juego de neumáticos PMT"},{"vueltas":750,"premio":"Escape completo LM"},{"vueltas":999,"premio":"Premio sorpresa"}],"reglamento":{"maxVueltasDia":100,"maxVueltasSemana":200,"ciclo":999},"semanas":[{"semana":"2026-W35","numero":35,"desde":"2026-08-24","hasta":"2026-08-30","vueltas":730,"pilotos":[{"id":"navarrete","nombre":"NAVARRETE","dorsal":44,"categoria":"160 Series","vueltas":143,"puesto":1},{"id":"elias8","nombre":"ELIAS8","dorsal":8,"categoria":"Cambio menos de 125","vueltas":100,"puesto":2},{"id":"m-ivansan","nombre":"M_IvanSan","dorsal":21,"categoria":"Z190 series","vueltas":82,"puesto":3},{"id":"javier-moreno-del-barrio","nombre":"Javier Moreno Del Barrio","dorsal":8,"categoria":"Master","vueltas":79,"puesto":4},{"id":"sergio","nombre":"SERGIO","dorsal":4,"categoria":"Z190 series","vueltas":72,"puesto":5},{"id":"souto","nombre":"SOUTO","dorsal":12,"categoria":"Z190 series","vueltas":53,"puesto":6},{"id":"david-garrido","nombre":"David Garrido","dorsal":null,"categoria":null,"vueltas":47,"puesto":7},{"id":"harry","nombre":"HARRY","dorsal":24,"categoria":"Z190 series","vueltas":44,"puesto":8},{"id":"alberto","nombre":"ALBERTO","dorsal":16,"categoria":"Pit Bike 90","vueltas":32,"puesto":9},{"id":"nieto","nombre":"NIETO","dorsal":15,"categoria":"160 Series","vueltas":32,"puesto":10},{"id":"manu","nombre":"MANU","dorsal":22,"categoria":"Z190 series","vueltas":24,"puesto":11},{"id":"javier18","nombre":"JAVIER18","dorsal":18,"categoria":"Z190 series","vueltas":22,"puesto":12}]},{"semana":"2026-W34","numero":34,"desde":"2026-08-17","hasta":"2026-08-23","vueltas":287,"pilotos":[{"id":"rafita","nombre":"Rafita","dorsal":98,"categoria":"Master","vueltas":81,"puesto":1},{"id":"ruben-57","nombre":"RUBEN 57","dorsal":57,"categoria":"Z190 series","vueltas":71,"puesto":2},{"id":"lucas21","nombre":"LUCAS21","dorsal":21,"categoria":"160 Series","vueltas":63,"puesto":3},{"id":"alba-98521","nombre":"Alba","dorsal":30,"categoria":"Z190 series","vueltas":39,"puesto":4},{"id":"jvc23","nombre":"JVC23","dorsal":23,"categoria":"160 Series","vueltas":33,"puesto":5}]},{"semana":"2026-W33","numero":33,"desde":"2026-08-10","hasta":"2026-08-16","vueltas":90,"pilotos":[{"id":"kevinsito07","nombre":"kevinsito07","dorsal":7,"categoria":"Z190 series","vueltas":42,"puesto":1},{"id":"alber","nombre":"Alber","dorsal":192,"categoria":"Z190 series","vueltas":34,"puesto":2},{"id":"kike78","nombre":"kike78","dorsal":78,"categoria":"Z190 series","vueltas":14,"puesto":3}]},{"semana":"2026-W32","numero":32,"desde":"2026-08-03","hasta":"2026-08-09","vueltas":225,"pilotos":[{"id":"josefh","nombre":"JOSEFH","dorsal":18,"categoria":"160 Series","vueltas":64,"puesto":1},{"id":"raul-paredes","nombre":"Raul Paredes","dorsal":15,"categoria":"Z190 series","vueltas":60,"puesto":2},{"id":"ruben8","nombre":"Ruben8","dorsal":8,"categoria":"Z190 series","vueltas":51,"puesto":3},{"id":"roberto79","nombre":"Roberto79","dorsal":79,"categoria":"Z190 series","vueltas":50,"puesto":4}]}],"pilotos":[{"id":"navarrete","nombre":"NAVARRETE","dorsal":44,"categoria":"160 Series","puesto":1,"vueltasCiclo":143,"vueltasTotales":143,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":357},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":357},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":607},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":856}],"historial":[{"fecha":"2026-08-29","vueltas":66,"registradas":66,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":143,"cicloTrasTanda":143,"reinicios":0},{"fecha":"2026-08-28","vueltas":77,"registradas":77,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":77,"cicloTrasTanda":77,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-29","vueltas":66,"registradas":66,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":143,"cicloTrasTanda":143,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":143}},{"id":"elias8","nombre":"ELIAS8","dorsal":8,"categoria":"Cambio menos de 125","puesto":2,"vueltasCiclo":100,"vueltasTotales":100,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":400},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":400},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":650},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":899}],"historial":[{"fecha":"2026-08-28","vueltas":100,"registradas":100,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":100,"cicloTrasTanda":100,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":100,"registradas":100,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":100,"cicloTrasTanda":100,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":100}},{"id":"m-ivansan","nombre":"M_IvanSan","dorsal":21,"categoria":"Z190 series","puesto":3,"vueltasCiclo":82,"vueltasTotales":82,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":418},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":418},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":668},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":917}],"historial":[{"fecha":"2026-08-30","vueltas":82,"registradas":82,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":82,"cicloTrasTanda":82,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-30","vueltas":82,"registradas":82,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":82,"cicloTrasTanda":82,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":82}},{"id":"rafita","nombre":"Rafita","dorsal":98,"categoria":"Master","puesto":4,"vueltasCiclo":81,"vueltasTotales":81,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":419},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":419},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":669},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":918}],"historial":[{"fecha":"2026-08-23","vueltas":81,"registradas":81,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":81,"cicloTrasTanda":81,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-23","vueltas":81,"registradas":81,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":81,"cicloTrasTanda":81,"reinicios":0},"semanaUltima":{"semana":"2026-W34","desde":"2026-08-17","hasta":"2026-08-23","vueltas":81}},{"id":"javier-moreno-del-barrio","nombre":"Javier Moreno Del Barrio","dorsal":8,"categoria":"Master","puesto":5,"vueltasCiclo":79,"vueltasTotales":79,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":421},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":421},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":671},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":920}],"historial":[{"fecha":"2026-08-28","vueltas":79,"registradas":79,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":79,"cicloTrasTanda":79,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":79,"registradas":79,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":79,"cicloTrasTanda":79,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":79}},{"id":"sergio","nombre":"SERGIO","dorsal":4,"categoria":"Z190 series","puesto":6,"vueltasCiclo":72,"vueltasTotales":72,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":428},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":428},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":678},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":927}],"historial":[{"fecha":"2026-08-29","vueltas":72,"registradas":72,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":72,"cicloTrasTanda":72,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-29","vueltas":72,"registradas":72,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":72,"cicloTrasTanda":72,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":72}},{"id":"ruben-57","nombre":"RUBEN 57","dorsal":57,"categoria":"Z190 series","puesto":7,"vueltasCiclo":71,"vueltasTotales":71,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":429},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":429},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":679},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":928}],"historial":[{"fecha":"2026-08-22","vueltas":71,"registradas":71,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":71,"cicloTrasTanda":71,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-22","vueltas":71,"registradas":71,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":71,"cicloTrasTanda":71,"reinicios":0},"semanaUltima":{"semana":"2026-W34","desde":"2026-08-17","hasta":"2026-08-23","vueltas":71}},{"id":"josefh","nombre":"JOSEFH","dorsal":18,"categoria":"160 Series","puesto":8,"vueltasCiclo":64,"vueltasTotales":64,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":436},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":436},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":686},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":935}],"historial":[{"fecha":"2026-08-09","vueltas":64,"registradas":64,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":64,"cicloTrasTanda":64,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-09","vueltas":64,"registradas":64,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":64,"cicloTrasTanda":64,"reinicios":0},"semanaUltima":{"semana":"2026-W32","desde":"2026-08-03","hasta":"2026-08-09","vueltas":64}},{"id":"lucas21","nombre":"LUCAS21","dorsal":21,"categoria":"160 Series","puesto":9,"vueltasCiclo":63,"vueltasTotales":63,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":437},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":437},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":687},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":936}],"historial":[{"fecha":"2026-08-23","vueltas":63,"registradas":63,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":63,"cicloTrasTanda":63,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-23","vueltas":63,"registradas":63,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":63,"cicloTrasTanda":63,"reinicios":0},"semanaUltima":{"semana":"2026-W34","desde":"2026-08-17","hasta":"2026-08-23","vueltas":63}},{"id":"raul-paredes","nombre":"Raul Paredes","dorsal":15,"categoria":"Z190 series","puesto":10,"vueltasCiclo":60,"vueltasTotales":60,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":440},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":440},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":690},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":939}],"historial":[{"fecha":"2026-08-08","vueltas":60,"registradas":60,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":60,"cicloTrasTanda":60,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-08","vueltas":60,"registradas":60,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":60,"cicloTrasTanda":60,"reinicios":0},"semanaUltima":{"semana":"2026-W32","desde":"2026-08-03","hasta":"2026-08-09","vueltas":60}},{"id":"souto","nombre":"SOUTO","dorsal":12,"categoria":"Z190 series","puesto":11,"vueltasCiclo":53,"vueltasTotales":53,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":447},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":447},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":697},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":946}],"historial":[{"fecha":"2026-08-29","vueltas":53,"registradas":53,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":53,"cicloTrasTanda":53,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-29","vueltas":53,"registradas":53,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":53,"cicloTrasTanda":53,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":53}},{"id":"ruben8","nombre":"Ruben8","dorsal":8,"categoria":"Z190 series","puesto":12,"vueltasCiclo":51,"vueltasTotales":51,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":449},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":449},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":699},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":948}],"historial":[{"fecha":"2026-08-08","vueltas":51,"registradas":51,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":51,"cicloTrasTanda":51,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-08","vueltas":51,"registradas":51,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":51,"cicloTrasTanda":51,"reinicios":0},"semanaUltima":{"semana":"2026-W32","desde":"2026-08-03","hasta":"2026-08-09","vueltas":51}},{"id":"roberto79","nombre":"Roberto79","dorsal":79,"categoria":"Z190 series","puesto":13,"vueltasCiclo":50,"vueltasTotales":50,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":450},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":450},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":700},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":949}],"historial":[{"fecha":"2026-08-08","vueltas":50,"registradas":50,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":50,"cicloTrasTanda":50,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-08","vueltas":50,"registradas":50,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":50,"cicloTrasTanda":50,"reinicios":0},"semanaUltima":{"semana":"2026-W32","desde":"2026-08-03","hasta":"2026-08-09","vueltas":50}},{"id":"david-garrido","nombre":"David Garrido","dorsal":null,"categoria":null,"puesto":14,"vueltasCiclo":47,"vueltasTotales":47,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":453},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":453},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":703},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":952}],"historial":[{"fecha":"2026-08-30","vueltas":47,"registradas":47,"descartadas":0,"limite":null,"nota":"Clasificación oficial · sin datos en CronoLaps","acumulado":47,"cicloTrasTanda":47,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-30","vueltas":47,"registradas":47,"descartadas":0,"limite":null,"nota":"Clasificación oficial · sin datos en CronoLaps","acumulado":47,"cicloTrasTanda":47,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":47}},{"id":"harry","nombre":"HARRY","dorsal":24,"categoria":"Z190 series","puesto":15,"vueltasCiclo":44,"vueltasTotales":44,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":456},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":456},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":706},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":955}],"historial":[{"fecha":"2026-08-28","vueltas":44,"registradas":44,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":44,"cicloTrasTanda":44,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":44,"registradas":44,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":44,"cicloTrasTanda":44,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":44}},{"id":"kevinsito07","nombre":"kevinsito07","dorsal":7,"categoria":"Z190 series","puesto":16,"vueltasCiclo":42,"vueltasTotales":42,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":458},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":458},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":708},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":957}],"historial":[{"fecha":"2026-08-12","vueltas":42,"registradas":42,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":42,"cicloTrasTanda":42,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-12","vueltas":42,"registradas":42,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":42,"cicloTrasTanda":42,"reinicios":0},"semanaUltima":{"semana":"2026-W33","desde":"2026-08-10","hasta":"2026-08-16","vueltas":42}},{"id":"alba-98521","nombre":"Alba","dorsal":30,"categoria":"Z190 series","puesto":17,"vueltasCiclo":39,"vueltasTotales":39,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":461},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":461},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":711},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":960}],"historial":[{"fecha":"2026-08-23","vueltas":39,"registradas":39,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":39,"cicloTrasTanda":39,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-23","vueltas":39,"registradas":39,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":39,"cicloTrasTanda":39,"reinicios":0},"semanaUltima":{"semana":"2026-W34","desde":"2026-08-17","hasta":"2026-08-23","vueltas":39}},{"id":"alber","nombre":"Alber","dorsal":192,"categoria":"Z190 series","puesto":18,"vueltasCiclo":34,"vueltasTotales":34,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":466},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":466},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":716},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":965}],"historial":[{"fecha":"2026-08-15","vueltas":34,"registradas":34,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":34,"cicloTrasTanda":34,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-15","vueltas":34,"registradas":34,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":34,"cicloTrasTanda":34,"reinicios":0},"semanaUltima":{"semana":"2026-W33","desde":"2026-08-10","hasta":"2026-08-16","vueltas":34}},{"id":"jvc23","nombre":"JVC23","dorsal":23,"categoria":"160 Series","puesto":19,"vueltasCiclo":33,"vueltasTotales":33,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":467},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":467},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":717},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":966}],"historial":[{"fecha":"2026-08-23","vueltas":33,"registradas":33,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":33,"cicloTrasTanda":33,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-23","vueltas":33,"registradas":33,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":33,"cicloTrasTanda":33,"reinicios":0},"semanaUltima":{"semana":"2026-W34","desde":"2026-08-17","hasta":"2026-08-23","vueltas":33}},{"id":"alberto","nombre":"ALBERTO","dorsal":16,"categoria":"Pit Bike 90","puesto":20,"vueltasCiclo":32,"vueltasTotales":32,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":468},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":468},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":718},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":967}],"historial":[{"fecha":"2026-08-28","vueltas":32,"registradas":32,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":32,"cicloTrasTanda":32,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":32,"registradas":32,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":32,"cicloTrasTanda":32,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":32}},{"id":"nieto","nombre":"NIETO","dorsal":15,"categoria":"160 Series","puesto":21,"vueltasCiclo":32,"vueltasTotales":32,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":468},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":468},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":718},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":967}],"historial":[{"fecha":"2026-08-29","vueltas":32,"registradas":32,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":32,"cicloTrasTanda":32,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-29","vueltas":32,"registradas":32,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":32,"cicloTrasTanda":32,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":32}},{"id":"manu","nombre":"MANU","dorsal":22,"categoria":"Z190 series","puesto":22,"vueltasCiclo":24,"vueltasTotales":24,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":476},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":476},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":726},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":975}],"historial":[{"fecha":"2026-08-28","vueltas":24,"registradas":24,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":24,"cicloTrasTanda":24,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":24,"registradas":24,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":24,"cicloTrasTanda":24,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":24}},{"id":"javier18","nombre":"JAVIER18","dorsal":18,"categoria":"Z190 series","puesto":23,"vueltasCiclo":22,"vueltasTotales":22,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":478},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":478},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":728},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":977}],"historial":[{"fecha":"2026-08-28","vueltas":22,"registradas":22,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":22,"cicloTrasTanda":22,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-28","vueltas":22,"registradas":22,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":22,"cicloTrasTanda":22,"reinicios":0},"semanaUltima":{"semana":"2026-W35","desde":"2026-08-24","hasta":"2026-08-30","vueltas":22}},{"id":"kike78","nombre":"kike78","dorsal":78,"categoria":"Z190 series","puesto":24,"vueltasCiclo":14,"vueltasTotales":14,"ciclosCompletados":0,"siguiente":{"vueltas":500,"premio":"Juego de neumáticos PMT","faltan":486},"premios":[{"vueltas":500,"premio":"Juego de neumáticos PMT","estado":"en curso","entregados":0,"faltan":486},{"vueltas":750,"premio":"Escape completo LM","estado":"bloqueado","entregados":0,"faltan":736},{"vueltas":999,"premio":"Premio sorpresa","estado":"bloqueado","entregados":0,"faltan":985}],"historial":[{"fecha":"2026-08-13","vueltas":14,"registradas":14,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":14,"cicloTrasTanda":14,"reinicios":0}],"ultimaJornada":{"fecha":"2026-08-13","vueltas":14,"registradas":14,"descartadas":0,"limite":null,"nota":"CronoLaps","acumulado":14,"cicloTrasTanda":14,"reinicios":0},"semanaUltima":{"semana":"2026-W33","desde":"2026-08-10","hasta":"2026-08-16","vueltas":14}}]}]};
 /* LIGA:FIN */
 </script>
 
@@ -347,29 +561,260 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
 (function(){
   const $ = (id) => document.getElementById(id);
   const n = (v) => (v ?? 0).toLocaleString('es-ES');
-  const CICLO = 999;
 
   const fecha = (iso) => {
     if (!iso) return '';
     const [a, m, d] = iso.split('-');
     return `${d}/${m}/${a.slice(2)}`;
   };
+  const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun',
+                 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  const diaMes = (iso) => {
+    const [, m, d] = iso.split('-');
+    return `${Number(d)} ${MESES[Number(m) - 1]}`;
+  };
+
+  // --- Qué campeonato se está mirando ---------------------------------------
+  // Va en la URL (?c=copa-catalana) para que se pueda enlazar, y se recuerda
+  // en el navegador para que la PWA abra donde la dejaste. Cambiar de
+  // campeonato recarga: son dos formatos de competición distintos y no
+  // comparten ni pantallas ni cálculo, así que no hay estado que conservar.
+  const CAMPEONATOS = LIGA.campeonatos ?? [];
+  const RECUERDO = 'pitbike-world:campeonato';
+  const pedido = new URLSearchParams(location.search).get('c')
+    || (() => { try { return localStorage.getItem(RECUERDO); } catch { return null; } })();
+  const CAMP = CAMPEONATOS.find((c) => c.id === pedido) ?? CAMPEONATOS[0];
+  try { localStorage.setItem(RECUERDO, CAMP.id); } catch { /* modo privado */ }
+
+  const CICLO = CAMP.reglamento?.ciclo ?? 999;
+
+  // El selector solo aparece si hay más de uno que elegir.
+  if (CAMPEONATOS.length > 1) {
+    $('selector').classList.remove('oculto');
+    $('selector').innerHTML = CAMPEONATOS.map((c) =>
+      `<button class="camp${c.id === CAMP.id ? ' activo' : ''}" type="button" data-camp="${c.id}">
+         <span class="nom">${c.nombre}</span>
+         <span class="det">${c.formato === 'carreras' ? 'Carreras y puntos' : 'Vueltas'}</span>
+       </button>`).join('');
+    $('selector').addEventListener('click', (e) => {
+      const b = e.target.closest('.camp');
+      if (b && b.dataset.camp !== CAMP.id) location.search = `?c=${b.dataset.camp}`;
+    });
+  }
 
   // --- Aviso de datos de ejemplo ---
-  if (LIGA.datosDeEjemplo) $('aviso').classList.remove('oculto');
+  if (CAMP.datosDeEjemplo) $('aviso').classList.remove('oculto');
 
   // --- Cabecera ---
-  if (LIGA.temporada) {
-    $('titulo').textContent = LIGA.temporada.nombre || 'Liga Fast Toys DR7';
-    $('subtitulo').textContent = `Circuito ${LIGA.temporada.circuito} · ${LIGA.temporada.categoria}`;
-  }
-  $('pieActualizado').textContent = LIGA.actualizado
-    ? `Actualizado el ${fecha(LIGA.actualizado)}`
+  $('titulo').textContent = LIGA.app ?? 'Pitbike World';
+  $('subtitulo').textContent = [CAMP.nombre, CAMP.sede].filter(Boolean).join(' · ');
+  $('pieActualizado').textContent = CAMP.actualizado
+    ? `Actualizado el ${fecha(CAMP.actualizado)}`
     : '';
 
+  // --- Campeonatos por carreras --------------------------------------------
+  // Otro deporte, otras pantallas: aquí no hay ciclos ni hitos de vueltas, hay
+  // puntos, pruebas y categorías. Se pinta lo suyo y se sale, para no ejecutar
+  // nada del formato de vueltas.
+  if (CAMP.formato === 'carreras') {
+    const ETIQUETAS = { general: 'General', semanas: 'Pruebas', premios: 'Categorías' };
+    for (const b of document.querySelectorAll('.navbar .pest')) {
+      const s = b.querySelector('span');
+      if (s) s.textContent = ETIQUETAS[b.dataset.vista] ?? s.textContent;
+    }
+
+    const MEDALLAS = ['Líder', '2.º', '3.º'];
+    const podio = CAMP.general.slice(0, 3);
+    const orden = podio.length >= 3 ? [1, 0, 2] : podio.map((_, i) => i);
+    $('gradasPuntos').innerHTML = orden.map((i) => {
+      const p = podio[i];
+      if (!p) return '';
+      return `<button class="grada p${p.puesto}" type="button" data-id="${p.id}">
+          <div class="cara">
+            <div class="medalla">${MEDALLAS[p.puesto - 1]}</div>
+            <div class="nom">${p.nombre}</div>
+            ${p.equipo ? `<div class="cat2">${p.equipo}</div>` : ''}
+            <div class="v num">${n(p.puntos)}</div>
+            <div class="vl">puntos</div>
+          </div>
+          <div class="cajon">${p.puesto}</div>
+        </button>`;
+    }).join('');
+
+    $('piePuntos').textContent =
+      `${n(CAMP.resumen.puntosRepartidos)} puntos repartidos entre ${CAMP.general.length} pilotos`;
+
+    const filaPuntos = (p) =>
+      `<button class="fila${p.puesto === 1 ? ' p1' : ''}" type="button" data-id="${p.id}">
+         <span class="pos num">${p.puesto}</span>
+         <span class="dor num">${p.dorsal != null ? '#' + p.dorsal : ''}</span>
+         <span class="nom">${p.nombre}</span>
+         <span class="vt num">${n(p.puntos)}</span>
+       </button>`;
+
+    const CABECERA_PTS =
+      '<div class="cabtabla"><span>Pos.</span><span>Dorsal</span>' +
+      '<span>Piloto</span><span class="der">Puntos</span></div>';
+
+    $('tablaPuntos').innerHTML = CABECERA_PTS + CAMP.general.map(filaPuntos).join('');
+
+    // --- Pruebas: pole por categoría y vuelta rápida del fin de semana ---
+    $('listaPruebas').innerHTML = CAMP.pruebas.length
+      ? CAMP.pruebas.map((pr, i) => `
+        <details class="prueba"${i === CAMP.pruebas.length - 1 ? ' open' : ''}>
+          <summary>
+            <span>${pr.nombre ?? pr.id}</span>
+            <span class="rango">${pr.fecha ? diaMes(pr.fecha) : ''}</span>
+          </summary>
+          <div class="cuerpo">
+            ${pr.circuito ? `<div class="notaciclo" style="margin:0 0 14px">${pr.circuito} · ${pr.mangas} mangas</div>` : ''}
+            <div class="cronos">
+              ${(pr.poles ?? []).map((po) => `
+                <div class="crono">
+                  <span class="k">Pole ${po.categoria}</span>
+                  <span class="q">${po.nombre}</span>
+                  ${po.tiempo ? `<span class="t">${po.tiempo}</span>` : '<span class="t" style="color:var(--tenue)">sin crono</span>'}
+                </div>`).join('')}
+              ${pr.vueltaRapida ? `
+                <div class="crono rapida">
+                  <span class="k">Vuelta rápida</span>
+                  <span class="q">${pr.vueltaRapida.nombre}</span>
+                  <span class="t">${pr.vueltaRapida.tiempo ?? '—'}</span>
+                </div>` : ''}
+            </div>
+          </div>
+        </details>`).join('')
+      : '<p class="notaciclo">Todavía no hay ninguna prueba disputada.</p>';
+
+    // --- Categorías: cada una con su tabla ---
+    $('listaCategorias').innerHTML = CAMP.categorias.length
+      ? CAMP.categorias.map((c, i) => `
+        <details class="sem"${i === 0 ? ' open' : ''}>
+          <summary>
+            <span><span class="flecha">›</span> ${c.categoria}</span>
+            <span class="rango">${c.pilotos.length} pilotos</span>
+          </summary>
+          <div class="cuerpo">
+            <div class="tabla">${CABECERA_PTS}${c.pilotos.map(filaPuntos).join('')}</div>
+          </div>
+        </details>`).join('')
+      : '<p class="notaciclo">Este campeonato no tiene categorías aparte de la general.</p>';
+
+    $('notaCiclo')?.remove();
+
+    // Las filas llevan al piloto; se delega para no colgar un escuchador por fila.
+    for (const cont of [$('tablaPuntos'), $('listaCategorias'), $('gradasPuntos')]) {
+      cont.addEventListener('click', (e) => {
+        const f = e.target.closest('[data-id]');
+        if (f) location.hash = f.dataset.id;
+      });
+    }
+
+    // --- Pizarra del piloto, en versión carreras ---
+    function pintarPilotoCarreras(p) {
+      $('pzNombre').textContent =
+        [p.nombre, p.dorsal != null ? '#' + p.dorsal : null, p.equipo].filter(Boolean).join(' · ');
+      $('pzCiclo').textContent = n(p.puntos);
+      $('pzCiclo').classList.add('num');
+      $('pzBarra').classList.add('oculto');
+      $('pzCupos').innerHTML = '';
+      document.querySelector('.pizarra .marcador .de').textContent =
+        `puntos · ${p.categoria ? p.categoria + ' y general' : 'general'}`;
+
+      const detalles = [
+        ['Victorias', p.victorias],
+        ['Poles', p.poles],
+        ['Vueltas rápidas', p.vueltasRapidas],
+      ].filter(([, v]) => v > 0);
+      $('pzObjetivo').innerHTML = detalles.length
+        ? detalles.map(([k, v]) => `${k}: <b class="num">${v}</b>`).join(' · ')
+        : 'Sin victorias ni poles todavía';
+
+      $('pzPremios').innerHTML = (p.historial ?? []).map((h) => `
+        <div class="premio-fila">
+          <div class="icono">${h.pole ? '★' : '▸'}</div>
+          <div class="txt"><b>${h.nombre ?? h.prueba}</b>
+            <span>${(h.mangas ?? []).map((m) => `Manga ${m.manga}: ${m.posicion}.º (${m.puntos})`).join(' · ')}</span></div>
+          <div class="est">${n(h.puntos)} pts</div>
+        </div>`).join('') || '<p class="notaciclo">Todavía no ha puntuado.</p>';
+
+      $('pzTandas').innerHTML = (p.mangas ?? []).map((m) => `
+        <tr><td>${m.prueba} · manga ${m.manga}</td>
+            <td class="d num">${m.posicion}.º</td>
+            <td class="d v num">${n(m.puntos)}</td></tr>`).join('');
+      document.querySelector('table.tandas thead').innerHTML =
+        '<tr><th>Manga</th><th class="d">Puesto</th><th class="d">Puntos</th></tr>';
+
+      $('pzTotales').textContent = n(p.puntos) + ' puntos';
+      $('pzPuesto').textContent = p.puesto;
+      $('pzRival').textContent = '';
+    }
+
+    // --- Navegación ---
+    const VISTAS = ['general', 'semanas', 'premios'];
+    const PANELES = {
+      general: 'panelCarrerasGeneral', semanas: 'panelPruebas', premios: 'panelCategorias',
+    };
+    for (const id of ['panelGeneral', 'panelSemanas', 'panelPremios']) $(id)?.classList.add('oculto');
+
+    function ruta() {
+      const destino = location.hash.replace('#', '');
+      const p = CAMP.general.find((x) => x.id === destino);
+      if (p) {
+        pintarPilotoCarreras(p);
+        $('vistaRanking').classList.add('oculto');
+        $('vistaPiloto').classList.remove('oculto');
+        document.title = `${p.nombre} · ${LIGA.app}`;
+      } else {
+        const vista = VISTAS.includes(destino) ? destino : 'general';
+        for (const v of VISTAS) $(PANELES[v]).classList.toggle('oculto', v !== vista);
+        for (const b of document.querySelectorAll('.pest')) {
+          const activa = b.dataset.vista === vista;
+          b.classList.toggle('activa', activa);
+          b.setAttribute('aria-selected', activa ? 'true' : 'false');
+        }
+        $('vistaPiloto').classList.add('oculto');
+        $('vistaRanking').classList.remove('oculto');
+        document.title = LIGA.app;
+      }
+      scrollTo(0, 0);
+    }
+    for (const b of document.querySelectorAll('.pest')) {
+      b.addEventListener('click', () => { location.hash = b.dataset.vista; });
+    }
+    addEventListener('hashchange', ruta);
+    $('btnVolver').addEventListener('click', () => { location.hash = 'general'; });
+    ruta();
+
+    // Compartir todavía no está montado para este formato.
+    $('btnCompartir')?.closest('.acciones')?.classList.add('oculto');
+
+    // Los patrocinadores se pintan aquí también: el render de vueltas, que es
+    // quien lo hace normalmente, no llega a ejecutarse en este formato.
+    $('patros').innerHTML = (CAMP.patrocinadores || [])
+      .map((s) => {
+        const cuerpo =
+          (s.logo ? `<img src="${s.logo}" alt="${s.nombre}">` : `<div class="textual">${s.nombre}</div>`) +
+          (s.rol ? `<div class="rol">${s.rol}</div>` : '');
+        return s.web
+          ? `<a class="patro" href="${s.web}" target="_blank" rel="noopener">${cuerpo}</a>`
+          : `<div class="patro">${cuerpo}</div>`;
+      })
+      .join('');
+    if (!(CAMP.patrocinadores || []).length) {
+      $('patros').previousElementSibling?.classList.add('oculto');
+    }
+
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    }
+    return;
+  }
+
   // --- Podio ---
-  const MEDALLAS = ['🥇', '🥈', '🥉'];
-  const podio = LIGA.pilotos.slice(0, 3);
+  // Sin emojis: el manual no admite adornos de color ajenos a la paleta.
+  const MEDALLAS = ['Líder', '2.º', '3.º'];
+  const podio = CAMP.pilotos.slice(0, 3);
 
   if (podio.length) {
     // Orden visual 2-1-3: el cajón alto va en el centro, como en un podio real.
@@ -395,7 +840,7 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
       g.addEventListener('click', () => { location.hash = g.dataset.id; });
     }
     $('odoPie').textContent =
-      `${n(LIGA.resumen.totalVueltas)} vueltas entre ${LIGA.resumen.pilotosActivos} pilotos`;
+      `${n(CAMP.resumen.totalVueltas)} vueltas entre ${CAMP.resumen.pilotosActivos} pilotos`;
   } else {
     $('gradas').innerHTML = '';
     $('odoPie').textContent = 'Todavía no hay vueltas registradas.';
@@ -406,7 +851,7 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
     el.innerHTML = '<div class="relleno"></div>';
     el.querySelector('.relleno').style.width =
       Math.min(100, (vueltasCiclo / CICLO) * 100) + '%';
-    for (const h of LIGA.hitos) {
+    for (const h of CAMP.hitos) {
       if (h.vueltas >= CICLO) continue; // el final de la barra ya es el corte
       const m = document.createElement('div');
       m.className = 'marca';
@@ -415,63 +860,127 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
     }
   }
 
-  // --- Ranking: del 4º en adelante, los tres primeros ya están en el podio ---
-  const lista = $('listaPilotos');
-  const resto = LIGA.pilotos.slice(3);
-  if (!resto.length) $('tituloResto').classList.add('oculto');
-  for (const p of resto) {
-    const card = document.createElement('button');
-    card.className = 'piloto' + (p.puesto <= 3 ? ' p' + p.puesto : '');
-    card.type = 'button';
-
-    const falta = p.siguiente
-      ? `Faltan <span class="num">${n(p.siguiente.faltan)}</span> vueltas para ${p.siguiente.premio}`
-      : 'Ciclo completado';
-
-    card.innerHTML = `
-      <div class="cab">
-        <div class="puesto num">${p.puesto}</div>
-        <div class="nombre">
-          <b>${p.nombre}</b>
-          <span class="meta">
-            <span class="dorsal">#${p.dorsal ?? '–'}</span>
-            ${p.categoria ? `<span class="cat">${p.categoria}</span>` : ''}
-          </span>
-        </div>
-        <div class="totales">
-          <b class="num">${n(p.vueltasTotales)}</b>
-          <span>totales</span>
-        </div>
-      </div>
-      <div class="barra"></div>
-      <div class="leyenda">
-        <div class="falta${p.siguiente ? '' : ' completo'}">${falta}</div>
-        <div class="ciclo num">${n(p.vueltasCiclo)}/999</div>
-      </div>
-      <div class="premios">${p.premios.map(pr =>
-        `<span class="premio ${pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : ''}">
-           ${pr.premio}${pr.entregados > 0 ? ` <span class="x">×${pr.entregados}</span>` : ''}
-         </span>`).join('')}</div>`;
-
-    pintarBarra(card.querySelector('.barra'), p.vueltasCiclo);
-    card.addEventListener('click', () => { location.hash = p.id; });
-    lista.appendChild(card);
+  // La distancia con el de delante es lo que engancha: los premios son por
+  // hitos, pero la gente compite por el puesto igual. El líder mira hacia atrás.
+  function rival(p) {
+    const i = CAMP.pilotos.findIndex((x) => x.id === p.id);
+    if (i === -1) return '';
+    if (i === 0) {
+      const segundo = CAMP.pilotos[1];
+      if (!segundo) return 'Líder de la liga';
+      const ventaja = p.vueltasTotales - segundo.vueltasTotales;
+      return ventaja > 0
+        ? `Líder, con <span class="num">${n(ventaja)}</span> vueltas de ventaja sobre ${segundo.nombre}`
+        : `Líder, empatado con ${segundo.nombre}`;
+    }
+    const delante = CAMP.pilotos[i - 1];
+    const hueco = delante.vueltasTotales - p.vueltasTotales;
+    return hueco > 0
+      ? `A <span class="num">${n(hueco)}</span> ${hueco === 1 ? 'vuelta' : 'vueltas'} de ${delante.nombre}`
+      : `Empatado con ${delante.nombre}`;
   }
 
-  // --- Contadores de premios ---
-  $('contadores').innerHTML = (LIGA.resumen?.premiosEntregados || [])
-    .map(h => `<div class="contador"><b class="num">${h.entregados}</b><span>${h.premio}</span></div>`)
-    .join('');
+  // Cabecera de columnas, común a la general y a las semanas.
+  const CABECERA =
+    '<div class="cabtabla"><span>Pos.</span><span>Dorsal</span>' +
+    '<span>Piloto</span><span class="der">Vueltas</span></div>';
+
+  // --- Fila de tabla, la misma para la general y para cada semana ---
+  const fila = (p, vueltas) =>
+    `<button class="fila${p.puesto === 1 ? ' p1' : ''}" type="button" data-id="${p.id}">
+       <span class="pos num">${p.puesto}</span>
+       <span class="dor num">${p.dorsal != null ? '#' + p.dorsal : ''}</span>
+       <span class="nom">${p.nombre}</span>
+       <span class="vt num">${n(vueltas)}</span>
+     </button>`;
+
+  // Las filas llevan al piloto. Se delega en el contenedor para no colgar un
+  // escuchador por fila: con 30 pilotos y cuatro semanas serían muchos.
+  function conectarFilas(contenedor) {
+    contenedor.addEventListener('click', (e) => {
+      const f = e.target.closest('.fila');
+      if (f) location.hash = f.dataset.id;
+    });
+  }
+
+  // --- Pestaña General: la tabla completa ---
+  $('tablaGeneral').innerHTML = CABECERA + CAMP.pilotos.map((p) => fila(p, p.vueltasTotales)).join('');
+  conectarFilas($('tablaGeneral'));
+  if (!CAMP.pilotos.length) $('tituloResto').classList.add('oculto');
+
+  // El gancho: a cuántas vueltas está el primer premio de la liga. Es lo que
+  // se perdía al pasar de tarjetas a filas, y cabe en una línea.
+  {
+    const conSiguiente = CAMP.pilotos.filter((p) => p.siguiente);
+    const cerca = conSiguiente.sort((a, b) => a.siguiente.faltan - b.siguiente.faltan)[0];
+    $('gancho').innerHTML = cerca
+      ? `Lo más cerca que está un premio: a <b class="num">${n(cerca.siguiente.faltan)}</b> vueltas ` +
+        `de ${cerca.nombre}, que va a por ${cerca.siguiente.premio}.`
+      : '';
+  }
+
+  // --- Pestaña Semanales: un desplegable por semana, la última abierta ---
+  const SEMANAS = CAMP.semanas ?? [];
+  $('listaSemanas').innerHTML = SEMANAS.map((s, i) => `
+      <details class="sem"${i === 0 ? ' open' : ''}>
+        <summary>
+          <span><span class="flecha">›</span> Semana ${s.numero}</span>
+          <span class="rango">${diaMes(s.desde)} – ${diaMes(s.hasta)}</span>
+        </summary>
+        <div class="cuerpo">
+          <div class="tabla">${CABECERA}${s.pilotos.map((p) => fila(p, p.vueltas)).join('')}</div>
+          <div class="piesem">
+            <span>${n(s.vueltas)} vueltas · ${s.pilotos.length} ${s.pilotos.length === 1 ? 'piloto' : 'pilotos'}${
+              CAMP.reglamento?.maxVueltasSemana ? ` · máx ${n(CAMP.reglamento.maxVueltasSemana)}/semana` : ''
+            }</span>
+            <button class="btn" type="button" data-semana="${s.semana}">Compartir esta semana</button>
+          </div>
+        </div>
+      </details>`).join('');
+  conectarFilas($('listaSemanas'));
+  if (!SEMANAS.length) {
+    $('listaSemanas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna semana con vueltas.</p>';
+  }
+
+  // --- Pestaña Premios: los hitos y quién está más cerca de cada uno ---
+  $('listaPremios').innerHTML = (CAMP.hitos ?? []).map((h) => {
+    const entregados = CAMP.resumen?.premiosEntregados
+      ?.find((x) => x.vueltas === h.vueltas)?.entregados ?? 0;
+    // Quien menos le falta para este hito en su ciclo actual.
+    const aspirantes = CAMP.pilotos
+      .map((p) => ({ p, hito: p.premios.find((x) => x.vueltas === h.vueltas) }))
+      .filter((x) => x.hito && x.hito.faltan > 0)
+      .sort((a, b) => a.hito.faltan - b.hito.faltan);
+    const lider = aspirantes[0];
+    const pct = lider ? Math.min(100, (lider.p.vueltasCiclo / h.vueltas) * 100) : 100;
+    return `<div class="hito${entregados > 0 ? ' entregado' : ''}">
+        <div class="cab">
+          <span class="cifra num">${n(h.vueltas)}</span>
+          <span class="tag">${entregados > 0 ? `Entregado ×${entregados}` : 'Sin entregar'}</span>
+        </div>
+        <div class="nombre2">${h.premio}</div>
+        <div class="quien">${
+          lider
+            ? `Más cerca: <b>${lider.p.nombre}</b> — le faltan <b class="num">${n(lider.hito.faltan)}</b> vueltas`
+            : 'Alcanzado por todos los pilotos en curso'
+        }</div>
+        ${lider ? `<div class="barra"><div class="relleno" style="width:${pct}%"></div></div>` : ''}
+      </div>`;
+  }).join('');
+
+  $('notaCiclo').textContent =
+    `Los premios son por número de vueltas, no por tiempos. Al llegar a ${n(CICLO)} ` +
+    'el contador vuelve a cero, las vueltas sobrantes se arrastran y empieza un ciclo nuevo.';
 
   // --- Marca de la liga ---
-  if (LIGA.marca?.logo) {
+  if (CAMP.marca?.logo) {
     const img = $('marcaLogo');
-    img.src = LIGA.marca.logo;
-    img.alt = LIGA.marca.alt || 'Fast Toys';
+    img.src = CAMP.marca.logo;
+    img.alt = CAMP.marca.alt || 'Fast Toys';
   }
 
   // --- Patrocinadores ---
-  $('patros').innerHTML = (LIGA.patrocinadores || [])
+  $('patros').innerHTML = (CAMP.patrocinadores || [])
     .map(s => {
       const cuerpo =
         (s.logo
@@ -497,7 +1006,7 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
 
     $('pzPremios').innerHTML = p.premios.map(pr => {
       const clase = pr.estado === 'entregado' ? 'entregado' : pr.estado === 'en curso' ? 'encurso' : '';
-      const icono = pr.estado === 'entregado' ? '✓' : pr.estado === 'en curso' ? '▸' : pr.entregados > 0 ? '✓' : '🔒';
+      const icono = pr.estado === 'entregado' ? '✓' : pr.estado === 'en curso' ? '▸' : pr.entregados > 0 ? '✓' : '—';
       // Tras reiniciar el ciclo, un premio ya ganado vuelve a estar "por conseguir"
       // en el ciclo nuevo. El piloto tiene que seguir viendo que ya lo tiene.
       const estado = pr.estado === 'entregado'
@@ -522,28 +1031,83 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
           </tr>`).join('')
       : '<tr><td colspan="3" style="color:var(--tenue)">Sin tandas registradas.</td></tr>';
 
+    // Cupo del reglamento. Se etiqueta con la fecha del dato, no con «hoy»:
+    // la web se regenera una vez al día, después del cierre.
+    const topeDia = CAMP.reglamento?.maxVueltasDia;
+    const topeSemana = CAMP.reglamento?.maxVueltasSemana;
+    const celda = (kicker, hechas, tope, detalle) => {
+      const lleno = tope != null && hechas >= tope;
+      return `<div class="cupo${lleno ? ' lleno' : ''}">
+          <span class="k">${kicker}</span>
+          <span class="v num">${n(hechas)}${tope != null ? `<i>/${n(tope)}</i>` : ''}</span>
+          <span class="d">${detalle}</span>
+        </div>`;
+    };
+    $('pzCupos').innerHTML =
+      p.ultimaJornada && (topeDia || topeSemana)
+        ? celda(
+            'Última jornada',
+            p.ultimaJornada.vueltas,
+            topeDia,
+            p.ultimaJornada.descartadas > 0
+              ? `${fecha(p.ultimaJornada.fecha)} · ${n(p.ultimaJornada.descartadas)} fuera de tope`
+              : fecha(p.ultimaJornada.fecha),
+          ) +
+          celda(
+            `Semana ${p.semanaUltima.semana.split('-W')[1]}`,
+            p.semanaUltima.vueltas,
+            topeSemana,
+            `${diaMes(p.semanaUltima.desde)} – ${diaMes(p.semanaUltima.hasta)}`,
+          )
+        : '';
+
     $('pzTotales').textContent = n(p.vueltasTotales) + ' vueltas';
     $('pzPuesto').textContent = p.puesto;
+    $('pzRival').innerHTML = rival(p);
   }
 
-  // --- Navegación por hash (permite abrir la PWA directa en un piloto) ---
+  // --- Navegación por hash ---------------------------------------------
+  // El hash hace dos cosas: elegir pestaña (#general, #semanas, #premios) y
+  // abrir la pizarra de un piloto (#david-ramos). Se distinguen por lista:
+  // si no es una de las tres vistas, se busca como piloto.
+  const VISTAS = ['general', 'semanas', 'premios'];
+  const PANELES = { general: 'panelGeneral', semanas: 'panelSemanas', premios: 'panelPremios' };
+
+  function mostrarPestana(vista) {
+    for (const v of VISTAS) {
+      $(PANELES[v]).classList.toggle('oculto', v !== vista);
+    }
+    for (const b of document.querySelectorAll('.pest')) {
+      const activa = b.dataset.vista === vista;
+      b.classList.toggle('activa', activa);
+      b.setAttribute('aria-selected', activa ? 'true' : 'false');
+    }
+  }
+
   function ruta() {
-    const id = location.hash.replace('#', '');
-    const p = LIGA.pilotos.find(x => x.id === id);
+    const destino = location.hash.replace('#', '');
+    const p = CAMP.pilotos.find((x) => x.id === destino);
     if (p) {
       pintarPiloto(p);
       $('vistaRanking').classList.add('oculto');
       $('vistaPiloto').classList.remove('oculto');
       document.title = `${p.nombre} · Liga Fast Toys DR7`;
     } else {
+      // Sin hash se abre General: el tráfico llega de enlaces compartidos y
+      // entra preguntando quién va ganando.
+      mostrarPestana(VISTAS.includes(destino) ? destino : 'general');
       $('vistaPiloto').classList.add('oculto');
       $('vistaRanking').classList.remove('oculto');
       document.title = 'Liga Fast Toys DR7';
     }
     scrollTo(0, 0);
   }
+  for (const b of document.querySelectorAll('.pest')) {
+    b.addEventListener('click', () => { location.hash = b.dataset.vista; });
+  }
   addEventListener('hashchange', ruta);
-  $('btnVolver').addEventListener('click', () => { location.hash = ''; });
+  // Volver desde la pizarra devuelve a la general, no a un hash vacío.
+  $('btnVolver').addEventListener('click', () => { location.hash = 'general'; });
   ruta();
 
   // --- Tarjeta para redes -------------------------------------------------
@@ -586,59 +1150,72 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
     return t + '…';
   }
 
-  async function generarTarjeta() {
+  // modo 'total' = clasificación acumulada (la que reparte premios).
+  // modo 'semana' = la última semana con actividad.
+  async function generarTarjeta(clave = null) {
+    // Sin clave, el acumulado. Con clave ('2026-W34'), esa semana.
+    const sem = clave ? (CAMP.semanas ?? []).find((s) => s.semana === clave) : null;
+    const semanal = !!sem;
+    const clasificados = semanal ? sem.pilotos : CAMP.pilotos;
+    const vueltasDe = (p) => (semanal ? p.vueltas : p.vueltasTotales);
     const W = 1080, H = 1350;
     const lienzo = document.createElement('canvas');
     lienzo.width = W; lienzo.height = H;
     const c = lienzo.getContext('2d');
 
-    const AMBAR = '#ffb300', TENUE = '#8d99a8', BLANCO = '#eef2f7';
+    const ROJO = '#ec3013', ROJO_CLARO = '#ff563c', TINTA = '#201e1d',
+          TENUE = '#9b9797', BLANCO = '#f3f2f2', CELDA = '#2d2b2b';
 
-    // Fondo
-    const fondo = c.createLinearGradient(0, 0, 0, H);
-    fondo.addColorStop(0, '#161c24');
-    fondo.addColorStop(1, '#0d0f12');
-    c.fillStyle = fondo;
+    // Fondo: tinta plana. Sin degradados, que el manual no los admite.
+    c.fillStyle = TINTA;
     c.fillRect(0, 0, W, H);
-    c.fillStyle = AMBAR;
-    c.fillRect(0, 0, W, 10);
+    c.fillStyle = ROJO;
+    c.fillRect(0, 0, W, 12);
 
     // Cabecera con el logo sobre su chip blanco
-    const logo = await cargarImagen(LIGA.marca?.logo ?? 'logos/fasttoys.png');
+    const logo = await cargarImagen(CAMP.marca?.logo ?? 'logos/fasttoys.png');
     let y = 66;
     if (logo) {
       const alto = 92, ancho = (logo.width / logo.height) * alto;
       c.fillStyle = '#fff';
       c.beginPath();
-      c.roundRect(60, y, ancho + 44, alto + 32, 18);
+      c.roundRect(60, y, ancho + 44, alto + 32, 0);
       c.fill();
       c.drawImage(logo, 60 + 22, y + 16, ancho, alto);
     }
     c.fillStyle = BLANCO;
-    c.font = '800 47px system-ui, sans-serif';
+    c.font = '800 47px "Archivo", system-ui, sans-serif';
     c.textAlign = 'right';
     c.fillText('LIGA FAST TOYS', W - 60, y + 56);
-    c.fillStyle = AMBAR;
-    c.font = '800 30px system-ui, sans-serif';
-    c.fillText(`CIRCUITO ${(LIGA.temporada?.circuito ?? 'DR7').toUpperCase()}`, W - 60, y + 96);
+    c.fillStyle = ROJO_CLARO;
+    c.font = '800 30px "Archivo", system-ui, sans-serif';
+    c.fillText(`CIRCUITO ${(CAMP.temporada?.circuito ?? 'DR7').toUpperCase()}`, W - 60, y + 96);
     c.textAlign = 'left';
 
     y = 244;
     c.fillStyle = TENUE;
-    c.font = '700 25px system-ui, sans-serif';
+    c.font = '700 25px "Archivo", system-ui, sans-serif';
     c.letterSpacing = '3px';
-    c.fillText('CLASIFICACIÓN POR VUELTAS', 60, y);
+    c.fillText(
+      semanal ? `CLASIFICACIÓN · SEMANA ${sem.numero}` : 'CLASIFICACIÓN POR VUELTAS',
+      60, y,
+    );
     c.letterSpacing = '0px';
-    if (LIGA.actualizado) {
+    const alDerecha = semanal
+      ? `${diaMes(sem.desde)} – ${diaMes(sem.hasta)}`.toUpperCase()
+      : (CAMP.actualizado ? fecha(CAMP.actualizado).toUpperCase() : '');
+    if (alDerecha) {
       c.textAlign = 'right';
-      c.fillText(fecha(LIGA.actualizado).toUpperCase(), W - 60, y);
+      c.fillText(alDerecha, W - 60, y);
       c.textAlign = 'left';
     }
 
     // Podio
-    const podio3 = LIGA.pilotos.slice(0, 3);
+    const podio3 = clasificados.slice(0, 3);
     const alturas = [232, 172, 130];
-    const colores = [AMBAR, '#d7dee6', '#cd8b4f'];
+    const colores = [ROJO, BLANCO, BLANCO];
+    // Mismo criterio que en la web: el metal es filo, no relleno.
+    const METALES = ['#e8b33a', '#c8cdd2', '#c2803f'];
     const anchoCol = 300, hueco = 30;
     const x0 = (W - (anchoCol * 3 + hueco * 2)) / 2;
     const baseY = 700;
@@ -652,71 +1229,80 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
 
       c.fillStyle = colores[p.puesto - 1];
       c.beginPath();
-      c.roundRect(x, baseY - alto, anchoCol, alto, [10, 10, 0, 0]);
+      c.roundRect(x, baseY - alto, anchoCol, alto, 0);
       c.fill();
+      c.fillStyle = METALES[p.puesto - 1];
+      c.fillRect(x, baseY - alto, anchoCol, 9);
 
-      c.fillStyle = '#000';
-      c.font = '800 74px system-ui, sans-serif';
+      c.fillStyle = TINTA;
+      c.font = '800 74px "Archivo", system-ui, sans-serif';
       c.textAlign = 'center';
       c.fillText(String(p.puesto), x + anchoCol / 2, baseY - alto / 2 + 26);
 
       // Datos del piloto, encima del cajón
       let ty = baseY - alto - 118;
       c.fillStyle = BLANCO;
-      c.font = '800 30px system-ui, sans-serif';
+      c.font = '800 30px "Archivo", system-ui, sans-serif';
       c.fillText(textoAjustado(c, p.nombre, anchoCol - 8), x + anchoCol / 2, ty);
       if (p.categoria) {
         c.fillStyle = TENUE;
-        c.font = '700 19px system-ui, sans-serif';
+        c.font = '700 19px "Archivo", system-ui, sans-serif';
         c.fillText(textoAjustado(c, p.categoria.toUpperCase(), anchoCol - 8), x + anchoCol / 2, ty + 28);
       }
-      c.fillStyle = p.puesto === 1 ? AMBAR : BLANCO;
-      c.font = '800 54px system-ui, sans-serif';
-      c.fillText(n(p.vueltasTotales), x + anchoCol / 2, ty + 82);
+      c.fillStyle = p.puesto === 1 ? ROJO_CLARO : BLANCO;
+      c.font = '800 54px "Archivo", system-ui, sans-serif';
+      c.fillText(n(vueltasDe(p)), x + anchoCol / 2, ty + 82);
       c.textAlign = 'left';
     });
 
     // Del 4º en adelante
     y = baseY + 66;
-    const resto3 = LIGA.pilotos.slice(3, 10);
+    const resto3 = clasificados.slice(3, 10);
     for (const p of resto3) {
-      c.fillStyle = '#161a20';
+      c.fillStyle = CELDA;
       c.beginPath();
-      c.roundRect(60, y - 34, W - 120, 54, 12);
+      c.roundRect(60, y - 34, W - 120, 54, 0);
       c.fill();
 
       c.fillStyle = TENUE;
-      c.font = '800 26px system-ui, sans-serif';
+      c.font = '800 26px "Archivo", system-ui, sans-serif';
       c.textAlign = 'center';
       c.fillText(String(p.puesto), 100, y);
 
       c.fillStyle = BLANCO;
-      c.font = '700 27px system-ui, sans-serif';
+      c.font = '700 27px "Archivo", system-ui, sans-serif';
       c.textAlign = 'left';
       c.fillText(textoAjustado(c, p.nombre, 560), 140, y);
 
-      c.fillStyle = AMBAR;
-      c.font = '800 28px system-ui, sans-serif';
+      c.fillStyle = ROJO_CLARO;
+      c.font = '800 28px "Archivo", system-ui, sans-serif';
       c.textAlign = 'right';
-      c.fillText(n(p.vueltasTotales), W - 84, y);
+      c.fillText(n(vueltasDe(p)), W - 84, y);
       c.textAlign = 'left';
       y += 62;
     }
 
-    if (LIGA.pilotos.length > 10) {
+    // La franja de patrocinadores marca el suelo de la tarjeta: con la liga
+    // llena, la línea de «y N más» caía debajo y no se veía.
+    const franjaY = H - 176;
+
+    if (clasificados.length > 10) {
       c.fillStyle = TENUE;
-      c.font = '600 22px system-ui, sans-serif';
+      c.font = '600 22px "Archivo", system-ui, sans-serif';
       c.textAlign = 'center';
-      c.fillText(`y ${LIGA.pilotos.length - 10} pilotos más`, W / 2, y + 4);
+      c.fillText(`y ${clasificados.length - 10} pilotos más`, W / 2, Math.min(y + 4, franjaY - 24));
       c.textAlign = 'left';
     }
 
-    // Franja de patrocinadores, sobre blanco para que se lean con su color
-    const franjaY = H - 176;
+    // Franja de patrocinadores, sobre blanco: son dibujo negro y sobre la
+    // tinta del fondo desaparecerían.
     c.fillStyle = '#fff';
     c.fillRect(0, franjaY, W, 108);
 
-    const conLogo = (LIGA.patrocinadores ?? []).filter((s) => s.logo);
+    // El manual los quiere en blanco y negro. Quitar esta línea los devuelve
+    // a color; los navegadores que no soportan c.filter ya los pintan así.
+    c.filter = 'grayscale(1) contrast(1.08)';
+    const conLogo = (CAMP.patrocinadores ?? []).filter((s) => s.logo);
     const imgs = await Promise.all(conLogo.map((s) => cargarImagen(s.logo)));
     const validos = imgs.filter(Boolean);
     if (validos.length) {
@@ -732,49 +1318,59 @@ const LIGA = {"datosDeEjemplo":false,"actualizado":"2026-08-18","temporada":{"no
       });
     }
 
+    c.filter = 'none';
+
     c.fillStyle = TENUE;
-    c.font = '600 21px system-ui, sans-serif';
+    c.font = '600 21px "Archivo", system-ui, sans-serif';
     c.textAlign = 'center';
     c.fillText('Cronometraje CronoLaps · Circuito DR7', W / 2, H - 30);
 
     return new Promise((ok) => lienzo.toBlob(ok, 'image/png'));
   }
 
-  const btn = $('btnCompartir');
-  // Sin clasificación no hay nada que compartir.
-  if (!LIGA.pilotos.length) btn.closest('.acciones').classList.add('oculto');
-  btn.addEventListener('click', async () => {
-    const original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Preparando…';
-    try {
-      const blob = await generarTarjeta();
-      const nombre = `liga-fast-toys-${LIGA.actualizado ?? 'clasificacion'}.png`;
-      const archivo = new File([blob], nombre, { type: 'image/png' });
+  function conectarCompartir(boton, clave) {
+    if (!boton) return;
+    boton.addEventListener('click', async () => {
+      const original = boton.textContent;
+      boton.disabled = true;
+      boton.textContent = 'Preparando…';
+      try {
+        const sem = clave ? (CAMP.semanas ?? []).find((s) => s.semana === clave) : null;
+        const blob = await generarTarjeta(clave);
+        const nombre = `liga-fast-toys-${sem ? `semana-${sem.numero}` : (CAMP.actualizado ?? 'clasificacion')}.png`;
+        const archivo = new File([blob], nombre, { type: 'image/png' });
+        const texto = sem
+          ? `Clasificación de la semana ${sem.numero} · ${n(sem.vueltas)} vueltas`
+          : `Clasificación de la Liga Fast Toys DR7 · ${n(CAMP.resumen.totalVueltas)} vueltas`;
 
-      // En el móvil abre el menú de compartir; en escritorio no suele existir,
-      // así que se descarga la imagen y ya se sube a mano.
-      if (navigator.canShare?.({ files: [archivo] })) {
-        await navigator.share({
-          files: [archivo],
-          title: 'Liga Fast Toys DR7',
-          text: `Clasificación de la Liga Fast Toys DR7 · ${n(LIGA.resumen.totalVueltas)} vueltas`,
-        });
-      } else {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = nombre;
-        a.click();
-        URL.revokeObjectURL(url);
+        // En el móvil abre el menú de compartir; en escritorio no suele existir,
+        // así que se descarga la imagen y ya se sube a mano.
+        if (navigator.canShare?.({ files: [archivo] })) {
+          await navigator.share({ files: [archivo], title: 'Liga Fast Toys DR7', text: texto });
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = nombre;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      } catch (e) {
+        if (e?.name !== 'AbortError') alert('No he podido generar la imagen: ' + e.message);
+      } finally {
+        boton.disabled = false;
+        boton.textContent = original;
       }
-    } catch (e) {
-      if (e?.name !== 'AbortError') alert('No he podido generar la imagen: ' + e.message);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = original;
-    }
-  });
+    });
+  }
+
+  // Sin clasificación no hay nada que compartir.
+  if (!CAMP.pilotos.length) $('btnCompartir').closest('.acciones').classList.add('oculto');
+  conectarCompartir($('btnCompartir'), null);
+  // Cada semana comparte la suya, no siempre la última.
+  for (const b of $('listaSemanas').querySelectorAll('[data-semana]')) {
+    conectarCompartir(b, b.dataset.semana);
+  }
 
   // --- Service worker (solo sirve por http/https, no con doble clic en el fichero) ---
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {

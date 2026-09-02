@@ -1,0 +1,381 @@
+{
+  "id": "copa-catalana",
+  "nombre": "Copa Catalana de Pit Bikes",
+  "formato": "carreras",
+  "pais": "ES",
+  "sede": "Cataluña",
+  "color": "#EC3013",
+  "actualizado": "2026-03-15",
+  "muestraTiempos": true,
+  "temporada": {
+    "nombre": "Copa Catalana de Pit Bikes",
+    "inicio": "2026-03-14"
+  },
+  "reglamento": {
+    "criterio": "Puntos por posición en carrera, dos mangas por prueba. Todos corren juntos; Rookies y Master son recortes de la general.",
+    "mangasPorPrueba": 2,
+    "puntoPole": 1,
+    "descartes": 0,
+    "pole": "Una pole por categoría, cada una suma 1 punto en su clasificación.",
+    "vueltaRapida": "Una del fin de semana, para toda la copa. No puntúa."
+  },
+  "categorias": [
+    "General",
+    "Rookies",
+    "Master"
+  ],
+  "puntuacion": [
+    25,
+    20,
+    16,
+    13,
+    11,
+    10,
+    9,
+    8,
+    7,
+    6,
+    5,
+    4,
+    3,
+    2,
+    1
+  ],
+  "puntoPole": 1,
+  "descartes": 0,
+  "origen": {
+    "sistema": "manual",
+    "fuente": "PDF de resultados de la organización"
+  },
+  "patrocinadores": [],
+  "inscritos": [
+    {
+      "piloto": "roi-garayalde",
+      "dorsal": 13,
+      "marca": "YCF",
+      "equipo": "TAR ZK JUNEDA",
+      "categoria": null
+    },
+    {
+      "piloto": "ismael-luna",
+      "dorsal": 97,
+      "marca": "IMR",
+      "equipo": null,
+      "categoria": null
+    },
+    {
+      "piloto": "sebastian-pena",
+      "dorsal": 11,
+      "marca": "SHARK",
+      "equipo": "SHARK TEAM RACING",
+      "categoria": null
+    },
+    {
+      "piloto": "ruben-cataluna",
+      "dorsal": 193,
+      "marca": "RACER",
+      "equipo": "TWINBOOTS F. TOYS",
+      "categoria": "Master"
+    },
+    {
+      "piloto": "manel-mas",
+      "dorsal": 17,
+      "marca": "PGR",
+      "equipo": "MASRACING",
+      "categoria": null
+    },
+    {
+      "piloto": "daniel-martinez",
+      "dorsal": 92,
+      "marca": null,
+      "equipo": null,
+      "categoria": "Rookies"
+    },
+    {
+      "piloto": "ismael-ruiz",
+      "dorsal": 16,
+      "marca": "SHARK",
+      "equipo": null,
+      "categoria": null
+    },
+    {
+      "piloto": "eduard-cortina",
+      "dorsal": 84,
+      "marca": "IMR",
+      "equipo": "TCR RACING TEAM",
+      "categoria": "Master"
+    },
+    {
+      "piloto": "santi-tubert",
+      "dorsal": 27,
+      "marca": "SIGMA",
+      "equipo": "TCR RACING TEAM",
+      "categoria": "Master"
+    },
+    {
+      "piloto": "alvaro-alguacil",
+      "dorsal": 44,
+      "marca": "MALCOR",
+      "equipo": null,
+      "categoria": "Rookies"
+    },
+    {
+      "piloto": "carlos-mata",
+      "dorsal": 881,
+      "marca": "MALCOR",
+      "equipo": null,
+      "categoria": "Master"
+    },
+    {
+      "piloto": "pere-pros",
+      "dorsal": 7,
+      "marca": "SIGMA",
+      "equipo": null,
+      "categoria": "Master"
+    },
+    {
+      "piloto": "marc-recio",
+      "dorsal": 17,
+      "marca": "SIGMA",
+      "equipo": "TCR RACING TEAM",
+      "categoria": "Rookies"
+    },
+    {
+      "piloto": "christian-navarro",
+      "dorsal": 61,
+      "marca": "SHARK",
+      "equipo": "CH61RACING",
+      "categoria": null
+    },
+    {
+      "piloto": "dafne-martinez",
+      "dorsal": 7,
+      "marca": "SIGMA",
+      "equipo": "TEAM DAFNE7",
+      "categoria": null
+    },
+    {
+      "piloto": "xavier-moreno",
+      "dorsal": 23,
+      "marca": "PGR",
+      "equipo": null,
+      "categoria": "Rookies"
+    },
+    {
+      "piloto": "said-benslaiman",
+      "dorsal": 20,
+      "marca": "SHARK",
+      "equipo": "POPTEAM",
+      "categoria": null
+    },
+    {
+      "piloto": "elsa-boix",
+      "dorsal": 28,
+      "marca": "MALCOR",
+      "equipo": null,
+      "categoria": null
+    },
+    {
+      "piloto": "enrique-ereza",
+      "dorsal": 93,
+      "marca": "MALCOR",
+      "equipo": "POPTEAM",
+      "categoria": "Master"
+    },
+    {
+      "piloto": "ignasi-de-argacha",
+      "dorsal": 69,
+      "marca": "MALCOR",
+      "equipo": null,
+      "categoria": "Rookies"
+    },
+    {
+      "piloto": "sergio-monzo",
+      "dorsal": 12,
+      "marca": "RACER",
+      "equipo": "TWINBOOTS F. TOYS",
+      "categoria": "Rookies"
+    }
+  ],
+  "pruebas": [
+    {
+      "id": "zkj",
+      "nombre": "I GP Zona Karting Juneda",
+      "fecha": "2026-03-15",
+      "circuito": "Zona Karting Juneda (1 km)",
+      "poles": {
+        "General": {
+          "piloto": "said-benslaiman",
+          "tiempo": "47.004"
+        },
+        "Rookies": {
+          "piloto": "daniel-martinez",
+          "tiempo": null
+        },
+        "Master": {
+          "piloto": "pere-pros",
+          "tiempo": null
+        }
+      },
+      "vueltaRapida": {
+        "piloto": "pere-pros",
+        "tiempo": "47.560",
+        "velocidad": "75.6 km/h",
+        "manga": 1
+      },
+      "mangas": [
+        {
+          "n": 1,
+          "resultados": [
+            {
+              "piloto": "ruben-cataluna",
+              "posicion": 1
+            },
+            {
+              "piloto": "roi-garayalde",
+              "posicion": 2
+            },
+            {
+              "piloto": "ismael-luna",
+              "posicion": 3
+            },
+            {
+              "piloto": "sebastian-pena",
+              "posicion": 4
+            },
+            {
+              "piloto": "manel-mas",
+              "posicion": 5
+            },
+            {
+              "piloto": "daniel-martinez",
+              "posicion": 6
+            },
+            {
+              "piloto": "eduard-cortina",
+              "posicion": 7
+            },
+            {
+              "piloto": "carlos-mata",
+              "posicion": 8
+            },
+            {
+              "piloto": "santi-tubert",
+              "posicion": 9
+            },
+            {
+              "piloto": "ismael-ruiz",
+              "posicion": 10
+            },
+            {
+              "piloto": "alvaro-alguacil",
+              "posicion": 11
+            },
+            {
+              "piloto": "marc-recio",
+              "posicion": 12
+            },
+            {
+              "piloto": "xavier-moreno",
+              "posicion": 13
+            },
+            {
+              "piloto": "dafne-martinez",
+              "posicion": 14
+            },
+            {
+              "piloto": "elsa-boix",
+              "posicion": 15
+            },
+            {
+              "piloto": "ignasi-de-argacha",
+              "posicion": 16
+            },
+            {
+              "piloto": "sergio-monzo",
+              "posicion": 17
+            }
+          ]
+        },
+        {
+          "n": 2,
+          "resultados": [
+            {
+              "piloto": "roi-garayalde",
+              "posicion": 1
+            },
+            {
+              "piloto": "ismael-luna",
+              "posicion": 2
+            },
+            {
+              "piloto": "sebastian-pena",
+              "posicion": 3
+            },
+            {
+              "piloto": "manel-mas",
+              "posicion": 4
+            },
+            {
+              "piloto": "pere-pros",
+              "posicion": 5
+            },
+            {
+              "piloto": "ismael-ruiz",
+              "posicion": 6
+            },
+            {
+              "piloto": "daniel-martinez",
+              "posicion": 7
+            },
+            {
+              "piloto": "alvaro-alguacil",
+              "posicion": 8
+            },
+            {
+              "piloto": "santi-tubert",
+              "posicion": 9
+            },
+            {
+              "piloto": "eduard-cortina",
+              "posicion": 10
+            },
+            {
+              "piloto": "carlos-mata",
+              "posicion": 11
+            },
+            {
+              "piloto": "ruben-cataluna",
+              "posicion": 12
+            },
+            {
+              "piloto": "christian-navarro",
+              "posicion": 13
+            },
+            {
+              "piloto": "marc-recio",
+              "posicion": 14
+            },
+            {
+              "piloto": "dafne-martinez",
+              "posicion": 15
+            },
+            {
+              "piloto": "xavier-moreno",
+              "posicion": 16
+            },
+            {
+              "piloto": "ignasi-de-argacha",
+              "posicion": 17
+            },
+            {
+              "piloto": "sergio-monzo",
+              "posicion": 18
+            }
+          ]
+        }
+      ],
+      "nota": "Las posiciones de manga se reconstruyeron desde la tabla de puntos oficial. Pendiente el PDF de cada grupo."
+    }
+  ]
+}

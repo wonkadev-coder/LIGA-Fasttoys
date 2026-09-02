@@ -5,7 +5,7 @@
 //   node scripts/cronolaps.mjs mapa                              (pilotos e idsocio)
 //
 // El volcado se escribe en datos/cronolaps-<rango>.json y se carga con
-// scripts/importar.mjs. No toca datos/liga.json directamente.
+// scripts/importar.mjs. No toca datos/campeonatos/ directamente.
 //
 // CÓMO FUNCIONA SU WEB (averiguado el 18/08/2026)
 // Las tablas se pintan en el navegador, así que el HTML servido llega vacío y
@@ -41,6 +41,20 @@ export const CATEGORIAS_LIGA = {
   95: 'Z190 series',
   160: 'Alevin 90',
 };
+
+/**
+ * Ids de CronoLaps de los inscritos en el campeonato.
+ *
+ * Se sacan de los pilotos ya unidos con el censo, donde `idsocio` viene de
+ * `externos.cronolaps`. Un inscrito sin id de CronoLaps —David Garrido, que no
+ * aparece en su sistema— simplemente no filtra nada.
+ *
+ * Sin inscritos, la ingesta cae al filtro por categoría.
+ */
+export function inscritosDeLaLiga(datos) {
+  const ids = (datos?.pilotos ?? []).map((p) => p.idsocio).filter(Boolean).map(String);
+  return ids.length ? new Set(ids) : null;
+}
 
 /** Los fragmentos de URL de cronolaps.es son JSON en Base64 con el padding comido. */
 export function decodificarFragmento(texto) {
@@ -139,25 +153,31 @@ const espera = (ms) => new Promise((r) => setTimeout(r, ms));
  * categoría: es lo que hace su web, y así el número coincide con el que el
  * piloto ve en la pantalla del circuito.
  */
-export function tandasDelDia(pasosDelDia, tmin) {
+export function tandasDelDia(pasosDelDia, tmin, inscritos = null) {
   const { vueltas, sellos } = contarVueltasDelDia(pasosDelDia, tmin);
   const ficha = new Map();
   const descartadas = new Map();
+  const conLista = inscritos instanceof Set && inscritos.size > 0;
 
   for (const paso of pasosDelDia) {
+    const socio = String(paso.idsocio);
     const cat = CATEGORIAS_LIGA[Number(paso.vehiculo)];
-    if (!cat) {
-      const k = String(paso.vehiculo);
+
+    // Con lista de inscritos manda la lista, no la categoría: la organización
+    // admite a quien admite, y de hecho hay algún inscrito que no rueda en una
+    // de las seis del reglamento. Sin lista se cae al filtro por categoría.
+    const entra = conLista ? inscritos.has(socio) : !!cat;
+    if (!entra) {
+      const k = conLista ? `socio ${socio}` : String(paso.vehiculo);
       descartadas.set(k, (descartadas.get(k) ?? 0) + 1);
       continue;
     }
-    const socio = String(paso.idsocio);
     if (!ficha.has(socio)) {
       ficha.set(socio, {
         idsocio: socio,
         socio: (paso.socio ?? '').trim(),
         dorsal: paso.dorsal,
-        categoria: cat,
+        categoria: cat ?? null,
         fecha: diaOperativo(new Date(Number(paso.fecha))),
       });
     }
@@ -219,6 +239,16 @@ if (!esCli) {
   }
 
   console.log('\n  Pidiendo sesión a CronoLaps...');
+  // La lista de inscritos vive en datos/campeonatos/<campeonato>.json; si no está, se filtra por
+  // categoría como antes.
+  let inscritos = null;
+  try {
+    const { leerDatos } = await import('./liga.mjs');
+    inscritos = inscritosDeLaLiga(leerDatos());
+  } catch {
+    // Sin datos/campeonatos/<campeonato>.json se sigue sin lista.
+  }
+  if (inscritos) console.log(`  Filtrando por los ${inscritos.size} inscritos de la liga.`);
   const sesion = await obtenerSesion();
   const tmin = await tiemposMinimos(sesion);
   console.log(`  Tiempo mínimo de vuelta por tramo: ${JSON.stringify(tmin)}`);
@@ -235,7 +265,7 @@ if (!esCli) {
   for (const dia of dias) {
     const delDia = await descargarDia(dia.getTime(), sesion);
     pasosTotales += delDia.length;
-    const resultado = tandasDelDia(delDia, tmin);
+    const resultado = tandasDelDia(delDia, tmin, inscritos);
     tandas.push(...resultado.tandas);
     for (const [k, v] of resultado.descartadas) {
       descartadas.set(k, (descartadas.get(k) ?? 0) + v);
@@ -271,7 +301,9 @@ if (!esCli) {
   console.log(`\n  ${pasos.length} pasos, ${volcado.pasosDeLaLiga} vueltas válidas de la liga.`);
   console.log(`  ${tandas.length} tandas de ${new Set(tandas.map((t) => t.idsocio)).size} pilotos.`);
   if (descartadas.size) {
-    console.log('\n  Descartado por no ser categoría de la liga (idCategoría: pasos):');
+    console.log(inscritos
+      ? '\n  Descartado por no estar inscrito (socio: pasos):'
+      : '\n  Descartado por no ser categoría de la liga (idCategoría: pasos):');
     console.log('    ' + JSON.stringify(Object.fromEntries(descartadas)));
   }
   console.log(`\n  Volcado: ${ruta.replace(RAIZ, '.')}`);

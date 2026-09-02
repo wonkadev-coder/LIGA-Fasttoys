@@ -4,7 +4,7 @@ argument-hint: "Jornada 4" 7:42 21:38 4:51   (dorsal:vueltas, o nombres)
 allowed-tools: Bash(node:*), Read, Edit
 ---
 
-Registra la jornada que describe el usuario en `datos/liga.json` y regenera la web.
+Registra la jornada que describe el usuario en `datos/campeonatos/<campeonato>.json` y regenera la web.
 
 Argumentos recibidos: $ARGUMENTS
 

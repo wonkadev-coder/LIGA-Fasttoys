@@ -1,7 +1,7 @@
 // Tests de la lógica de ciclos y premios. Sin dependencias: node scripts/test.mjs
 import {
   calcularPiloto, calcularLiga, diaOperativo, buscarPiloto, CICLO,
-  semanaIso, aplicarLimites,
+  semanaIso, aplicarLimites, rangoSemanaIso, ultimaSemana,
 } from './liga.mjs';
 
 let fallos = 0;
@@ -175,6 +175,68 @@ comprueba('el lunes 17 ya es la siguiente',
   semanaIso('2026-08-17') === semanaIso('2026-08-16'), false);
 comprueba('domingo 9 pertenece a la semana anterior',
   semanaIso('2026-08-09') === semanaIso('2026-08-10'), false);
+comprueba('la W33 de 2026 va del lunes 10 al domingo 16',
+  rangoSemanaIso('2026-W33'), { desde: '2026-08-10', hasta: '2026-08-16' });
+comprueba('el rango cuadra con la clave que lo genera',
+  semanaIso(rangoSemanaIso('2026-W33').desde), '2026-W33');
+comprueba('y también por el otro extremo',
+  semanaIso(rangoSemanaIso('2026-W33').hasta), '2026-W33');
+comprueba('la semana 1 arranca donde toca',
+  rangoSemanaIso('2026-W01').desde, '2025-12-29');
+
+console.log('\nClasificación de la semana');
+{
+  // Dos pilotos repartidos entre dos semanas: la W33 tiene que ganar por
+  // ser la última con vueltas, no la que más vueltas suma.
+  const tandas = [
+    { fecha: '2026-08-08', piloto: 'a', vueltas: 90 },  // W32
+    { fecha: '2026-08-09', piloto: 'b', vueltas: 20 },  // W32
+    { fecha: '2026-08-12', piloto: 'a', vueltas: 30 },  // W33
+    { fecha: '2026-08-15', piloto: 'b', vueltas: 50 },  // W33
+  ];
+  const liga = calcularLiga({
+    hitos: HITOS,
+    pilotos: [{ id: 'a', nombre: 'Ana' }, { id: 'b', nombre: 'Bea' }],
+    tandas,
+  });
+
+  comprueba('se elige la última semana con actividad', liga.semana.semana, '2026-W33');
+  comprueba('con su número', liga.semana.numero, 33);
+  comprueba('y su rango de fechas', [liga.semana.desde, liga.semana.hasta],
+    ['2026-08-10', '2026-08-16']);
+  comprueba('suma solo las vueltas de esa semana', liga.semana.vueltas, 80);
+  comprueba('deja fuera las de la semana anterior', liga.resumen.totalVueltas, 190);
+  comprueba('gana la semana quien más hizo esa semana',
+    liga.semana.pilotos.map((p) => p.nombre), ['Bea', 'Ana']);
+  comprueba('aunque en el acumulado vaya primero el otro',
+    liga.pilotos.map((p) => p.nombre), ['Ana', 'Bea']);
+
+  const ana = liga.pilotos.find((p) => p.id === 'a');
+  comprueba('el piloto guarda el reparto por semanas',
+    Object.keys(ana.semanas).sort().map((k) => [k, ana.semanas[k]]),
+    [['2026-W32', 90], ['2026-W33', 30]]);
+  comprueba('la última jornada es la más reciente', ana.ultimaJornada.fecha, '2026-08-12');
+  comprueba('y la semana de esa jornada', ana.semanaUltima.semana, '2026-W33');
+
+  comprueba('quien no rodó esa semana no sale',
+    ultimaSemana([{ id: 'c', nombre: 'Cris', semanas: {} }]), null);
+}
+
+{
+  // El cupo semanal se cuenta con las vueltas ya recortadas, no con las brutas.
+  const liga = calcularLiga({
+    hitos: HITOS,
+    reglamento: { maxVueltasDia: 100, maxVueltasSemana: 200 },
+    pilotos: [{ id: 'a', nombre: 'Ana' }],
+    tandas: [
+      { fecha: '2026-08-10', piloto: 'a', vueltas: 160 },
+      { fecha: '2026-08-11', piloto: 'a', vueltas: 160 },
+    ],
+  });
+  comprueba('la semana cuenta lo válido, no lo registrado', liga.semana.vueltas, 200);
+  comprueba('y el cupo semanal queda agotado',
+    liga.pilotos[0].semanaUltima.vueltas, 200);
+}
 
 console.log('\nConteo de vueltas igual que CronoLaps');
 {
@@ -238,6 +300,171 @@ console.log('\nDatos reales del repo');
   const liga = calcularLiga(leerDatos());
   comprueba('todos los pilotos tienen puesto', liga.pilotos.every((p, i) => p.puesto === i + 1), true);
   comprueba('el ranking está ordenado por totales', liga.pilotos.every((p, i, a) => i === 0 || a[i - 1].vueltasTotales >= p.vueltasTotales), true);
+}
+
+console.log('\nCenso global y campeonatos');
+{
+  const {
+    leerPilotos, leerCampeonato, listarCampeonatos, calcularCampeonato, leerDatos,
+  } = await import('./liga.mjs');
+
+  const censo = leerPilotos();
+  comprueba('el censo tiene pilotos', censo.length > 0, true);
+  comprueba('cada piloto del censo tiene id y nombre',
+    censo.every((p) => p.id && p.nombre), true);
+  comprueba('hay al menos un campeonato', listarCampeonatos().length > 0, true);
+
+  const camp = leerCampeonato('fast-toys-dr7');
+  comprueba('el campeonato declara su formato', camp.formato, 'vueltas');
+  comprueba('el ciclo vive en el reglamento, no en el código', camp.reglamento.ciclo, 999);
+  comprueba('los inscritos apuntan al censo por id',
+    camp.inscritos.every((i) => censo.some((p) => p.id === i.piloto)), true);
+
+  const liga = calcularCampeonato(camp, censo);
+  comprueba('calcularCampeonato da lo mismo que la forma plana',
+    liga.resumen.totalVueltas, calcularLiga(leerDatos()).resumen.totalVueltas);
+  comprueba('el piloto une identidad y datos del campeonato',
+    typeof liga.pilotos[0].nombre === 'string' && 'dorsal' in liga.pilotos[0], true);
+
+  // Un campeonato con otro ciclo no toca la constante del módulo.
+  const otro = calcularLiga({
+    hitos: [{ vueltas: 50, premio: 'X' }],
+    reglamento: { ciclo: 100 },
+    pilotos: [{ id: 'a', nombre: 'Ana' }],
+    tandas: [{ fecha: '2026-08-10', piloto: 'a', vueltas: 120 }],
+  });
+  comprueba('con ciclo 100, a las 120 vueltas quedan 20 en el ciclo',
+    otro.pilotos[0].vueltasCiclo, 20);
+  comprueba('y el total no se reinicia', otro.pilotos[0].vueltasTotales, 120);
+  comprueba('el ciclo por defecto sigue siendo 999', CICLO, 999);
+}
+
+console.log('\nCampeonatos por carreras y puntos');
+{
+  const { calcularCampeonatoCarreras, puntosDe, PUNTOS_MOTOGP } = await import('./carreras.mjs');
+
+  comprueba('el ganador se lleva 25', puntosDe(1), 25);
+  comprueba('el decimoquinto se lleva 1', puntosDe(15), 1);
+  comprueba('el decimosexto no puntúa', puntosDe(16), 0);
+  comprueba('la tabla es la del mundial', PUNTOS_MOTOGP.length, 15);
+
+  const censo = [
+    { id: 'ana', nombre: 'Ana' }, { id: 'bea', nombre: 'Bea' },
+    { id: 'cris', nombre: 'Cris' }, { id: 'dani', nombre: 'Dani' },
+  ];
+  // Todos corren juntos. Cada clasificación reparte SUS puntos ordenando a los
+  // suyos por la posición absoluta, y cada una tiene su pole.
+  const copa = {
+    id: 'prueba', formato: 'carreras',
+    categorias: ['General', 'Rookies', 'Master'],
+    puntuacion: PUNTOS_MOTOGP, puntoPole: 1, descartes: 0,
+    inscritos: [
+      { piloto: 'ana', dorsal: 1, categoria: null },
+      { piloto: 'bea', dorsal: 2, categoria: 'Rookies' },
+      { piloto: 'cris', dorsal: 3, categoria: 'Master' },
+      { piloto: 'dani', dorsal: 4, categoria: 'Rookies' },
+    ],
+    pruebas: [{
+      id: 'p1', nombre: 'Primera', fecha: '2026-09-06', circuito: 'Circuito X',
+      poles: {
+        General: { piloto: 'ana', tiempo: '0:51.900' },
+        Rookies: { piloto: 'dani', tiempo: '0:53.010' },
+        Master: { piloto: 'cris', tiempo: '0:54.220' },
+      },
+      vueltaRapida: { piloto: 'bea', tiempo: '0:51.740' },
+      mangas: [
+        // Posición de llegada absoluta. Quien no acaba, no aparece.
+        { n: 1, resultados: [
+          { piloto: 'ana', posicion: 1 }, { piloto: 'bea', posicion: 2 },
+          { piloto: 'cris', posicion: 3 }, { piloto: 'dani', posicion: 4 }] },
+        { n: 2, resultados: [
+          { piloto: 'bea', posicion: 1 }, { piloto: 'ana', posicion: 2 },
+          { piloto: 'dani', posicion: 3 }] }, // Cris no termina
+      ],
+    }],
+  };
+
+  const r = calcularCampeonatoCarreras(copa, censo);
+  const cat = (c) => r.categorias.find((x) => x.categoria === c);
+  const gen = (id) => r.general.find((p) => p.id === id);
+  const rk = (id) => cat('Rookies').pilotos.find((p) => p.id === id);
+
+  comprueba('la general lleva a todos', r.general.length, 4);
+  comprueba('las categorías no incluyen la general', r.categorias.length, 2);
+  comprueba('Rookies recorta a los suyos',
+    cat('Rookies').pilotos.map((p) => p.id).sort(), ['bea', 'dani']);
+
+  // LO IMPORTANTE: cada clasificación reparte sus propios puntos.
+  comprueba('en la general Dani es 4.º y 3.º: 13 + 16', gen('dani').puntosMangas, 29);
+  comprueba('en Rookies es 2.º y 2.º: 20 + 20', rk('dani').puntosMangas, 40);
+  comprueba('el segundo rookie NO cobra los puntos de la general',
+    gen('dani').puntosMangas !== rk('dani').puntosMangas, true);
+
+  // La pole es por categoría y suma en la suya.
+  comprueba('Ana cobra la pole de la general', gen('ana').puntos, 45 + 1);
+  comprueba('Dani cobra la pole de Rookies', rk('dani').puntos, 40 + 1);
+  comprueba('pero no la cobra en la general', gen('dani').puntos, 29);
+  comprueba('Bea es 1.ª de Rookies las dos mangas', rk('bea').puntosMangas, 25 + 25);
+
+  // No acabar no es lo mismo que acabar sin puntuar.
+  comprueba('Cris solo tiene la manga que acabó', gen('cris').mangas.length, 1);
+  comprueba('y cobra los puntos de esa más su pole',
+    cat('Master').pilotos[0].puntos, 25 + 1);
+
+  // La vuelta rápida se enseña pero no puntúa.
+  comprueba('la prueba guarda la vuelta rápida', r.pruebas[0].vueltaRapida.tiempo, '0:51.740');
+  comprueba('y una pole por clasificación', r.pruebas[0].poles.length, 3);
+
+  // Desempate: mejor resultado más reciente, no número de victorias.
+  const desempate = calcularCampeonatoCarreras({
+    ...copa, puntoPole: 0,
+    pruebas: [{
+      id: 'p1', fecha: '2026-09-06',
+      mangas: [
+        { n: 1, resultados: [{ piloto: 'ana', posicion: 1 }, { piloto: 'bea', posicion: 2 }] },
+        { n: 2, resultados: [{ piloto: 'bea', posicion: 1 }, { piloto: 'ana', posicion: 2 }] },
+      ],
+    }],
+  }, censo);
+  comprueba('empatan a puntos',
+    desempate.general[0].puntos === desempate.general[1].puntos, true);
+  comprueba('gana quien fue mejor en la última manga', desempate.general[0].id, 'bea');
+}
+
+console.log('\nCopa Catalana: contraste con los PDF oficiales (prueba ZKJ)');
+{
+  const { leerCampeonato, leerPilotos } = await import('./liga.mjs');
+  const { calcularCampeonatoCarreras } = await import('./carreras.mjs');
+  const r = calcularCampeonatoCarreras(leerCampeonato('copa-catalana'), leerPilotos());
+
+  const nombres = (l) => l.map((p) => p.nombre);
+  const puntos = (l) => l.map((p) => p.puntos);
+  const cat = (c) => r.categorias.find((x) => x.categoria === c).pilotos;
+
+  comprueba('Rookies, mismo orden que el PDF', nombres(cat('Rookies')),
+    ['DANIEL MARTINEZ', 'ALVARO ALGUACIL', 'MARC RECIO', 'XAVIER MORENO',
+      'IGNASI DE ARGACHA', 'SERGIO MONZO']);
+  comprueba('Rookies, mismos puntos', puntos(cat('Rookies')), [51, 40, 32, 26, 22, 20]);
+
+  comprueba('Master, mismo orden que el PDF', nombres(cat('Master')),
+    ['EDUARD CORTINA', 'RUBÉN CATALUÑA', 'SANTI TUBERT', 'CARLOS MATA',
+      'PERE PROS', 'ENRIQUE EREZA']);
+  comprueba('Master, mismos puntos', puntos(cat('Master')), [36, 36, 33, 29, 26, 0]);
+
+  comprueba('General, mismos puntos', puntos(r.general),
+    [45, 36, 29, 29, 24, 19, 16, 15, 14, 13, 13, 11, 6, 3, 3, 3, 1, 1, 0, 0, 0]);
+  comprueba('General, los dieciséis primeros en el mismo orden',
+    nombres(r.general).slice(0, 16),
+    ['ROI GARAYALDE', 'ISMAEL LUNA', 'SEBASTIAN PEÑA', 'RUBÉN CATALUÑA', 'MANEL MAS',
+      'DANIEL MARTINEZ', 'ISMAEL RUIZ', 'EDUARD CORTINA', 'SANTI TUBERT',
+      'ALVARO ALGUACIL', 'CARLOS MATA', 'PERE PROS', 'MARC RECIO',
+      'CHRISTIAN NAVARRO', 'DAFNE MARTÍNEZ', 'XAVIER MORENO']);
+
+  // El caso que obligó a rehacer el cálculo.
+  const dani = r.general.find((p) => p.nombre === 'DANIEL MARTINEZ');
+  const daniRk = cat('Rookies').find((p) => p.nombre === 'DANIEL MARTINEZ');
+  comprueba('Daniel Martínez suma 19 en la general', dani.puntos, 19);
+  comprueba('y 51 en Rookies, con su pole', daniRk.puntos, 51);
 }
 
 console.log(fallos === 0 ? '\nTodo correcto.\n' : `\n${fallos} fallo(s).\n`);

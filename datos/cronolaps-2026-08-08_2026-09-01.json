@@ -1,0 +1,277 @@
+{
+  "origen": "cronolaps.es/tiempos — circuito 115 (Circuito DR7)",
+  "extraido": "2026-09-01",
+  "rango": [
+    "2026-08-08",
+    "2026-09-01"
+  ],
+  "criterio": "Solo las seis categorías del reglamento (hijas de la categoría 18, Pit Bike). Agrupado por día operativo 06:00-06:00 e idsocio. Las vueltas se cuentan con el mismo criterio que CronoLaps: la primera pasada no cuenta (es la de lanzamiento) y se descartan los pasos separados por menos del tiempo mínimo.",
+  "pasosTotales": 7508,
+  "pasosDeLaLiga": 1285,
+  "tandas": [
+    {
+      "idsocio": "38716",
+      "socio": "Raul Paredes",
+      "dorsal": "15",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 60,
+      "mejorVuelta": 48.376,
+      "desde": "10:26",
+      "hasta": "15:06"
+    },
+    {
+      "idsocio": "98466",
+      "socio": "Ruben8",
+      "dorsal": "8",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 51,
+      "mejorVuelta": 58.657,
+      "desde": "10:32",
+      "hasta": "14:10"
+    },
+    {
+      "idsocio": "98467",
+      "socio": "Roberto79",
+      "dorsal": "79",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-08",
+      "vueltas": 50,
+      "mejorVuelta": 60.867,
+      "desde": "10:31",
+      "hasta": "14:14"
+    },
+    {
+      "idsocio": "98476",
+      "socio": "JOSEFH",
+      "dorsal": "18",
+      "categoria": "160 Series",
+      "fecha": "2026-08-09",
+      "vueltas": 64,
+      "mejorVuelta": 63.872,
+      "desde": "12:45",
+      "hasta": "19:01"
+    },
+    {
+      "idsocio": "98479",
+      "socio": "kevinsito07",
+      "dorsal": "7",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-12",
+      "vueltas": 42,
+      "mejorVuelta": 59.339,
+      "desde": "14:10",
+      "hasta": "17:25"
+    },
+    {
+      "idsocio": "98480",
+      "socio": "kike78",
+      "dorsal": "78",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-13",
+      "vueltas": 14,
+      "mejorVuelta": 78.253,
+      "desde": "12:09",
+      "hasta": "12:45"
+    },
+    {
+      "idsocio": "64002",
+      "socio": "Alber",
+      "dorsal": "192",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-15",
+      "vueltas": 34,
+      "mejorVuelta": 58.862,
+      "desde": "19:20",
+      "hasta": "22:28"
+    },
+    {
+      "idsocio": "11099",
+      "socio": "RUBEN 57",
+      "dorsal": "57",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-22",
+      "vueltas": 71,
+      "mejorVuelta": 56.294,
+      "desde": "10:50",
+      "hasta": "15:19"
+    },
+    {
+      "idsocio": "84179",
+      "socio": "Rafita",
+      "dorsal": "98",
+      "categoria": "Master",
+      "fecha": "2026-08-23",
+      "vueltas": 81,
+      "mejorVuelta": 57.428,
+      "desde": "10:50",
+      "hasta": "16:38"
+    },
+    {
+      "idsocio": "98523",
+      "socio": "LUCAS21",
+      "dorsal": "21",
+      "categoria": "160 Series",
+      "fecha": "2026-08-23",
+      "vueltas": 63,
+      "mejorVuelta": 62.872,
+      "desde": "13:07",
+      "hasta": "17:27"
+    },
+    {
+      "idsocio": "98521",
+      "socio": "Alba",
+      "dorsal": "30",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-23",
+      "vueltas": 39,
+      "mejorVuelta": 57.565,
+      "desde": "10:48",
+      "hasta": "15:26"
+    },
+    {
+      "idsocio": "98522",
+      "socio": "JVC23",
+      "dorsal": "23",
+      "categoria": "160 Series",
+      "fecha": "2026-08-23",
+      "vueltas": 33,
+      "mejorVuelta": 58.202,
+      "desde": "10:50",
+      "hasta": "17:27"
+    },
+    {
+      "idsocio": "38703",
+      "socio": "ELIAS8",
+      "dorsal": "8",
+      "categoria": null,
+      "fecha": "2026-08-28",
+      "vueltas": 100,
+      "mejorVuelta": 61.604,
+      "desde": "11:33",
+      "hasta": "17:56"
+    },
+    {
+      "idsocio": "18870",
+      "socio": "Javier Moreno Del Barrio",
+      "dorsal": "8",
+      "categoria": "Master",
+      "fecha": "2026-08-28",
+      "vueltas": 79,
+      "mejorVuelta": 58.658,
+      "desde": "12:12",
+      "hasta": "17:55"
+    },
+    {
+      "idsocio": "98528",
+      "socio": "NAVARRETE",
+      "dorsal": "44",
+      "categoria": "160 Series",
+      "fecha": "2026-08-28",
+      "vueltas": 77,
+      "mejorVuelta": 61.889,
+      "desde": "14:55",
+      "hasta": "18:09"
+    },
+    {
+      "idsocio": "71118",
+      "socio": "HARRY",
+      "dorsal": "24",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-28",
+      "vueltas": 44,
+      "mejorVuelta": 63.635,
+      "desde": "17:25",
+      "hasta": "20:26"
+    },
+    {
+      "idsocio": "98530",
+      "socio": "ALBERTO",
+      "dorsal": "16",
+      "categoria": "Pit Bike 90",
+      "fecha": "2026-08-28",
+      "vueltas": 32,
+      "mejorVuelta": 91.284,
+      "desde": "17:18",
+      "hasta": "21:13"
+    },
+    {
+      "idsocio": "98529",
+      "socio": "MANU",
+      "dorsal": "22",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-28",
+      "vueltas": 24,
+      "mejorVuelta": 66.491,
+      "desde": "17:31",
+      "hasta": "20:25"
+    },
+    {
+      "idsocio": "98531",
+      "socio": "JAVIER18",
+      "dorsal": "18",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-28",
+      "vueltas": 22,
+      "mejorVuelta": 65.182,
+      "desde": "17:31",
+      "hasta": "20:15"
+    },
+    {
+      "idsocio": "98539",
+      "socio": "SERGIO",
+      "dorsal": "4",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-29",
+      "vueltas": 72,
+      "mejorVuelta": 71.183,
+      "desde": "11:07",
+      "hasta": "17:46"
+    },
+    {
+      "idsocio": "98528",
+      "socio": "NAVARRETE",
+      "dorsal": "44",
+      "categoria": "160 Series",
+      "fecha": "2026-08-29",
+      "vueltas": 66,
+      "mejorVuelta": 61.038,
+      "desde": "10:43",
+      "hasta": "14:06"
+    },
+    {
+      "idsocio": "98540",
+      "socio": "SOUTO",
+      "dorsal": "12",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-29",
+      "vueltas": 53,
+      "mejorVuelta": 66.623,
+      "desde": "11:10",
+      "hasta": "16:51"
+    },
+    {
+      "idsocio": "98545",
+      "socio": "NIETO",
+      "dorsal": "15",
+      "categoria": "160 Series",
+      "fecha": "2026-08-29",
+      "vueltas": 32,
+      "mejorVuelta": 77.882,
+      "desde": "11:55",
+      "hasta": "18:42"
+    },
+    {
+      "idsocio": "78947",
+      "socio": "M_IvanSan",
+      "dorsal": "21",
+      "categoria": "Z190 series",
+      "fecha": "2026-08-30",
+      "vueltas": 82,
+      "mejorVuelta": 64.678,
+      "desde": "10:20",
+      "hasta": "16:43"
+    }
+  ]
+}
