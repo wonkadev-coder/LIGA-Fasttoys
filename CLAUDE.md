@@ -297,16 +297,17 @@ fijadas por Jorge el 05/09/2026 y verificadas contra los PDF oficiales:
   por prueba. Quien no acaba **no aparece** en la manga: distinto de acabar
   fuera de los puntos, que en su categoría sí puede puntuar.
 - **El punto extra cambió de criterio a mitad de temporada.** En Juneda y
-  Menàrguens lo dio la pole (por categoría: Said en la general, Pere Pros en
-  Master); desde Alcarràs lo da **la vuelta rápida, solo en la general**. La
+  Menàrguens lo dio la pole (Said en la general; en Juneda Pere Pros lleva
+  además 1 en Master, que su hoja mantiene); desde Alcarràs lo da **la vuelta rápida, solo en la general**. La
   organización no rehizo lo anterior (a Daniel Martínez le quitó el de Rookies
   de Juneda y a Pere Pros le dejó el de Master), así que **no se aplica una
   regla: se guarda lo que dieron**, prueba a prueba, en `extras`
   (`{ categoria, piloto, puntos, motivo }`). `puntoPole` está a 0. Jorge lo
   contó el 05/09/2026 con las hojas de la ronda 4 delante.
-- **La pole y la vuelta rápida se registran igualmente** (`poles` por
-  categoría, `vueltaRapida` una por fin de semana), con su crono cuando lo
-  hay: son información, no puntos.
+- **La pole solo existe en la general** (Jorge, 05/09/2026): `poles` lleva
+  únicamente la clave `General`, y en la web no debe salir ninguna pole por
+  categoría. La vuelta rápida es una por fin de semana. Las dos se registran
+  con su crono cuando lo hay: son información, no puntos.
 - **La general usa la posición de llegada tal cual**: si el 10.º no era de la
   copa, el 11.º cobra lo del 11.º. Se registra como hueco (`-` en el
   comando). Las categorías ordenan a los suyos y reparten la tabla entre ellos.
@@ -330,7 +331,7 @@ nadie más lo lleva; el 7 y el 17 están repetidos y hay que usar el nombre):
 node scripts/prueba.mjs --nueva "II GP Circuit de Lleida" --fecha 2026-04-12 --circuito "Circuit de Lleida"
 node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 1 "Ruben Cataluña" Roi "Ismael Luna" 11 "Manel Mas"
 node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 2 Roi "Ismael Luna" 11
-node scripts/prueba.mjs ii-gp-circuit-de-lleida --pole General Said 47.004 --pole Rookies "Daniel Martinez" --pole Master "Pere Pros"
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --pole General Said 47.004
 node scripts/prueba.mjs ii-gp-circuit-de-lleida --rapida "Pere Pros" 47.560 --en-manga 1
 node scripts/prueba.mjs ii-gp-circuit-de-lleida --extra General "Pere Pros" --motivo "Vuelta rápida"
 node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 2 Roi - "Ismael Luna"
@@ -379,8 +380,7 @@ salen de esas tablas y todavía no están en el JSON:
 - El logo oficial es el de **ANPA Copa Catalana 2026 · Rodicar**, con
   CronoLaps, Electrics Championship y MM Sports Management como patrocinadores.
   Hay que pedir el fichero.
-- La pole se marca en amarillo en sus tablas: Said (General), Pere Pros
-  (Master) y Daniel Martínez (Rookies), como ya está cargado.
+- El punto extra se marca en amarillo en sus tablas.
 
 ### Donde nuestras tablas no coinciden con sus hojas (05/09/2026)
 
@@ -402,7 +402,7 @@ resultado más reciente.
   categoría contradecía a la general, Jorge decidió el 05/09/2026 que **manda
   la general**. Si algún día llegan las hojas de llegada, se sustituyen con
   `--manga`.
-- Los cronos de las poles de Rookies y Master de Juneda.
+- Los cronos de las poles y vueltas rápidas de las rondas 2 a 4.
 - El **logo y el color oficiales**: el ámbar `#F5A524` y las siglas "CC" son
   provisionales.
 

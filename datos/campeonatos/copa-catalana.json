@@ -16,7 +16,7 @@
     "mangasPorPrueba": 2,
     "puntoPole": 0,
     "descartes": 0,
-    "pole": "Se registra con su crono. Al principio de la temporada daba 1 punto en su categoría; ya no.",
+    "pole": "Solo hay pole en la general. Se registra con su crono; el punto extra va aparte (ver extras).",
     "vueltaRapida": "Una del fin de semana, para toda la copa. Desde la ronda 3 da 1 punto en la general.",
     "puntoExtra": "Lo que la organización dio de más en cada prueba, tal cual está en sus hojas (extras de cada prueba). Cambió de criterio a mitad de temporada y no rehizo lo anterior."
   },
@@ -257,21 +257,13 @@
   "pruebas": [
     {
       "id": "zkj",
-      "nombre": "I GP Zona Karting Juneda",
+      "nombre": "Ronda 1 · Zona Karting Juneda",
       "fecha": "2026-03-15",
       "circuito": "Zona Karting Juneda (1 km)",
       "poles": {
         "General": {
           "piloto": "said-benslaiman",
           "tiempo": "47.004"
-        },
-        "Rookies": {
-          "piloto": "daniel-martinez",
-          "tiempo": null
-        },
-        "Master": {
-          "piloto": "pere-pros",
-          "tiempo": null
         }
       },
       "vueltaRapida": {
@@ -432,7 +424,7 @@
           ]
         }
       ],
-      "nota": "Posiciones reconstruidas desde la tabla de puntos oficial. El PDF de marzo daba 26 a Daniel Martínez en Rookies por su pole; la hoja de septiembre de la organización le deja 25, y manda la hoja.",
+      "nota": "Posiciones reconstruidas desde la tabla de puntos oficial. Pere Pros lleva 1 punto extra en Master porque así está en la hoja de la organización (septiembre de 2026), aunque la pole solo exista en la general.",
       "extras": [
         {
           "categoria": "General",
@@ -444,7 +436,7 @@
           "categoria": "Master",
           "piloto": "pere-pros",
           "puntos": 1,
-          "motivo": "Pole"
+          "motivo": null
         }
       ]
     },
