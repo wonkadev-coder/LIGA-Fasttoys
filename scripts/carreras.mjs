@@ -81,8 +81,21 @@ const esDe = (piloto, categoria) => categoria === GENERAL || piloto.categoria ==
 /**
  * Clasificación de una categoría a lo largo de todo el campeonato.
  *
- * Para cada manga se ordena a los miembros de la categoría por su posición
- * absoluta y se reparte la tabla de puntos entre ellos.
+ * LA GENERAL USA LA POSICIÓN DE LLEGADA TAL CUAL: el 11.º cobra lo del 11.º
+ * aunque el 10.º no esté en la copa. Por eso una manga puede llevar huecos
+ * (posiciones sin inscrito), como el 11.º de la manga 2 de Menàrguens 2.
+ * Las categorías, en cambio, ordenan a los suyos por esa posición absoluta y
+ * reparten la tabla entre ellos.
+ *
+ * Un resultado puede traer su propia `categoria` (o null) solo para esa
+ * manga: Rubén Cataluña puntuó en la general de Menàrguens 2 pero no en
+ * Master, y así lo reflejan las hojas de la organización.
+ *
+ * PUNTOS EXTRA. Además de la pole reglada (`puntoPole`, en la categoría que
+ * la marca), una prueba puede dar puntos a dedo con `extras`: quién, en qué
+ * clasificación, cuántos y por qué. Es como se guarda lo que hace la Copa
+ * Catalana, que empezó dando el punto a la pole por categoría y acabó
+ * dándolo solo en la general a la vuelta rápida, sin rehacer lo anterior.
  */
 function clasificacionDe(categoria, inscritos, campeonato) {
   const tabla = campeonato.puntuacion ?? PUNTOS_MOTOGP;
@@ -94,11 +107,16 @@ function clasificacionDe(categoria, inscritos, campeonato) {
     ...p,
     puntos: 0,
     poles: 0,
+    extras: 0,
     victorias: 0,
     posiciones: [],
     mangas: [],
     historial: [],
   }]));
+
+  // La categoría con la que corre un piloto ESA manga: la del resultado si la
+  // trae, la de su inscripción si no.
+  const categoriaEnManga = (r) => ('categoria' in r ? r.categoria : estado.get(r.piloto).categoria);
 
   const pruebas = [...(campeonato.pruebas ?? [])]
     .sort((a, b) => (a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0));
@@ -115,11 +133,12 @@ function clasificacionDe(categoria, inscritos, campeonato) {
       ordenManga++;
       // Solo los de la categoría que ACABARON, ordenados por su puesto real.
       const suyosEnManga = (manga.resultados ?? [])
-        .filter((r) => estado.has(r.piloto) && Number.isFinite(Number(r.posicion)))
+        .filter((r) => r.piloto && estado.has(r.piloto) && Number.isFinite(Number(r.posicion)))
+        .filter((r) => categoria === GENERAL || categoriaEnManga(r) === categoria)
         .sort((a, b) => Number(a.posicion) - Number(b.posicion));
 
       suyosEnManga.forEach((r, i) => {
-        const puesto = i + 1; // puesto dentro de la categoría
+        const puesto = categoria === GENERAL ? Number(r.posicion) : i + 1;
         const puntos = puntosDe(puesto, tabla);
         const p = estado.get(r.piloto);
 
@@ -140,13 +159,23 @@ function clasificacionDe(categoria, inscritos, campeonato) {
       });
     }
 
-    // La pole de ESTA categoría suma su punto.
+    // La pole de ESTA categoría suma su punto reglado, si lo hay.
     const pole = poleDe(prueba, categoria);
     if (pole?.piloto && estado.has(pole.piloto)) {
       estado.get(pole.piloto).poles++;
       const acc = anota(pole.piloto);
       acc.puntos += puntoPole;
       acc.pole = true;
+    }
+
+    // Puntos extra dados a dedo en esta clasificación.
+    for (const e of prueba.extras ?? []) {
+      if ((e.categoria ?? GENERAL) !== categoria || !estado.has(e.piloto)) continue;
+      const puntos = Number(e.puntos ?? 1);
+      estado.get(e.piloto).extras += puntos;
+      const acc = anota(e.piloto);
+      acc.puntos += puntos;
+      acc.extras = [...(acc.extras ?? []), { puntos, motivo: e.motivo ?? null }];
     }
 
     for (const [id, acc] of enLaPrueba) {
@@ -167,7 +196,7 @@ function clasificacionDe(categoria, inscritos, campeonato) {
         ...p,
         puntosMangas,
         descartados: ordenadas.length - cuentan.length,
-        puntos: puntosMangas + p.poles * puntoPole,
+        puntos: puntosMangas + p.poles * puntoPole + p.extras,
       };
     })
     .sort(comparar)
@@ -176,7 +205,14 @@ function clasificacionDe(categoria, inscritos, campeonato) {
   return { categoria, pilotos };
 }
 
-/** Campeonato de carreras completo: la general y cada categoría. */
+/**
+ * Campeonato de carreras completo: la general y cada categoría.
+ *
+ * Además de las tablas, deja preparado lo que pintan las pantallas:
+ * - En cada piloto de la general, su `puestoCategoria` (si corre en una).
+ * - En cada prueba, los resultados de cada manga con los puntos de la
+ *   general, y quién sumó más puntos ese fin de semana (`ganador`).
+ */
 export function calcularCampeonatoCarreras(campeonato, censo = leerPilotos()) {
   const porId = new Map(censo.map((p) => [p.id, p]));
   const inscritos = (campeonato.inscritos ?? []).map((i) => ({
@@ -189,19 +225,60 @@ export function calcularCampeonatoCarreras(campeonato, censo = leerPilotos()) {
   const nombreDe = (id) => porId.get(id)?.nombre ?? id;
 
   const declaradas = campeonato.categorias ?? [GENERAL];
-  const general = clasificacionDe(GENERAL, inscritos, campeonato).pilotos;
+  const ordenadas = [...(campeonato.pruebas ?? [])]
+    .sort((a, b) => (a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0));
+
+  // La vuelta rápida no puntúa, pero se cuenta: es un mérito del piloto.
+  const rapidas = new Map();
+  for (const pr of ordenadas) {
+    const id = pr.vueltaRapida?.piloto;
+    if (id) rapidas.set(id, (rapidas.get(id) ?? 0) + 1);
+  }
+  const conRapidas = (p) => ({ ...p, vueltasRapidas: rapidas.get(p.id) ?? 0 });
+
   const categorias = declaradas
     .filter((c) => c !== GENERAL)
-    .map((c) => clasificacionDe(c, inscritos, campeonato));
+    .map((c) => {
+      const cl = clasificacionDe(c, inscritos, campeonato);
+      return { ...cl, pilotos: cl.pilotos.map(conRapidas) };
+    });
+  const puestoEn = new Map(
+    categorias.flatMap((c) => c.pilotos.map((p) => [p.id, p.puesto])),
+  );
+  const general = clasificacionDe(GENERAL, inscritos, campeonato).pilotos
+    .map(conRapidas)
+    .map((p) => ({ ...p, puestoCategoria: p.categoria ? (puestoEn.get(p.id) ?? null) : null }));
 
-  const pruebas = [...(campeonato.pruebas ?? [])]
-    .sort((a, b) => (a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0))
-    .map((pr) => ({
+  const pruebas = ordenadas.map((pr) => {
+    // Resultados de cada manga, con los puntos de la general que dio cada puesto.
+    const mangas = (pr.mangas ?? []).map((m) => ({
+      n: m.n ?? null,
+      resultados: general
+        .flatMap((p) => p.mangas
+          .filter((x) => x.prueba === pr.id && x.manga === (m.n ?? null))
+          .map((x) => ({
+            piloto: p.id, nombre: p.nombre, dorsal: p.dorsal, categoria: p.categoria,
+            posicion: x.posicion, puntos: x.puntos,
+          })))
+        .sort((a, b) => a.posicion - b.posicion),
+    }));
+
+    // Quien más sumó ese fin de semana en la general, pole incluida.
+    const ganador = general
+      .map((p) => ({ p, h: p.historial.find((h) => h.prueba === pr.id) }))
+      .filter((x) => x.h)
+      .sort((a, b) => b.h.puntos - a.h.puntos)[0];
+
+    return {
       id: pr.id,
       nombre: pr.nombre ?? null,
       fecha: pr.fecha,
       circuito: pr.circuito ?? null,
-      mangas: (pr.mangas ?? []).length,
+      numMangas: mangas.length,
+      mangas,
+      ganador: ganador
+        ? { piloto: ganador.p.id, nombre: ganador.p.nombre, puntos: ganador.h.puntos }
+        : null,
       poles: declaradas
         .map((c) => {
           const pole = poleDe(pr, c);
@@ -211,7 +288,12 @@ export function calcularCampeonatoCarreras(campeonato, censo = leerPilotos()) {
       vueltaRapida: pr.vueltaRapida
         ? { ...pr.vueltaRapida, nombre: nombreDe(pr.vueltaRapida.piloto) }
         : null,
-    }));
+      extras: (pr.extras ?? []).map((e) => ({
+        categoria: e.categoria ?? GENERAL, piloto: e.piloto, nombre: nombreDe(e.piloto),
+        puntos: Number(e.puntos ?? 1), motivo: e.motivo ?? null,
+      })),
+    };
+  });
 
   return {
     ...campeonato,

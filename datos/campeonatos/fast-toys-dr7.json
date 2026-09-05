@@ -372,5 +372,7 @@
       "vueltas": 47,
       "nota": "Clasificación oficial · sin datos en CronoLaps"
     }
-  ]
+  ],
+  "colorTexto": "#FFFFFF",
+  "siglas": "FT"
 }

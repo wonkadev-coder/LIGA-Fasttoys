@@ -228,35 +228,13 @@ planteamiento actual de web estática sin dependencias.
 No está implementado. El dato existe en los pasos de CronoLaps, así que es
 factible, pero hoy no se guarda a qué hora se cruzó cada objetivo.
 
-## Lo que la web ya aplica
+## Dónde se aplica este manual, y dónde no
 
-`index.html` sigue el sistema: un solo acento, radio 0, reglas de 2 px, Archivo,
-cifras tabulares en todo dato de vueltas y logos de patrocinador en blanco y
-negro. La pizarra del piloto es el mockup «contador de vueltas» del manual.
+Desde el 02/09/2026 la app es **Pitbike World**, con identidad propia y neutral
+(ver `CLAUDE.md` → Marca). Este manual describe la marca de **Fast Toys**, que
+es uno de los campeonatos de dentro, y manda sobre su material —su tarjeta de
+compartir, su PDF, sus logos—, no sobre la interfaz de la app.
 
-**Con dos desviaciones deliberadas, decididas por Jorge.** La primera: el manual
-pide blanco pista de fondo y la app va sobre **fondo oscuro**, porque en claro no
-se leía bien. No es saltarse el sistema: el manual define su propio juego sobre oscuro
-para la tarjeta del contador, y es ese el que se aplica a toda la app.
-
-**La segunda: oro, plata y bronce en el podio** (29/08/2026). El manual admite tres
-colores y ninguno más, pero el 2.º y el 3.º salían idénticos —los dos con el cajón
-blanco— y solo los distinguía la altura. Se resolvió con el metal **como filo de
-4 px, nunca como relleno**: `--oro:#E8B33A`, `--plata:#C8CDD2`, `--bronce:#C2803F`.
-El bloque del cajón sigue siendo de la paleta de la casa, así que la página conserva
-un solo acento. Mismo criterio en la imagen de compartir. Se descartó pintar los
-cajones enteros de metal, que habría dejado la identidad en cuatro acentos.
-
-| | Sobre claro (manual) | Sobre oscuro (la app) |
-|---|---|---|
-| Fondo | `#F3F2F2` | `#201E1D` |
-| Superficie | `#EAE9E9` | `#2D2B2B` |
-| Texto | `#201E1D` | `#F3F2F2` |
-| Atenuado | `#7D7979` | `#9B9797` |
-| Divisor | `#D8D6D5` | `#444141` |
-| Acento en texto | `#AE1800` | `#FF563C` |
-| Acento en relleno | `#EC3013` | `#EC3013` |
-
-Los dos únicos elementos que siguen siendo claros son los que no pueden dejar de
-serlo: el chip del logo de Fast Toys y las celdas de patrocinador. Los logos son
-dibujo negro y sobre tinta desaparecerían.
+El fondo oscuro, el radio 0 y las reglas de 2 px que aplicamos entre el 27 de
+agosto y el 2 de septiembre eran la app vestida con este manual. Jorge la
+rechazó por demasiado oscura y sobria, y esa etapa quedó atrás.

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #14171c; } a:hover { color: #000; }
+    body{font-family:"Plus Jakarta Sans", system-ui, sans-serif}
+  </style>
+</helmet>
+
+<div style="width:390px;height:844px;background:#F5F6FA;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden">
+  <div style="padding:28px 20px 6px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 100 100" style="display:block;width:32px;height:32px;flex:0 0 auto">
+  <g fill="#171A21"><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(0 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(90 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(180 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(270 50 50)"></rect></g>
+  <g fill="#EC3013"><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(45 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(135 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(225 50 50)"></rect><rect x="43.5" y="3.5" width="13" height="18" transform="rotate(315 50 50)"></rect></g>
+  <circle cx="50" cy="50" r="26" fill="none" stroke="#171A21" stroke-width="9"></circle>
+</svg><span style="font-size:19px;font-weight:800;letter-spacing:-.02em;color:#171A21">Pitbike World</span></div>
+  </div>
+  <div style="padding:14px 20px 16px;display:flex;flex-direction:column;gap:4px">
+    <div style="font-size:26px;font-weight:800;letter-spacing:-.02em;color:#171A21;line-height:1.1">Campeonatos</div>
+    <div style="font-size:13.5px;font-weight:500;color:#6A7185">Elige el tuyo para ver quién va ganando.</div>
+  </div>
+  <div style="padding:0 16px;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px">
+    
+    <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 2px 6px rgba(23,26,33,.05), 0 10px 24px rgba(23,26,33,.06);overflow:hidden;display:flex;flex-direction:column">
+      <div style="height:64px;background:#F5A524;position:relative">
+        <div style="position:absolute;left:16px;bottom:-26px;width:56px;height:56px;border-radius:50%;background:#F5A524;border:4px solid #FFFFFF;display:grid;place-items:center;color:#1A1300;font-weight:800;font-size:15px">CC</div>
+      </div>
+      <div style="padding:34px 16px 16px;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.01em;color:#171A21;line-height:1.2">Copa Catalana de Pit Bikes</div>
+        <div style="font-size:12px;font-weight:500;color:#6A7185">Carreras y puntos</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:#F5F6FA">
+          <div style="width:26px;height:26px;border-radius:50%;background:#171A21;color:#fff;display:grid;place-items:center;font-size:10px;font-weight:800">RG</div>
+          <div style="display:flex;flex-direction:column;min-width:0;flex:1">
+            <span style="font-size:11.5px;font-weight:800;color:#171A21;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ROI GARAYALDE</span>
+            <span style="font-size:10.5px;font-weight:600;color:#6A7185;font-variant-numeric:tabular-nums">45 pts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="background:#FFFFFF;border-radius:20px;box-shadow:0 2px 6px rgba(23,26,33,.05), 0 10px 24px rgba(23,26,33,.06);overflow:hidden;display:flex;flex-direction:column">
+      <div style="height:64px;background:#EC3013;position:relative">
+        <div style="position:absolute;left:16px;bottom:-26px;width:56px;height:56px;border-radius:50%;background:#EC3013;border:4px solid #FFFFFF;display:grid;place-items:center;color:#FFFFFF;font-weight:800;font-size:15px">FT</div>
+      </div>
+      <div style="padding:34px 16px 16px;display:flex;flex-direction:column;gap:4px">
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.01em;color:#171A21;line-height:1.2">Liga Fast Toys DR7</div>
+        <div style="font-size:12px;font-weight:500;color:#6A7185">Vueltas</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 10px;border-radius:12px;background:#F5F6FA">
+          <div style="width:26px;height:26px;border-radius:50%;background:#171A21;color:#fff;display:grid;place-items:center;font-size:10px;font-weight:800">N</div>
+          <div style="display:flex;flex-direction:column;min-width:0;flex:1">
+            <span style="font-size:11.5px;font-weight:800;color:#171A21;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">NAVARRETE</span>
+            <span style="font-size:10.5px;font-weight:600;color:#6A7185;font-variant-numeric:tabular-nums">143 vueltas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

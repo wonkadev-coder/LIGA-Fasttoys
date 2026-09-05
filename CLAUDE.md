@@ -281,6 +281,131 @@ Tests de la lógica de ciclos y premios:
 node scripts/test.mjs
 ```
 
+## Copa Catalana de Pit Bikes
+
+Campeonato por **carreras y puntos** (formato `carreras`). Los datos los da la
+organización en PDF y se transcriben a mano con `scripts/prueba.mjs`. Reglas,
+fijadas por Jorge el 05/09/2026 y verificadas contra los PDF oficiales:
+
+- **Tres clasificaciones: General, Rookies y Master.** Todos corren juntos en
+  la misma carrera; Rookies y Master son recortes de la general. Cada
+  clasificación **reparte sus propios puntos** ordenando a sus miembros por la
+  posición absoluta de la manga: Daniel Martínez acaba 6.º de la general (10
+  puntos) y 1.º de Rookies (25). Por eso se guarda la **posición de llegada**,
+  nunca los puntos.
+- **Puntuación de MotoGP** (25-20-16-13-11-10-9-8-7-6-5-4-3-2-1), dos mangas
+  por prueba. Quien no acaba **no aparece** en la manga: distinto de acabar
+  fuera de los puntos, que en su categoría sí puede puntuar.
+- **El punto extra cambió de criterio a mitad de temporada.** En Juneda y
+  Menàrguens lo dio la pole (por categoría: Said en la general, Pere Pros en
+  Master); desde Alcarràs lo da **la vuelta rápida, solo en la general**. La
+  organización no rehizo lo anterior (a Daniel Martínez le quitó el de Rookies
+  de Juneda y a Pere Pros le dejó el de Master), así que **no se aplica una
+  regla: se guarda lo que dieron**, prueba a prueba, en `extras`
+  (`{ categoria, piloto, puntos, motivo }`). `puntoPole` está a 0. Jorge lo
+  contó el 05/09/2026 con las hojas de la ronda 4 delante.
+- **La pole y la vuelta rápida se registran igualmente** (`poles` por
+  categoría, `vueltaRapida` una por fin de semana), con su crono cuando lo
+  hay: son información, no puntos.
+- **La general usa la posición de llegada tal cual**: si el 10.º no era de la
+  copa, el 11.º cobra lo del 11.º. Se registra como hueco (`-` en el
+  comando). Las categorías ordenan a los suyos y reparten la tabla entre ellos.
+- **Un resultado puede llevar su propia `categoria`** (o null) para esa manga:
+  Rubén Cataluña puntuó en la general de Menàrguens 2 y no en Master, y así
+  lo dicen las hojas.
+- Desempate: mejor resultado más reciente, deducido de sus tablas (no el
+  número de victorias del mundial).
+- **Aquí sí se muestran tiempos** (`muestraTiempos: true`): pole y vuelta
+  rápida. La regla de "nunca tiempos" es de Fast Toys.
+
+Todo esto está en `scripts/carreras.mjs`, con tests que contrastan la prueba
+de Juneda con los tres PDF oficiales.
+
+### Cómo se registra una prueba
+
+Con el PDF delante, en orden de llegada (id, trozo del nombre, o dorsal si
+nadie más lo lleva; el 7 y el 17 están repetidos y hay que usar el nombre):
+
+```bash
+node scripts/prueba.mjs --nueva "II GP Circuit de Lleida" --fecha 2026-04-12 --circuito "Circuit de Lleida"
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 1 "Ruben Cataluña" Roi "Ismael Luna" 11 "Manel Mas"
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 2 Roi "Ismael Luna" 11
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --pole General Said 47.004 --pole Rookies "Daniel Martinez" --pole Master "Pere Pros"
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --rapida "Pere Pros" 47.560 --en-manga 1
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --extra General "Pere Pros" --motivo "Vuelta rápida"
+node scripts/prueba.mjs ii-gp-circuit-de-lleida --manga 2 Roi - "Ismael Luna"
+```
+
+El guion de la última línea es un hueco: el 2.º no era de la copa. Volver a
+dar una manga borra lo que llevara a mano (como la `categoria` por manga de
+Rubén en Menàrguens 2), así que eso se repone después editando el JSON.
+
+Cada comando guarda, regenera la web y enseña la general, las categorías y el
+resumen de la prueba. **Repetir una manga la sustituye entera**: corregir un
+error es volver a darla. Alta de un piloto nuevo (si ya está en el censo por
+otro campeonato, se reutiliza su ficha):
+
+```bash
+node scripts/prueba.mjs --alta "Nombre Apellido" --dorsal 12 --categoria Rookies --marca IMR --equipo "Equipo"
+```
+
+Ver la clasificación sin tocar nada: `node scripts/prueba.mjs --ver`.
+
+### Lo que enseña la web
+
+- **General**: podio, filas con la etiqueta de categoría y el botón de
+  compartir, que dibuja una tarjeta 1080x1350 en estilo Pitbike World (no la
+  de Fast Toys) con el podio y los diez primeros.
+- **Pruebas**: un desplegable por prueba con quién sumó más puntos ese fin de
+  semana, las poles con crono, la vuelta rápida y los resultados de cada
+  manga con los puntos de la general.
+- **Categorías**: la tabla de Rookies y la de Master.
+- **Ficha del piloto**: puntos, puesto en la general y en su categoría,
+  victorias, poles y vueltas rápidas, y el detalle manga a manga.
+
+### Lo que dicen sus tablas oficiales (05/09/2026)
+
+Jorge pasó las tres tablas de Juneda (General, Rookies y Master) y la app las
+reproduce punto por punto; la única diferencia es el orden entre empatados a
+0 y a 1 punto al final de la general, que ellos ordenan a mano. Datos que
+salen de esas tablas y todavía no están en el JSON:
+
+- La categoría de la copa se llama **Z190 Series** en sus documentos.
+- **Calendario de seis rondas**, dos mangas cada una, por sus columnas:
+  ZKJ (Zona Karting Juneda), MEN R (Menàrguens), ALC (Alcarràs), MEN, KMO y MOR.
+  La ronda 4 fue **Menàrguens 2** (columnas MEN), a finales de agosto de 2026,
+  y es la última puntuable hasta la fecha. Faltan las fechas exactas de las
+  rondas 2, 3 y 4 (en el JSON van provisionales) y todo lo de KMO y MOR.
+- El logo oficial es el de **ANPA Copa Catalana 2026 · Rodicar**, con
+  CronoLaps, Electrics Championship y MM Sports Management como patrocinadores.
+  Hay que pedir el fichero.
+- La pole se marca en amarillo en sus tablas: Said (General), Pere Pros
+  (Master) y Daniel Martínez (Rookies), como ya está cargado.
+
+### Donde nuestras tablas no coinciden con sus hojas (05/09/2026)
+
+Sus hojas de categoría contradicen a su propia general en dos celdas, y Jorge
+decidió que **manda la general**: Menàrguens manga 1 (Luis Bernabeu 14.º con 2
+puntos, Monzo fuera de los puntos; su hoja de Rookies los pone al revés) y
+Menàrguens manga 2 (Cortina 15.º con 1 punto, Tubert fuera; su hoja de Master
+da 16 a Tubert y 13 a Cortina). Además su Master pone 15 a Carlos Mata en
+Juneda 1, que no es un valor de la tabla (es 16, como en su PDF de marzo), y en
+Menàrguens 2 manga 2 dan 1 punto a Dafne Martínez y a Andrés Osorio a la vez
+(dos 15.º); aquí es 15.ª Dafne. Todo lo demás cuadra celda por celda y en los
+totales. Los empates los ordenan por el orden que traían; aquí, por el mejor
+resultado más reciente.
+
+### Lo que queda pendiente de la organización
+
+- Las posiciones de manga de las tres rondas están **reconstruidas desde las
+  tablas de puntos** (lo dice la `nota` de cada prueba). Donde una hoja de
+  categoría contradecía a la general, Jorge decidió el 05/09/2026 que **manda
+  la general**. Si algún día llegan las hojas de llegada, se sustituyen con
+  `--manga`.
+- Los cronos de las poles de Rookies y Master de Juneda.
+- El **logo y el color oficiales**: el ámbar `#F5A524` y las siglas "CC" son
+  provisionales.
+
 ## Fuente de datos: CronoLaps
 
 CronoLaps es el cronometrador oficial del circuito **y además patrocinador de la liga**.
@@ -492,36 +617,33 @@ desordenadas (Kevin Barrios con 42 por debajo de Javier Velasco con 33).
 
 ## Marca
 
-`marca/` es la **norma** de identidad; `logos/` son los activos que consume la
-web. El manual de marca vive en `marca/brandbook/` (paquete de handoff, agosto
-2026) y `marca/README.md` lo resume: tokens de color, tipografía Archivo, radio
-0, bordes de 2 px, iconos Lucide y fotografía en blanco y negro.
+**La app es Pitbike World y tiene identidad propia. La de Fast Toys es la de uno
+de los campeonatos de dentro.** Decidido por Jorge el 02/09/2026, cuando rechazó
+la versión anterior por "demasiado oscura, demasiado sobria, demasiado tabla y
+poco visual".
 
-La web **ya sigue el manual**: un solo acento (`#EC3013`), radio 0, reglas de
-2 px, Archivo, cifras tabulares en todo dato de vueltas y logos de patrocinador
-en blanco y negro.
+Reglas que salen de esa decisión:
 
-Con **dos desviaciones deliberadas, decididas por Jorge**. La primera: el manual
-pide blanco pista de fondo y la app va sobre **fondo oscuro**, porque en claro no se
-leía bien. No es saltarse el sistema — el propio manual define su juego sobre oscuro
-para la tarjeta del contador (`#201E1D` de fondo, `#F3F2F2` de texto, `#9B9797`
-atenuado, `#444141` de pista y `#FF563C` de acento), y es ese juego el que se
-aplica a toda la app. Sobre oscuro **el acento sube a `#FF563C`**: `#EC3013` se
-reserva para rellenos.
+- **Interfaz común y marca neutral.** Pitbike World pone el chasis en claro
+  (`#F5F6FA`) y sin color propio dominante; el color lo trae cada campeonato
+  y entra por la variable CSS `--camp` (con `--camp-txt` para el texto sobre
+  él). Añadir un campeonato no puede exigir diseño nuevo: se rellena `color`,
+  `colorTexto`, `siglas` y `marca.logo` en su JSON y listo.
+- **Dirección «Escudo»**, elegida entre tres (`marca/propuestas/app/`):
+  tarjetas redondeadas (20 px), sombras suaves, avatares circulares con
+  iniciales —que son el sitio de las fotos cuando las haya— y el campeonato
+  como insignia. Tipografía **Plus Jakarta Sans**, no Archivo: Archivo es de
+  Fast Toys.
+- **La portada es la lista de campeonatos.** Sin `?c=` en la URL se ve la
+  portada; con `?c=<id>` se entra en uno. Cambiar de campeonato recarga, a
+  propósito: son formatos que no comparten ni pantallas ni cálculo.
+- El icono de Pitbike World es la corona (`logos/pitbike-world.svg`,
+  `scripts/icono.mjs`). A 26 px se simplifica a un aro con cuatro marcas.
 
-**La segunda: oro, plata y bronce en el podio** (29/08/2026). El manual admite tres
-colores y ninguno más, pero el 2.º y el 3.º salían idénticos —los dos con el cajón
-blanco— y solo los distinguía la altura. Se resolvió con el metal **como filo de
-4 px, nunca como relleno**: `--oro:#E8B33A`, `--plata:#C8CDD2`, `--bronce:#C2803F`.
-El bloque del cajón sigue siendo de la paleta de la casa, así que la página conserva
-un solo acento. Mismo criterio en la imagen de compartir. Se descartó pintar los
-cajones enteros de metal, que habría dejado la identidad en cuatro acentos.
-
-El handoff trae además **reglas de negocio marcadas como confirmadas que
-contradicen lo implementado** — sobre todo que el reinicio de las 999 sea global
-y no por piloto. Están listadas como decisiones pendientes al final de
-`marca/README.md`. **No las implementes sin que Jorge las confirme**: cambian el
-modelo de datos y rompen la "Regla crítica de ranking".
+El manual de marca de Fast Toys sigue en `marca/` y **sigue mandando sobre su
+material** (la tarjeta de compartir de esa liga, su PDF, sus logos), no sobre la
+app. Lo que dice `marca/README.md` de fondo oscuro y radio 0 describe la etapa
+anterior de la app, no la actual.
 
 ## Logos
 

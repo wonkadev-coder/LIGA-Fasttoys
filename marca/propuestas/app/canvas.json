@@ -1,0 +1,86 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1100,
+      "h": 640,
+      "title": "Índice"
+    },
+    {
+      "file": "PanelPortada.dc.html",
+      "x": 0,
+      "y": 800,
+      "w": 390,
+      "h": 844,
+      "title": "A · Panel — portada"
+    },
+    {
+      "file": "PanelCampeonato.dc.html",
+      "x": 480,
+      "y": 800,
+      "w": 390,
+      "h": 844,
+      "title": "A · Panel — campeonato"
+    },
+    {
+      "file": "CartelPortada.dc.html",
+      "x": 0,
+      "y": 1800,
+      "w": 390,
+      "h": 844,
+      "title": "B · Cartel — portada"
+    },
+    {
+      "file": "CartelCampeonato.dc.html",
+      "x": 480,
+      "y": 1800,
+      "w": 390,
+      "h": 844,
+      "title": "B · Cartel — campeonato"
+    },
+    {
+      "file": "EscudoPortada.dc.html",
+      "x": 0,
+      "y": 2800,
+      "w": 390,
+      "h": 844,
+      "title": "C · Escudo — portada"
+    },
+    {
+      "file": "EscudoCampeonato.dc.html",
+      "x": 480,
+      "y": 2800,
+      "w": 390,
+      "h": 844,
+      "title": "C · Escudo — campeonato"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "nota-panel",
+      "x": 960,
+      "y": 800,
+      "w": 260,
+      "text": "A · Panel\nLa más neutral. El color del campeonato va en banda y tintes; la composición es de app de resultados."
+    },
+    {
+      "id": "nota-cartel",
+      "x": 960,
+      "y": 1800,
+      "w": 260,
+      "text": "B · Cartel\nLa más visual. Titulares condensados y el color a sangre; el podio es un cartel."
+    },
+    {
+      "id": "nota-escudo",
+      "x": 960,
+      "y": 2800,
+      "w": 260,
+      "text": "C · Escudo\nLa más «app deportiva». Tarjetas, avatares e insignias; sitio para fotos de pilotos."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

@@ -293,6 +293,54 @@
       "id": "sergio-monzo",
       "nombre": "SERGIO MONZO",
       "externos": {}
+    },
+    {
+      "id": "alejandro-rodriguez",
+      "nombre": "ALEJANDRO RODRIGUEZ",
+      "nombreReal": "ALEJANDRO RODRIGUEZ",
+      "externos": {}
+    },
+    {
+      "id": "pau-romero-i-carretero",
+      "nombre": "PAU ROMERO I CARRETERO",
+      "nombreReal": "PAU ROMERO I CARRETERO",
+      "externos": {}
+    },
+    {
+      "id": "oscar-escuder-pena",
+      "nombre": "OSCAR ESCUDER PEÑA",
+      "nombreReal": "OSCAR ESCUDER PEÑA",
+      "externos": {}
+    },
+    {
+      "id": "luis-bernabeu-algarra",
+      "nombre": "LUIS BERNABEU ALGARRA",
+      "nombreReal": "LUIS BERNABEU ALGARRA",
+      "externos": {}
+    },
+    {
+      "id": "vicente-balbastre-banuls",
+      "nombre": "VICENTE BALBASTRE BAÑULS",
+      "nombreReal": "VICENTE BALBASTRE BAÑULS",
+      "externos": {}
+    },
+    {
+      "id": "cristian-camilo-gallon-bermudez",
+      "nombre": "CRISTIAN CAMILO GALLON BERMUDEZ",
+      "nombreReal": "CRISTIAN CAMILO GALLON BERMUDEZ",
+      "externos": {}
+    },
+    {
+      "id": "cristian-david-cardona-quintero",
+      "nombre": "CRISTIAN DAVID CARDONA QUINTERO",
+      "nombreReal": "CRISTIAN DAVID CARDONA QUINTERO",
+      "externos": {}
+    },
+    {
+      "id": "andres-felipe-osorio-marin",
+      "nombre": "ANDRES FELIPE OSORIO MARIN",
+      "nombreReal": "ANDRES FELIPE OSORIO MARIN",
+      "externos": {}
     }
   ]
 }

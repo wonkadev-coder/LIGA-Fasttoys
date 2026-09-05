@@ -61,7 +61,7 @@ servidor.listen(PUERTO, () => {
     .filter((i) => i && i.family === 'IPv4' && !i.internal)
     .map((i) => i.address);
 
-  console.log(`\n  Liga Fast Toys DR7 en marcha:\n`);
+  console.log(`\n  Pitbike World en marcha:\n`);
   console.log(`    Este equipo:  http://localhost:${PUERTO}`);
   for (const ip of ips) console.log(`    En el móvil:  http://${ip}:${PUERTO}`);
   console.log(`\n  En el móvil: abrir el enlace y "Añadir a pantalla de inicio".`);

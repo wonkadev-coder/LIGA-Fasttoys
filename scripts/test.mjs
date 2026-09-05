@@ -5,6 +5,11 @@ import {
 } from './liga.mjs';
 
 let fallos = 0;
+function falla(nombre, fn) {
+  try { fn(); } catch { comprueba(nombre, true, true); return; }
+  comprueba(nombre, 'no falló', 'que fallara');
+}
+
 function comprueba(nombre, real, esperado) {
   const ok = JSON.stringify(real) === JSON.stringify(esperado);
   if (!ok) {
@@ -415,6 +420,28 @@ console.log('\nCampeonatos por carreras y puntos');
   comprueba('la prueba guarda la vuelta rápida', r.pruebas[0].vueltaRapida.tiempo, '0:51.740');
   comprueba('y una pole por clasificación', r.pruebas[0].poles.length, 3);
 
+  // Un piloto puede correr una manga fuera de su categoría (Rubén en
+  // Menàrguens 2): puntúa en la general y no en la suya.
+  const fuera = calcularCampeonatoCarreras({
+    ...copa, puntoPole: 0,
+    pruebas: [{
+      id: 'p1', fecha: '2026-09-06',
+      extras: [{ categoria: 'General', piloto: 'bea', puntos: 1, motivo: 'Vuelta rápida' }],
+      mangas: [{ n: 1, resultados: [
+        { piloto: 'cris', posicion: 1, categoria: null }, { piloto: 'bea', posicion: 3 },
+        { piloto: 'dani', posicion: 4 }] }],
+    }],
+  }, censo);
+  comprueba('fuera de categoría sigue puntuando en la general',
+    fuera.general.find((p) => p.id === 'cris').puntos, 25);
+  comprueba('pero no en la suya', fuera.categorias.find((c) => c.categoria === 'Master').pilotos[0].puntos, 0);
+  comprueba('la general respeta el hueco: 3.º cobra 16',
+    fuera.general.find((p) => p.id === 'bea').puntosMangas, 16);
+  comprueba('y el extra se suma donde se apunta',
+    fuera.general.find((p) => p.id === 'bea').puntos, 17);
+  comprueba('la categoría no ve el hueco: Bea es 1.ª de Rookies',
+    fuera.categorias.find((c) => c.categoria === 'Rookies').pilotos[0].puntos, 25);
+
   // Desempate: mejor resultado más reciente, no número de victorias.
   const desempate = calcularCampeonatoCarreras({
     ...copa, puntoPole: 0,
@@ -431,11 +458,120 @@ console.log('\nCampeonatos por carreras y puntos');
   comprueba('gana quien fue mejor en la última manga', desempate.general[0].id, 'bea');
 }
 
+// La Copa tal como quedó tras Juneda: solo esa prueba y los inscritos de
+// entonces. Los que se apuntaron en rondas posteriores no salen en sus PDF.
+const { leerCampeonato: leerCampeonatoTest } = await import('./liga.mjs');
+function copaTrasJuneda() {
+  const NUEVOS = ['alejandro-rodriguez', 'pau-romero-i-carretero', 'oscar-escuder-pena',
+    'luis-bernabeu-algarra', 'vicente-balbastre-banuls', 'cristian-camilo-gallon-bermudez',
+    'cristian-david-cardona-quintero', 'andres-felipe-osorio-marin'];
+  const c = structuredClone(leerCampeonatoTest('copa-catalana'));
+  c.pruebas = c.pruebas.filter((p) => p.id === 'zkj');
+  c.inscritos = c.inscritos.filter((i) => !NUEVOS.includes(i.piloto));
+  return c;
+}
+
+console.log('\nCarreras: lo que preparan las pantallas');
+{
+  const { leerCampeonato, leerPilotos } = await import('./liga.mjs');
+  const { calcularCampeonatoCarreras } = await import('./carreras.mjs');
+  const r = calcularCampeonatoCarreras(copaTrasJuneda(), leerPilotos());
+  const gen = (id) => r.general.find((p) => p.id === id);
+
+  // El puesto en la categoría viaja con el piloto de la general.
+  comprueba('Daniel Martínez es 6.º de la general', gen('daniel-martinez').puesto, 6);
+  comprueba('y 1.º de Rookies', gen('daniel-martinez').puestoCategoria, 1);
+  comprueba('quien no tiene categoría no tiene puesto en ella', gen('roi-garayalde').puestoCategoria, null);
+
+  // La vuelta rápida se cuenta aunque no puntúe.
+  comprueba('Pere Pros tiene una vuelta rápida', gen('pere-pros').vueltasRapidas, 1);
+  comprueba('y Roi ninguna', gen('roi-garayalde').vueltasRapidas, 0);
+
+  // Cada prueba lleva los resultados de sus mangas con los puntos de la general.
+  const zkj = r.pruebas[0];
+  comprueba('la prueba trae sus dos mangas', zkj.numMangas, 2);
+  comprueba('la manga 1 la gana Rubén Cataluña', zkj.mangas[0].resultados[0].piloto, 'ruben-cataluna');
+  comprueba('y el ganador cobra 25', zkj.mangas[0].resultados[0].puntos, 25);
+  comprueba('la manga 2 la gana Roi', zkj.mangas[1].resultados[0].piloto, 'roi-garayalde');
+  comprueba('el 16.º de una manga no puntúa', zkj.mangas[1].resultados[15].puntos, 0);
+  comprueba('el que más sumó el fin de semana', zkj.ganador, { piloto: 'roi-garayalde', nombre: 'ROI GARAYALDE', puntos: 45 });
+}
+
+console.log('\nRegistro de pruebas (prueba.mjs)');
+{
+  const { leerCampeonato, leerPilotos } = await import('./liga.mjs');
+  const {
+    parsearArgs, pilotosDe, resolverPiloto, nuevaPrueba, registrarManga, ponerPole,
+    ponerVueltaRapida, ponerExtra, darDeAlta, esTiempo,
+  } = await import('./prueba.mjs');
+
+  const args = parsearArgs(['zkj', '--manga', '1', 'Roi', '97', 'Ismael Luna',
+    '--pole', 'Rookies', 'Daniel Martinez', '47,900', '--rapida', 'Pere Pros', '47.560', '--en-manga', '1']);
+  comprueba('la prueba es el primer suelto', args.prueba, 'zkj');
+  comprueba('la manga se lleva el orden de llegada', args.mangas, [{ n: 1, orden: ['Roi', '97', 'Ismael Luna'] }]);
+  comprueba('la pole trae categoría, piloto y crono con punto', args.poles, [{ categoria: 'Rookies', piloto: 'Daniel Martinez', tiempo: '47.900' }]);
+  comprueba('la vuelta rápida sabe en qué manga fue', args.rapida, { piloto: 'Pere Pros', tiempo: '47.560', manga: 1 });
+  comprueba('un dorsal no es un crono', esTiempo('97'), false);
+  comprueba('un crono con minutos sí', esTiempo('1:02.350'), true);
+  falla('una opción desconocida se rechaza', () => parsearArgs(['--mangas', '1']));
+  falla('una manga sin pilotos se rechaza', () => parsearArgs(['zkj', '--manga', '1']));
+
+  const copa = copaTrasJuneda();
+  const censo = structuredClone(leerPilotos());
+  const lista = pilotosDe(copa, censo);
+  comprueba('"Roi" basta para dar con Roi Garayalde', resolverPiloto(lista, 'Roi').id, 'roi-garayalde');
+  comprueba('el dorsal 97 es único', resolverPiloto(lista, '97').id, 'ismael-luna');
+  falla('el dorsal 7 lo llevan dos y no vale', () => resolverPiloto(lista, '7'));
+  falla('un desconocido pide el alta', () => resolverPiloto(lista, 'Marc Márquez'));
+
+  const pr = nuevaPrueba(copa, { nombre: 'II GP Circuit de Prueba', fecha: '2026-04-12', circuito: 'Circuit de Prueba' });
+  comprueba('la prueba nueva toma el id del nombre', pr.id, 'ii-gp-circuit-de-prueba');
+  falla('no se puede crear dos veces', () => nuevaPrueba(copa, { nombre: 'II GP Circuit de Prueba', fecha: '2026-04-12' }));
+
+  registrarManga(copa, pr.id, 1, ['ismael-luna', 'roi-garayalde', 'daniel-martinez']);
+  comprueba('la manga guarda posiciones 1..k', pr.mangas[0].resultados.map((r) => r.posicion), [1, 2, 3]);
+  registrarManga(copa, pr.id, 1, ['roi-garayalde', 'ismael-luna']);
+  comprueba('repetir la manga la sustituye entera', pr.mangas[0].resultados.map((r) => r.piloto), ['roi-garayalde', 'ismael-luna']);
+  comprueba('y sigue habiendo una sola', pr.mangas.length, 1);
+  falla('un piloto no puede llegar dos veces', () => registrarManga(copa, pr.id, 2, ['roi-garayalde', 'roi-garayalde']));
+
+  comprueba('la pole admite la categoría sin mayúsculas', ponerPole(copa, pr.id, 'rookies', 'daniel-martinez', '47.900').categoria, 'Rookies');
+  falla('una categoría inventada se rechaza', () => ponerPole(copa, pr.id, 'Junior', 'daniel-martinez'));
+  comprueba('la vuelta rápida se guarda con su manga', ponerVueltaRapida(copa, pr.id, 'pere-pros', '47.560', 2), { piloto: 'pere-pros', tiempo: '47.560', manga: 2 });
+  comprueba('el punto extra se apunta en su clasificación',
+    ponerExtra(copa, pr.id, 'general', 'said-benslaiman', 1, 'Vuelta rápida'),
+    { categoria: 'General', piloto: 'said-benslaiman', puntos: 1, motivo: 'Vuelta rápida' });
+  ponerExtra(copa, pr.id, 'General', 'roi-garayalde');
+  comprueba('y solo hay uno por clasificación y prueba', pr.extras.length, 1);
+  comprueba('los huecos no generan resultado',
+    registrarManga(copa, pr.id, 2, ['ismael-luna', null, 'roi-garayalde']).resultados,
+    [{ piloto: 'ismael-luna', posicion: 1 }, { piloto: 'roi-garayalde', posicion: 3 }]);
+  comprueba('el guion se lee como hueco', parsearArgs(['zkj', '--manga', '2', 'Luna', '-', 'Roi']).mangas[0].orden, ['Luna', '-', 'Roi']);
+  comprueba('--extra lleva su motivo', parsearArgs(['men', '--extra', 'General', 'Pere', '--motivo', 'Vuelta rápida']).extras,
+    [{ categoria: 'General', piloto: 'Pere', puntos: 1, motivo: 'Vuelta rápida' }]);
+
+  const { calcularCampeonatoCarreras } = await import('./carreras.mjs');
+  const r = calcularCampeonatoCarreras(copa, censo);
+  comprueba('lo registrado entra en el cálculo', r.pruebas.length, 2);
+  comprueba('Roi suma sus 25 de la manga nueva y el 3.º de la otra, más su extra',
+    r.general.find((p) => p.id === 'roi-garayalde').puntos, 45 + 25 + 16 + 1);
+  comprueba('el hueco deja a Roi 3.º: el 2.º no era de la copa',
+    r.general.find((p) => p.id === 'roi-garayalde').mangas.at(-1).posicion, 3);
+
+  const alta = darDeAlta(copa, censo, { nombre: 'Piloto Nuevo', dorsal: 99, categoria: 'master' });
+  comprueba('el alta crea la ficha en el censo', alta.nuevoEnCenso, true);
+  comprueba('con la categoría normalizada', alta.inscrito.categoria, 'Master');
+  const repetido = darDeAlta(copa, censo, { nombre: 'NAVARRETE', dorsal: 5 });
+  comprueba('un piloto de otro campeonato reutiliza su ficha', repetido.nuevoEnCenso, false);
+  falla('la general no es una categoría de alta', () => darDeAlta(copa, censo, { nombre: 'Otro', categoria: 'General' }));
+  falla('no se inscribe dos veces', () => darDeAlta(copa, censo, { nombre: 'Piloto Nuevo' }));
+}
+
 console.log('\nCopa Catalana: contraste con los PDF oficiales (prueba ZKJ)');
 {
   const { leerCampeonato, leerPilotos } = await import('./liga.mjs');
   const { calcularCampeonatoCarreras } = await import('./carreras.mjs');
-  const r = calcularCampeonatoCarreras(leerCampeonato('copa-catalana'), leerPilotos());
+  const r = calcularCampeonatoCarreras(copaTrasJuneda(), leerPilotos());
 
   const nombres = (l) => l.map((p) => p.nombre);
   const puntos = (l) => l.map((p) => p.puntos);
@@ -444,7 +580,7 @@ console.log('\nCopa Catalana: contraste con los PDF oficiales (prueba ZKJ)');
   comprueba('Rookies, mismo orden que el PDF', nombres(cat('Rookies')),
     ['DANIEL MARTINEZ', 'ALVARO ALGUACIL', 'MARC RECIO', 'XAVIER MORENO',
       'IGNASI DE ARGACHA', 'SERGIO MONZO']);
-  comprueba('Rookies, mismos puntos', puntos(cat('Rookies')), [51, 40, 32, 26, 22, 20]);
+  comprueba('Rookies, mismos puntos', puntos(cat('Rookies')), [50, 40, 32, 26, 22, 20]);
 
   comprueba('Master, mismo orden que el PDF', nombres(cat('Master')),
     ['EDUARD CORTINA', 'RUBÉN CATALUÑA', 'SANTI TUBERT', 'CARLOS MATA',
@@ -464,7 +600,7 @@ console.log('\nCopa Catalana: contraste con los PDF oficiales (prueba ZKJ)');
   const dani = r.general.find((p) => p.nombre === 'DANIEL MARTINEZ');
   const daniRk = cat('Rookies').find((p) => p.nombre === 'DANIEL MARTINEZ');
   comprueba('Daniel Martínez suma 19 en la general', dani.puntos, 19);
-  comprueba('y 51 en Rookies, con su pole', daniRk.puntos, 51);
+  comprueba('y 50 en Rookies: su pole ya no suma', daniRk.puntos, 50);
 }
 
 console.log(fallos === 0 ? '\nTodo correcto.\n' : `\n${fallos} fallo(s).\n`);
