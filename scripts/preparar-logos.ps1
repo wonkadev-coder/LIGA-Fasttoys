@@ -12,7 +12,10 @@ $raiz = Split-Path -Parent $PSScriptRoot
 # Varios logos vienen con el dibujo metido en un lienzo blanco enorme (el de LM
 # ocupa un tercio de su imagen). Si no se recorta, en la tarjeta sale diminuto y
 # descentrado. Esto busca el rectángulo que de verdad tiene tinta.
-function RecortarBlanco($origen, $destino, $umbral = 243) {
+# $minTinta: píxeles de tinta que necesita una fila o columna para contar. Con
+# 1 (el valor normal) cualquier mota cuenta; el original de la Copa Catalana
+# tiene un punto suelto en el borde derecho que dejaba el recorte a lo ancho.
+function RecortarBlanco($origen, $destino, $umbral = 243, $minTinta = 1) {
   $img = New-Object System.Drawing.Bitmap($origen)
   $datos = $img.LockBits(
     (New-Object System.Drawing.Rectangle(0, 0, $img.Width, $img.Height)),
@@ -23,7 +26,8 @@ function RecortarBlanco($origen, $destino, $umbral = 243) {
   [System.Runtime.InteropServices.Marshal]::Copy($datos.Scan0, $bytes, 0, $bytes.Length)
   $img.UnlockBits($datos)
 
-  $minX = $img.Width; $minY = $img.Height; $maxX = -1; $maxY = -1
+  $tintaCol = New-Object int[] $img.Width
+  $tintaFila = New-Object int[] $img.Height
   for ($y = 0; $y -lt $img.Height; $y++) {
     $fila = $y * $datos.Stride
     for ($x = 0; $x -lt $img.Width; $x++) {
@@ -31,12 +35,13 @@ function RecortarBlanco($origen, $destino, $umbral = 243) {
       # BGRA. Un píxel transparente tampoco es tinta.
       if ($bytes[$p + 3] -lt 16) { continue }
       if ($bytes[$p] -ge $umbral -and $bytes[$p + 1] -ge $umbral -and $bytes[$p + 2] -ge $umbral) { continue }
-      if ($x -lt $minX) { $minX = $x }
-      if ($x -gt $maxX) { $maxX = $x }
-      if ($y -lt $minY) { $minY = $y }
-      if ($y -gt $maxY) { $maxY = $y }
+      $tintaCol[$x]++
+      $tintaFila[$y]++
     }
   }
+  $minX = $img.Width; $minY = $img.Height; $maxX = -1; $maxY = -1
+  for ($x = 0; $x -lt $img.Width; $x++) { if ($tintaCol[$x] -ge $minTinta) { if ($x -lt $minX) { $minX = $x }; $maxX = $x } }
+  for ($y = 0; $y -lt $img.Height; $y++) { if ($tintaFila[$y] -ge $minTinta) { if ($y -lt $minY) { $minY = $y }; $maxY = $y } }
 
   if ($maxX -lt 0) { $img.Dispose(); throw "$origen parece estar en blanco" }
 
@@ -120,6 +125,10 @@ New-Item -ItemType Directory -Force $tmp | Out-Null
 "`n  Recorte del blanco sobrante:"
 RecortarBlanco "$raiz\logos\pmt-original.jpg" "$tmp\pmt.png"
 RecortarBlanco "$raiz\logos\lm-original.jpg"  "$tmp\lm.png"
+# El de la Copa Catalana es un PNG con el escudo en el tercio izquierdo y el
+# resto transparente. Solo se recorta: es pequeño (271x109) y escalarlo no
+# ganaría nada.
+RecortarBlanco "$raiz\logos\copa-catalana-original.png" "$raiz\logos\copa-catalana.png" 243 5
 
 "`n  Logos para la web:"
 Redimensionar "$raiz\logos\fasttoys-original.png"  "$raiz\logos\fasttoys.png"  420

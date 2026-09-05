@@ -379,7 +379,7 @@ salen de esas tablas y todavía no están en el JSON:
   rondas 2, 3 y 4 (en el JSON van provisionales) y todo lo de KMO y MOR.
 - El logo oficial es el de **ANPA Copa Catalana 2026 · Rodicar**, con
   CronoLaps, Electrics Championship y MM Sports Management como patrocinadores.
-  Hay que pedir el fichero.
+  Está en `logos/copa-catalana-original.png`, recortado a `logos/copa-catalana.png`.
 - El punto extra se marca en amarillo en sus tablas.
 
 ### Donde nuestras tablas no coinciden con sus hojas (05/09/2026)
@@ -403,8 +403,9 @@ resultado más reciente.
   la general**. Si algún día llegan las hojas de llegada, se sustituyen con
   `--manga`.
 - Los cronos de las poles y vueltas rápidas de las rondas 2 a 4.
-- El **logo y el color oficiales**: el ámbar `#F5A524` y las siglas "CC" son
-  provisionales.
+- Un **logo a más resolución**: el que pasó Jorge el 05/09/2026 (`logos/copa-catalana-original.png`)
+  tiene el escudo en 78x70 px y en la tarjeta de compartir se ve blando. El
+  naranja `#F0641E` del campeonato sale de ese logo.
 
 ## Fuente de datos: CronoLaps
 

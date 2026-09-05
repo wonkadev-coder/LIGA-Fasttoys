@@ -4,7 +4,7 @@
   "formato": "carreras",
   "pais": "ES",
   "sede": "Cataluña",
-  "color": "#F5A524",
+  "color": "#F0641E",
   "actualizado": "2026-08-30",
   "muestraTiempos": true,
   "temporada": {
@@ -916,6 +916,10 @@
       "nota": "Fecha PROVISIONAL (la ronda fue \"la semana pasada\" del 05/09/2026). Posiciones reconstruidas desde las hojas de puntos de la organización del 05/09/2026, que Jorge dio por fiables al 100 %. Rubén Cataluña puntúa en la general y no en Master, como en sus hojas. Dafne Martínez y Andrés Osorio figuran los dos con 1 punto en la manga 2 (dos 15.º): se ha puesto 15.ª a Dafne. Los apellidos completos de los tres pilotos nuevos están cortados en la hoja y son supuestos."
     }
   ],
-  "colorTexto": "#1A1300",
-  "siglas": "CC"
+  "colorTexto": "#FFFFFF",
+  "siglas": "CC",
+  "marca": {
+    "logo": "logos/copa-catalana.png",
+    "alt": "Copa Catalana de Pit Bikes"
+  }
 }

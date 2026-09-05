@@ -10,6 +10,8 @@ const ARCHIVOS = [
   './iconos/icono-192.png',
   './iconos/icono-512.png',
   './logos/fasttoys.png',
+  './logos/copa-catalana.png',
+  './logos/pitbike-world.svg',
   './logos/dr7.png',
   './logos/cronolaps.jpg',
   './logos/pmt.jpg',
