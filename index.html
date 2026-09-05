@@ -60,15 +60,17 @@
   header .sub{margin:2px 0 0;color:var(--tenue);font-size:12.5px;font-weight:600}
   header .escudo{margin-right:2px}
 
-  /* Escudo de campeonato: logo real sobre blanco si lo hay, siglas sobre su
-     color si no. */
+  /* Escudo de campeonato: su logo, o sus siglas sobre su color si no lo hay.
+     Es una baldosa redondeada, no un círculo: los logos son cuadrados o
+     apaisados y en un círculo quedaban como un parche pegado. El logo ocupa
+     la baldosa entera, sin margen: el aire ya lo trae cada logo. */
   .escudo{
-    width:56px;height:56px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+    width:56px;height:56px;border-radius:16px;flex:0 0 auto;display:grid;place-items:center;
     background:var(--camp);color:var(--camp-txt);font-weight:800;font-size:16px;
     letter-spacing:-.02em;box-shadow:var(--sombra);overflow:hidden;
   }
-  .escudo.conLogo{background:#fff;padding:9px}
-  .escudo img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+  .escudo.conLogo{background:#fff;padding:0}
+  .escudo img{display:block;width:100%;height:100%;object-fit:contain}
 
   /* Portada */
   .portada-titulo{padding:12px 0 16px}
@@ -82,8 +84,9 @@
     color:inherit;cursor:pointer;
   }
   .tarjeta .banda{height:64px;background:var(--camp);position:relative}
-  .tarjeta .banda .escudo{position:absolute;left:16px;bottom:-26px;border:4px solid var(--sup);box-shadow:none}
-  .tarjeta .cuerpo{padding:34px 16px 16px;display:flex;flex-direction:column;gap:4px}
+  .tarjeta .banda .escudo{position:absolute;left:14px;bottom:-28px;width:64px;height:64px;border-radius:18px;
+    border:3px solid var(--sup);box-shadow:none}
+  .tarjeta .cuerpo{padding:38px 16px 16px;display:flex;flex-direction:column;gap:4px}
   .tarjeta .nom{font-size:15px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
   .tarjeta .det{font-size:12px;color:var(--tenue);font-weight:500}
   .tarjeta .lider{
@@ -885,7 +888,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
       c.fillStyle = logo ? SUP : COLOR;
       c.beginPath(); c.roundRect(ex, ey, es, es, 28); c.fill();
       if (logo) {
-        const k = Math.min((es - 24) / logo.width, (es - 24) / logo.height);
+        const k = Math.min(es / logo.width, es / logo.height);
         const lw = logo.width * k, lh = logo.height * k;
         c.drawImage(logo, ex + (es - lw) / 2, ey + (es - lh) / 2, lw, lh);
       } else {
