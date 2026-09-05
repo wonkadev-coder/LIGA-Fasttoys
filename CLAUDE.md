@@ -296,18 +296,17 @@ fijadas por Jorge el 05/09/2026 y verificadas contra los PDF oficiales:
 - **Puntuación de MotoGP** (25-20-16-13-11-10-9-8-7-6-5-4-3-2-1), dos mangas
   por prueba. Quien no acaba **no aparece** en la manga: distinto de acabar
   fuera de los puntos, que en su categoría sí puede puntuar.
-- **El punto extra cambió de criterio a mitad de temporada.** En Juneda y
-  Menàrguens lo dio la pole (Said en la general; en Juneda Pere Pros lleva
-  además 1 en Master, que su hoja mantiene); desde Alcarràs lo da **la vuelta rápida, solo en la general**. La
-  organización no rehizo lo anterior (a Daniel Martínez le quitó el de Rookies
-  de Juneda y a Pere Pros le dejó el de Master), así que **no se aplica una
-  regla: se guarda lo que dieron**, prueba a prueba, en `extras`
-  (`{ categoria, piloto, puntos, motivo }`). `puntoPole` está a 0. Jorge lo
-  contó el 05/09/2026 con las hojas de la ronda 4 delante.
-- **La pole solo existe en la general** (Jorge, 05/09/2026): `poles` lleva
-  únicamente la clave `General`, y en la web no debe salir ninguna pole por
-  categoría. La vuelta rápida es una por fin de semana. Las dos se registran
-  con su crono cuando lo hay: son información, no puntos.
+- **La pole solo existe en la general y da 1 punto** (Jorge, 05/09/2026).
+  `poles` lleva únicamente la clave `General`; en la web no sale ninguna pole
+  por categoría. Según sus hojas la hizo Said en las rondas 1 a 3 y Pere Pros
+  en la 4 (son quienes llevan el +1); faltan los cronos de las rondas 2 a 4.
+- **El tiempo más rápido del fin de semana es una estadística**: se enseña con
+  su crono (`vueltaRapida`, una por prueba) y no puntúa. Jorge tiene que
+  pasar el de las cuatro rondas; el de Juneda (Pere Pros, 47.560) viene del PDF.
+- **`extras` guarda lo que la organización dio fuera de la regla** y mantiene
+  en sus hojas: solo el punto de Pere Pros en Master en Juneda. Cuenta en su
+  total y no se enseña en la prueba como pole. Con `--extra` se registra otro
+  si algún día hace falta.
 - **La general usa la posición de llegada tal cual**: si el 10.º no era de la
   copa, el 11.º cobra lo del 11.º. Se registra como hueco (`-` en el
   comando). Las categorías ordenan a los suyos y reparten la tabla entre ellos.
@@ -402,7 +401,8 @@ resultado más reciente.
   categoría contradecía a la general, Jorge decidió el 05/09/2026 que **manda
   la general**. Si algún día llegan las hojas de llegada, se sustituyen con
   `--manga`.
-- Los cronos de las poles y vueltas rápidas de las rondas 2 a 4.
+- Los cronos de la pole de las rondas 2 a 4 y el tiempo más rápido del fin de
+  semana de las cuatro rondas.
 - Un **logo a más resolución**: el que pasó Jorge el 05/09/2026 (`logos/copa-catalana-original.png`)
   tiene el escudo en 78x70 px y en la tarjeta de compartir se ve blando. El
   naranja `#F0641E` del campeonato sale de ese logo.

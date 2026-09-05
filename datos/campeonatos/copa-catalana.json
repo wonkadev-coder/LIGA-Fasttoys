@@ -14,11 +14,11 @@
   "reglamento": {
     "criterio": "Puntos por posición en carrera, dos mangas por prueba. Todos corren juntos; Rookies y Master son recortes de la general.",
     "mangasPorPrueba": 2,
-    "puntoPole": 0,
+    "puntoPole": 1,
     "descartes": 0,
-    "pole": "Solo hay pole en la general. Se registra con su crono; el punto extra va aparte (ver extras).",
-    "vueltaRapida": "Una del fin de semana, para toda la copa. Desde la ronda 3 da 1 punto en la general.",
-    "puntoExtra": "Lo que la organización dio de más en cada prueba, tal cual está en sus hojas (extras de cada prueba). Cambió de criterio a mitad de temporada y no rehizo lo anterior."
+    "pole": "Solo hay pole en la general y da 1 punto. Se registra con su crono.",
+    "vueltaRapida": "El tiempo más rápido del fin de semana. No puntúa: es una estadística.",
+    "puntoExtra": "Puntos que la organización dio fuera de la regla y mantiene en sus hojas (extras de cada prueba). Solo el de Pere Pros en Master en la ronda 1."
   },
   "categorias": [
     "General",
@@ -42,7 +42,7 @@
     2,
     1
   ],
-  "puntoPole": 0,
+  "puntoPole": 1,
   "descartes": 0,
   "origen": {
     "sistema": "manual",
@@ -427,12 +427,6 @@
       "nota": "Posiciones reconstruidas desde la tabla de puntos oficial. Pere Pros lleva 1 punto extra en Master porque así está en la hoja de la organización (septiembre de 2026), aunque la pole solo exista en la general.",
       "extras": [
         {
-          "categoria": "General",
-          "piloto": "said-benslaiman",
-          "puntos": 1,
-          "motivo": "Pole"
-        },
-        {
           "categoria": "Master",
           "piloto": "pere-pros",
           "puntos": 1,
@@ -451,10 +445,7 @@
           "tiempo": null
         }
       },
-      "vueltaRapida": {
-        "piloto": "ismael-luna",
-        "tiempo": null
-      },
+      "vueltaRapida": null,
       "mangas": [
         {
           "n": 1,
@@ -608,25 +599,20 @@
         }
       ],
       "nota": "Fecha PROVISIONAL (pendiente de la organización). Posiciones reconstruidas desde la hoja de puntos de la general del 05/09/2026; Jorge confirmó que manda la general donde Rookies (Monzo/Bernabeu, manga 1) y Master (Tubert/Cortina, manga 2) la contradecían.",
-      "extras": [
-        {
-          "categoria": "General",
-          "piloto": "said-benslaiman",
-          "puntos": 1,
-          "motivo": "Pole"
-        }
-      ]
+      "extras": []
     },
     {
       "id": "alc",
       "nombre": "Ronda 3 · Alcarràs",
       "fecha": "2026-05-17",
       "circuito": "Alcarràs",
-      "poles": {},
-      "vueltaRapida": {
-        "piloto": "said-benslaiman",
-        "tiempo": null
+      "poles": {
+        "General": {
+          "piloto": "said-benslaiman",
+          "tiempo": null
+        }
       },
+      "vueltaRapida": null,
       "mangas": [
         {
           "n": 1,
@@ -752,25 +738,20 @@
         }
       ],
       "nota": "Fecha PROVISIONAL (pendiente de la organización). Posiciones reconstruidas desde la hoja de puntos de la general del 05/09/2026; cuadra con Rookies y Master celda por celda.",
-      "extras": [
-        {
-          "categoria": "General",
-          "piloto": "said-benslaiman",
-          "puntos": 1,
-          "motivo": "Vuelta rápida"
-        }
-      ]
+      "extras": []
     },
     {
       "id": "men",
       "nombre": "Ronda 4 · Menàrguens 2",
       "fecha": "2026-08-30",
       "circuito": "Menàrguens",
-      "poles": {},
-      "vueltaRapida": {
-        "piloto": "pere-pros",
-        "tiempo": null
+      "poles": {
+        "General": {
+          "piloto": "pere-pros",
+          "tiempo": null
+        }
       },
+      "vueltaRapida": null,
       "mangas": [
         {
           "n": 1,
@@ -905,14 +886,7 @@
           ]
         }
       ],
-      "extras": [
-        {
-          "categoria": "General",
-          "piloto": "pere-pros",
-          "puntos": 1,
-          "motivo": "Vuelta rápida"
-        }
-      ],
+      "extras": [],
       "nota": "Fecha PROVISIONAL (la ronda fue \"la semana pasada\" del 05/09/2026). Posiciones reconstruidas desde las hojas de puntos de la organización del 05/09/2026, que Jorge dio por fiables al 100 %. Rubén Cataluña puntúa en la general y no en Master, como en sus hojas. Dafne Martínez y Andrés Osorio figuran los dos con 1 punto en la manga 2 (dos 15.º): se ha puesto 15.ª a Dafne. Los apellidos completos de los tres pilotos nuevos están cortados en la hoja y son supuestos."
     }
   ],
