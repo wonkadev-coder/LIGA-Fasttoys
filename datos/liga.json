@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-08-31",
+  "actualizado": "2026-09-05",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -391,6 +391,30 @@
       "categoria": "Z190 series",
       "idsocio": "78947",
       "transpondedor": null
+    },
+    {
+      "id": "segurajonas495",
+      "nombre": "segurajonas495",
+      "dorsal": 495,
+      "categoria": "Z190 series",
+      "idsocio": "98710",
+      "transpondedor": null
+    },
+    {
+      "id": "migel690",
+      "nombre": "MIGEL690",
+      "dorsal": 690,
+      "categoria": "Z190 series",
+      "idsocio": "98711",
+      "transpondedor": null
+    },
+    {
+      "id": "ledesmoli",
+      "nombre": "LEDESMOLI",
+      "dorsal": 36,
+      "categoria": "Z190 series",
+      "idsocio": "98712",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -701,6 +725,27 @@
       "vueltas": 82,
       "nota": "CronoLaps",
       "mejorVuelta": 64.678
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "segurajonas495",
+      "vueltas": 3,
+      "nota": "CronoLaps",
+      "mejorVuelta": 74.292
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "migel690",
+      "vueltas": 1,
+      "nota": "CronoLaps",
+      "mejorVuelta": 199.329
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "ledesmoli",
+      "vueltas": 3,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.718
     }
   ]
 }
