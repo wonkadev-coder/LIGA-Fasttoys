@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-09-05",
+  "actualizado": "2026-09-06",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -415,6 +415,30 @@
       "categoria": "Z190 series",
       "idsocio": "98712",
       "transpondedor": null
+    },
+    {
+      "id": "arcos",
+      "nombre": "ARCOS",
+      "dorsal": 7,
+      "categoria": "Z190 series",
+      "idsocio": "98713",
+      "transpondedor": null
+    },
+    {
+      "id": "piky",
+      "nombre": "PIKY",
+      "dorsal": 56,
+      "categoria": "Z190 series",
+      "idsocio": "98714",
+      "transpondedor": null
+    },
+    {
+      "id": "asaco",
+      "nombre": "ASACO",
+      "dorsal": 23,
+      "categoria": "Z190 series",
+      "idsocio": "98745",
+      "transpondedor": null
     }
   ],
   "tandas": [
@@ -729,23 +753,51 @@
     {
       "fecha": "2026-09-05",
       "piloto": "segurajonas495",
-      "vueltas": 3,
+      "vueltas": 47,
       "nota": "CronoLaps",
-      "mejorVuelta": 74.292
+      "mejorVuelta": 57.595
     },
     {
       "fecha": "2026-09-05",
       "piloto": "migel690",
-      "vueltas": 1,
+      "vueltas": 52,
       "nota": "CronoLaps",
-      "mejorVuelta": 199.329
+      "mejorVuelta": 62.073
     },
     {
       "fecha": "2026-09-05",
       "piloto": "ledesmoli",
-      "vueltas": 3,
+      "vueltas": 46,
       "nota": "CronoLaps",
-      "mejorVuelta": 63.718
+      "mejorVuelta": 61.319
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "arcos",
+      "vueltas": 82,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.387
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "piky",
+      "vueltas": 47,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.367
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "navarrete",
+      "vueltas": 83,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.179
+    },
+    {
+      "fecha": "2026-09-06",
+      "piloto": "asaco",
+      "vueltas": 5,
+      "nota": "CronoLaps",
+      "mejorVuelta": 71.758
     }
   ]
 }
