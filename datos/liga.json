@@ -1,6 +1,6 @@
 {
   "datosDeEjemplo": false,
-  "actualizado": "2026-09-06",
+  "actualizado": "2026-09-07",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -795,9 +795,9 @@
     {
       "fecha": "2026-09-06",
       "piloto": "asaco",
-      "vueltas": 5,
+      "vueltas": 9,
       "nota": "CronoLaps",
-      "mejorVuelta": 71.758
+      "mejorVuelta": 52.189
     }
   ]
 }
