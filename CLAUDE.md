@@ -356,9 +356,12 @@ Ver la clasificación sin tocar nada: `node scripts/prueba.mjs --ver`.
 - **General**: podio, filas con la etiqueta de categoría y el botón de
   compartir, que dibuja una tarjeta 1080x1350 en estilo Pitbike World (no la
   de Fast Toys) con el podio y los diez primeros.
-- **Pruebas**: un desplegable por prueba con quién sumó más puntos ese fin de
-  semana, las poles con crono, la vuelta rápida y los resultados de cada
-  manga con los puntos de la general.
+- **Pruebas**: fichas "R1 R2 R3 R4" para elegir la ronda (la última marcada),
+  una banda con la pole, el tiempo más rápido y quien más sumó, y **una sola
+  tabla** con cada piloto, su puesto en cada manga y los puntos de la ronda,
+  ordenada por esos puntos (tocar M1, M2 o Pts reordena). Rediseñado el
+  09/09/2026: antes cada manga era una lista de tarjetas y una ronda medía
+  cuatro pantallas de móvil. No lo devuelvas a listas por manga.
 - **Categorías**: la tabla de Rookies y la de Master.
 - **Ficha del piloto**: puntos, puesto en la general y en su categoría,
   victorias, poles y vueltas rápidas, y el detalle manga a manga.

@@ -206,31 +206,54 @@
   }
   .piesem .btn{flex:0 0 auto;padding:8px 14px;font-size:12.5px;box-shadow:none;background:var(--fondo)}
 
-  /* Pruebas */
-  .prueba{background:var(--sup);border-radius:var(--r);box-shadow:var(--sombra);margin-bottom:10px;overflow:hidden}
-  .prueba > summary{display:flex;align-items:center;justify-content:space-between;gap:10px;
-    padding:14px 16px;cursor:pointer;list-style:none;font-size:14px;font-weight:800}
-  .prueba > summary::-webkit-details-marker{display:none}
-  .prueba > summary .rango{font-weight:600;color:var(--tenue);font-size:12px}
-  .prueba .cuerpo{padding:0 14px 14px}
-  .cronos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .crono{border-radius:14px;padding:10px 12px;background:var(--fondo)}
-  .crono .k{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);display:block}
-  .crono .q{font-size:13px;font-weight:800;display:block;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .crono .t{font-size:16px;font-weight:800;color:var(--camp);display:block;margin-top:2px;font-variant-numeric:tabular-nums}
-  .crono.rapida .t{color:var(--texto)}
   /* Etiqueta de categoría (Rookies / Master) en filas y pizarra */
   .etq{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
     border-radius:999px;padding:2px 7px;background:var(--camp);color:var(--camp-txt);font-style:normal;
     vertical-align:1px;margin-right:4px}
-  /* Dentro de una prueba: quién sumó más y los resultados de cada manga */
-  .prueba .gana{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:13px;color:var(--tenue);font-weight:600;
-    background:none;border:0;padding:0;font-family:inherit;text-align:left;cursor:pointer;width:100%}
-  .prueba .gana b{color:var(--texto)}
-  .prueba .gana .avatar{background:var(--camp);color:var(--camp-txt)}
-  h3.manga{font-size:11px;font-weight:800;color:var(--tenue);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px}
-  .prueba .tabla{gap:6px}
-  .prueba .fila{box-shadow:none;background:var(--fondo)}
+  /* Pruebas: un selector de ronda, una banda con los tres datos del fin de
+     semana y UNA tabla con el resultado de cada piloto en las dos mangas.
+     Antes cada manga era una lista de tarjetas grandes y una ronda medía
+     cuatro pantallas; Jorge pidió el 09/09/2026 que se viera sin bajar tanto. */
+  .rondas{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+  .rondas::-webkit-scrollbar{display:none}
+  .chip{border:0;border-radius:999px;padding:9px 16px;font:inherit;font-size:13px;font-weight:800;
+    background:var(--sup);color:var(--texto);box-shadow:var(--sombra);cursor:pointer;flex:0 0 auto}
+  .chip.activa{background:var(--camp);color:var(--camp-txt)}
+  .ronda{background:var(--sup);border-radius:var(--r);box-shadow:var(--sombra);padding:14px 14px 4px}
+  .rcab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+  .rcab b{font-size:15px;letter-spacing:-.01em}
+  .rcab span{font-size:12px;color:var(--tenue);font-weight:600;text-align:right;flex:0 0 auto}
+  .tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
+  .tres button{border:0;border-radius:14px;background:var(--fondo);padding:10px 10px;font:inherit;
+    text-align:left;cursor:pointer;color:inherit;min-width:0}
+  .tres .k{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);display:block}
+  .tres b{display:block;font-size:12px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tres .t{display:block;font-size:15px;font-weight:800;color:var(--camp);margin-top:1px;font-variant-numeric:tabular-nums}
+  table.res{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;table-layout:fixed}
+  table.res th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tenue);
+    text-align:right;padding:6px 4px;border-bottom:1px solid var(--linea);white-space:nowrap}
+  table.res th.pos{width:30px;text-align:center}
+  table.res th.m{width:40px}
+  table.res th.pts{width:52px}
+  table.res th.i{text-align:left}
+  table.res th button{border:0;background:none;font:inherit;color:inherit;cursor:pointer;padding:0;
+    text-transform:inherit;letter-spacing:inherit}
+  table.res th button.activa{color:var(--camp)}
+  table.res th button.activa::after{content:" ▾"}
+  table.res td{padding:0 4px;height:38px;border-bottom:1px solid var(--linea);font-size:13px;text-align:right;font-weight:600}
+  table.res tr:last-child td{border-bottom:0}
+  table.res td.pos{text-align:center;color:var(--tenue);font-weight:800}
+  table.res tr.p1 td.pos{color:var(--camp)}
+  table.res td.i{text-align:left;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* La categoría, en una letra: la etiqueta entera se comía el nombre en móvil */
+  table.res td.i .cat{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;
+    background:var(--camp);color:var(--camp-txt);font-size:9px;font-weight:800;font-style:normal;
+    margin-left:6px;vertical-align:1px}
+  table.res td.g{color:var(--camp);font-weight:800}
+  table.res td.no{color:var(--linea)}
+  table.res td.pts{font-weight:800;font-size:14px}
+  table.res td.pts sup{font-size:9px;color:var(--tenue);margin-left:2px;font-weight:700}
+  table.res tr[data-id]{cursor:pointer}
 
   /* Premios */
   .hito{background:var(--sup);border-radius:var(--r);box-shadow:var(--sombra);padding:16px;margin-bottom:10px}
@@ -674,14 +697,6 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
          <span class="vt num">${n(p.puntos)}</span>
        </button>`;
 
-    // Resultado de una manga: puesto de llegada y los puntos de la general.
-    const filaManga = (r) =>
-      `<button class="fila${r.posicion === 1 ? ' p1' : ''}" type="button" data-id="${r.piloto}">
-         <span class="pos num">${r.posicion}</span>
-         ${avatar(r.nombre)}
-         <span class="nom"><b>${r.nombre}</b><span class="dor num">${r.categoria ? `<i class="etq">${r.categoria}</i>` : ''}${r.dorsal != null ? '#' + r.dorsal : ''}</span></span>
-         <span class="vt num">${r.puntos ? '+' + n(r.puntos) : '0'}</span>
-       </button>`;
 
     const CABECERA_PTS =
       '<div class="cabtabla"><span>Pos.</span><span>Dorsal</span>' +
@@ -689,41 +704,90 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
 
     $('tablaPuntos').innerHTML = CABECERA_PTS + CAMP.general.map(filaPuntos).join('');
 
-    // --- Pruebas: pole por categoría y vuelta rápida del fin de semana ---
-    $('listaPruebas').innerHTML = CAMP.pruebas.length
-      ? CAMP.pruebas.map((pr, i) => `
-        <details class="prueba"${i === CAMP.pruebas.length - 1 ? ' open' : ''}>
-          <summary>
-            <span>${pr.nombre ?? pr.id}</span>
-            <span class="rango">${pr.fecha ? diaMes(pr.fecha) : ''}</span>
-          </summary>
-          <div class="cuerpo">
-            ${pr.circuito ? `<div class="notaciclo" style="margin:0 0 12px">${pr.circuito} · ${pr.numMangas} mangas</div>` : ''}
-            ${pr.ganador ? `
-              <button class="gana" type="button" data-id="${pr.ganador.piloto}">
-                ${avatar(pr.ganador.nombre)}
-                <span>Más puntos del fin de semana: <b>${pr.ganador.nombre}</b> · ${n(pr.ganador.puntos)} pts</span>
-              </button>` : ''}
-            <div class="cronos">
-              ${(pr.poles ?? []).filter((po) => po.categoria === 'General').map((po) => `
-                <div class="crono">
-                  <span class="k">Pole${CAMP.puntoPole ? ' · +' + CAMP.puntoPole + ' punto' : ''}</span>
-                  <span class="q">${po.nombre}</span>
-                  ${po.tiempo ? `<span class="t">${po.tiempo}</span>` : '<span class="t" style="color:var(--tenue)">sin crono</span>'}
-                </div>`).join('')}
-              ${pr.vueltaRapida ? `
-                <div class="crono rapida">
-                  <span class="k">Tiempo más rápido${pr.vueltaRapida.manga ? ' · manga ' + pr.vueltaRapida.manga : ''}</span>
-                  <span class="q">${pr.vueltaRapida.nombre}</span>
-                  <span class="t">${pr.vueltaRapida.tiempo ?? '—'}</span>
-                </div>` : ''}
-            </div>
-            ${(pr.mangas ?? []).map((m) => `
-              <h3 class="manga">Manga ${m.n}</h3>
-              <div class="tabla">${m.resultados.map(filaManga).join('')}</div>`).join('')}
+    // --- Pruebas: selector de ronda, tres datos y una tabla por fin de semana ---
+    // La tabla sale de la general: cada piloto con su puesto en cada manga y los
+    // puntos que sumó esa ronda (pole incluida). Quien no corrió no aparece.
+    const filasDePrueba = (pr) => CAMP.general
+      .map((p) => {
+        const h = p.historial.find((x) => x.prueba === pr.id);
+        if (!h) return null;
+        const pos = {};
+        for (const m of p.mangas) if (m.prueba === pr.id) pos[m.manga] = m.posicion;
+        // La categoría de ESA ronda: si no puntuó en la suya (Rubén en Menàrguens 2), sin marca.
+        const cat = p.categoria && CAMP.categorias.find((c) => c.categoria === p.categoria)
+          ?.pilotos.find((x) => x.id === p.id)?.historial.some((x) => x.prueba === pr.id) ? p.categoria : null;
+        return { id: p.id, nombre: p.nombre, categoria: cat, pos, puntos: h.puntos, pole: !!h.pole };
+      })
+      .filter(Boolean);
+
+    let rondaActiva = CAMP.pruebas.length - 1;
+    let ordenPrueba = 'puntos';
+
+    function pintarPrueba() {
+      const pr = CAMP.pruebas[rondaActiva];
+      if (!pr) {
+        $('listaPruebas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna prueba disputada.</p>';
+        return;
+      }
+      const numeros = pr.mangas.map((m) => m.n);
+      const ultima = numeros[numeros.length - 1];
+      const noAcabo = Infinity;
+      const filas = filasDePrueba(pr).sort((a, b) => {
+        if (ordenPrueba !== 'puntos') {
+          const k = Number(ordenPrueba.slice(1));
+          return (a.pos[k] ?? noAcabo) - (b.pos[k] ?? noAcabo) || b.puntos - a.puntos;
+        }
+        // A igual puntuación, quien fue mejor en la última manga.
+        return b.puntos - a.puntos
+          || (a.pos[ultima] ?? noAcabo) - (b.pos[ultima] ?? noAcabo)
+          || a.nombre.localeCompare(b.nombre, 'es');
+      });
+      const pole = (pr.poles ?? []).find((po) => po.categoria === 'General') ?? null;
+      const dato = (k, quien, t) => `
+        <button type="button"${quien ? ` data-id="${quien.piloto}"` : ''}>
+          <span class="k">${k}</span>
+          <b>${quien?.nombre ?? '—'}</b>
+          <span class="t">${t}</span>
+        </button>`;
+      const th = (col, texto, clase) =>
+        `<th class="${clase}"><button type="button" data-col="${col}" class="${ordenPrueba === col ? 'activa' : ''}">${texto}</button></th>`;
+
+      $('listaPruebas').innerHTML = `
+        <div class="rondas">${CAMP.pruebas.map((p, i) =>
+          `<button class="chip${i === rondaActiva ? ' activa' : ''}" type="button" data-ronda="${i}">R${i + 1}</button>`).join('')}</div>
+        <div class="ronda">
+          <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
+          <div class="tres">
+            ${dato(`Pole${CAMP.puntoPole ? ' · +' + CAMP.puntoPole : ''}`, pole, pole?.tiempo ?? 'sin crono')}
+            ${dato('Más rápido', pr.vueltaRapida, pr.vueltaRapida?.tiempo ?? '—')}
+            ${dato('Más puntos', pr.ganador, pr.ganador ? n(pr.ganador.puntos) + ' pts' : '—')}
           </div>
-        </details>`).join('')
-      : '<p class="notaciclo">Todavía no hay ninguna prueba disputada.</p>';
+          <table class="res">
+            <thead><tr>
+              <th class="pos">#</th><th class="i">Piloto</th>
+              ${numeros.map((k) => th('m' + k, 'M' + k, 'm')).join('')}
+              ${th('puntos', 'Pts', 'pts')}
+            </tr></thead>
+            <tbody>${filas.map((f, i) => `
+              <tr data-id="${f.id}"${i === 0 && ordenPrueba === 'puntos' ? ' class="p1"' : ''}>
+                <td class="pos num">${i + 1}</td>
+                <td class="i">${f.nombre}${f.categoria ? `<i class="cat" title="${f.categoria}">${f.categoria[0]}</i>` : ''}</td>
+                ${numeros.map((k) => f.pos[k] == null
+                  ? '<td class="no">—</td>'
+                  : `<td class="num${f.pos[k] === 1 ? ' g' : ''}">${f.pos[k]}</td>`).join('')}
+                <td class="pts num">${n(f.puntos)}${f.pole ? '<sup>P</sup>' : ''}</td>
+              </tr>`).join('')}</tbody>
+          </table>
+        </div>`;
+    }
+    pintarPrueba();
+
+    $('listaPruebas').addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-ronda]');
+      if (chip) { rondaActiva = Number(chip.dataset.ronda); ordenPrueba = 'puntos'; pintarPrueba(); return; }
+      const col = e.target.closest('[data-col]');
+      if (col) { ordenPrueba = col.dataset.col; pintarPrueba(); }
+    });
 
     // --- Categorías: cada una con su tabla ---
     $('listaCategorias').innerHTML = CAMP.categorias.length
