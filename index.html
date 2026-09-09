@@ -254,6 +254,13 @@
   table.res td.pts{font-weight:800;font-size:14px}
   table.res td.pts sup{font-size:9px;color:var(--tenue);margin-left:2px;font-weight:700}
   table.res tr[data-id]{cursor:pointer}
+  /* Categorías: cada una con su cabecera y sus fichas Temporada · R1 · R2… */
+  .catcab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-size:15px;font-weight:800;margin:18px 4px 10px;letter-spacing:-.01em}
+  .catcab:first-child{margin-top:4px}
+  .catcab span{font-size:12px;color:var(--tenue);font-weight:600}
+  .tres.uno{grid-template-columns:1fr}
+  .ronda .notaciclo{margin:10px 0 8px}
 
   /* Premios */
   .hito{background:var(--sup);border-radius:var(--r);box-shadow:var(--sombra);padding:16px;margin-bottom:10px}
@@ -704,64 +711,44 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
 
     $('tablaPuntos').innerHTML = CABECERA_PTS + CAMP.general.map(filaPuntos).join('');
 
-    // --- Pruebas: selector de ronda, tres datos y una tabla por fin de semana ---
-    // La tabla sale de la general: cada piloto con su puesto en cada manga y los
-    // puntos que sumó esa ronda (pole incluida). Quien no corrió no aparece.
-    const filasDePrueba = (pr) => CAMP.general
+    // --- La tabla de una ronda, común a Pruebas y Categorías -----------------
+    // Cada piloto de la lista con su puesto en cada manga y los puntos de esa
+    // ronda (pole incluida). Con la general, los puestos son absolutos; con una
+    // categoría, los de dentro de ella. Quien no corrió no aparece.
+    const filasDeRonda = (pr, pilotos, marcaDe = () => null) => pilotos
       .map((p) => {
         const h = p.historial.find((x) => x.prueba === pr.id);
         if (!h) return null;
         const pos = {};
         for (const m of p.mangas) if (m.prueba === pr.id) pos[m.manga] = m.posicion;
-        // La categoría de ESA ronda: si no puntuó en la suya (Rubén en Menàrguens 2), sin marca.
-        const cat = p.categoria && CAMP.categorias.find((c) => c.categoria === p.categoria)
-          ?.pilotos.find((x) => x.id === p.id)?.historial.some((x) => x.prueba === pr.id) ? p.categoria : null;
-        return { id: p.id, nombre: p.nombre, categoria: cat, pos, puntos: h.puntos, pole: !!h.pole };
+        return { id: p.id, nombre: p.nombre, marca: marcaDe(p), pos, puntos: h.puntos, pole: !!h.pole };
       })
       .filter(Boolean);
 
-    let rondaActiva = CAMP.pruebas.length - 1;
-    let ordenPrueba = 'puntos';
-
-    function pintarPrueba() {
-      const pr = CAMP.pruebas[rondaActiva];
-      if (!pr) {
-        $('listaPruebas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna prueba disputada.</p>';
-        return;
+    const NO_ACABO = Infinity;
+    const ordenarFilas = (filas, orden, ultima) => [...filas].sort((a, b) => {
+      if (orden !== 'puntos') {
+        const k = Number(orden.slice(1));
+        return (a.pos[k] ?? NO_ACABO) - (b.pos[k] ?? NO_ACABO) || b.puntos - a.puntos;
       }
-      const numeros = pr.mangas.map((m) => m.n);
-      const ultima = numeros[numeros.length - 1];
-      const noAcabo = Infinity;
-      const filas = filasDePrueba(pr).sort((a, b) => {
-        if (ordenPrueba !== 'puntos') {
-          const k = Number(ordenPrueba.slice(1));
-          return (a.pos[k] ?? noAcabo) - (b.pos[k] ?? noAcabo) || b.puntos - a.puntos;
-        }
-        // A igual puntuación, quien fue mejor en la última manga.
-        return b.puntos - a.puntos
-          || (a.pos[ultima] ?? noAcabo) - (b.pos[ultima] ?? noAcabo)
-          || a.nombre.localeCompare(b.nombre, 'es');
-      });
-      const pole = (pr.poles ?? []).find((po) => po.categoria === 'General') ?? null;
-      const dato = (k, quien, t) => `
+      // A igual puntuación, quien fue mejor en la última manga.
+      return b.puntos - a.puntos
+        || (a.pos[ultima] ?? NO_ACABO) - (b.pos[ultima] ?? NO_ACABO)
+        || a.nombre.localeCompare(b.nombre, 'es');
+    });
+
+    const dato = (k, quien, t) => `
         <button type="button"${quien ? ` data-id="${quien.piloto}"` : ''}>
           <span class="k">${k}</span>
           <b>${quien?.nombre ?? '—'}</b>
           <span class="t">${t}</span>
         </button>`;
-      const th = (col, texto, clase) =>
-        `<th class="${clase}"><button type="button" data-col="${col}" class="${ordenPrueba === col ? 'activa' : ''}">${texto}</button></th>`;
 
-      $('listaPruebas').innerHTML = `
-        <div class="rondas">${CAMP.pruebas.map((p, i) =>
-          `<button class="chip${i === rondaActiva ? ' activa' : ''}" type="button" data-ronda="${i}">R${i + 1}</button>`).join('')}</div>
-        <div class="ronda">
-          <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
-          <div class="tres">
-            ${dato(`Pole${CAMP.puntoPole ? ' · +' + CAMP.puntoPole : ''}`, pole, pole?.tiempo ?? 'sin crono')}
-            ${dato('Más rápido', pr.vueltaRapida, pr.vueltaRapida?.tiempo ?? '—')}
-            ${dato('Más puntos', pr.ganador, pr.ganador ? n(pr.ganador.puntos) + ' pts' : '—')}
-          </div>
+    function tablaRonda(pr, filas, orden) {
+      const numeros = pr.mangas.map((m) => m.n);
+      const th = (col, texto, clase) =>
+        `<th class="${clase}"><button type="button" data-col="${col}" class="${orden === col ? 'activa' : ''}">${texto}</button></th>`;
+      return `
           <table class="res">
             <thead><tr>
               <th class="pos">#</th><th class="i">Piloto</th>
@@ -769,15 +756,51 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
               ${th('puntos', 'Pts', 'pts')}
             </tr></thead>
             <tbody>${filas.map((f, i) => `
-              <tr data-id="${f.id}"${i === 0 && ordenPrueba === 'puntos' ? ' class="p1"' : ''}>
+              <tr data-id="${f.id}"${i === 0 && orden === 'puntos' ? ' class="p1"' : ''}>
                 <td class="pos num">${i + 1}</td>
-                <td class="i">${f.nombre}${f.categoria ? `<i class="cat" title="${f.categoria}">${f.categoria[0]}</i>` : ''}</td>
+                <td class="i">${f.nombre}${f.marca ? `<i class="cat" title="${f.marca}">${f.marca[0]}</i>` : ''}</td>
                 ${numeros.map((k) => f.pos[k] == null
                   ? '<td class="no">—</td>'
                   : `<td class="num${f.pos[k] === 1 ? ' g' : ''}">${f.pos[k]}</td>`).join('')}
                 <td class="pts num">${n(f.puntos)}${f.pole ? '<sup>P</sup>' : ''}</td>
               </tr>`).join('')}</tbody>
-          </table>
+          </table>`;
+    }
+
+    const chipsRondas = (activa, extra = '', conTemporada = false) => `
+        <div class="rondas">
+          ${conTemporada ? `<button class="chip${activa === -1 ? ' activa' : ''}" type="button" data-ronda="-1"${extra}>Temporada</button>` : ''}
+          ${CAMP.pruebas.map((p, i) =>
+            `<button class="chip${i === activa ? ' activa' : ''}" type="button" data-ronda="${i}"${extra}>R${i + 1}</button>`).join('')}
+        </div>`;
+
+    // --- Pruebas: la general, ronda a ronda ---------------------------------
+    let rondaActiva = CAMP.pruebas.length - 1;
+    let ordenPrueba = 'puntos';
+
+    // La categoría de ESA ronda: si no puntuó en la suya (Rubén en Menàrguens 2), sin marca.
+    const marcaEnRonda = (pr) => (p) => p.categoria && CAMP.categorias.find((c) => c.categoria === p.categoria)
+      ?.pilotos.find((x) => x.id === p.id)?.historial.some((x) => x.prueba === pr.id) ? p.categoria : null;
+
+    function pintarPrueba() {
+      const pr = CAMP.pruebas[rondaActiva];
+      if (!pr) {
+        $('listaPruebas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna prueba disputada.</p>';
+        return;
+      }
+      const ultima = pr.mangas[pr.mangas.length - 1]?.n;
+      const filas = ordenarFilas(filasDeRonda(pr, CAMP.general, marcaEnRonda(pr)), ordenPrueba, ultima);
+      const pole = (pr.poles ?? []).find((po) => po.categoria === 'General') ?? null;
+      $('listaPruebas').innerHTML = `
+        ${chipsRondas(rondaActiva)}
+        <div class="ronda">
+          <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
+          <div class="tres">
+            ${dato(`Pole${CAMP.puntoPole ? ' · +' + CAMP.puntoPole : ''}`, pole, pole?.tiempo ?? 'sin crono')}
+            ${dato('Más rápido', pr.vueltaRapida, pr.vueltaRapida?.tiempo ?? '—')}
+            ${dato('Más puntos', pr.ganador, pr.ganador ? n(pr.ganador.puntos) + ' pts' : '—')}
+          </div>
+          ${tablaRonda(pr, filas, ordenPrueba)}
         </div>`;
     }
     pintarPrueba();
@@ -789,19 +812,56 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
       if (col) { ordenPrueba = col.dataset.col; pintarPrueba(); }
     });
 
-    // --- Categorías: cada una con su tabla ---
-    $('listaCategorias').innerHTML = CAMP.categorias.length
-      ? CAMP.categorias.map((c, i) => `
-        <details class="sem"${i === 0 ? ' open' : ''}>
-          <summary>
-            <span><span class="flecha">›</span> ${c.categoria}</span>
-            <span class="rango">${c.pilotos.length} pilotos</span>
-          </summary>
-          <div class="cuerpo">
-            <div class="tabla">${CABECERA_PTS}${c.pilotos.map((p) => filaPuntos(p, { conEtiqueta: false })).join('')}</div>
-          </div>
-        </details>`).join('')
-      : '<p class="notaciclo">Este campeonato no tiene categorías aparte de la general.</p>';
+    // --- Categorías: la temporada o una ronda, con los puestos de la categoría --
+    const estadoCat = new Map(CAMP.categorias.map((c) => [c.categoria, { ronda: -1, orden: 'puntos' }]));
+
+    function pintarCategorias() {
+      if (!CAMP.categorias.length) {
+        $('listaCategorias').innerHTML = '<p class="notaciclo">Este campeonato no tiene categorías aparte de la general.</p>';
+        return;
+      }
+      $('listaCategorias').innerHTML = CAMP.categorias.map((c) => {
+        const st = estadoCat.get(c.categoria);
+        const chips = chipsRondas(st.ronda, ` data-cat="${c.categoria}"`, true);
+        let cuerpo;
+        if (st.ronda === -1) {
+          cuerpo = `<div class="tabla">${c.pilotos.map((p) => filaPuntos(p, { conEtiqueta: false })).join('')}</div>`;
+        } else {
+          const pr = CAMP.pruebas[st.ronda];
+          const ultima = pr.mangas[pr.mangas.length - 1]?.n;
+          const filas = ordenarFilas(filasDeRonda(pr, c.pilotos), st.orden, ultima);
+          const mejor = [...filas].sort((a, b) => b.puntos - a.puntos)[0] ?? null;
+          // Quien corrió la ronda pero no puntuó en esta categoría (Rubén en Menàrguens 2).
+          const fuera = CAMP.general.filter((p) => p.categoria === c.categoria
+            && p.historial.some((x) => x.prueba === pr.id)
+            && !filas.some((f) => f.id === p.id));
+          cuerpo = `
+            <div class="ronda">
+              <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
+              ${mejor ? `<div class="tres uno">${dato(`Más puntos en ${c.categoria}`, { piloto: mejor.id, nombre: mejor.nombre }, n(mejor.puntos) + ' pts')}</div>` : ''}
+              ${filas.length ? tablaRonda(pr, filas, st.orden) : '<p class="notaciclo">Ningún piloto de esta categoría puntuó en esta ronda.</p>'}
+              ${fuera.length ? `<p class="notaciclo">${fuera.map((p) => p.nombre).join(', ')} puntuó en la general pero no en ${c.categoria} en esta ronda.</p>` : ''}
+            </div>`;
+        }
+        return `
+          <section data-cat="${c.categoria}">
+            <h3 class="catcab">${c.categoria} <span>${c.pilotos.length} pilotos</span></h3>
+            ${chips}
+            ${cuerpo}
+          </section>`;
+      }).join('');
+    }
+    pintarCategorias();
+
+    $('listaCategorias').addEventListener('click', (e) => {
+      const sec = e.target.closest('[data-cat]');
+      const st = sec && estadoCat.get(sec.dataset.cat);
+      if (!st) return;
+      const chip = e.target.closest('[data-ronda]');
+      if (chip) { st.ronda = Number(chip.dataset.ronda); st.orden = 'puntos'; pintarCategorias(); return; }
+      const col = e.target.closest('[data-col]');
+      if (col) { st.orden = col.dataset.col; pintarCategorias(); }
+    });
 
     $('notaCiclo')?.remove();
 
