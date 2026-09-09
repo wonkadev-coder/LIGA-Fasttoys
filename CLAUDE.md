@@ -9,6 +9,19 @@ Francia).
 > como si lo fuera. Las secciones de Fast Toys son correctas **como
 > descripción de ese campeonato**, no del proyecto. Falta reescribirlo.
 
+## Dónde está publicada
+
+En GitHub Pages, desde la rama `main` del repositorio
+`wonkadev-coder/LIGA-Fasttoys` (el nombre es el antiguo; Jorge puede
+renombrarlo y GitHub redirige):
+
+**https://wonkadev-coder.github.io/LIGA-Fasttoys/**
+
+Activado por Jorge el 10/09/2026. Cada `git push` a `main` la actualiza en un
+minuto, y el bot de `.github/workflows/actualizar.yml` sube las vueltas de la
+liga cada mañana. Todas las rutas de la app son relativas a propósito: vive en
+una subcarpeta del dominio.
+
 ## Los dos formatos de competición
 
 No comparten nada salvo el censo de pilotos. Son dos motores de cálculo y dos
