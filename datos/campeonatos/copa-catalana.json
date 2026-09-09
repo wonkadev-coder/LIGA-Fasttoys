@@ -615,7 +615,10 @@
           "tiempo": "51.923"
         }
       },
-      "vueltaRapida": null,
+      "vueltaRapida": {
+        "piloto": "said-benslaiman",
+        "tiempo": "51.669"
+      },
       "mangas": [
         {
           "n": 1,
