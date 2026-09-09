@@ -607,12 +607,12 @@
     {
       "id": "alc",
       "nombre": "Ronda 3 · Alcarràs",
-      "fecha": "2026-05-17",
+      "fecha": "2026-07-19",
       "circuito": "Alcarràs",
       "poles": {
         "General": {
           "piloto": "said-benslaiman",
-          "tiempo": null
+          "tiempo": "51.923"
         }
       },
       "vueltaRapida": null,
@@ -740,7 +740,7 @@
           ]
         }
       ],
-      "nota": "Fecha PROVISIONAL (pendiente de la organización). Posiciones reconstruidas desde la hoja de puntos de la general del 05/09/2026; cuadra con Rookies y Master celda por celda.",
+      "nota": "Fin de semana del 18-19 de julio de 2026 (hoja de cronos de la organización). Posiciones reconstruidas desde la hoja de puntos de la general del 05/09/2026; cuadra con Rookies y Master celda por celda.",
       "extras": []
     },
     {
