@@ -379,8 +379,10 @@ Ver la clasificación sin tocar nada: `node scripts/prueba.mjs --ver`.
   ordenada por esos puntos (tocar M1, M2 o Pts reordena). Rediseñado el
   09/09/2026: antes cada manga era una lista de tarjetas y una ronda medía
   cuatro pantallas de móvil. No lo devuelvas a listas por manga.
-- **Categorías**: Rookies y Master, cada una con sus fichas "Temporada · R1 ·
-  R2…". Temporada es la tabla acumulada; una ronda es la misma tabla compacta
+- **Categorías**: un selector de dos mitades "Rookies · Master" arriba y
+  debajo solo la elegida (se recuerda en el navegador), con su podio de tres
+  avatares y sus fichas "Temporada · R1 · R2…". Antes iban apiladas y Master
+  quedaba debajo de los doce rookies (cambiado el 10/09/2026). Temporada es la tabla acumulada; una ronda es la misma tabla compacta
   de Pruebas pero con **el puesto dentro de la categoría** en cada manga y los
   puntos de la categoría (Daniel Martínez: 22 en la general de Menàrguens 2,
   50 en Rookies). Sin pole ni tiempo más rápido, que son de la general. Si

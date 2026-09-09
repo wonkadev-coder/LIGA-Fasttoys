@@ -254,7 +254,18 @@
   table.res td.pts{font-weight:800;font-size:14px}
   table.res td.pts sup{font-size:9px;color:var(--tenue);margin-left:2px;font-weight:700}
   table.res tr[data-id]{cursor:pointer}
-  /* Categorías: cada una con su cabecera y sus fichas Temporada · R1 · R2… */
+  /* Categorías: un selector de dos mitades (Rookies · Master) y debajo solo
+     la elegida, con su podio y sus fichas Temporada · R1 · R2… Antes iban
+     apiladas y Master quedaba debajo de doce rookies (Jorge, 10/09/2026). */
+  .segmento{display:grid;gap:2px;background:var(--sup);border-radius:var(--r2);box-shadow:var(--sombra);
+    padding:4px;margin:4px 0 12px}
+  .segmento button{border:0;border-radius:12px;padding:10px 8px;font:inherit;background:none;color:var(--tenue);
+    cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+  .segmento button b{font-size:14px;font-weight:800;color:inherit;letter-spacing:-.01em}
+  .segmento button span{font-size:11px;font-weight:600;opacity:.85}
+  .segmento button.activa{background:var(--camp);color:var(--camp-txt)}
+  .podio.cat{margin:0 0 12px}
+  /* Cabecera de categoría de la versión anterior; ya no se usa */
   .catcab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
     font-size:15px;font-weight:800;margin:18px 4px 10px;letter-spacing:-.01em}
   .catcab:first-child{margin-top:4px}
@@ -817,48 +828,81 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
       if (col) { ordenPrueba = col.dataset.col; pintarPrueba(); }
     });
 
-    // --- Categorías: la temporada o una ronda, con los puestos de la categoría --
+    // --- Categorías: se elige una y se ve solo esa, con su podio y sus rondas --
     const estadoCat = new Map(CAMP.categorias.map((c) => [c.categoria, { ronda: -1, orden: 'puntos' }]));
+    const CLAVE_CAT = `pw:categoria:${CAMP.id}`;
+    // Se recuerda la última vista: quien es master abre siempre en Master.
+    let catActiva = (() => {
+      try { const v = localStorage.getItem(CLAVE_CAT); if (CAMP.categorias.some((c) => c.categoria === v)) return v; } catch { /* sin almacenamiento */ }
+      return CAMP.categorias[0]?.categoria ?? null;
+    })();
+
+    const podioDe = (pilotos, etiqueta) => {
+      const top = pilotos.slice(0, 3);
+      if (!top.length) return '';
+      const orden = top.length >= 3 ? [1, 0, 2] : top.map((_, i) => i);
+      return `
+        <section class="podio cat">
+          <div class="et">${etiqueta}</div>
+          <div class="gradas">${orden.map((i) => {
+            const p = top[i];
+            return `<button class="grada p${p.puesto}" type="button" data-id="${p.id}">
+                ${avatar(p.nombre, `<span class="rango">${p.puesto}</span>`)}
+                <div class="nom">${p.nombre}</div>
+                ${p.equipo ? `<div class="cat2">${p.equipo}</div>` : ''}
+                <div class="v num">${n(p.puntos)}</div>
+                <div class="vl">puntos</div>
+              </button>`;
+          }).join('')}</div>
+        </section>`;
+    };
 
     function pintarCategorias() {
       if (!CAMP.categorias.length) {
         $('listaCategorias').innerHTML = '<p class="notaciclo">Este campeonato no tiene categorías aparte de la general.</p>';
         return;
       }
-      $('listaCategorias').innerHTML = CAMP.categorias.map((c) => {
-        const st = estadoCat.get(c.categoria);
-        const chips = chipsRondas(st.ronda, ` data-cat="${c.categoria}"`, true);
-        let cuerpo;
-        if (st.ronda === -1) {
-          cuerpo = `<div class="tabla">${c.pilotos.map((p) => filaPuntos(p, { conEtiqueta: false })).join('')}</div>`;
-        } else {
-          const pr = CAMP.pruebas[st.ronda];
-          const ultima = pr.mangas[pr.mangas.length - 1]?.n;
-          const filas = ordenarFilas(filasDeRonda(pr, c.pilotos), st.orden, ultima);
-          const mejor = [...filas].sort((a, b) => b.puntos - a.puntos)[0] ?? null;
-          // Quien corrió la ronda pero no puntuó en esta categoría (Rubén en Menàrguens 2).
-          const fuera = CAMP.general.filter((p) => p.categoria === c.categoria
-            && p.historial.some((x) => x.prueba === pr.id)
-            && !filas.some((f) => f.id === p.id));
-          cuerpo = `
-            <div class="ronda">
-              <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
-              ${mejor ? `<div class="tres uno">${dato(`Más puntos en ${c.categoria}`, { piloto: mejor.id, nombre: mejor.nombre }, n(mejor.puntos) + ' pts')}</div>` : ''}
-              ${filas.length ? tablaRonda(pr, filas, st.orden) : '<p class="notaciclo">Ningún piloto de esta categoría puntuó en esta ronda.</p>'}
-              ${fuera.length ? `<p class="notaciclo">${fuera.map((p) => p.nombre).join(', ')} puntuó en la general pero no en ${c.categoria} en esta ronda.</p>` : ''}
-            </div>`;
-        }
-        return `
-          <section data-cat="${c.categoria}">
-            <h3 class="catcab">${c.categoria} <span>${c.pilotos.length} pilotos</span></h3>
-            ${chips}
-            ${cuerpo}
-          </section>`;
-      }).join('');
+      const c = CAMP.categorias.find((x) => x.categoria === catActiva) ?? CAMP.categorias[0];
+      const st = estadoCat.get(c.categoria);
+      const selector = `
+        <div class="segmento" style="grid-template-columns:repeat(${CAMP.categorias.length},minmax(0,1fr))">${CAMP.categorias.map((x) =>
+          `<button type="button" data-catsel="${x.categoria}" class="${x.categoria === c.categoria ? 'activa' : ''}">
+             <b>${x.categoria}</b><span>${x.pilotos.length} pilotos</span>
+           </button>`).join('')}</div>`;
+      const chips = chipsRondas(st.ronda, ` data-cat="${c.categoria}"`, true);
+      let cuerpo;
+      if (st.ronda === -1) {
+        cuerpo = podioDe(c.pilotos, `Clasificación ${c.categoria}`) +
+          `<div class="tabla">${c.pilotos.map((p) => filaPuntos(p, { conEtiqueta: false })).join('')}</div>`;
+      } else {
+        const pr = CAMP.pruebas[st.ronda];
+        const ultima = pr.mangas[pr.mangas.length - 1]?.n;
+        const filas = ordenarFilas(filasDeRonda(pr, c.pilotos), st.orden, ultima);
+        const mejor = [...filas].sort((a, b) => b.puntos - a.puntos)[0] ?? null;
+        // Quien corrió la ronda pero no puntuó en esta categoría (Rubén en Menàrguens 2).
+        const fuera = CAMP.general.filter((p) => p.categoria === c.categoria
+          && p.historial.some((x) => x.prueba === pr.id)
+          && !filas.some((f) => f.id === p.id));
+        cuerpo = `
+          <div class="ronda">
+            <div class="rcab"><b>${pr.nombre ?? pr.id}</b><span>${pr.fecha ? diaMes(pr.fecha) : ''}</span></div>
+            ${mejor ? `<div class="tres uno">${dato(`Más puntos en ${c.categoria}`, { piloto: mejor.id, nombre: mejor.nombre }, n(mejor.puntos) + ' pts')}</div>` : ''}
+            ${filas.length ? tablaRonda(pr, filas, st.orden) : '<p class="notaciclo">Ningún piloto de esta categoría puntuó en esta ronda.</p>'}
+            ${fuera.length ? `<p class="notaciclo">${fuera.map((p) => p.nombre).join(', ')} puntuó en la general pero no en ${c.categoria} en esta ronda.</p>` : ''}
+          </div>`;
+      }
+      $('listaCategorias').innerHTML = `${selector}<section data-cat="${c.categoria}">${chips}${cuerpo}</section>`;
     }
     pintarCategorias();
 
     $('listaCategorias').addEventListener('click', (e) => {
+      const sel = e.target.closest('[data-catsel]');
+      if (sel) {
+        catActiva = sel.dataset.catsel;
+        try { localStorage.setItem(CLAVE_CAT, catActiva); } catch { /* sin almacenamiento */ }
+        pintarCategorias();
+        return;
+      }
       const sec = e.target.closest('[data-cat]');
       const st = sec && estadoCat.get(sec.dataset.cat);
       if (!st) return;
