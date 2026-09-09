@@ -666,8 +666,16 @@ Reglas que salen de esa decisión:
 - **La portada es la lista de campeonatos.** Sin `?c=` en la URL se ve la
   portada; con `?c=<id>` se entra en uno. Cambiar de campeonato recarga, a
   propósito: son formatos que no comparten ni pantallas ni cálculo.
-- El icono de Pitbike World es la corona (`logos/pitbike-world.svg`,
-  `scripts/icono.mjs`). A 26 px se simplifica a un aro con cuatro marcas.
+- **El logotipo es el que entregó Jorge el 10/09/2026**: barra roja, PIT /
+  BIKE apilados en **Archivo Black**, una regla, WORLD espaciado y el rótulo
+  "CAMPEONATOS · ES" en rojo (`#E63A1E`). En la web se dibuja con HTML y CSS
+  (`.wordmark`, todo en em) y solo en la portada; dentro de un campeonato la
+  cabecera lleva su escudo. `logos/pitbike-world-wordmark.svg` es el mismo
+  logotipo con la fuente incrustada, para usarlo fuera de la app. Archivo Black
+  es la única excepción a Plus Jakarta Sans, y solo para el logotipo. La
+  tarjeta de compartir lo dibuja en su pie con canvas.
+- El icono de la PWA sigue siendo la corona (`logos/pitbike-world.svg`,
+  `scripts/icono.mjs`): el logotipo es apaisado y en 48 px no se lee.
 
 El manual de marca de Fast Toys sigue en `marca/` y **sigue mandando sobre su
 material** (la tarjeta de compartir de esa liga, su PDF, sus logos), no sobre la

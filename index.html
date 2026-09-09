@@ -9,7 +9,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
 <link rel="icon" href="iconos/pitbike-world-192.png" type="image/png">
 <link rel="apple-touch-icon" href="iconos/pitbike-world-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,23 @@
   /* Cabecera: en la portada es la marca; dentro de un campeonato, su escudo. */
   header{padding:24px 0 6px;display:flex;align-items:center;gap:12px;min-height:74px}
   header .marca{display:grid;place-items:center;flex:0 0 auto}
-  header .marca img{display:block;height:32px;width:auto}
+  /* En la portada el logotipo lleva el nombre; el h1 sobraría al lado. */
+  header.soloMarca{padding-top:28px}
+  header.soloMarca h1,header.soloMarca .sub{display:none}
+
+  /* Logotipo Pitbike World: barra roja, PIT / BIKE, regla, WORLD y rótulo.
+     Todo en em para que baste cambiar font-size. Archivo Black solo aquí:
+     la interfaz sigue en Plus Jakarta Sans. */
+  .wordmark{display:flex;gap:.34em;align-items:stretch;font-size:22px;color:#171A21;
+    font-family:"Archivo Black","Arial Black",Impact,sans-serif;line-height:1;user-select:none}
+  .wordmark .wm-barra{width:.2em;background:#E63A1E;flex:0 0 auto}
+  .wordmark .wm-txt{display:flex;flex-direction:column;justify-content:space-between}
+  .wordmark b{font-weight:400;font-size:1em;letter-spacing:-.02em;line-height:.92}
+  .wordmark .wm-linea{height:.07em;background:#171A21;margin:.16em 0 .14em}
+  .wordmark .wm-pie{display:flex;align-items:baseline;gap:.5em;white-space:nowrap}
+  .wordmark em{font-style:normal;font-size:.42em;letter-spacing:.26em}
+  .wordmark small{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-weight:700;font-size:.24em;
+    letter-spacing:.2em;color:#E63A1E}
   header .volverPortada{
     width:44px;height:44px;border-radius:50%;background:var(--sup);box-shadow:var(--sombra);
     border:0;display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 auto;
@@ -392,7 +408,18 @@
 <div class="contenedor">
 
   <header id="cabecera">
-    <div class="marca" id="marcaPW"><img id="marcaLogo" src="logos/pitbike-world.svg" alt="Pitbike World"></div>
+    <div class="marca" id="marcaPW">
+      <!-- Logotipo de Pitbike World (10/09/2026), dibujado con HTML para que
+           escale nítido. El fichero equivalente es logos/pitbike-world-wordmark.svg. -->
+      <div class="wordmark" role="img" aria-label="Pitbike World · Campeonatos · ES">
+        <span class="wm-barra"></span>
+        <span class="wm-txt">
+          <b>PIT</b><b>BIKE</b>
+          <span class="wm-linea"></span>
+          <span class="wm-pie"><em>WORLD</em><small>CAMPEONATOS · ES</small></span>
+        </span>
+      </div>
+    </div>
     <button class="volverPortada oculto" id="btnPortada" type="button" aria-label="Volver a los campeonatos">
       <svg viewBox="0 0 24 24"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
     </button>
@@ -597,6 +624,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
     $('vistaRanking').classList.add('oculto');
     $('vistaPiloto').classList.add('oculto');
     $('navbar').classList.add('oculto');
+    $('cabecera').classList.add('soloMarca');
     document.querySelector('.contenedor').style.paddingBottom = '40px';
 
     $('portada').innerHTML = CAMPEONATOS.map((c) => {
@@ -1128,14 +1156,25 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
         y += alto + hueco;
       }
 
-      // Pie: la firma de Pitbike World
-      const corona = await cargarImagen('logos/pitbike-world.svg');
+      // Pie: el logotipo de Pitbike World, dibujado igual que en la cabecera
+      const FB = '"Archivo Black", "Arial Black", Impact, sans-serif';
+      try { await document.fonts.load(`400 30px ${FB}`); } catch { /* con la de reserva */ }
+      const espaciado = (px) => { try { c.letterSpacing = px + 'px'; } catch { /* Safari viejo */ } };
+      const bx = W / 2 - 150, by = H - 122;
+      c.textAlign = 'left';
+      c.fillStyle = '#E63A1E'; c.fillRect(bx, by, 7, 74);
+      c.fillStyle = TEXTO; c.font = `400 30px ${FB}`;
+      espaciado(-0.6);
+      c.fillText('PIT BIKE', bx + 20, by + 28);
+      c.fillRect(bx + 20, by + 38, 280, 2);
+      c.font = `400 15px ${FB}`; espaciado(4);
+      c.fillText('WORLD', bx + 20, by + 62);
+      c.fillStyle = '#E63A1E'; c.font = `700 10px ${F}`; espaciado(2);
+      c.fillText('CAMPEONATOS · ES', bx + 112, by + 62);
+      espaciado(0);
       c.textAlign = 'center';
-      try { if (corona) c.drawImage(corona, W / 2 - 132, H - 96, 44, 44); } catch { /* sin icono */ }
-      c.fillStyle = TEXTO; c.font = `800 28px ${F}`;
-      c.fillText('Pitbike World', W / 2 + 22, H - 64);
       c.fillStyle = TENUE; c.font = `600 19px ${F}`;
-      c.fillText('Los campeonatos de pit bikes, en una sola app', W / 2, H - 28);
+      c.fillText('Los campeonatos de pit bikes, en una sola app', W / 2, H - 22);
 
       return new Promise((ok) => lienzo.toBlob(ok, 'image/png'));
     }
@@ -1425,11 +1464,8 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
     'el contador vuelve a cero, las vueltas sobrantes se arrastran y empieza un ciclo nuevo.';
 
   // --- Marca de la liga ---
-  if (CAMP.marca?.logo) {
-    const img = $('marcaLogo');
-    img.src = CAMP.marca.logo;
-    img.alt = CAMP.marca.alt || 'Fast Toys';
-  }
+  // La cabecera de un campeonato ya enseña su escudo; el logotipo de Pitbike
+  // World solo va en la portada.
 
   // --- Patrocinadores ---
   $('patros').innerHTML = (CAMP.patrocinadores || [])
