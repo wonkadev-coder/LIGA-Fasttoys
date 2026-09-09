@@ -1,3 +1,8 @@
+// AVISO (10/09/2026): el icono de la app ya no es la corona sino el logotipo
+// PIT / BIKE; lo genera scripts/icono-logotipo.ps1. Este script se conserva
+// por si la corona vuelve a hacer falta, pero NO hay que ejecutarlo: pisaría
+// los iconos buenos.
+//
 // Genera los PNG del icono de Pitbike World desde su geometría.
 //
 //   node scripts/icono.mjs

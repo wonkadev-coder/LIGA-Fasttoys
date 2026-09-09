@@ -674,8 +674,12 @@ Reglas que salen de esa decisión:
   logotipo con la fuente incrustada, para usarlo fuera de la app. Archivo Black
   es la única excepción a Plus Jakarta Sans, y solo para el logotipo. La
   tarjeta de compartir lo dibuja en su pie con canvas.
-- El icono de la PWA sigue siendo la corona (`logos/pitbike-world.svg`,
-  `scripts/icono.mjs`): el logotipo es apaisado y en 48 px no se lee.
+- **El icono de la PWA es el logotipo reducido**: la barra roja y PIT / BIKE
+  sobre el gris claro, sin WORLD ni rótulo, que en 48 px no se leen. Lo genera
+  `scripts/icono-logotipo.ps1` con System.Drawing y la fuente de
+  `marca/fuentes/ArchivoBlack-Regular.ttf` (licencia OFL). La corona anterior
+  sigue en `logos/pitbike-world.svg` y `scripts/icono.mjs`, pero **no hay que
+  ejecutar ese script**: pisaría los iconos.
 
 El manual de marca de Fast Toys sigue en `marca/` y **sigue mandando sobre su
 material** (la tarjeta de compartir de esa liga, su PDF, sus logos), no sobre la
