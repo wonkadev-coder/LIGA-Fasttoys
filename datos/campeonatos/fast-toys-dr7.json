@@ -5,7 +5,7 @@
   "pais": "ES",
   "sede": "Circuito DR7 · Tarancón",
   "color": "#EC3013",
-  "actualizado": "2026-09-01",
+  "actualizado": "2026-09-06",
   "temporada": {
     "nombre": "Liga Fast Toys DR7",
     "inicio": "2026-08-08",
@@ -371,6 +371,13 @@
       "piloto": "david-garrido",
       "vueltas": 47,
       "nota": "Clasificación oficial · sin datos en CronoLaps"
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "navarrete",
+      "vueltas": 83,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.179
     }
   ],
   "colorTexto": "#FFFFFF",

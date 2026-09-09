@@ -1,0 +1,24 @@
+{
+  "origen": "cronolaps.es/tiempos — circuito 115 (Circuito DR7)",
+  "extraido": "2026-09-09",
+  "rango": [
+    "2026-08-31",
+    "2026-09-06"
+  ],
+  "criterio": "Solo las seis categorías del reglamento (hijas de la categoría 18, Pit Bike). Agrupado por día operativo 06:00-06:00 e idsocio. Las vueltas se cuentan con el mismo criterio que CronoLaps: la primera pasada no cuenta (es la de lanzamiento) y se descartan los pasos separados por menos del tiempo mínimo.",
+  "pasosTotales": 2085,
+  "pasosDeLaLiga": 83,
+  "tandas": [
+    {
+      "idsocio": "98528",
+      "socio": "NAVARRETE",
+      "dorsal": "44",
+      "categoria": "160 Series",
+      "fecha": "2026-09-05",
+      "vueltas": 83,
+      "mejorVuelta": 61.179,
+      "desde": "11:41",
+      "hasta": "17:21"
+    }
+  ]
+}
