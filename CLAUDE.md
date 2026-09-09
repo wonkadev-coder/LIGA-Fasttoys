@@ -299,10 +299,10 @@ fijadas por Jorge el 05/09/2026 y verificadas contra los PDF oficiales:
 - **La pole solo existe en la general y da 1 punto** (Jorge, 05/09/2026).
   `poles` lleva únicamente la clave `General`; en la web no sale ninguna pole
   por categoría. Según sus hojas la hizo Said en las rondas 1 a 3 y Pere Pros
-  en la 4 (son quienes llevan el +1); faltan los cronos de las rondas 2 a 4.
+  en la 4 (son quienes llevan el +1), con sus cronos.
 - **El tiempo más rápido del fin de semana es una estadística**: se enseña con
-  su crono (`vueltaRapida`, una por prueba) y no puntúa. Jorge tiene que
-  pasar el de las cuatro rondas; el de Juneda (Pere Pros, 47.560) viene del PDF.
+  su crono (`vueltaRapida`, una por prueba) y no puntúa. Cargado en las cuatro
+  rondas (09/09/2026); el de Juneda (Pere Pros, 47.560) viene del PDF de marzo.
 - **`extras` guarda lo que la organización dio fuera de la regla** y mantiene
   en sus hojas: solo el punto de Pere Pros en Master en Juneda. Cuenta en su
   total y no se enseña en la prueba como pole. Con `--extra` se registra otro
@@ -374,8 +374,9 @@ salen de esas tablas y todavía no están en el JSON:
 - **Calendario de seis rondas**, dos mangas cada una, por sus columnas:
   ZKJ (Zona Karting Juneda), MEN R (Menàrguens), ALC (Alcarràs), MEN, KMO y MOR.
   La ronda 4 fue **Menàrguens 2** (columnas MEN), a finales de agosto de 2026,
-  y es la última puntuable hasta la fecha. Faltan las fechas exactas de las
-  rondas 2, 3 y 4 (en el JSON van provisionales) y todo lo de KMO y MOR.
+  y es la última puntuable hasta la fecha. Fechas confirmadas por las hojas de
+  cronos: Alcarràs 19/07/2026 y Menàrguens 2 30/08/2026; la de la ronda 2 sigue
+  provisional. Falta todo lo de KMO y MOR.
 - El logo oficial es el de **ANPA Copa Catalana 2026 · Rodicar**, con
   CronoLaps, Electrics Championship y MM Sports Management como patrocinadores.
   Está en `logos/copa-catalana-original.png`, recortado a `logos/copa-catalana.png`.
@@ -401,8 +402,6 @@ resultado más reciente.
   categoría contradecía a la general, Jorge decidió el 05/09/2026 que **manda
   la general**. Si algún día llegan las hojas de llegada, se sustituyen con
   `--manga`.
-- Los cronos de la pole de las rondas 2 a 4 y el tiempo más rápido del fin de
-  semana de las cuatro rondas.
 - Un **logo a más resolución**: el que pasó Jorge el 05/09/2026 (`logos/copa-catalana-original.png`)
   tiene el escudo en 78x70 px y en la tarjeta de compartir se ve blando. El
   naranja `#F0641E` del campeonato sale de ese logo.
