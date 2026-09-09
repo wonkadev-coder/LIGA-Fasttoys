@@ -442,10 +442,13 @@
       "poles": {
         "General": {
           "piloto": "said-benslaiman",
-          "tiempo": null
+          "tiempo": "50.528"
         }
       },
-      "vueltaRapida": null,
+      "vueltaRapida": {
+        "piloto": "said-benslaiman",
+        "tiempo": "50.707"
+      },
       "mangas": [
         {
           "n": 1,
