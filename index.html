@@ -260,6 +260,11 @@
   .catcab:first-child{margin-top:4px}
   .catcab span{font-size:12px;color:var(--tenue);font-weight:600}
   .tres.uno{grid-template-columns:1fr}
+  /* Semanales (liga de vueltas): la tabla puede tener un día por columna */
+  .tablascroll{overflow-x:auto;margin:0 -14px;padding:0 14px}
+  table.res th.d{width:44px}
+  table.res td sup.rec{font-size:9px;color:var(--tenue);margin-left:1px;font-weight:700}
+  .ronda .piesem{margin-top:10px}
   .ronda .notaciclo{margin:10px 0 8px}
 
   /* Premios */
@@ -1250,28 +1255,100 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
       : '';
   }
 
-  // --- Pestaña Semanales: un desplegable por semana, la última abierta ---
+  // --- Pestaña Semanales: fichas por semana y una tabla con un día por columna ---
+  // Calcado de las rondas de la copa (09/09/2026): la semana es la ronda y los
+  // días en que se rodó son las mangas. Solo vueltas, nunca tiempos.
   const SEMANAS = CAMP.semanas ?? [];
-  $('listaSemanas').innerHTML = SEMANAS.map((s, i) => `
-      <details class="sem"${i === 0 ? ' open' : ''}>
-        <summary>
-          <span><span class="flecha">›</span> Semana ${s.numero}</span>
-          <span class="rango">${diaMes(s.desde)} – ${diaMes(s.hasta)}</span>
-        </summary>
-        <div class="cuerpo">
-          <div class="tabla">${CABECERA}${s.pilotos.map((p) => fila(p, p.vueltas)).join('')}</div>
-          <div class="piesem">
-            <span>${n(s.vueltas)} vueltas · ${s.pilotos.length} ${s.pilotos.length === 1 ? 'piloto' : 'pilotos'}${
-              CAMP.reglamento?.maxVueltasSemana ? ` · máx ${n(CAMP.reglamento.maxVueltasSemana)}/semana` : ''
-            }</span>
-            <button class="btn" type="button" data-semana="${s.semana}">Compartir esta semana</button>
-          </div>
+  let semanaActiva = 0; // SEMANAS va de la más reciente a la más antigua
+  let ordenSemana = 'total';
+  const DIAS = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+  const etiquetaDia = (iso) => `${DIAS[new Date(iso + 'T12:00:00').getDay()]}${Number(iso.slice(8, 10))}`;
+
+  function pintarSemana() {
+    const s = SEMANAS[semanaActiva];
+    if (!s) {
+      $('listaSemanas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna semana con vueltas.</p>';
+      return;
+    }
+    // Las tandas de cada piloto dentro de la semana, por día.
+    const porDia = new Map();
+    const dias = new Set();
+    for (const p of CAMP.pilotos) {
+      for (const t of p.historial ?? []) {
+        if (t.fecha < s.desde || t.fecha > s.hasta) continue;
+        dias.add(t.fecha);
+        if (!porDia.has(p.id)) porDia.set(p.id, {});
+        porDia.get(p.id)[t.fecha] = t;
+      }
+    }
+    const fechas = [...dias].sort();
+    const filas = s.pilotos.map((p) => ({ ...p, dias: porDia.get(p.id) ?? {} }));
+    filas.sort((a, b) => {
+      if (ordenSemana !== 'total') {
+        return (b.dias[ordenSemana]?.vueltas ?? -1) - (a.dias[ordenSemana]?.vueltas ?? -1) || b.vueltas - a.vueltas;
+      }
+      return b.vueltas - a.vueltas || a.nombre.localeCompare(b.nombre, 'es');
+    });
+    const dato = (k, b, t, id = null) => `
+        <button type="button"${id ? ` data-id="${id}"` : ''}>
+          <span class="k">${k}</span><b>${b}</b><span class="t">${t}</span>
+        </button>`;
+    const th = (col, texto, clase) =>
+      `<th class="${clase}"><button type="button" data-col="${col}" class="${ordenSemana === col ? 'activa' : ''}">${texto}</button></th>`;
+    const lider = filas[0];
+    const cronologicas = SEMANAS.map((x, i) => ({ x, i })).reverse();
+
+    $('listaSemanas').innerHTML = `
+      <div class="rondas">${cronologicas.map(({ x, i }) =>
+        `<button class="chip${i === semanaActiva ? ' activa' : ''}" type="button" data-semana-i="${i}">S${x.numero}</button>`).join('')}</div>
+      <div class="ronda">
+        <div class="rcab"><b>Semana ${s.numero}</b><span>${diaMes(s.desde)} – ${diaMes(s.hasta)}</span></div>
+        <div class="tres">
+          ${dato('Más vueltas', lider.nombre, n(lider.vueltas), lider.id)}
+          ${dato('Pilotos', 'en pista', n(s.pilotos.length))}
+          ${dato('Vueltas', 'de la semana', n(s.vueltas))}
         </div>
-      </details>`).join('');
-  conectarFilas($('listaSemanas'));
-  if (!SEMANAS.length) {
-    $('listaSemanas').innerHTML = '<p class="notaciclo">Todavía no hay ninguna semana con vueltas.</p>';
+        <div class="tablascroll">
+          <table class="res" style="min-width:${200 + 44 * fechas.length}px">
+            <thead><tr>
+              <th class="pos">#</th><th class="i">Piloto</th>
+              ${fechas.map((f) => th(f, etiquetaDia(f), 'd')).join('')}
+              ${th('total', 'Total', 'pts')}
+            </tr></thead>
+            <tbody>${filas.map((p, i) => `
+              <tr data-id="${p.id}"${i === 0 && ordenSemana === 'total' ? ' class="p1"' : ''}>
+                <td class="pos num">${i + 1}</td>
+                <td class="i">${p.nombre}</td>
+                ${fechas.map((f) => {
+                  const t = p.dias[f];
+                  if (!t) return '<td class="no">—</td>';
+                  const recorte = t.descartadas > 0
+                    ? `<sup class="rec" title="Hizo ${n(t.registradas)}; el tope deja ${n(t.vueltas)}">*</sup>` : '';
+                  return `<td class="num${ordenSemana === f && i === 0 ? ' g' : ''}">${n(t.vueltas)}${recorte}</td>`;
+                }).join('')}
+                <td class="pts num">${n(p.vueltas)}</td>
+              </tr>`).join('')}</tbody>
+          </table>
+        </div>
+        <div class="piesem">
+          <span>${CAMP.reglamento?.maxVueltasSemana ? `máx ${n(CAMP.reglamento.maxVueltasDia)}/día y ${n(CAMP.reglamento.maxVueltasSemana)}/semana` : ''}${
+            filas.some((p) => Object.values(p.dias).some((t) => t.descartadas > 0)) ? ' · * recortado por el tope' : ''}</span>
+          <button class="btn" type="button" data-semana="${s.semana}">Compartir esta semana</button>
+        </div>
+      </div>`;
+    conectarCompartir($('listaSemanas').querySelector('[data-semana]'), s.semana);
   }
+  pintarSemana();
+  conectarFilas($('listaSemanas'));
+  $('listaSemanas').addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-semana-i]');
+    if (chip) { semanaActiva = Number(chip.dataset.semanaI); ordenSemana = 'total'; pintarSemana(); return; }
+    const col = e.target.closest('[data-col]');
+    if (col) { ordenSemana = col.dataset.col; pintarSemana(); return; }
+    // Las filas de la tabla y la tarjeta del líder llevan al piloto.
+    const f = e.target.closest('[data-id]');
+    if (f) location.hash = f.dataset.id;
+  });
 
   // --- Pestaña Premios: los hitos y quién está más cerca de cada uno ---
   $('listaPremios').innerHTML = (CAMP.hitos ?? []).map((h) => {
@@ -1663,10 +1740,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-01","campeonatos":[{"
   // Sin clasificación no hay nada que compartir.
   if (!CAMP.pilotos.length) $('btnCompartir').closest('.acciones').classList.add('oculto');
   conectarCompartir($('btnCompartir'), null);
-  // Cada semana comparte la suya, no siempre la última.
-  for (const b of $('listaSemanas').querySelectorAll('[data-semana]')) {
-    conectarCompartir(b, b.dataset.semana);
-  }
+  // La semana elegida comparte la suya: el botón lo engancha pintarSemana().
 
   // --- Service worker (solo sirve por http/https, no con doble clic en el fichero) ---
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {

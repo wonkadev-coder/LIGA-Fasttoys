@@ -108,9 +108,9 @@ actividad** — no la semana en curso: la web se regenera una vez al día y con 
 parada unos días saldría una tabla de ceros. Siempre con su rango de fechas a la
 vista, para que no se confunda con hoy.
 
-Se publican **todas las semanas con vueltas**, de la más reciente a la más antigua,
-en la pestaña "Semanales": un `<details>` por semana, la última abierta. Las semanas
-sin actividad no se pintan, para no dejar desplegables vacíos.
+Se publican **todas las semanas con vueltas**, de la más antigua a la más reciente
+en las fichas de la pestaña "Semanales", con la última elegida. Las semanas sin
+actividad no se pintan, para no dejar fichas vacías.
 
 Se calcula en `semanasDeLaLiga()` sobre el reparto por semana ISO que guarda cada
 piloto en `semanas`. Cuenta **vueltas válidas, ya recortadas por los topes**, no las
@@ -147,7 +147,11 @@ interminable. La vista pública se reparte en tres secciones, con el hash como r
 - **General** — podio, una línea con el premio más cercano de toda la liga y la
   clasificación completa en **filas compactas**. El detalle rico (barra, premios,
   historial, rival) vive en la pizarra del piloto, no repetido en cada fila.
-- **Semanales** — un desplegable por semana con vueltas, la última abierta.
+- **Semanales** — fichas "S34 · S35…" para elegir la semana (la última
+  marcada) y una tabla compacta con **un día por columna** (S29, D30…) y el
+  total de la semana; un asterisco marca el día recortado por el tope. Calcado
+  de las rondas de la copa el 09/09/2026, cuando Jorge pidió ver los
+  resultados sin bajar tanto. Antes era un desplegable por semana.
 - **Premios** — los tres hitos con cuántos se han entregado y **quién está más
   cerca** de cada uno. Sin esto la pestaña serían tres ceros hasta que alguien
   llegue a 500.
@@ -173,8 +177,8 @@ Instagram, el formato que más ocupa en el feed) con el podio, los diez primeros
 la franja de patrocinadores. Es canvas puro, sin librerías.
 
 `generarTarjeta(clave)` sirve para las dos: **sin clave** dibuja el acumulado, el que
-reparte premios; **con la clave de una semana** (`'2026-W34'`) dibuja esa semana. Cada
-desplegable de la pestaña "Semanales" comparte la suya, no siempre la última. Cambia
+reparte premios; **con la clave de una semana** (`'2026-W34'`) dibuja esa semana. La
+semana elegida en la pestaña "Semanales" comparte la suya, no siempre la última. Cambia
 la fuente de datos y el rótulo; el resto del dibujo es el mismo.
 
 En el móvil abre el menú de compartir del sistema (`navigator.share` con ficheros);
