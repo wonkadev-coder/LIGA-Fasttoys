@@ -31,6 +31,7 @@ function paraWebVueltas(c) {
     pilotos: c.pilotos.map((p) => ({
       id: p.id,
       nombre: p.nombre,
+      foto: p.foto ?? null,
       dorsal: p.dorsal,
       categoria: p.categoria ?? null,
       puesto: p.puesto,
@@ -51,6 +52,7 @@ function paraWebCarreras(c) {
   const piloto = (p) => ({
     id: p.id,
     nombre: p.nombre,
+    foto: p.foto ?? null,
     dorsal: p.dorsal,
     categoria: p.categoria ?? null,
     marca: p.marca ?? null,

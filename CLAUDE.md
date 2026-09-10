@@ -435,6 +435,24 @@ resultado más reciente.
   tiene el escudo en 78x70 px y en la tarjeta de compartir se ve blando. El
   naranja `#F0641E` del campeonato sale de ese logo.
 
+## Fotos de los pilotos
+
+Los carteles que publica cada liga se guardan tal cual en `FOTOS PILOTOS/`
+(Jorge los deja ahí, con cualquier nombre). `scripts/fotos.ps1` recorta la cara
+de cada uno en un cuadrado de 320 px y lo deja en `fotos/<id>.jpg`; lleva una
+tabla con el fichero, el id del piloto y dónde está la cara en fracción del
+cartel, porque un recorte fijo cortaba cabezas. Después, la ruta va en el censo
+(`datos/pilotos.json`, campo `foto`) y `generar.mjs` la pasa a la web.
+
+La web pinta la foto en todos los avatares —podio, filas, ficha, portada y
+tarjeta de compartir de Pitbike World— y las iniciales cuando no la hay, así
+que no hace falta tener las de todos. La tarjeta de Fast Toys no lleva
+avatares por su manual. Primeras seis (10/09/2026): Ruben8, Roberto79, Raúl
+Paredes, JOSEFH, kike78 y RUBEN 57, de los carteles de Fast Toys. Para añadir
+una: cartel a `FOTOS PILOTOS/`, una línea en la tabla del script, ejecutarlo,
+y `node scripts/generar.mjs` (el censo se actualiza con el patch de fotos o a
+mano).
+
 ## Fuente de datos: CronoLaps
 
 CronoLaps es el cronometrador oficial del circuito **y además patrocinador de la liga**.
