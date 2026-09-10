@@ -681,6 +681,17 @@ Reglas que salen de esa decisión:
   barra y entrada suave de las vistas. Todo derivado de las variables de la
   piel con `color-mix`; no hay colores a mano. Si se cambia algo del acabado,
   se cambia ahí, no en las reglas de arriba.
+- **Segunda vuelta del acabado** (10/09/2026, "necesito más mejoras"): la
+  cabecera de un campeonato es una **banda a sangre** con su color, damero y
+  escudo grande (`header.hero`); la ficha del piloto lleva avatar, nombre en
+  tipografía de titulares y **el dorsal enorme y translúcido de fondo**
+  (`.marcador::before` con `data-dorsal`); y la tarjeta de compartir de
+  Pitbike World se viste con la piel del campeonato (lee las variables CSS)
+  con banda, damero, podio con cajones y el logotipo en el pie. La de Fast
+  Toys conserva su manual: solo gana una bandera a cuadros plana bajo la
+  banda roja y nombres mayores. Pendiente y decidido: **fotos de los
+  pilotos** (Jorge tiene que pasarlas), iconografía propia y un modo de
+  escritorio a dos columnas.
 - **El logotipo es el que entregó Jorge el 10/09/2026**: barra roja, PIT /
   BIKE apilados en **Archivo Black**, una regla, WORLD espaciado y el rótulo
   "CAMPEONATOS · ES" en rojo (`#E63A1E`). En la web se dibuja con HTML y CSS

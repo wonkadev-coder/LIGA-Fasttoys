@@ -527,6 +527,46 @@
     animation:entra .34s cubic-bezier(.2,.7,.2,1) both}
   .portada .tarjeta:nth-child(2){animation-delay:.07s}
   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+  /* ----- Segunda vuelta del acabado (10/09/2026) ----- */
+  /* Cabecera de campeonato a sangre: banda con su color, damero y escudo grande */
+  header.hero{margin:0 -16px 16px;padding:calc(18px + env(safe-area-inset-top)) 18px 20px;
+    border-radius:0 0 28px 28px;color:var(--camp-txt);position:relative;overflow:hidden;min-height:0;gap:14px;
+    background:linear-gradient(150deg, var(--camp) 0%, color-mix(in srgb, var(--camp) 78%, var(--texto)) 100%);
+    box-shadow:0 18px 40px -18px color-mix(in srgb, var(--camp) 70%, transparent)}
+  header.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-conic-gradient(rgba(255,255,255,.16) 0 25%, transparent 0 50%) 0 0/18px 18px;
+    -webkit-mask-image:linear-gradient(105deg, transparent 45%, #000 88%);mask-image:linear-gradient(105deg, transparent 45%, #000 88%)}
+  header.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:55%;pointer-events:none;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.16))}
+  header.hero>*{position:relative;z-index:1}
+  header.hero h1{color:var(--camp-txt);font-size:24px}
+  header.hero .sub{color:color-mix(in srgb, var(--camp-txt) 80%, transparent)}
+  header.hero .hero-meta span{background:color-mix(in srgb, var(--camp-txt) 16%, transparent);
+    color:var(--camp-txt);border-color:color-mix(in srgb, var(--camp-txt) 30%, transparent)}
+  header.hero .volverPortada{background:color-mix(in srgb, var(--camp-txt) 18%, transparent);
+    box-shadow:none;border:1px solid color-mix(in srgb, var(--camp-txt) 32%, transparent)}
+  header.hero .volverPortada svg{stroke:var(--camp-txt)}
+  header.hero .escudo{width:74px;height:74px;border-radius:20px;
+    box-shadow:0 12px 28px rgba(0,0,0,.28), 0 0 0 3px color-mix(in srgb, var(--camp-txt) 40%, transparent)}
+  header.hero .escudo:not(.conLogo){background:var(--sup);color:var(--camp)}
+  .aviso+.contenedor header.hero{margin-top:0}
+
+  /* Ficha del piloto: avatar y nombre grande, dorsal de fondo como número de competición */
+  .pizarra .marcador{position:relative;overflow:hidden;padding-top:20px}
+  .pizarra .marcador::before{content:attr(data-dorsal);position:absolute;right:-4px;top:-26px;z-index:0;
+    font-family:var(--tit);font-weight:800;font-size:176px;line-height:1;letter-spacing:-.06em;
+    color:color-mix(in srgb, var(--camp) 13%, transparent);pointer-events:none}
+  .pizarra .marcador>*{position:relative;z-index:1}
+  .quien{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .quien .avatar{width:66px;height:66px;font-size:21px;background:var(--camp);color:var(--camp-txt);
+    box-shadow:0 0 0 5px var(--glow)}
+  .quien .qtxt{min-width:0}
+  .quien .nombre{font-family:var(--tit);font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .quien .et{margin-top:4px}
+  .pizarra .marcador .cifra{font-size:86px}
+  .pizarra .volver{margin-top:0}
 </style>
 </head>
 <body>
@@ -633,8 +673,11 @@
   <!-- Vista: pizarra del piloto -->
   <main id="vistaPiloto" class="pizarra oculto">
     <button class="volver" id="btnVolver">← Clasificación</button>
-    <section class="marcador">
-      <div class="et" id="pzNombre"></div>
+    <section class="marcador" id="pzMarcador">
+      <div class="quien">
+        <span class="avatar" id="pzAvatar"></span>
+        <div class="qtxt"><div class="nombre" id="pzNombre"></div><div class="et" id="pzSub"></div></div>
+      </div>
       <div class="cifra num" id="pzCiclo">0</div>
       <div class="de">vueltas de este ciclo · de 999</div>
       <div class="barra" id="pzBarra"><div class="relleno"></div></div>
@@ -807,6 +850,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
 
   // --- Cabecera: dentro de un campeonato, su escudo y la vuelta a la portada ---
   $('marcaPW').classList.add('oculto');
+  $('cabecera').classList.add('hero');
   $('btnPortada').classList.remove('oculto');
   $('btnPortada').addEventListener('click', () => { location.href = location.pathname; });
   $('escudoCamp').outerHTML = escudo(CAMP).replace('<div class="escudo', '<div id="escudoCamp" class="escudo');
@@ -1112,9 +1156,11 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
     const ordinal = (k) => `${k}.º`;
 
     function pintarPilotoCarreras(p) {
-      $('pzNombre').innerHTML =
-        [p.nombre, p.dorsal != null ? '#' + p.dorsal : null, p.equipo].filter(Boolean).join(' · ') +
+      $('pzNombre').textContent = p.nombre;
+      $('pzSub').innerHTML = [p.dorsal != null ? '#' + p.dorsal : null, p.equipo].filter(Boolean).join(' · ') +
         (p.categoria ? ` <i class="etq">${p.categoria}</i>` : '');
+      $('pzAvatar').textContent = iniciales(p.nombre);
+      $('pzMarcador').dataset.dorsal = p.dorsal ?? '';
       $('pzCiclo').textContent = n(p.puntos);
       $('pzCiclo').classList.add('num');
       $('pzBarra').classList.add('oculto');
@@ -1226,114 +1272,180 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
       const lienzo = document.createElement('canvas');
       lienzo.width = W; lienzo.height = H;
       const c = lienzo.getContext('2d');
+      // La tarjeta viste la misma piel que la web: colores y tipografía del campeonato.
+      const css = getComputedStyle(document.documentElement);
+      const v = (k, d) => (css.getPropertyValue(k).trim() || d);
       const F = '"Plus Jakarta Sans", system-ui, sans-serif';
-      // Con la piel del campeonato: la tarjeta se ve como su app.
-      const FONDO = PIEL.fondo ?? '#f5f6fa', SUP = PIEL.superficie ?? '#ffffff', TEXTO = PIEL.texto ?? '#171a21',
-            TENUE = PIEL.tenue ?? '#6a7185', LINEA = PIEL.linea ?? '#e7e9f0';
+      const FT = v('--tit', F);
+      const FONDO = v('--fondo', '#f5f6fa'), SUP = v('--sup', '#ffffff'), TEXTO = v('--texto', '#171a21'),
+            TENUE = v('--tenue', '#6a7185'), LINEA = v('--linea', '#e7e9f0');
       const COLOR = CAMP.color ?? TEXTO, COLOR_TXT = CAMP.colorTexto ?? '#ffffff';
       const MEDALLA = ['#f2c14e', '#c9cdd6', '#c98a5b'];
-      try { await document.fonts.ready; } catch { /* sin fuentes web se dibuja con la del sistema */ }
+      const alfa = (hex, a) => {
+        const m = /^#?([0-9a-f]{6})$/i.exec(hex);
+        if (!m) return hex;
+        const n = parseInt(m[1], 16);
+        return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+      };
+      const espaciado = (px) => { try { c.letterSpacing = px + 'px'; } catch { /* Safari viejo */ } };
+      try { await document.fonts.ready; } catch { /* con la de reserva */ }
 
       c.fillStyle = FONDO; c.fillRect(0, 0, W, H);
-      c.fillStyle = COLOR; c.fillRect(0, 0, W, 14);
 
-      // Cabecera: escudo del campeonato y nombre
+      // --- Banda de cabecera con el color del campeonato y damero que se desvanece ---
+      const BANDA = 330;
+      const grad = c.createLinearGradient(0, 0, W, BANDA);
+      grad.addColorStop(0, COLOR); grad.addColorStop(1, alfa(TEXTO, 1) === TEXTO ? COLOR : COLOR);
+      c.save();
+      c.beginPath(); c.roundRect(0, -60, W, BANDA + 60, [0, 0, 44, 44]); c.clip();
+      c.fillStyle = COLOR; c.fillRect(0, 0, W, BANDA);
+      const oscuro = c.createLinearGradient(0, 0, 0, BANDA);
+      oscuro.addColorStop(0, 'rgba(0,0,0,0)'); oscuro.addColorStop(1, 'rgba(0,0,0,.18)');
+      c.fillStyle = oscuro; c.fillRect(0, 0, W, BANDA);
+      const celda = 26;
+      for (let y = 0; y < BANDA; y += celda) {
+        for (let x = 0; x < W; x += celda) {
+          if (((x / celda) + (y / celda)) % 2) continue;
+          const t = Math.max(0, Math.min(1, (x / W - 0.42) / 0.5));
+          if (t <= 0) continue;
+          c.fillStyle = `rgba(255,255,255,${(0.16 * t).toFixed(3)})`;
+          c.fillRect(x, y, celda, celda);
+        }
+      }
+      c.restore();
+
+      // Escudo en baldosa blanca
       const logo = CAMP.marca?.logo ? await cargarImagen(CAMP.marca.logo) : null;
-      const ex = 60, ey = 64, es = 112;
-      c.fillStyle = logo ? SUP : COLOR;
-      c.beginPath(); c.roundRect(ex, ey, es, es, 28); c.fill();
+      const ex = 60, ey = 84, es = 140;
+      c.save();
+      c.shadowColor = 'rgba(0,0,0,.28)'; c.shadowBlur = 30; c.shadowOffsetY = 12;
+      c.fillStyle = logo ? '#fff' : SUP;
+      c.beginPath(); c.roundRect(ex, ey, es, es, 34); c.fill();
+      c.restore();
       if (logo) {
-        const k = Math.min(es / logo.width, es / logo.height);
+        const k = Math.min((es - 8) / logo.width, (es - 8) / logo.height);
         const lw = logo.width * k, lh = logo.height * k;
         c.drawImage(logo, ex + (es - lw) / 2, ey + (es - lh) / 2, lw, lh);
       } else {
-        c.fillStyle = COLOR_TXT; c.font = `800 44px ${F}`;
-        c.textAlign = 'center'; c.textBaseline = 'middle';
+        c.fillStyle = COLOR; c.font = `800 54px ${FT}`; c.textAlign = 'center'; c.textBaseline = 'middle';
         c.fillText(CAMP.siglas ?? iniciales(CAMP.nombre), ex + es / 2, ey + es / 2 + 2);
         c.textBaseline = 'alphabetic';
       }
-      c.textAlign = 'left';
-      c.fillStyle = TEXTO; c.font = `800 44px ${F}`;
-      c.fillText(textoAjustado(c, CAMP.nombre, W - ex - es - 100), ex + es + 28, ey + 50);
-      c.fillStyle = TENUE; c.font = `600 25px ${F}`;
-      const np = CAMP.resumen.pruebas;
-      c.fillText(
-        `Clasificación general · ${np} ${np === 1 ? 'prueba' : 'pruebas'}${CAMP.actualizado ? ' · ' + fecha(CAMP.actualizado) : ''}`,
-        ex + es + 28, ey + 92,
-      );
 
-      // Podio: tres avatares con su insignia, el líder en el centro y más grande
+      // Nombre, subtítulo y píldoras
+      const tx = ex + es + 30, anchoTxt = W - tx - 60;
+      c.textAlign = 'left';
+      c.fillStyle = COLOR_TXT; c.font = `800 52px ${FT}`;
+      espaciado(-1);
+      const nombreCamp = textoAjustado(c, CAMP.nombre, anchoTxt);
+      c.fillText(nombreCamp, tx, ey + 60);
+      espaciado(0);
+      c.fillStyle = alfa(COLOR_TXT, .82); c.font = `600 26px ${F}`;
+      const np = CAMP.resumen?.pruebas ?? 0;
+      c.fillText(`Clasificación general · ${np} ${np === 1 ? 'ronda' : 'rondas'}${CAMP.actualizado ? ' · ' + fecha(CAMP.actualizado) : ''}`, tx, ey + 104);
+      let px = tx;
+      for (const t of [`${CAMP.general.length} pilotos`, CAMP.sede].filter(Boolean)) {
+        c.font = `700 20px ${F}`;
+        const w = c.measureText(t).width + 34;
+        c.fillStyle = alfa(COLOR_TXT, .18);
+        c.beginPath(); c.roundRect(px, ey + 122, w, 40, 20); c.fill();
+        c.fillStyle = COLOR_TXT; c.fillText(t, px + 17, ey + 149);
+        px += w + 10;
+      }
+
+      // --- Podio: avatares con anillo de medalla, halo en el líder y cajones ---
       const top = CAMP.general.slice(0, 3);
-      const sitios = [[W / 2, 400, 118, 0], [W / 2 - 330, 430, 88, 1], [W / 2 + 330, 430, 88, 2]];
-      for (const [x, y, r, i] of sitios) {
+      const sitios = [[W / 2, 0], [W / 2 - 330, 1], [W / 2 + 330, 2]];
+      const baseCajon = 780;
+      const cajones = [64, 42, 28];
+      for (const [x, i] of sitios) {
         const p = top[i];
         if (!p) continue;
+        const r = i === 0 ? 108 : 84;
+        // De arriba abajo: avatar, nombre, equipo, puntos y cajón. Todo cuelga del cajón.
+        const cajonTop = baseCajon - cajones[i];
+        const cy = cajonTop - 158 - r;
+        // cajón
+        c.fillStyle = i === 0 ? COLOR : alfa(TEXTO, 0.09);
+        c.beginPath(); c.roundRect(x - 150, baseCajon - cajones[i], 300, cajones[i] + 30, [22, 22, 0, 0]); c.fill();
+        // avatar
+        c.save();
+        if (i === 0) { c.shadowColor = alfa(COLOR, .45); c.shadowBlur = 40; }
         c.fillStyle = i === 0 ? COLOR : SUP;
-        c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fill();
-        c.lineWidth = 6; c.strokeStyle = i === 0 ? COLOR : LINEA; c.stroke();
-        c.fillStyle = i === 0 ? COLOR_TXT : TEXTO; c.font = `800 ${Math.round(r * 0.6)}px ${F}`;
+        c.beginPath(); c.arc(x, cy, r, 0, Math.PI * 2); c.fill();
+        c.restore();
+        c.lineWidth = 7; c.strokeStyle = i === 0 ? COLOR : MEDALLA[i];
+        c.beginPath(); c.arc(x, cy, r, 0, Math.PI * 2); c.stroke();
+        c.fillStyle = i === 0 ? COLOR_TXT : TEXTO; c.font = `800 ${Math.round(r * 0.62)}px ${FT}`;
         c.textAlign = 'center'; c.textBaseline = 'middle';
-        c.fillText(iniciales(p.nombre), x, y + 2);
-        const bx = x + r * 0.7, by = y + r * 0.7;
-        c.fillStyle = MEDALLA[i]; c.beginPath(); c.arc(bx, by, 26, 0, Math.PI * 2); c.fill();
+        c.fillText(iniciales(p.nombre), x, cy + 2);
+        const bx = x + r * 0.7, by = cy + r * 0.7;
+        c.fillStyle = MEDALLA[i]; c.beginPath(); c.arc(bx, by, 27, 0, Math.PI * 2); c.fill();
         c.lineWidth = 5; c.strokeStyle = FONDO; c.stroke();
         c.fillStyle = i === 2 ? '#fff' : TEXTO; c.font = `800 26px ${F}`;
         c.fillText(String(i + 1), bx, by + 1);
         c.textBaseline = 'alphabetic';
-        c.fillStyle = TEXTO; c.font = `800 ${i === 0 ? 34 : 27}px ${F}`;
-        c.fillText(textoAjustado(c, p.nombre, 310), x, y + r + 54);
-        c.fillStyle = i === 0 ? COLOR : TENUE; c.font = `800 ${i === 0 ? 40 : 30}px ${F}`;
-        c.fillText(`${n(p.puntos)} pts`, x, y + r + (i === 0 ? 104 : 92));
+        c.fillStyle = TEXTO; c.font = `800 ${i === 0 ? 32 : 26}px ${FT}`;
+        c.fillText(textoAjustado(c, p.nombre, i === 0 ? 330 : 296), x, cy + r + 50);
+        if (p.equipo || p.categoria) {
+          c.fillStyle = TENUE; c.font = `600 17px ${F}`;
+          c.fillText(textoAjustado(c, (p.equipo ?? p.categoria).toUpperCase(), 280), x, cy + r + 76);
+        }
+        // Puntos con su unidad pequeña detrás, centrados en conjunto
+        const fCifra = `800 ${i === 0 ? 46 : 36}px ${FT}`, fUnidad = `700 16px ${F}`;
+        c.font = fCifra; const wCifra = c.measureText(n(p.puntos)).width;
+        c.font = fUnidad; const wUnidad = c.measureText(' pts').width;
+        const x0 = x - (wCifra + wUnidad) / 2;
+        c.textAlign = 'left';
+        c.fillStyle = i === 0 ? COLOR : TEXTO; c.font = fCifra;
+        c.fillText(n(p.puntos), x0, cajonTop - 18);
+        c.fillStyle = TENUE; c.font = fUnidad;
+        c.fillText(' pts', x0 + wCifra, cajonTop - 18);
+        c.textAlign = 'center';
       }
       c.textAlign = 'left';
 
-      // Del 4.º al 10.º, en filas como las de la web
-      let y = 690;
-      const alto = 66, hueco = 8;
+      // --- Del 4.º al 10.º ---
+      let y = baseCajon + 52;
+      const alto = 52, hueco = 5;
       for (const p of CAMP.general.slice(3, 10)) {
-        // roundRect no reinicia el trazado: sin beginPath se pintaría encima lo anterior.
-        c.fillStyle = SUP; c.beginPath(); c.roundRect(60, y, W - 120, alto, 18); c.fill();
-        c.fillStyle = TENUE; c.font = `800 25px ${F}`; c.textAlign = 'center';
-        c.fillText(String(p.puesto), 104, y + 43);
-        c.fillStyle = FONDO; c.beginPath(); c.arc(168, y + alto / 2, 23, 0, Math.PI * 2); c.fill();
-        c.fillStyle = TEXTO; c.font = `800 16px ${F}`; c.textBaseline = 'middle';
-        c.fillText(iniciales(p.nombre), 168, y + alto / 2 + 1);
+        c.fillStyle = SUP; c.beginPath(); c.roundRect(60, y, W - 120, alto, 16); c.fill();
+        c.strokeStyle = LINEA; c.lineWidth = 1.5; c.stroke();
+        c.fillStyle = TENUE; c.font = `800 24px ${FT}`; c.textAlign = 'center';
+        c.fillText(String(p.puesto), 100, y + 35);
+        c.fillStyle = alfa(COLOR, .12); c.beginPath(); c.arc(160, y + alto / 2, 19, 0, Math.PI * 2); c.fill();
+        c.fillStyle = TEXTO; c.font = `800 15px ${F}`; c.textBaseline = 'middle';
+        c.fillText(iniciales(p.nombre), 160, y + alto / 2 + 1);
         c.textBaseline = 'alphabetic'; c.textAlign = 'left';
-        c.font = `800 26px ${F}`;
-        const nombre = textoAjustado(c, p.nombre, 480);
-        c.fillText(nombre, 210, y + 42);
+        c.font = `800 24px ${FT}`;
+        const nombre = textoAjustado(c, p.nombre, 520);
+        c.fillText(nombre, 200, y + 35);
         if (p.categoria) {
-          // La categoría, en pequeño, a continuación del nombre
-          const anchoNombre = c.measureText(nombre).width;
-          c.fillStyle = TENUE; c.font = `700 16px ${F}`;
-          c.fillText(p.categoria.toUpperCase(), 210 + anchoNombre + 14, y + 42);
-          c.fillStyle = TEXTO;
+          const w = c.measureText(nombre).width;
+          c.fillStyle = TENUE; c.font = `700 15px ${F}`; espaciado(1.5);
+          c.fillText(p.categoria.toUpperCase(), 200 + w + 14, y + 35);
+          espaciado(0); c.fillStyle = TEXTO;
         }
-        c.textAlign = 'right'; c.fillStyle = TEXTO; c.font = `800 30px ${F}`;
-        c.fillText(n(p.puntos), W - 96, y + 44);
+        c.textAlign = 'right'; c.fillStyle = TEXTO; c.font = `800 27px ${FT}`;
+        c.fillText(n(p.puntos), W - 96, y + 36);
         c.textAlign = 'left';
         y += alto + hueco;
       }
 
-      // Pie: el logotipo de Pitbike World, dibujado igual que en la cabecera
+      // --- Pie: el logotipo de Pitbike World ---
       const FB = '"Archivo Black", "Arial Black", Impact, sans-serif';
-      try { await document.fonts.load(`400 30px ${FB}`); } catch { /* con la de reserva */ }
-      const espaciado = (px) => { try { c.letterSpacing = px + 'px'; } catch { /* Safari viejo */ } };
-      const bx = W / 2 - 150, by = H - 122;
+      try { await document.fonts.load(`400 26px ${FB}`); } catch { /* con la de reserva */ }
+      const bx0 = W / 2 - 128, by0 = H - 92;
       c.textAlign = 'left';
-      c.fillStyle = '#E63A1E'; c.fillRect(bx, by, 7, 74);
-      c.fillStyle = TEXTO; c.font = `400 30px ${FB}`;
-      espaciado(-0.6);
-      c.fillText('PIT BIKE', bx + 20, by + 28);
-      c.fillRect(bx + 20, by + 38, 280, 2);
-      c.font = `400 15px ${FB}`; espaciado(4);
-      c.fillText('WORLD', bx + 20, by + 62);
-      c.fillStyle = '#E63A1E'; c.font = `700 10px ${F}`; espaciado(2);
-      c.fillText('CAMPEONATOS · ES', bx + 112, by + 62);
+      c.fillStyle = '#E63A1E'; c.fillRect(bx0, by0, 6, 62);
+      c.fillStyle = TEXTO; c.font = `400 26px ${FB}`; espaciado(-0.5);
+      c.fillText('PIT BIKE', bx0 + 18, by0 + 24);
+      c.fillRect(bx0 + 18, by0 + 33, 236, 2);
+      c.font = `400 13px ${FB}`; espaciado(3.5);
+      c.fillText('WORLD', bx0 + 18, by0 + 54);
+      c.fillStyle = '#E63A1E'; c.font = `700 9px ${F}`; espaciado(1.8);
+      c.fillText('CAMPEONATOS · ES', bx0 + 98, by0 + 54);
       espaciado(0);
-      c.textAlign = 'center';
-      c.fillStyle = TENUE; c.font = `600 19px ${F}`;
-      c.fillText('Los campeonatos de pit bikes, en una sola app', W / 2, H - 22);
 
       return new Promise((ok) => lienzo.toBlob(ok, 'image/png'));
     }
@@ -1642,8 +1754,10 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
 
   // --- Pizarra del piloto ---
   function pintarPiloto(p) {
-    $('pzNombre').textContent =
-      `${p.nombre} · #${p.dorsal ?? '–'}${p.categoria ? ` · ${p.categoria}` : ''}`;
+    $('pzNombre').textContent = p.nombre;
+    $('pzSub').textContent = [p.dorsal != null ? '#' + p.dorsal : null, p.categoria].filter(Boolean).join(' · ');
+    $('pzAvatar').textContent = iniciales(p.nombre);
+    $('pzMarcador').dataset.dorsal = p.dorsal ?? '';
     $('pzCiclo').textContent = n(p.vueltasCiclo);
     pintarBarra($('pzBarra'), p.vueltasCiclo);
 
@@ -1783,6 +1897,14 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
     c.fillRect(0, 0, W, H);
     c.fillStyle = ROJO;
     c.fillRect(0, 0, W, 12);
+    // Bandera a cuadros bajo la banda: plana, dos filas, como admite el manual.
+    for (let fila = 0; fila < 2; fila++) {
+      for (let x = 0; x < W; x += 18) {
+        if (((x / 18) + fila) % 2) continue;
+        c.fillStyle = fila === 0 ? ROJO : CELDA;
+        c.fillRect(x, 12 + fila * 9, 18, 9);
+      }
+    }
 
     // Cabecera con el logo sobre su chip blanco
     const logo = await cargarImagen(CAMP.marca?.logo ?? 'logos/fasttoys.png');
@@ -1854,7 +1976,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
       // Datos del piloto, encima del cajón
       let ty = baseY - alto - 118;
       c.fillStyle = BLANCO;
-      c.font = '800 30px "Archivo", system-ui, sans-serif';
+      c.font = '800 34px "Archivo", system-ui, sans-serif';
       c.fillText(textoAjustado(c, p.nombre, anchoCol - 8), x + anchoCol / 2, ty);
       if (p.categoria) {
         c.fillStyle = TENUE;
