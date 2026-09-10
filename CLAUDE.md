@@ -672,6 +672,15 @@ Reglas que salen de esa decisión:
 - **La portada es la lista de campeonatos.** Sin `?c=` en la URL se ve la
   portada; con `?c=<id>` se entra en uno. Cambiar de campeonato recarga, a
   propósito: son formatos que no comparten ni pantallas ni cálculo.
+- **Capa de acabado** (10/09/2026, "más calidad visual, no de estructura"):
+  al final del `<style>` hay un bloque que manda sobre el resto y solo toca
+  el acabado: sombra en capas más filo de 1 px (`--borde`, lo que define las
+  tarjetas en oscuro), resplandor del color del campeonato en lo alto
+  (`body::before` con `--glow`), podio con cajones y anillos de medalla,
+  titulares de sección como rótulos, damero en la portada, cristal en la
+  barra y entrada suave de las vistas. Todo derivado de las variables de la
+  piel con `color-mix`; no hay colores a mano. Si se cambia algo del acabado,
+  se cambia ahí, no en las reglas de arriba.
 - **El logotipo es el que entregó Jorge el 10/09/2026**: barra roja, PIT /
   BIKE apilados en **Archivo Black**, una regla, WORLD espaciado y el rótulo
   "CAMPEONATOS · ES" en rojo (`#E63A1E`). En la web se dibuja con HTML y CSS

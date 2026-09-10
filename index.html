@@ -409,6 +409,124 @@
     .portada{grid-template-columns:repeat(3,minmax(0,1fr))}
     .pizarra .marcador .cifra{font-size:88px}
   }
+
+  /* ===== Acabado (10/09/2026) =====================================================
+     Jorge pidió "más calidad en el entorno visual, no en la estructura". Esta
+     capa va al final para mandar sobre lo anterior y no toca ni pantallas ni
+     datos: profundidad (sombra en capas + filo de 1 px, que es lo que define
+     las tarjetas en la piel oscura), un resplandor del color del campeonato
+     en lo alto de la página, un podio con cajones y anillos de medalla,
+     titulares como rótulos, damero en las tarjetas de la portada y una
+     entrada suave de cada vista. Todo sale de las variables de la piel. */
+  :root{
+    --glow:color-mix(in srgb, var(--camp) 16%, transparent);
+    --borde:color-mix(in srgb, var(--texto) 8%, transparent);
+    --sombra-2:0 1px 2px rgba(23,26,33,.04), 0 8px 20px rgba(23,26,33,.06), 0 24px 48px rgba(23,26,33,.05);
+    --tinte:color-mix(in srgb, var(--camp) 7%, var(--sup));
+  }
+  body{position:relative}
+  body::before{content:"";position:fixed;left:0;right:0;top:0;height:440px;pointer-events:none;z-index:0;
+    background:radial-gradient(110% 60% at 50% -12%, var(--glow), transparent 72%)}
+  body.portada::before{display:none}
+  .contenedor{position:relative;z-index:1}
+  ::selection{background:var(--camp);color:var(--camp-txt)}
+  :focus-visible{outline:2px solid var(--camp);outline-offset:3px;border-radius:8px}
+
+  /* Cabecera del campeonato: escudo con filo, título más presente, datos en píldoras */
+  header{padding:26px 0 12px;gap:14px}
+  header h1{font-size:23px;letter-spacing:-.025em;line-height:1.1}
+  header .sub{margin-top:3px}
+  header .escudo{width:62px;height:62px;border-radius:18px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+  .hero-meta:empty{display:none}
+  .hero-meta span{font-size:11px;font-weight:700;letter-spacing:.02em;padding:5px 10px;border-radius:999px;
+    background:var(--tinte);color:var(--texto);border:1px solid var(--borde)}
+
+  /* Superficies: sombra en capas y filo */
+  .podio,.fila,.sem,.ronda,.hito,.caja,.pizarra .marcador,.gancho,.tarjeta,.chip,.segmento,.btn,
+  .volver,.volverPortada,.escudo{box-shadow:var(--sombra-2), 0 0 0 1px var(--borde)}
+  .btn.destacado{box-shadow:0 8px 22px var(--glow), 0 0 0 1px color-mix(in srgb, var(--camp) 40%, transparent)}
+  .fila{border-radius:16px}
+  .fila.p1{background:linear-gradient(90deg, color-mix(in srgb, var(--camp) 14%, var(--sup)), var(--sup) 72%)}
+  .fila .pos,.res td.pos{font-family:var(--tit)}
+  .sem .fila,.prueba .fila{box-shadow:none}
+
+  /* Titulares de sección como rótulos */
+  h2.seccion{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--tenue);margin:24px 0 10px}
+  .podio .et,.tres .k,.cupo .k,.crono .k,.pizarra .marcador .et{letter-spacing:.1em}
+
+  /* Podio: cajones con altura, anillos de medalla y resplandor en el líder */
+  .podio{padding:22px 12px 0;overflow:hidden;
+    background:linear-gradient(180deg, var(--tinte), var(--sup) 62%)}
+  .gradas{align-items:end;gap:8px}
+  .grada{gap:6px}
+  .grada.p1,.grada.p2,.grada.p3{padding-top:0}
+  .grada .avatar{border-width:3px;transition:transform .2s}
+  .grada:hover .avatar{transform:translateY(-2px)}
+  .grada.p1 .avatar{box-shadow:0 0 0 7px var(--glow), var(--sombra-2)}
+  .grada.p2 .avatar{border-color:var(--plata)}
+  .grada.p3 .avatar{border-color:var(--bronce)}
+  .grada .rango{border-color:var(--sup)}
+  .grada .nom{font-size:12.5px}
+  .grada .v{font-size:21px;letter-spacing:-.02em;margin-top:0}
+  .grada.p1 .v{font-size:31px}
+  .grada .vl{margin-top:-4px}
+  .grada::after{content:"";display:block;width:100%;margin-top:10px;border-radius:14px 14px 0 0;
+    background:linear-gradient(180deg, color-mix(in srgb, var(--texto) 11%, var(--sup)), color-mix(in srgb, var(--texto) 4%, var(--sup)))}
+  .grada.p1::after{height:36px;background:linear-gradient(180deg, var(--camp), color-mix(in srgb, var(--camp) 72%, var(--sup)))}
+  .grada.p2::after{height:24px}
+  .grada.p3::after{height:15px}
+  .podio .pie{margin:0;padding:12px 0 14px;border-top:1px solid var(--linea)}
+
+  /* Pizarra del piloto: el marcador con el mismo tinte que el podio */
+  .pizarra .marcador{background:linear-gradient(180deg, var(--tinte), var(--sup) 70%)}
+  .pizarra .marcador .cifra{font-size:78px;letter-spacing:-.04em}
+
+  /* Fichas y selectores: el activo con resplandor */
+  .chip.activa,.segmento button.activa{box-shadow:0 8px 18px var(--glow), 0 0 0 1px color-mix(in srgb, var(--camp) 40%, transparent)}
+  .segmento{box-shadow:var(--sombra-2), 0 0 0 1px var(--borde)}
+  .segmento button.activa{box-shadow:0 6px 14px var(--glow)}
+  .tres button,.cupo{border:1px solid var(--borde)}
+
+  /* Barra inferior: cristal esmerilado con filo */
+  .navbar{background:color-mix(in srgb, var(--sup) 84%, transparent);
+    -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+    border-top:1px solid var(--borde);box-shadow:0 -10px 30px rgba(0,0,0,.08)}
+  .pest.activa .pild{box-shadow:0 6px 16px var(--glow)}
+  .pest{transition:color .15s}
+
+  /* Portada: tarjetas más altas, banda con damero que se desvanece y escudo con filo */
+  .portada-titulo h2{font-size:30px}
+  .tarjeta{border-radius:24px}
+  .tarjeta .banda{height:88px;overflow:hidden}
+  .tarjeta .banda::before{content:"";position:absolute;inset:0;
+    background:repeating-conic-gradient(rgba(255,255,255,.18) 0 25%, transparent 0 50%) 0 0/16px 16px;
+    -webkit-mask-image:linear-gradient(100deg, transparent 38%, #000 78%);mask-image:linear-gradient(100deg, transparent 38%, #000 78%)}
+  .tarjeta .banda::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.14))}
+  .tarjeta .banda .escudo{bottom:-30px;width:68px;height:68px;border-radius:20px;z-index:1;
+    box-shadow:var(--sombra-2), 0 0 0 1px var(--borde)}
+  .tarjeta .cuerpo{padding-top:42px}
+  .tarjeta .nom{font-size:16px}
+  .tarjeta .lider{border:1px solid var(--borde)}
+  .tarjeta{transition:transform .2s, box-shadow .2s}
+  .tarjeta:hover{transform:translateY(-2px)}
+
+  /* En móvil, una tarjeta por fila: a dos columnas los nombres se partían en cuatro líneas */
+  @media (max-width:560px){
+    .portada{grid-template-columns:1fr}
+    .tarjeta .banda{height:96px}
+    .tarjeta .banda .escudo{left:18px;width:76px;height:76px;bottom:-32px}
+    .tarjeta .cuerpo{padding:44px 18px 18px}
+    .tarjeta .nom{font-size:18px}
+  }
+
+  /* Entrada suave de cada vista */
+  @keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  #vistaRanking>section:not(.oculto),#vistaRanking>.tabla,.pizarra>*,.portada .tarjeta,.portada-titulo{
+    animation:entra .34s cubic-bezier(.2,.7,.2,1) both}
+  .portada .tarjeta:nth-child(2){animation-delay:.07s}
+  @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -436,7 +554,7 @@
     <div class="escudo oculto" id="escudoCamp"></div>
     <div>
       <h1 id="titulo">Pitbike World</h1>
-      <p class="sub" id="subtitulo">Los campeonatos de pit bikes</p>
+      <p class="sub" id="subtitulo">Los campeonatos de pit bikes</p><div class="hero-meta" id="heroMeta"></div>
     </div>
   </header>
 
@@ -635,6 +753,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
     $('vistaPiloto').classList.add('oculto');
     $('navbar').classList.add('oculto');
     $('cabecera').classList.add('soloMarca');
+    document.body.classList.add('portada');
     document.querySelector('.contenedor').style.paddingBottom = '40px';
 
     $('portada').innerHTML = CAMPEONATOS.map((c) => {
@@ -693,6 +812,18 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-06","campeonatos":[{"
   $('escudoCamp').outerHTML = escudo(CAMP).replace('<div class="escudo', '<div id="escudoCamp" class="escudo');
   $('titulo').textContent = CAMP.nombre;
   $('subtitulo').textContent = [CAMP.formato === 'carreras' ? 'Carreras y puntos' : 'Vueltas', CAMP.sede].filter(Boolean).join(' · ');
+  // Tres datos del campeonato en píldoras: cuántos corren, cuánto se ha corrido y de cuándo es.
+  {
+    const cuantos = CAMP.formato === 'carreras' ? CAMP.general?.length : CAMP.pilotos?.length;
+    const corrido = CAMP.formato === 'carreras'
+      ? `${CAMP.resumen?.pruebas ?? 0} ${(CAMP.resumen?.pruebas ?? 0) === 1 ? 'ronda' : 'rondas'}`
+      : `${(CAMP.semanas ?? []).length} ${(CAMP.semanas ?? []).length === 1 ? 'semana' : 'semanas'}`;
+    $('heroMeta').innerHTML = [
+      cuantos ? `${cuantos} pilotos` : null,
+      corrido,
+      CAMP.actualizado ? `Al día ${fecha(CAMP.actualizado)}` : null,
+    ].filter(Boolean).map((t) => `<span>${t}</span>`).join('');
+  }
   $('pieActualizado').textContent = CAMP.actualizado
     ? `Actualizado el ${fecha(CAMP.actualizado)}`
     : '';
