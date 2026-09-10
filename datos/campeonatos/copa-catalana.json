@@ -904,5 +904,15 @@
   "marca": {
     "logo": "logos/copa-catalana.png",
     "alt": "Copa Catalana de Pit Bikes"
+  },
+  "piel": {
+    "oscura": false,
+    "fondo": "#f7f3ec",
+    "superficie": "#ffffff",
+    "texto": "#1b2440",
+    "tenue": "#6b7189",
+    "linea": "#e9e2d6",
+    "tipografia": null,
+    "nota": "Sacada del escudo de ANPA Copa Catalana 2026: naranja #F0641E de acento y azul marino en el texto, sobre un fondo cálido. Sin manual oficial; provisional."
   }
 }

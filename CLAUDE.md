@@ -653,11 +653,17 @@ poco visual".
 
 Reglas que salen de esa decisión:
 
-- **Interfaz común y marca neutral.** Pitbike World pone el chasis en claro
-  (`#F5F6FA`) y sin color propio dominante; el color lo trae cada campeonato
-  y entra por la variable CSS `--camp` (con `--camp-txt` para el texto sobre
-  él). Añadir un campeonato no puede exigir diseño nuevo: se rellena `color`,
-  `colorTexto`, `siglas` y `marca.logo` en su JSON y listo.
+- **Mismo esqueleto, piel de cada campeonato** (Jorge, 10/09/2026). La portada
+  es Pitbike World, neutra y clara. Dentro de un campeonato, las mismas
+  pantallas se visten con su marca: además de `color` y `colorTexto` (la
+  variable `--camp`), el JSON lleva `piel` con `fondo`, `superficie`,
+  `texto`, `tenue`, `linea`, `sombra`, `oscura` y `tipografia.titulos`
+  (con su `google` para cargarla). Fast Toys va en oscuro con rojo y Archivo,
+  como manda su manual; la Copa Catalana, en un fondo cálido con azul marino y
+  naranja sacados de su escudo. **No se hacen pantallas distintas por
+  campeonato**: cada mejora tiene que llegar a todos a la vez. Añadir un
+  campeonato sigue siendo rellenar su JSON. Ningún color va escrito a mano en
+  el CSS salvo los chips blancos de los logos y las medallas.
 - **Dirección «Escudo»**, elegida entre tres (`marca/propuestas/app/`):
   tarjetas redondeadas (20 px), sombras suaves, avatares circulares con
   iniciales —que son el sitio de las fotos cuando las haya— y el campeonato

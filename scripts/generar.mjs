@@ -98,6 +98,7 @@ export function generar() {
       color: bruto.color ?? null,
       colorTexto: bruto.colorTexto ?? '#FFFFFF',
       siglas: bruto.siglas ?? null,
+      piel: bruto.piel ?? null,
       actualizado: bruto.actualizado ?? null,
       muestraTiempos: !!bruto.muestraTiempos,
       datosDeEjemplo: !!bruto.datosDeEjemplo,
