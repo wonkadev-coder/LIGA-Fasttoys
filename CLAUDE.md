@@ -441,7 +441,11 @@ Los carteles que publica cada liga se guardan tal cual en `FOTOS PILOTOS/`
 (Jorge los deja ahí, con cualquier nombre). `scripts/fotos.ps1` recorta la cara
 de cada uno en un cuadrado de 320 px y lo deja en `fotos/<id>.jpg`; lleva una
 tabla con el fichero, el id del piloto y dónde está la cara en fracción del
-cartel, porque un recorte fijo cortaba cabezas. Después, la ruta va en el censo
+cartel, porque un recorte fijo cortaba cabezas. Después baja un poco la
+saturación, funde todo lo que rodea la cara hacia el mismo gris (`#1b1d22`)
+con un degradado radial y apaga la franja alta, donde va el logo del cartel:
+Jorge pidió el 10/09/2026 que fueran todas del mismo tamaño y fondo, "que no
+parezca un corta y pega". El encuadre se ajusta a ojo con `cx`/`cy`. Después, la ruta va en el censo
 (`datos/pilotos.json`, campo `foto`) y `generar.mjs` la pasa a la web.
 
 La web pinta la foto en todos los avatares —podio, filas, ficha, portada y
