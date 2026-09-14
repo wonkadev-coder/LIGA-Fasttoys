@@ -108,7 +108,8 @@
       "nombreReal": "Javier Moreno",
       "externos": {
         "cronolaps": "18870"
-      }
+      },
+      "foto": "fotos/javier-moreno-del-barrio.jpg"
     },
     {
       "id": "navarrete",
@@ -116,7 +117,8 @@
       "nombreReal": "David Navarrete",
       "externos": {
         "cronolaps": "98528"
-      }
+      },
+      "foto": "fotos/navarrete.jpg"
     },
     {
       "id": "harry",

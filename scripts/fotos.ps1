@@ -27,7 +27,11 @@ $tabla = @(
   @{ f = 'RAUL PAREDES.jfif';       id = 'raul-paredes'; cx = 0.48; cy = 0.39; lado = 0.31 },
   @{ f = 'JOS*FERNANDEZ.jfif';      id = 'josefh';       cx = 0.44; cy = 0.41; lado = 0.31 },
   @{ f = 'ENRIQUE PORRAS.jfif';     id = 'kike78';       cx = 0.44; cy = 0.42; lado = 0.31 },
-  @{ f = 'RUBEN FERNANDEZ.jfif';    id = 'ruben-57';     cx = 0.47; cy = 0.39; lado = 0.31 }
+  @{ f = 'RUBEN FERNANDEZ.jfif';    id = 'ruben-57';     cx = 0.47; cy = 0.39; lado = 0.31 },
+  # Estos dos llegaron como miniaturas (187 px de ancho): salen borrosos hasta
+  # que Jorge pase el cartel a tamaño real. Mismo tratamiento, sin excepción.
+  @{ f = 'DAVID NAVARRETE.png';     id = 'navarrete';    cx = 0.45; cy = 0.40; lado = 0.34 },
+  @{ f = 'JAVIER MORENO.png';       id = 'javier-moreno-del-barrio'; cx = 0.43; cy = 0.43; lado = 0.34 }
 )
 
 $LADO = 320
