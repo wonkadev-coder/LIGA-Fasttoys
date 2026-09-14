@@ -22,14 +22,14 @@ New-Item -ItemType Directory -Force $destino | Out-Null
 # (cx, cy en fracción) y lado del recorte (fracción del ancho). Un asterisco
 # vale como comodín: los nombres con tilde no sobreviven a PowerShell 5.
 $tabla = @(
-  @{ f = 'RUBEN ESCRIBANO.jfif';    id = 'ruben8';       cx = 0.44; cy = 0.41; lado = 0.31 },
-  @{ f = 'ROBERTO ESCRIBANO.jfif';  id = 'roberto79';    cx = 0.47; cy = 0.41; lado = 0.31 },
-  @{ f = 'RAUL PAREDES.jfif';       id = 'raul-paredes'; cx = 0.48; cy = 0.39; lado = 0.31 },
-  @{ f = 'JOS*FERNANDEZ.jfif';      id = 'josefh';       cx = 0.44; cy = 0.41; lado = 0.31 },
-  @{ f = 'ENRIQUE PORRAS.jfif';     id = 'kike78';       cx = 0.44; cy = 0.42; lado = 0.31 },
-  @{ f = 'RUBEN FERNANDEZ.jfif';    id = 'ruben-57';     cx = 0.47; cy = 0.39; lado = 0.31 },
-  @{ f = 'DAVID NAVARRETE.png';     id = 'navarrete';    cx = 0.45; cy = 0.38; lado = 0.37 },
-  @{ f = 'JAVIER MORENO.png';       id = 'javier-moreno-del-barrio'; cx = 0.43; cy = 0.43; lado = 0.31 }
+  @{ f = 'RUBEN ESCRIBANO.jfif';    id = 'ruben8';       cx = 0.44; cy = 0.42; lado = 0.32 },
+  @{ f = 'ROBERTO ESCRIBANO.jfif';  id = 'roberto79';    cx = 0.47; cy = 0.42; lado = 0.33 },
+  @{ f = 'RAUL PAREDES.jfif';       id = 'raul-paredes'; cx = 0.48; cy = 0.4; lado = 0.32 },
+  @{ f = 'JOS*FERNANDEZ.jfif';      id = 'josefh';       cx = 0.44; cy = 0.42; lado = 0.32 },
+  @{ f = 'ENRIQUE PORRAS.jfif';     id = 'kike78';       cx = 0.44; cy = 0.43; lado = 0.32 },
+  @{ f = 'RUBEN FERNANDEZ.jfif';    id = 'ruben-57';     cx = 0.47; cy = 0.4; lado = 0.34 },
+  @{ f = 'DAVID NAVARRETE.png';     id = 'navarrete';    cx = 0.45; cy = 0.39; lado = 0.37 },
+  @{ f = 'JAVIER MORENO.png';       id = 'javier-moreno-del-barrio'; cx = 0.43; cy = 0.45; lado = 0.34 }
 )
 
 $LADO = 320

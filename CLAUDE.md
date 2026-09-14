@@ -437,6 +437,14 @@ resultado más reciente.
 
 ## Fotos de los pilotos
 
+> **Apagadas el 14/09/2026.** Jorge vio las ocho primeras y no le convencieron:
+> los carteles tienen fondos distintos y ángulos distintos, y el fundido no lo
+> disimula. La web vuelve a las iniciales (ningún piloto lleva `foto` en el
+> censo). Los recortes siguen en `fotos/` y el script en `scripts/fotos.ps1`
+> para cuando lleguen **las fotos originales de estudio** con fondo liso o
+> recortadas, que es lo que hace falta para que salgan iguales. No las
+> vuelvas a activar sin ese material.
+
 Los carteles que publica cada liga se guardan tal cual en `FOTOS PILOTOS/`
 (Jorge los deja ahí, con cualquier nombre). `scripts/fotos.ps1` recorta la cara
 de cada uno en un cuadrado de 320 px y lo deja en `fotos/<id>.jpg`; lleva una
