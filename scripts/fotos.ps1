@@ -59,11 +59,12 @@ foreach ($e in $tabla) {
   $fichero = Get-ChildItem -Path $origen -Filter $e.f | Select-Object -First 1
   if (-not $fichero) { "  {0,-28} FALTA" -f $e.f; continue }
   $img = [System.Drawing.Image]::FromFile($fichero.FullName)
-  $lado = [int]($img.Width * $e.lado)
-  $x0 = [int]($img.Width * $e.cx - $lado / 2)
-  $y0 = [int]($img.Height * $e.cy - $lado / 2)
-  $x0 = [math]::Max(0, [math]::Min($img.Width - $lado, $x0))
-  $y0 = [math]::Max(0, [math]::Min($img.Height - $lado, $y0))
+  # No se llama $lado: PowerShell no distingue mayúsculas y pisaría $LADO (salían avatares del tamaño del recorte).
+  $corte = [int]($img.Width * $e.lado)
+  $x0 = [int]($img.Width * $e.cx - $corte / 2)
+  $y0 = [int]($img.Height * $e.cy - $corte / 2)
+  $x0 = [math]::Max(0, [math]::Min($img.Width - $corte, $x0))
+  $y0 = [math]::Max(0, [math]::Min($img.Height - $corte, $y0))
 
   $out = New-Object System.Drawing.Bitmap($LADO, $LADO)
   $g = [System.Drawing.Graphics]::FromImage($out)
@@ -71,7 +72,7 @@ foreach ($e in $tabla) {
   $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
   $g.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
   $g.DrawImage($img, (New-Object System.Drawing.Rectangle(0, 0, $LADO, $LADO)),
-    $x0, $y0, $lado, $lado, [System.Drawing.GraphicsUnit]::Pixel, $atributos)
+    $x0, $y0, $corte, $corte, [System.Drawing.GraphicsUnit]::Pixel, $atributos)
 
   # Fundido radial hacia el gris: limpio hasta el 30 % del radio, casi sólido
   # en el borde del círculo del avatar (el 69 % del radio de esta elipse).
