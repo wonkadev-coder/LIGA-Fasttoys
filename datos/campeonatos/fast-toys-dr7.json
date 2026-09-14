@@ -383,17 +383,17 @@
   "colorTexto": "#FFFFFF",
   "siglas": "FT",
   "piel": {
-    "oscura": true,
-    "fondo": "#201e1d",
-    "superficie": "#2d2b2b",
-    "texto": "#f3f2f2",
-    "tenue": "#9b9797",
-    "linea": "#3f3b3b",
-    "sombra": "0 1px 0 rgba(0,0,0,.35)",
+    "oscura": false,
+    "fondo": "#f3f2f2",
+    "superficie": "#ffffff",
+    "texto": "#201e1d",
+    "tenue": "#7a7575",
+    "linea": "#e6e3e3",
+    "sombra": "0 2px 6px rgba(32,30,29,.06), 0 10px 24px rgba(32,30,29,.08)",
     "tipografia": {
       "titulos": "Archivo",
       "google": "Archivo:wght@700;900"
     },
-    "nota": "Del manual de marca de Fast Toys (marca/): tinta #201e1d, celda #2d2b2b, blanco #f3f2f2, rojo #ec3013 y Archivo."
+    "nota": "Colores del manual de Fast Toys en versión clara: su blanco #f3f2f2 de fondo, su tinta #201e1d en el texto y el rojo #EC3013 de acento. Jorge descartó la versión oscura el 14/09/2026 (\"se ve muy oscura\"). La tarjeta de compartir sigue oscura, como manda el manual."
   }
 }

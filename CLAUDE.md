@@ -680,8 +680,10 @@ Reglas que salen de esa decisión:
   pantallas se visten con su marca: además de `color` y `colorTexto` (la
   variable `--camp`), el JSON lleva `piel` con `fondo`, `superficie`,
   `texto`, `tenue`, `linea`, `sombra`, `oscura` y `tipografia.titulos`
-  (con su `google` para cargarla). Fast Toys va en oscuro con rojo y Archivo,
-  como manda su manual; la Copa Catalana, en un fondo cálido con azul marino y
+  (con su `google` para cargarla). Fast Toys va en claro (su blanco #f3f2f2, su tinta y su rojo) con Archivo
+  en los titulares: la versión oscura de su manual se probó y Jorge la
+  descartó el 14/09/2026 por oscura, y solo sobrevive en su tarjeta de
+  compartir; la Copa Catalana, en un fondo cálido con azul marino y
   naranja sacados de su escudo. **No se hacen pantallas distintas por
   campeonato**: cada mejora tiene que llegar a todos a la vez. Añadir un
   campeonato sigue siendo rellenar su JSON. Ningún color va escrito a mano en
