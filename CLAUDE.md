@@ -750,8 +750,10 @@ Reglas que salen de esa decisión:
   el CSS salvo los chips blancos de los logos y las medallas.
 - **Estilo "broadcast" para la Copa Catalana** (Jorge, 22/09/2026: "más al
   estilo de nuestro otro proyecto Karting League"). La piel declara
-  `estilo: "broadcast"` y va como clase `estilo-broadcast` en `<html>`: fondo
-  `#15151e` de retransmisión, Barlow Condensed en mayúsculas, esquinas de 6 a
+  `estilo: "broadcast"` y va como clase `estilo-broadcast` en `<html>`: Barlow
+  Condensed en mayúsculas, **con los colores de la Copa** (fondo cálido
+  `#f7f3ec`, azul marino y naranja; el fondo oscuro de KL se probó y Jorge lo
+  descartó el 22/09/2026: "los colores se tienen que mantener"), esquinas de 6 a
   10 px, chips oro/plata/bronce con degradado, podio en **tres cajas 2-1-3**
   (`.caja-podio`) y la **tabla carrera a carrera** (`table.cac`,
   `tablaCarreraACarrera()`): una columna por manga con la posición, punto
