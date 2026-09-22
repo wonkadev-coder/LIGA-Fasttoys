@@ -385,6 +385,20 @@
   .patro .textual{font-size:16px;font-weight:800;text-align:center}
   .patro .rol{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue)}
 
+  .instalar{display:flex;align-items:center;gap:12px;margin:22px 0 0;padding:14px;
+    background:var(--sup);border-radius:var(--r);box-shadow:var(--sombra);position:relative}
+  .instalar .ico{width:48px;height:48px;border-radius:14px;overflow:hidden;flex:0 0 auto;box-shadow:0 0 0 1px var(--linea)}
+  .instalar .ico img{width:100%;height:100%;display:block}
+  .instalar .txt{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .instalar .txt b{font-size:14px}
+  .instalar .txt span{font-size:12.5px;color:var(--tenue);line-height:1.4}
+  .instalar .txt span b{font-size:12.5px;color:var(--texto)}
+  .instalar .acc{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  .instalar .btn{flex:0 0 auto;padding:10px 16px;font-size:13px}
+  .instalar .cerrar{width:32px;height:32px;border-radius:50%;border:0;background:var(--fondo);color:var(--tenue);
+    font:inherit;font-size:18px;line-height:1;cursor:pointer}
+  .instalar.ios .btn{display:none}
+  @media (max-width:420px){.instalar{flex-wrap:wrap}.instalar .acc{margin-left:auto}}
   footer{color:var(--tenue);font-size:12px;font-weight:600;text-align:center;line-height:1.7;margin-top:28px}
   footer .sello{display:none}
 
@@ -712,6 +726,21 @@
     </div>
   </main>
 
+  <!-- Instalar como app. Solo se enseña en el navegador (no dentro de la app
+       ya instalada): en Android abre la instalación con un toque; en iPhone
+       explica los dos pasos, porque Safari no deja pedirla desde la web. -->
+  <section class="instalar oculto" id="instalar">
+    <div class="ico"><img src="iconos/pitbike-world-192.png" alt=""></div>
+    <div class="txt">
+      <b>Lleva Pitbike World en el móvil</b>
+      <span id="instalarTexto">Sin tiendas ni registros: se instala desde aquí y se abre como una app.</span>
+    </div>
+    <div class="acc">
+      <button class="btn destacado" type="button" id="btnInstalar">Instalar</button>
+      <button class="cerrar" type="button" id="btnInstalarNo" aria-label="Ahora no">×</button>
+    </div>
+  </section>
+
   <footer>
     <div class="sello"><img src="logos/fasttoys.png" alt="Fast Toys"></div>
     <div id="pieActualizado"></div>
@@ -799,6 +828,49 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
       addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
     }
   };
+
+  // --- Instalar como app -----------------------------------------------------
+  // Dentro de la app instalada no se enseña; si se cerró con la X, tampoco
+  // durante un mes. Android/Chrome avisa con beforeinstallprompt y deja abrir
+  // la instalación desde el botón; iPhone/Safari no, así que se explican los
+  // dos toques. Sin Safari ni Chrome (Firefox, etc.) no se enseña nada.
+  (() => {
+    const caja = $('instalar');
+    if (!caja) return;
+    const instalada = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+    let callada = false;
+    try { callada = Number(localStorage.getItem('pw:instalar:no') ?? 0) > Date.now(); } catch { /* sin almacenamiento */ }
+    if (instalada || callada) return;
+    const ua = navigator.userAgent;
+    const esIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const esSafari = esIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+    const cerrar = () => {
+      caja.classList.add('oculto');
+      try { localStorage.setItem('pw:instalar:no', String(Date.now() + 30 * 864e5)); } catch { /* nada */ }
+    };
+    $('btnInstalarNo').addEventListener('click', cerrar);
+    if (esIOS) {
+      if (!esSafari) return; // en Chrome de iPhone no se puede instalar: no se enseña
+      caja.classList.add('ios');
+      $('instalarTexto').innerHTML = 'En Safari: toca <b>Compartir</b> (el cuadrado con la flecha) y luego <b>Añadir a pantalla de inicio</b>.';
+      caja.classList.remove('oculto');
+      return;
+    }
+    let evento = null;
+    addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      evento = e;
+      caja.classList.remove('oculto');
+    });
+    addEventListener('appinstalled', () => caja.classList.add('oculto'));
+    $('btnInstalar').addEventListener('click', async () => {
+      if (!evento) return;
+      evento.prompt();
+      const { outcome } = await evento.userChoice;
+      if (outcome === 'accepted') caja.classList.add('oculto');
+      evento = null;
+    });
+  })();
 
   // --- Portada: sin campeonato en la URL se enseñan todos ------------------
   if (!CAMP) {

@@ -465,6 +465,25 @@ una: cartel a `FOTOS PILOTOS/`, una línea en la tabla del script, ejecutarlo,
 y `node scripts/generar.mjs` (el censo se actualiza con el patch de fotos o a
 mano).
 
+## App para el móvil
+
+Pitbike World **es una PWA**: se instala desde el navegador en Android y en
+iPhone, se abre a pantalla completa con su icono y se actualiza sola. Desde el
+22/09/2026 la web lo dice con una tarjeta `#instalar` sobre el pie: en
+Android/Chrome escucha `beforeinstallprompt` y el botón abre la instalación;
+en iPhone/Safari, que no lo permite, explica los dos toques (Compartir → Añadir
+a pantalla de inicio); dentro de la app instalada no sale, y la X la calla un
+mes (`localStorage`). Jorge pidió ese día "una aplicación descargable para
+Android y iPhone".
+
+**Tiendas (Google Play, App Store): no hechas, y no dependen del código.**
+Ambas envolverían esta misma web (Android con Trusted Web Activity vía
+PWABuilder o Bubblewrap; iPhone con Capacitor y un WebView). Lo que falta es de
+Jorge: cuenta de desarrollador de Google (pago único) y de Apple (anual), y
+para iPhone además un Mac con Xcode para compilar y enviar. Si se hace, va en
+una carpeta aparte (`app/`) con sus propias dependencias; la web sigue sin
+ninguna.
+
 ## Fuente de datos: CronoLaps
 
 CronoLaps es el cronometrador oficial del circuito **y además patrocinador de la liga**.

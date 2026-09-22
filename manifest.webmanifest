@@ -28,5 +28,13 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "id": "./",
+  "categories": [
+    "sports"
+  ],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
   ]
 }
