@@ -906,13 +906,18 @@
     "alt": "Copa Catalana de Pit Bikes"
   },
   "piel": {
-    "oscura": false,
-    "fondo": "#f7f3ec",
-    "superficie": "#ffffff",
-    "texto": "#1b2440",
-    "tenue": "#6b7189",
-    "linea": "#e9e2d6",
-    "tipografia": null,
-    "nota": "Sacada del escudo de ANPA Copa Catalana 2026: naranja #F0641E de acento y azul marino en el texto, sobre un fondo cálido. Sin manual oficial; provisional."
+    "oscura": true,
+    "fondo": "#15151e",
+    "superficie": "#1c1c27",
+    "texto": "#ffffff",
+    "tenue": "#9a9aab",
+    "linea": "#2a2a38",
+    "sombra": "0 1px 2px rgba(0,0,0,.4), 0 10px 24px rgba(0,0,0,.35)",
+    "tipografia": {
+      "titulos": "Barlow Condensed",
+      "google": "Barlow+Condensed:wght@600;700;800;900"
+    },
+    "estilo": "broadcast",
+    "nota": "Estilo Karting League (Jorge, 22/09/2026): fondo #15151e de retransmisión, Barlow Condensed en mayúsculas, chips oro/plata/bronce y tabla carrera a carrera. El naranja #F0641E del escudo sigue de acento."
   }
 }

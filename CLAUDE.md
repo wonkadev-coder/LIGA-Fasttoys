@@ -748,6 +748,19 @@ Reglas que salen de esa decisión:
   campeonato**: cada mejora tiene que llegar a todos a la vez. Añadir un
   campeonato sigue siendo rellenar su JSON. Ningún color va escrito a mano en
   el CSS salvo los chips blancos de los logos y las medallas.
+- **Estilo "broadcast" para la Copa Catalana** (Jorge, 22/09/2026: "más al
+  estilo de nuestro otro proyecto Karting League"). La piel declara
+  `estilo: "broadcast"` y va como clase `estilo-broadcast` en `<html>`: fondo
+  `#15151e` de retransmisión, Barlow Condensed en mayúsculas, esquinas de 6 a
+  10 px, chips oro/plata/bronce con degradado, podio en **tres cajas 2-1-3**
+  (`.caja-podio`) y la **tabla carrera a carrera** (`table.cac`,
+  `tablaCarreraACarrera()`): una columna por manga con la posición, punto
+  dorado de pole y verde de vuelta rápida sobre la manga 1, "·" si no la
+  disputó, PTS al final y leyenda debajo. En Categorías la misma tabla con las
+  posiciones de dentro de la categoría. La referencia visual está en
+  `karting-league-system/karting-league/output/tabla_general_k1.png` y
+  `docs/ESTETICA.md` de ese proyecto. Sigue siendo el mismo esqueleto: otro
+  campeonato de carreras sin `estilo` se ve con la piel neutra.
 - **Dirección «Escudo»**, elegida entre tres (`marca/propuestas/app/`):
   tarjetas redondeadas (20 px), sombras suaves, avatares circulares con
   iniciales —que son el sitio de las fotos cuando las haya— y el campeonato
