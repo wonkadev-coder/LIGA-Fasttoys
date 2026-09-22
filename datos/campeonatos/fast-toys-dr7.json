@@ -25,7 +25,9 @@
     "criterio": "Los premios son por número de vueltas, no por tiempos.",
     "maxVueltasDia": 100,
     "maxVueltasSemana": 200,
-    "ciclo": 999
+    "ciclo": 999,
+    "abierta": false,
+    "quienParticipa": "Los que salen en la clasificación oficial que publica Fast Toys. Alineado el 22/09/2026 con la tabla de 56 (53 con transpondedor propio). No es \"todo el que rueda\": la organización deja fuera a gente que rueda en pit bike."
   },
   "hitos": [
     {
@@ -195,6 +197,151 @@
       "piloto": "david-garrido",
       "dorsal": null,
       "categoria": null
+    },
+    {
+      "piloto": "david11",
+      "dorsal": 11,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "dario-fernandez",
+      "dorsal": 81,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "jose-alcaniz",
+      "dorsal": 27,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "alba",
+      "dorsal": 30,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "arcos",
+      "dorsal": 7,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "migel690",
+      "dorsal": 690,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "ledesmoli",
+      "dorsal": 36,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "asaco",
+      "dorsal": 23,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "marco51",
+      "dorsal": 51,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "xate",
+      "dorsal": 17,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "victor86",
+      "dorsal": 86,
+      "categoria": "Pit Bike 90"
+    },
+    {
+      "piloto": "diego25",
+      "dorsal": 25,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "am14",
+      "dorsal": 14,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "drr00",
+      "dorsal": 67,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "loren",
+      "dorsal": 42,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "rayito",
+      "dorsal": 257,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "hel",
+      "dorsal": 57,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "robertk8",
+      "dorsal": 22,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "lazaro",
+      "dorsal": 95,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "kevin",
+      "dorsal": 17,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "fonsi",
+      "dorsal": 24,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "carlos-garcia-perez",
+      "dorsal": 14,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "cona",
+      "dorsal": 28,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "claudio16h",
+      "dorsal": 16,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "juan-carlos-gaito",
+      "dorsal": 69,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "alvin19",
+      "dorsal": 19,
+      "categoria": "Z190 series"
+    },
+    {
+      "piloto": "sh",
+      "dorsal": 13,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "alex",
+      "dorsal": 3,
+      "categoria": "160 Series"
+    },
+    {
+      "piloto": "pollito",
+      "dorsal": 13,
+      "categoria": "160 Series"
     }
   ],
   "tandas": [
@@ -248,6 +395,27 @@
       "mejorVuelta": 58.862
     },
     {
+      "fecha": "2026-08-15",
+      "piloto": "david11",
+      "vueltas": 38,
+      "nota": "CronoLaps",
+      "mejorVuelta": 76.525
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "dario-fernandez",
+      "vueltas": 32,
+      "nota": "CronoLaps",
+      "mejorVuelta": 56.512
+    },
+    {
+      "fecha": "2026-08-15",
+      "piloto": "jose-alcaniz",
+      "vueltas": 29,
+      "nota": "CronoLaps",
+      "mejorVuelta": 69.342
+    },
+    {
       "fecha": "2026-08-22",
       "piloto": "ruben-57",
       "vueltas": 71,
@@ -281,6 +449,13 @@
       "vueltas": 33,
       "nota": "CronoLaps",
       "mejorVuelta": 58.202
+    },
+    {
+      "fecha": "2026-08-23",
+      "piloto": "alba",
+      "vueltas": 56,
+      "nota": "CronoLaps",
+      "mejorVuelta": 57.588
     },
     {
       "fecha": "2026-08-28",
@@ -360,6 +535,13 @@
       "mejorVuelta": 77.882
     },
     {
+      "fecha": "2026-08-29",
+      "piloto": "david11",
+      "vueltas": 58,
+      "nota": "CronoLaps",
+      "mejorVuelta": 76.954
+    },
+    {
       "fecha": "2026-08-30",
       "piloto": "m-ivansan",
       "vueltas": 82,
@@ -380,6 +562,34 @@
       "mejorVuelta": 61.179
     },
     {
+      "fecha": "2026-09-05",
+      "piloto": "arcos",
+      "vueltas": 82,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.387
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "migel690",
+      "vueltas": 52,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.073
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "ledesmoli",
+      "vueltas": 46,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.319
+    },
+    {
+      "fecha": "2026-09-06",
+      "piloto": "asaco",
+      "vueltas": 9,
+      "nota": "CronoLaps",
+      "mejorVuelta": 52.189
+    },
+    {
       "fecha": "2026-09-12",
       "piloto": "navarrete",
       "vueltas": 94,
@@ -394,11 +604,151 @@
       "mejorVuelta": 56.221
     },
     {
+      "fecha": "2026-09-12",
+      "piloto": "dario-fernandez",
+      "vueltas": 70,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.676
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "marco51",
+      "vueltas": 59,
+      "nota": "CronoLaps",
+      "mejorVuelta": 59.599
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "xate",
+      "vueltas": 54,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.739
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "victor86",
+      "vueltas": 48,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.896
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "diego25",
+      "vueltas": 43,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.003
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "am14",
+      "vueltas": 38,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.849
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "drr00",
+      "vueltas": 37,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.439
+    },
+    {
+      "fecha": "2026-09-13",
+      "piloto": "loren",
+      "vueltas": 90,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.411
+    },
+    {
+      "fecha": "2026-09-13",
+      "piloto": "rayito",
+      "vueltas": 76,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.313
+    },
+    {
+      "fecha": "2026-09-13",
+      "piloto": "hel",
+      "vueltas": 68,
+      "nota": "CronoLaps",
+      "mejorVuelta": 65.523
+    },
+    {
+      "fecha": "2026-09-13",
+      "piloto": "robertk8",
+      "vueltas": 67,
+      "nota": "CronoLaps",
+      "mejorVuelta": 64.495
+    },
+    {
+      "fecha": "2026-09-13",
+      "piloto": "lazaro",
+      "vueltas": 26,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.576
+    },
+    {
       "fecha": "2026-09-19",
       "piloto": "alber",
       "vueltas": 17,
       "nota": "CronoLaps",
       "mejorVuelta": 64.733
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "kevin",
+      "vueltas": 80,
+      "nota": "CronoLaps",
+      "mejorVuelta": 57.662
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "fonsi",
+      "vueltas": 66,
+      "nota": "CronoLaps",
+      "mejorVuelta": 60.216
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "carlos-garcia-perez",
+      "vueltas": 59,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.364
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "cona",
+      "vueltas": 57,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.418
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "claudio16h",
+      "vueltas": 52,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.155
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "juan-carlos-gaito",
+      "vueltas": 50,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.58
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "alvin19",
+      "vueltas": 42,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.877
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "jose-alcaniz",
+      "vueltas": 33,
+      "nota": "CronoLaps",
+      "mejorVuelta": 67.696
     },
     {
       "fecha": "2026-09-20",
@@ -413,6 +763,34 @@
       "vueltas": 68,
       "nota": "CronoLaps",
       "mejorVuelta": 62.915
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "sh",
+      "vueltas": 74,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.242
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "alex",
+      "vueltas": 74,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.95
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "pollito",
+      "vueltas": 58,
+      "nota": "CronoLaps",
+      "mejorVuelta": 80.136
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "diego25",
+      "vueltas": 50,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.854
     }
   ],
   "colorTexto": "#FFFFFF",

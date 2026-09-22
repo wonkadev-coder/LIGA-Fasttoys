@@ -53,7 +53,13 @@ export const CATEGORIAS_LIGA = {
  */
 export function inscritosDeLaLiga(datos) {
   const ids = (datos?.pilotos ?? []).map((p) => p.idsocio).filter(Boolean).map(String);
-  return ids.length ? new Set(ids) : null;
+  if (!ids.length) return null;
+  const lista = new Set(ids);
+  // Liga abierta (reglamento.abierta): la lista no excluye a nadie, solo suma
+  // a los que ruedan fuera de las seis categorías. Lo decidió Jorge el
+  // 22/09/2026 con la clasificación oficial de 56 pilotos delante.
+  lista.abierta = !!datos?.reglamento?.abierta;
+  return lista;
 }
 
 /** Los fragmentos de URL de cronolaps.es son JSON en Base64 con el padding comido. */
@@ -166,9 +172,11 @@ export function tandasDelDia(pasosDelDia, tmin, inscritos = null) {
     // Con lista de inscritos manda la lista, no la categoría: la organización
     // admite a quien admite, y de hecho hay algún inscrito que no rueda en una
     // de las seis del reglamento. Sin lista se cae al filtro por categoría.
-    const entra = conLista ? inscritos.has(socio) : !!cat;
+    const entra = conLista
+      ? (inscritos.has(socio) || (inscritos.abierta && !!cat))
+      : !!cat;
     if (!entra) {
-      const k = conLista ? `socio ${socio}` : String(paso.vehiculo);
+      const k = conLista && !inscritos.abierta ? `socio ${socio}` : String(paso.vehiculo);
       descartadas.set(k, (descartadas.get(k) ?? 0) + 1);
       continue;
     }

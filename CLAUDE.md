@@ -619,25 +619,47 @@ Por orden, y **solo cuando haga falta**:
 
 ## Quién está en la liga
 
-**La liga es cerrada: participan los inscritos.** Corregido el 01/09/2026 con las
-clasificaciones oficiales que publica [@fast_toys_pitbikes](https://www.instagram.com/fast_toys_pitbikes/)
-delante. Antes se daba por abierta y era falso: de los 40 pilotos que salían por
-categoría, la organización solo cuenta a 24.
+**Participan los que salen en la clasificación oficial de Fast Toys**, ni más
+ni menos. Ni es cerrada a los 24 de agosto (el 22/09/2026 la tabla oficial
+traía 56) ni es "todo el que rueda en pit bike": ese día rodaban en el DR7 75
+pilotos de las seis categorías y la organización dejó fuera a 23, entre ellos
+David Ramos, que con 300 vueltas sería 2.º. Así que el censo es una **lista
+que se alinea con cada tabla oficial** que publica
+[@fast_toys_pitbikes](https://www.instagram.com/fast_toys_pitbikes/).
 
-El censo vive en `datos/liga.json` → **`inscritos`**, un objeto `idsocio -> nombre
-real`. Es la única fuente de quién compite.
+El censo vive en `datos/campeonatos/fast-toys-dr7.json` → **`inscritos`**, y la
+identidad de cada uno en `datos/pilotos.json` con su `externos.cronolaps`. Para
+alinear: se descarga toda la temporada con la liga abierta
+(`reglamento.abierta: true` hace que `tandasDelDia()` admita a la lista **o** a
+las seis categorías), se importa, se compara con la tabla oficial
+(`comparar-oficial.mjs` del 22/09 es el modelo) y se recorta la lista a los que
+salen. Con `abierta: false` la lista vuelve a mandar.
 
-**La lista manda sobre la categoría.** `tandasDelDia()` filtra por `inscritos` si
-existe y por `CATEGORIAS_LIGA` solo si no existe. Hace falta porque hay un inscrito
-—Elías Moreno, 2.º— que rueda en **"Cambio menos de 125"** (categoría 24), que
-cuelga de MOTOS CIRCUITO VELOCIDAD y no es una pit bike. Filtrando por categoría se
-quedaba fuera.
+**La lista manda sobre la categoría.** Hace falta porque hay un inscrito —Elías
+Moreno— que rueda en **"Cambio menos de 125"** (categoría 24), que no es una
+pit bike. Consecuencia: **la categoría de un piloto puede venir vacía**.
 
-Consecuencia: **la categoría de un piloto puede venir vacía**. `importar.mjs` y la
-web lo contemplan.
+Si un piloto nuevo aparece en CronoLaps, **no entra solo**: entra cuando sale
+en la tabla oficial. Es deliberado.
 
-Si un piloto nuevo aparece en CronoLaps, **no entra solo**: hay que añadir su
-`idsocio` a `inscritos`. Es deliberado.
+### Lo que dijo la tabla oficial del 22/09/2026
+
+56 nombres, 3.556 vueltas. Casan con CronoLaps **47 exactos de 56**:
+
+- **Dos no tienen transpondedor que los explique**: Anderson Rendón (38) y
+  Javier Cobos (28). Ningún socio de las seis categorías suma eso. Quedan fuera
+  del censo hasta saber quiénes son.
+- **José Alcañiz López (34) y José Alcañiz de la Guía (33) comparten socio**
+  en CronoLaps ("Jose Alcañiz", 98511): dos personas con un transpondedor. Aquí
+  es un solo piloto con 62; la organización los separa a mano.
+- **Camilo Andrés Arcos** 72 oficial, 82 en CronoLaps (05/09). **Darío
+  Fernández** 70 oficial, 102 en CronoLaps: no le cuentan las 32 del 15/08.
+  **Alejandro Nieto** 21 oficial, 32 en CronoLaps (lo de siempre). Se mantiene
+  el dato del cronómetro.
+- Nombres reales de los 29 nuevos: de la tabla oficial, casados por vueltas y
+  por apodo (SH = Sergio Higueras, AM14 = Adolfo Mena, POLLITO = Vanessa
+  Rodríguez, CONA = Pedro López, David11 = Jhonatan Villa Cañas…). La segunda
+  "Alba" de CronoLaps (socio 87211, 56 vueltas) es Ariadna Septiem.
 
 ### Los nombres son apodos, no nombres reales
 
@@ -652,17 +674,9 @@ No hay endpoint de perfil (probados `socios`, `socio`, `pilotos`, `perfil`,
 
 ### Lo que no cuadra con la clasificación oficial
 
-Una sola cosa, y es de ellos: **Alejandro Nieto (nuestro "NIETO")**. Su gráfica dice
-21 vueltas; CronoLaps dice **32**, rodadas el 29 de agosto. Se mantiene el 32, que es
-el dato del cronómetro. Eso explica la única diferencia de total: 1.332 frente a
-1.321.
-
-**David Garrido** (14.º, 47 vueltas) **no aparece en CronoLaps en ninguna fecha**.
-Está dado de alta a mano, con una tanda que lo dice en la `nota`. Si algún día
-aparece su `idsocio`, hay que sustituirla.
-
-Sus gráficas se montan a mano y tienen erratas: la del 25 de agosto lleva las filas
-desordenadas (Kevin Barrios con 42 por debajo de Javier Velasco con 33).
+Ver "Lo que dijo la tabla oficial del 22/09/2026". **David Garrido** (47)
+**no aparece en CronoLaps en ninguna fecha** y sigue dado de alta a mano, con
+una tanda que lo dice en la `nota`; la organización lo cuenta con esas 47.
 
 ## Cómo trabajar en este repo
 

@@ -292,7 +292,9 @@
     {
       "id": "sergio-monzo",
       "nombre": "SERGIO MONZO",
-      "externos": {}
+      "externos": {
+        "cronolaps": "93517"
+      }
     },
     {
       "id": "alejandro-rodriguez",
@@ -341,6 +343,238 @@
       "nombre": "ANDRES FELIPE OSORIO MARIN",
       "nombreReal": "ANDRES FELIPE OSORIO MARIN",
       "externos": {}
+    },
+    {
+      "id": "david11",
+      "nombre": "David11",
+      "externos": {
+        "cronolaps": "98510"
+      },
+      "nombreReal": "Jhonatan Villa Cañas"
+    },
+    {
+      "id": "dario-fernandez",
+      "nombre": "DARIO FERNANDEZ",
+      "externos": {
+        "cronolaps": "94565"
+      },
+      "nombreReal": "Darío Fernández"
+    },
+    {
+      "id": "jose-alcaniz",
+      "nombre": "Jose Alcañiz",
+      "externos": {
+        "cronolaps": "98511"
+      },
+      "nombreReal": "José Alcañiz López"
+    },
+    {
+      "id": "alba",
+      "nombre": "Alba",
+      "externos": {
+        "cronolaps": "87211"
+      },
+      "nombreReal": "Ariadna Septiem"
+    },
+    {
+      "id": "arcos",
+      "nombre": "ARCOS",
+      "externos": {
+        "cronolaps": "98713"
+      },
+      "nombreReal": "Camilo Andrés Arcos"
+    },
+    {
+      "id": "migel690",
+      "nombre": "MIGEL690",
+      "externos": {
+        "cronolaps": "98711"
+      },
+      "nombreReal": "Miguel Ángel Paz"
+    },
+    {
+      "id": "ledesmoli",
+      "nombre": "LEDESMOLI",
+      "externos": {
+        "cronolaps": "98712"
+      },
+      "nombreReal": "Cristian Ledesma"
+    },
+    {
+      "id": "asaco",
+      "nombre": "ASACO",
+      "externos": {
+        "cronolaps": "98745"
+      },
+      "nombreReal": "Isaac Martí"
+    },
+    {
+      "id": "marco51",
+      "nombre": "MARCO51",
+      "externos": {
+        "cronolaps": "98978"
+      },
+      "nombreReal": "Marco Borrueco"
+    },
+    {
+      "id": "xate",
+      "nombre": "XATE",
+      "externos": {
+        "cronolaps": "98975"
+      },
+      "nombreReal": "Alejandro Martínez"
+    },
+    {
+      "id": "victor86",
+      "nombre": "VICTOR86",
+      "externos": {
+        "cronolaps": "98961"
+      },
+      "nombreReal": "Víctor Fernández"
+    },
+    {
+      "id": "diego25",
+      "nombre": "DIEGO25",
+      "externos": {
+        "cronolaps": "98969"
+      },
+      "nombreReal": "Diego Menea"
+    },
+    {
+      "id": "am14",
+      "nombre": "AM14",
+      "externos": {
+        "cronolaps": "98976"
+      },
+      "nombreReal": "Adolfo Mena"
+    },
+    {
+      "id": "drr00",
+      "nombre": "DRR00",
+      "externos": {
+        "cronolaps": "98970"
+      },
+      "nombreReal": "David Robles"
+    },
+    {
+      "id": "loren",
+      "nombre": "LOREN",
+      "externos": {
+        "cronolaps": "99031"
+      },
+      "nombreReal": "Lorenzo Galeano"
+    },
+    {
+      "id": "rayito",
+      "nombre": "RAYITO",
+      "externos": {
+        "cronolaps": "99029"
+      },
+      "nombreReal": "Enrique Lafuente"
+    },
+    {
+      "id": "hel",
+      "nombre": "HEL",
+      "externos": {
+        "cronolaps": "84176"
+      },
+      "nombreReal": "Helena Muñoz"
+    },
+    {
+      "id": "robertk8",
+      "nombre": "robertk8",
+      "externos": {
+        "cronolaps": "99030"
+      },
+      "nombreReal": "Roberto Moreno"
+    },
+    {
+      "id": "lazaro",
+      "nombre": "LAZARO",
+      "externos": {
+        "cronolaps": "99033"
+      },
+      "nombreReal": "Lázaro López"
+    },
+    {
+      "id": "kevin",
+      "nombre": "Kevin",
+      "externos": {
+        "cronolaps": "63993"
+      },
+      "nombreReal": "Kevin Díaz"
+    },
+    {
+      "id": "fonsi",
+      "nombre": "FONSI",
+      "externos": {
+        "cronolaps": "99269"
+      },
+      "nombreReal": "Adrián Alfonso Díaz"
+    },
+    {
+      "id": "carlos-garcia-perez",
+      "nombre": "Carlos Garcia Pérez",
+      "externos": {
+        "cronolaps": "72962"
+      },
+      "nombreReal": "Carlos García Pérez"
+    },
+    {
+      "id": "cona",
+      "nombre": "CONA",
+      "externos": {
+        "cronolaps": "99268"
+      },
+      "nombreReal": "Pedro López"
+    },
+    {
+      "id": "claudio16h",
+      "nombre": "CLAUDIO16H",
+      "externos": {
+        "cronolaps": "99267"
+      },
+      "nombreReal": "Claudio Romero"
+    },
+    {
+      "id": "juan-carlos-gaito",
+      "nombre": "Juan Carlos Gaito",
+      "externos": {
+        "cronolaps": "93516"
+      },
+      "nombreReal": "Juan Carlos Artés"
+    },
+    {
+      "id": "alvin19",
+      "nombre": "ALVIN19",
+      "externos": {
+        "cronolaps": "99300"
+      },
+      "nombreReal": "Alvin Indutivo"
+    },
+    {
+      "id": "sh",
+      "nombre": "SH",
+      "externos": {
+        "cronolaps": "99305"
+      },
+      "nombreReal": "Sergio Higueras"
+    },
+    {
+      "id": "alex",
+      "nombre": "ALEX",
+      "externos": {
+        "cronolaps": "99322"
+      },
+      "nombreReal": "Alejandro Martínez"
+    },
+    {
+      "id": "pollito",
+      "nombre": "POLLITO",
+      "externos": {
+        "cronolaps": "99323"
+      },
+      "nombreReal": "Vanessa Rodríguez"
     }
   ]
 }
