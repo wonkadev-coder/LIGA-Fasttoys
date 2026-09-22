@@ -1,7 +1,7 @@
 // Service worker de la Liga Fast Toys DR7.
 // VERSION la reescribe scripts/generar.mjs en cada actualización: al cambiar,
 // el móvil del piloto descarta la caché vieja y se trae la clasificación nueva.
-const VERSION = 'pitbike-world-2026-09-21-6bc27e5';
+const VERSION = 'pitbike-world-2026-09-21-0f37517';
 
 const ARCHIVOS = [
   './',

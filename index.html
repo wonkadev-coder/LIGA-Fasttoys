@@ -674,6 +674,11 @@
   table.cac tbody tr.podio td.pts{color:var(--oro)}
   table.cac tbody tr.podio{background:linear-gradient(90deg, color-mix(in srgb, var(--oro) 6%, transparent), transparent 40%)}
   table.cac tr[data-id]{cursor:pointer}
+  /* Puesto y piloto fijos al hacer scroll lateral en el móvil */
+  table.cac th:first-child,table.cac td.pos{position:sticky;left:0;z-index:2;background:var(--sup)}
+  table.cac th.i,table.cac tr.r th:nth-child(2),table.cac tr.c th:nth-child(2),table.cac td.i{position:sticky;left:34px;z-index:2;background:var(--sup)}
+  table.cac thead th:first-child,table.cac thead tr.r th:nth-child(2),table.cac thead tr.c th:nth-child(2){background:color-mix(in srgb, var(--sup) 60%, var(--fondo))}
+  table.cac tbody tr.podio td.pos,table.cac tbody tr.podio td.i{background:color-mix(in srgb, var(--oro) 6%, var(--sup))}
   .estilo-broadcast table.res{background:var(--sup);border-radius:10px;overflow:hidden}
   .estilo-broadcast table.res td.i{font-family:var(--tit);text-transform:uppercase;font-size:14px;letter-spacing:.02em;border-left:3px solid var(--camp);padding-left:8px}
   .estilo-broadcast table.res td.pts{color:var(--camp);font-size:17px}
@@ -1148,8 +1153,10 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
         const pos = new Map(p.mangas.map((m) => [m.prueba + '|' + m.manga, m]));
         const celdas = columnas.map((c) => {
           const m = pos.get(c.prueba + '|' + c.manga);
-          if (!m) return '<td class="no">·</td>';
+          // La pole y la vuelta rápida van sobre la manga 1 aunque no la acabara
+          // (Said en Juneda: pole y 0 en carrera).
           const marca = marcas ? `${polesDe.get(c.prueba) === p.id && c.manga === 1 ? '<i class="mk pole" title="Pole"></i>' : ''}${rapidasDe.get(c.prueba) === p.id && c.manga === 1 ? '<i class="mk vr" title="Vuelta rápida"></i>' : ''}` : '';
+          if (!m) return `<td class="no">·${marca}</td>`;
           const chip = CHIP(m.posicion);
           return `<td class="num">${chip ? `<span class="chip ${chip}">${m.posicion}</span>` : m.posicion}${marca}</td>`;
         }).join('');
