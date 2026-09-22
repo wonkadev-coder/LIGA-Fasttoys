@@ -646,9 +646,13 @@ en la tabla oficial. Es deliberado.
 
 56 nombres, 3.556 vueltas. Casan con CronoLaps **47 exactos de 56**:
 
-- **Dos no tienen transpondedor que los explique**: Anderson Rendón (38) y
-  Javier Cobos (28). Ningún socio de las seis categorías suma eso. Quedan fuera
-  del censo hasta saber quiénes son.
+- **Javier Cobos (28)** rueda en la categoría "Avanzados" (28 de CronoLaps), fuera
+  de las seis de pit bike, como Elías: está en la lista a mano (`javier-cobos`,
+  socio 6384). **Anderson Rendón (38) no tiene transpondedor que lo explique**:
+  revisadas TODAS las categorías del DR7 desde el 8 de agosto, el único socio
+  con 38 es AM14 (dorsal 14, 160 Series), que es Adolfo Mena, también con 38 en
+  su tabla. Probablemente una fila duplicada de la organización. Fuera hasta
+  que Jorge lo aclare.
 - **José Alcañiz López (34) y José Alcañiz de la Guía (33) comparten socio**
   en CronoLaps ("Jose Alcañiz", 98511): dos personas con un transpondedor. Aquí
   es un solo piloto con 62; la organización los separa a mano.

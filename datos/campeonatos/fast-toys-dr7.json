@@ -342,6 +342,11 @@
       "piloto": "pollito",
       "dorsal": 13,
       "categoria": "160 Series"
+    },
+    {
+      "piloto": "javier-cobos",
+      "dorsal": 20,
+      "categoria": null
     }
   ],
   "tandas": [
@@ -791,6 +796,12 @@
       "vueltas": 50,
       "nota": "CronoLaps",
       "mejorVuelta": 61.854
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "javier-cobos",
+      "vueltas": 28,
+      "nota": "CronoLaps (categoría Avanzados, fuera de las seis de pit bike; sale en la tabla oficial del 22/09/2026)"
     }
   ],
   "colorTexto": "#FFFFFF",

@@ -575,6 +575,14 @@
         "cronolaps": "99323"
       },
       "nombreReal": "Vanessa Rodríguez"
+    },
+    {
+      "id": "javier-cobos",
+      "nombre": "Cobos Molina, Javier",
+      "nombreReal": "Javier Cobos Molina",
+      "externos": {
+        "cronolaps": "6384"
+      }
     }
   ]
 }
