@@ -665,20 +665,35 @@ en la tabla oficial. Es deliberado.
   Rodríguez, CONA = Pedro López, David11 = Jhonatan Villa Cañas…). La segunda
   "Alba" de CronoLaps (socio 87211, 56 vueltas) es Ariadna Septiem.
 
-### Los nombres son apodos, no nombres reales
+### Nombres reales, como la tabla oficial
 
-En la web se muestra el `socio` de CronoLaps —"M_IvanSan", "Rafita", "kike78"—,
-que es el apodo que cada uno se pone. Decidido por Jorge el 01/09/2026: **de momento
-se quedan los apodos**. Los nombres reales están guardados en `inscritos` para
-cuando se quiera cambiar.
+Desde el 22/09/2026 la web enseña el **nombre real** (`nombreReal` del censo), no
+el apodo de CronoLaps: con 56 pilotos, "David11" o "SH" hacían imposible cotejar
+con la tabla de Fast Toys. Lo decidió Jorge ese día ("cada semana se tiene que
+ver con nombres reales"). `generar.mjs` hace el cambio al pasar los datos a la
+web y conserva el apodo en `apodo`; los scripts de operación siguen buscando
+por apodo, id o dorsal. Un piloto nuevo entra con el apodo como nombre real
+hasta que la tabla oficial diga el suyo.
 
 CronoLaps **no expone el nombre real**: su API pública solo da `idsocio` y `socio`.
 No hay endpoint de perfil (probados `socios`, `socio`, `pilotos`, `perfil`,
 `usuario`: todos 404).
 
-### Lo que no cuadra con la clasificación oficial
+### Manda la clasificación oficial de Fast Toys
 
-Ver "Lo que dijo la tabla oficial del 22/09/2026". **David Garrido** (47)
+Decidido por Jorge el 22/09/2026, y sustituye al "manda el cronómetro" del
+18/08. Donde la tabla oficial difiere de CronoLaps, la tanda lleva **la cifra
+oficial en `vueltas` y la del cronómetro en `cronolaps`**, con la `nota`
+explicando por qué; `importar.mjs` no toca tandas existentes y
+`actualizar.mjs` solo corrige las que llevan `nota: 'CronoLaps'`, así que
+estas no se pisan. Casos: Darío Fernández (el 15/08 a 0, la organización no lo
+cuenta), Arcos (72), Nieto (21), José Alcañiz López (34 el 15/08 y 0 el 19/09,
+que ese día el transpondedor lo llevaba **José Alcañiz de la Guía**, dado de
+alta a mano con 33) y **Anderson Rendón**, sin transpondedor, a mano con 38 y
+fecha 20/09 (la del cierre de la tabla, no la real). Con eso la general es
+idéntica a la oficial: 56 pilotos, 3.556 vueltas.
+
+Ver también "Lo que dijo la tabla oficial del 22/09/2026". **David Garrido** (47)
 **no aparece en CronoLaps en ninguna fecha** y sigue dado de alta a mano, con
 una tanda que lo dice en la `nota`; la organización lo cuenta con esas 47.
 

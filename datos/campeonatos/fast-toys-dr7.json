@@ -27,7 +27,9 @@
     "maxVueltasSemana": 200,
     "ciclo": 999,
     "abierta": false,
-    "quienParticipa": "Los que salen en la clasificación oficial que publica Fast Toys. Alineado el 22/09/2026 con la tabla de 56 (53 con transpondedor propio). No es \"todo el que rueda\": la organización deja fuera a gente que rueda en pit bike."
+    "quienParticipa": "Los que salen en la clasificación oficial que publica Fast Toys. Alineado el 22/09/2026 con la tabla de 56 (53 con transpondedor propio). No es \"todo el que rueda\": la organización deja fuera a gente que rueda en pit bike.",
+    "cifras": "Manda la clasificación oficial de Fast Toys (Jorge, 22/09/2026). Donde la organización difiere del cronómetro, la tanda lleva la cifra oficial en vueltas y la del cronómetro en cronolaps.",
+    "nombres": "Nombres reales (nombreReal del censo), como en la tabla oficial. Jorge, 22/09/2026."
   },
   "hitos": [
     {
@@ -347,6 +349,16 @@
       "piloto": "javier-cobos",
       "dorsal": 20,
       "categoria": null
+    },
+    {
+      "piloto": "jose-alcaniz-de-la-guia",
+      "dorsal": 27,
+      "categoria": null
+    },
+    {
+      "piloto": "anderson-rendon",
+      "dorsal": null,
+      "categoria": null
     }
   ],
   "tandas": [
@@ -359,17 +371,17 @@
     },
     {
       "fecha": "2026-08-08",
-      "piloto": "ruben8",
-      "vueltas": 51,
-      "nota": "CronoLaps",
-      "mejorVuelta": 58.657
-    },
-    {
-      "fecha": "2026-08-08",
       "piloto": "roberto79",
       "vueltas": 50,
       "nota": "CronoLaps",
       "mejorVuelta": 60.867
+    },
+    {
+      "fecha": "2026-08-08",
+      "piloto": "ruben8",
+      "vueltas": 51,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.657
     },
     {
       "fecha": "2026-08-09",
@@ -401,6 +413,14 @@
     },
     {
       "fecha": "2026-08-15",
+      "piloto": "dario-fernandez",
+      "vueltas": 0,
+      "nota": "Oficial (tabla Fast Toys 22/09/2026). CronoLaps registra 32. La organización no cuenta este día.",
+      "mejorVuelta": 56.512,
+      "cronolaps": 32
+    },
+    {
+      "fecha": "2026-08-15",
       "piloto": "david11",
       "vueltas": 38,
       "nota": "CronoLaps",
@@ -408,17 +428,11 @@
     },
     {
       "fecha": "2026-08-15",
-      "piloto": "dario-fernandez",
-      "vueltas": 32,
-      "nota": "CronoLaps",
-      "mejorVuelta": 56.512
-    },
-    {
-      "fecha": "2026-08-15",
       "piloto": "jose-alcaniz",
-      "vueltas": 29,
-      "nota": "CronoLaps",
-      "mejorVuelta": 69.342
+      "vueltas": 34,
+      "nota": "Oficial (tabla Fast Toys 22/09/2026). CronoLaps registra 29. La organización cuenta 34.",
+      "mejorVuelta": 69.342,
+      "cronolaps": 29
     },
     {
       "fecha": "2026-08-22",
@@ -429,17 +443,10 @@
     },
     {
       "fecha": "2026-08-23",
-      "piloto": "rafita",
-      "vueltas": 81,
+      "piloto": "alba",
+      "vueltas": 56,
       "nota": "CronoLaps",
-      "mejorVuelta": 57.428
-    },
-    {
-      "fecha": "2026-08-23",
-      "piloto": "lucas21",
-      "vueltas": 63,
-      "nota": "CronoLaps",
-      "mejorVuelta": 62.872
+      "mejorVuelta": 57.588
     },
     {
       "fecha": "2026-08-23",
@@ -457,31 +464,17 @@
     },
     {
       "fecha": "2026-08-23",
-      "piloto": "alba",
-      "vueltas": 56,
+      "piloto": "lucas21",
+      "vueltas": 63,
       "nota": "CronoLaps",
-      "mejorVuelta": 57.588
+      "mejorVuelta": 62.872
     },
     {
-      "fecha": "2026-08-28",
-      "piloto": "javier-moreno-del-barrio",
-      "vueltas": 79,
+      "fecha": "2026-08-23",
+      "piloto": "rafita",
+      "vueltas": 81,
       "nota": "CronoLaps",
-      "mejorVuelta": 58.658
-    },
-    {
-      "fecha": "2026-08-28",
-      "piloto": "navarrete",
-      "vueltas": 77,
-      "nota": "CronoLaps",
-      "mejorVuelta": 61.889
-    },
-    {
-      "fecha": "2026-08-28",
-      "piloto": "harry",
-      "vueltas": 44,
-      "nota": "CronoLaps",
-      "mejorVuelta": 63.635
+      "mejorVuelta": 57.428
     },
     {
       "fecha": "2026-08-28",
@@ -492,10 +485,24 @@
     },
     {
       "fecha": "2026-08-28",
-      "piloto": "manu",
-      "vueltas": 24,
+      "piloto": "elias8",
+      "vueltas": 100,
       "nota": "CronoLaps",
-      "mejorVuelta": 66.491
+      "mejorVuelta": 61.604
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "harry",
+      "vueltas": 44,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.635
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "javier-moreno-del-barrio",
+      "vueltas": 79,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.658
     },
     {
       "fecha": "2026-08-28",
@@ -506,17 +513,24 @@
     },
     {
       "fecha": "2026-08-28",
-      "piloto": "elias8",
-      "vueltas": 100,
+      "piloto": "manu",
+      "vueltas": 24,
       "nota": "CronoLaps",
-      "mejorVuelta": 61.604
+      "mejorVuelta": 66.491
+    },
+    {
+      "fecha": "2026-08-28",
+      "piloto": "navarrete",
+      "vueltas": 77,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.889
     },
     {
       "fecha": "2026-08-29",
-      "piloto": "sergio",
-      "vueltas": 72,
+      "piloto": "david11",
+      "vueltas": 58,
       "nota": "CronoLaps",
-      "mejorVuelta": 71.183
+      "mejorVuelta": 76.954
     },
     {
       "fecha": "2026-08-29",
@@ -527,24 +541,31 @@
     },
     {
       "fecha": "2026-08-29",
+      "piloto": "nieto",
+      "vueltas": 21,
+      "nota": "Oficial (tabla Fast Toys 22/09/2026). CronoLaps registra 32. La organización cuenta 21.",
+      "mejorVuelta": 77.882,
+      "cronolaps": 32
+    },
+    {
+      "fecha": "2026-08-29",
+      "piloto": "sergio",
+      "vueltas": 72,
+      "nota": "CronoLaps",
+      "mejorVuelta": 71.183
+    },
+    {
+      "fecha": "2026-08-29",
       "piloto": "souto",
       "vueltas": 53,
       "nota": "CronoLaps",
       "mejorVuelta": 66.623
     },
     {
-      "fecha": "2026-08-29",
-      "piloto": "nieto",
-      "vueltas": 32,
-      "nota": "CronoLaps",
-      "mejorVuelta": 77.882
-    },
-    {
-      "fecha": "2026-08-29",
-      "piloto": "david11",
-      "vueltas": 58,
-      "nota": "CronoLaps",
-      "mejorVuelta": 76.954
+      "fecha": "2026-08-30",
+      "piloto": "david-garrido",
+      "vueltas": 47,
+      "nota": "Clasificación oficial · sin datos en CronoLaps"
     },
     {
       "fecha": "2026-08-30",
@@ -554,24 +575,19 @@
       "mejorVuelta": 64.678
     },
     {
-      "fecha": "2026-08-30",
-      "piloto": "david-garrido",
-      "vueltas": 47,
-      "nota": "Clasificación oficial · sin datos en CronoLaps"
-    },
-    {
-      "fecha": "2026-09-05",
-      "piloto": "navarrete",
-      "vueltas": 83,
-      "nota": "CronoLaps",
-      "mejorVuelta": 61.179
-    },
-    {
       "fecha": "2026-09-05",
       "piloto": "arcos",
-      "vueltas": 82,
+      "vueltas": 72,
+      "nota": "Oficial (tabla Fast Toys 22/09/2026). CronoLaps registra 82. La organización cuenta 72.",
+      "mejorVuelta": 63.387,
+      "cronolaps": 82
+    },
+    {
+      "fecha": "2026-09-05",
+      "piloto": "ledesmoli",
+      "vueltas": 46,
       "nota": "CronoLaps",
-      "mejorVuelta": 63.387
+      "mejorVuelta": 61.319
     },
     {
       "fecha": "2026-09-05",
@@ -582,10 +598,10 @@
     },
     {
       "fecha": "2026-09-05",
-      "piloto": "ledesmoli",
-      "vueltas": 46,
+      "piloto": "navarrete",
+      "vueltas": 83,
       "nota": "CronoLaps",
-      "mejorVuelta": 61.319
+      "mejorVuelta": 61.179
     },
     {
       "fecha": "2026-09-06",
@@ -593,6 +609,41 @@
       "vueltas": 9,
       "nota": "CronoLaps",
       "mejorVuelta": 52.189
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "am14",
+      "vueltas": 38,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.849
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "dario-fernandez",
+      "vueltas": 70,
+      "nota": "CronoLaps",
+      "mejorVuelta": 55.676
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "diego25",
+      "vueltas": 43,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.003
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "drr00",
+      "vueltas": 37,
+      "nota": "CronoLaps",
+      "mejorVuelta": 63.439
+    },
+    {
+      "fecha": "2026-09-12",
+      "piloto": "marco51",
+      "vueltas": 59,
+      "nota": "CronoLaps",
+      "mejorVuelta": 59.599
     },
     {
       "fecha": "2026-09-12",
@@ -610,17 +661,10 @@
     },
     {
       "fecha": "2026-09-12",
-      "piloto": "dario-fernandez",
-      "vueltas": 70,
+      "piloto": "victor86",
+      "vueltas": 48,
       "nota": "CronoLaps",
-      "mejorVuelta": 55.676
-    },
-    {
-      "fecha": "2026-09-12",
-      "piloto": "marco51",
-      "vueltas": 59,
-      "nota": "CronoLaps",
-      "mejorVuelta": 59.599
+      "mejorVuelta": 60.896
     },
     {
       "fecha": "2026-09-12",
@@ -630,32 +674,18 @@
       "mejorVuelta": 62.739
     },
     {
-      "fecha": "2026-09-12",
-      "piloto": "victor86",
-      "vueltas": 48,
+      "fecha": "2026-09-13",
+      "piloto": "hel",
+      "vueltas": 68,
       "nota": "CronoLaps",
-      "mejorVuelta": 60.896
+      "mejorVuelta": 65.523
     },
     {
-      "fecha": "2026-09-12",
-      "piloto": "diego25",
-      "vueltas": 43,
+      "fecha": "2026-09-13",
+      "piloto": "lazaro",
+      "vueltas": 26,
       "nota": "CronoLaps",
-      "mejorVuelta": 63.003
-    },
-    {
-      "fecha": "2026-09-12",
-      "piloto": "am14",
-      "vueltas": 38,
-      "nota": "CronoLaps",
-      "mejorVuelta": 63.849
-    },
-    {
-      "fecha": "2026-09-12",
-      "piloto": "drr00",
-      "vueltas": 37,
-      "nota": "CronoLaps",
-      "mejorVuelta": 63.439
+      "mejorVuelta": 62.576
     },
     {
       "fecha": "2026-09-13",
@@ -673,24 +703,10 @@
     },
     {
       "fecha": "2026-09-13",
-      "piloto": "hel",
-      "vueltas": 68,
-      "nota": "CronoLaps",
-      "mejorVuelta": 65.523
-    },
-    {
-      "fecha": "2026-09-13",
       "piloto": "robertk8",
       "vueltas": 67,
       "nota": "CronoLaps",
       "mejorVuelta": 64.495
-    },
-    {
-      "fecha": "2026-09-13",
-      "piloto": "lazaro",
-      "vueltas": 26,
-      "nota": "CronoLaps",
-      "mejorVuelta": 62.576
     },
     {
       "fecha": "2026-09-19",
@@ -701,17 +717,10 @@
     },
     {
       "fecha": "2026-09-19",
-      "piloto": "kevin",
-      "vueltas": 80,
+      "piloto": "alvin19",
+      "vueltas": 42,
       "nota": "CronoLaps",
-      "mejorVuelta": 57.662
-    },
-    {
-      "fecha": "2026-09-19",
-      "piloto": "fonsi",
-      "vueltas": 66,
-      "nota": "CronoLaps",
-      "mejorVuelta": 60.216
+      "mejorVuelta": 62.877
     },
     {
       "fecha": "2026-09-19",
@@ -722,6 +731,13 @@
     },
     {
       "fecha": "2026-09-19",
+      "piloto": "claudio16h",
+      "vueltas": 52,
+      "nota": "CronoLaps",
+      "mejorVuelta": 58.155
+    },
+    {
+      "fecha": "2026-09-19",
       "piloto": "cona",
       "vueltas": 57,
       "nota": "CronoLaps",
@@ -729,10 +745,30 @@
     },
     {
       "fecha": "2026-09-19",
-      "piloto": "claudio16h",
-      "vueltas": 52,
+      "piloto": "fonsi",
+      "vueltas": 66,
       "nota": "CronoLaps",
-      "mejorVuelta": 58.155
+      "mejorVuelta": 60.216
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "javier-cobos",
+      "vueltas": 28,
+      "nota": "CronoLaps (categoría Avanzados, fuera de las seis de pit bike; sale en la tabla oficial del 22/09/2026)"
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "jose-alcaniz",
+      "vueltas": 0,
+      "nota": "Oficial (tabla Fast Toys 22/09/2026). CronoLaps registra 33. Este día el transpondedor lo llevaba José Alcañiz de la Guía.",
+      "mejorVuelta": 67.696,
+      "cronolaps": 33
+    },
+    {
+      "fecha": "2026-09-19",
+      "piloto": "jose-alcaniz-de-la-guia",
+      "vueltas": 33,
+      "nota": "Manual: tabla oficial 22/09/2026. Rodó con el transpondedor de José Alcañiz López (CronoLaps 33 ese día)."
     },
     {
       "fecha": "2026-09-19",
@@ -743,38 +779,10 @@
     },
     {
       "fecha": "2026-09-19",
-      "piloto": "alvin19",
-      "vueltas": 42,
+      "piloto": "kevin",
+      "vueltas": 80,
       "nota": "CronoLaps",
-      "mejorVuelta": 62.877
-    },
-    {
-      "fecha": "2026-09-19",
-      "piloto": "jose-alcaniz",
-      "vueltas": 33,
-      "nota": "CronoLaps",
-      "mejorVuelta": 67.696
-    },
-    {
-      "fecha": "2026-09-20",
-      "piloto": "navarrete",
-      "vueltas": 111,
-      "nota": "CronoLaps",
-      "mejorVuelta": 61.125
-    },
-    {
-      "fecha": "2026-09-20",
-      "piloto": "lucas21",
-      "vueltas": 68,
-      "nota": "CronoLaps",
-      "mejorVuelta": 62.915
-    },
-    {
-      "fecha": "2026-09-20",
-      "piloto": "sh",
-      "vueltas": 74,
-      "nota": "CronoLaps",
-      "mejorVuelta": 62.242
+      "mejorVuelta": 57.662
     },
     {
       "fecha": "2026-09-20",
@@ -785,10 +793,9 @@
     },
     {
       "fecha": "2026-09-20",
-      "piloto": "pollito",
-      "vueltas": 58,
-      "nota": "CronoLaps",
-      "mejorVuelta": 80.136
+      "piloto": "anderson-rendon",
+      "vueltas": 38,
+      "nota": "Manual: tabla oficial 22/09/2026, sin transpondedor en CronoLaps. La fecha es la del cierre de esa tabla, no la real."
     },
     {
       "fecha": "2026-09-20",
@@ -798,10 +805,32 @@
       "mejorVuelta": 61.854
     },
     {
-      "fecha": "2026-09-19",
-      "piloto": "javier-cobos",
-      "vueltas": 28,
-      "nota": "CronoLaps (categoría Avanzados, fuera de las seis de pit bike; sale en la tabla oficial del 22/09/2026)"
+      "fecha": "2026-09-20",
+      "piloto": "lucas21",
+      "vueltas": 68,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.915
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "navarrete",
+      "vueltas": 111,
+      "nota": "CronoLaps",
+      "mejorVuelta": 61.125
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "pollito",
+      "vueltas": 58,
+      "nota": "CronoLaps",
+      "mejorVuelta": 80.136
+    },
+    {
+      "fecha": "2026-09-20",
+      "piloto": "sh",
+      "vueltas": 74,
+      "nota": "CronoLaps",
+      "mejorVuelta": 62.242
     }
   ],
   "colorTexto": "#FFFFFF",

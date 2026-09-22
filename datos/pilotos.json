@@ -187,7 +187,8 @@
     {
       "id": "david-garrido",
       "nombre": "David Garrido",
-      "externos": {}
+      "externos": {},
+      "nombreReal": "David Garrido"
     },
     {
       "id": "roi-garayalde",
@@ -583,6 +584,20 @@
       "externos": {
         "cronolaps": "6384"
       }
+    },
+    {
+      "id": "jose-alcaniz-de-la-guia",
+      "nombre": "José Alcañiz de la Guía",
+      "nombreReal": "José Alcañiz de la Guía",
+      "externos": {},
+      "nota": "Comparte el transpondedor \"Jose Alcañiz\" (socio 98511) con José Alcañiz López. Sus tandas se meten a mano según la tabla oficial."
+    },
+    {
+      "id": "anderson-rendon",
+      "nombre": "Anderson Rendón",
+      "nombreReal": "Anderson Rendón",
+      "externos": {},
+      "nota": "No hay transpondedor que lo explique en CronoLaps. Cifra de la tabla oficial del 22/09/2026, metida a mano."
     }
   ]
 }

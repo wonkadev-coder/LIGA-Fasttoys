@@ -17,6 +17,10 @@ const FIN = '/* LIGA:FIN */';
 
 /** Lo que se pinta de un campeonato de vueltas. */
 function paraWebVueltas(c) {
+  // La web enseña el nombre real, como la tabla oficial (Jorge, 22/09/2026);
+  // el apodo de CronoLaps se conserva en `apodo`.
+  const censo = new Map(leerPilotos().map((p) => [p.id, p]));
+  const real = (p) => censo.get(p.id)?.nombreReal ?? p.nombre;
   return {
     resumen: c.resumen,
     hitos: c.hitos,
@@ -27,10 +31,11 @@ function paraWebVueltas(c) {
           ciclo: c.reglamento.ciclo ?? 999,
         }
       : null,
-    semanas: c.semanas,
+    semanas: (c.semanas ?? []).map((s) => ({ ...s, pilotos: s.pilotos.map((p) => ({ ...p, nombre: real(p), apodo: p.nombre })) })),
     pilotos: c.pilotos.map((p) => ({
       id: p.id,
-      nombre: p.nombre,
+      nombre: real(p),
+      apodo: p.nombre,
       foto: p.foto ?? null,
       dorsal: p.dorsal,
       categoria: p.categoria ?? null,
