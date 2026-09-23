@@ -2476,7 +2476,8 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
     for (const p of PIL) if (p.categoria) cuenta.set(p.categoria, (cuenta.get(p.categoria) ?? 0) + 1);
     const CATS = [TODAS, ...[...cuenta].sort((a, b) => b[1] - a[1]).map(([c]) => c)];
 
-    let cat = CATS.includes(lee(K('cat'))) ? lee(K('cat')) : TODAS;
+    // Sin filtro por moto (Jorge, 23/09/2026): se ve siempre la liga entera.
+    const cat = TODAS;
     let seguido = lee(K('piloto'));
     if (!PIL.some((p) => p.id === seguido)) seguido = null;
     let semSel = SEM.length - 1;
@@ -2727,7 +2728,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
 
     const pintar = () => {
       $('apCats').innerHTML = CATS.map((c) => `<button type="button" data-cat="${esc(c)}" class="${c === cat ? 'on' : ''}">${esc(c)}</button>`).join('');
-      $('apCats').classList.toggle('oculto', tab === 'premios' || tab === 'mipiloto');
+      $('apCats').classList.add('oculto');
       $('apCuerpo').innerHTML = tab === 'semanas' ? vistaSemanas() : tab === 'premios' ? vistaPremios() : tab === 'mipiloto' ? vistaMiPiloto() : vistaClasificacion();
       for (const b of nav.querySelectorAll('.pest')) {
         const a = b.dataset.vista === tab;
@@ -2755,7 +2756,7 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
       const t = e.target;
       if (!t.closest('#vistaApp') && !t.closest('#apHoja')) return;
       const c = t.closest('#apCats [data-cat]');
-      if (c) { cat = c.dataset.cat; guarda(K('cat'), cat); pintar(); return; }
+      if (c) return;
       const s = t.closest('[data-sem]');
       if (s) { semSel = Number(s.dataset.sem); pintar(); return; }
       const g = t.closest('[data-seguir]');

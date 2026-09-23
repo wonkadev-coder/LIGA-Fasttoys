@@ -172,9 +172,9 @@ interminable. La vista pública se reparte en tres secciones, con el hash como r
 > **Desde el 23/09/2026 la liga va en modo app** (lo pidió Jorge tras ver la
 > Copa: "una actualización de semejante calibre en la liga Fast Toys"). Mismo
 > esqueleto que la Copa (`#vistaApp`, `#apHoja`, clases `.ap-*`), en un bloque
-> al final del JS de la liga que desactiva el enrutador anterior. Arriba, fijo,
-> un **filtro por moto** (no son divisiones: el puesto es siempre el de la
-> liga). Cuatro pestañas: **Clasificación** (líder con la barra de su ciclo,
+> al final del JS de la liga que desactiva el enrutador anterior. **Sin filtro
+> por moto**: se probó y Jorge lo quitó el mismo día; la liga se ve entera.
+> Cuatro pestañas: **Clasificación** (líder con la barra de su ciclo,
 > "premio más cerca", "Tu piloto", y por piloto ▲▼ respecto a la semana
 > anterior, barras con sus vueltas de las últimas cuatro semanas y la línea
 > de su ciclo de 999 con los premios marcados), **Semanas** (calendario
