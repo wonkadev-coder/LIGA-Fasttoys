@@ -753,7 +753,10 @@ Reglas que salen de esa decisión:
   `estilo: "broadcast"` y va como clase `estilo-broadcast` en `<html>`: Barlow
   Condensed en mayúsculas, **con los colores de la Copa** (fondo cálido
   `#f7f3ec`, azul marino y naranja; el fondo oscuro de KL se probó y Jorge lo
-  descartó el 22/09/2026: "los colores se tienen que mantener"), esquinas de 6 a
+  descartó el 22/09/2026: "los colores se tienen que mantener"; y el 23/09
+  también fuera el oro/plata/bronce: 1.º naranja, 2.º azul marino, 3.º crema
+  con filo marino, cabecera de la tabla en marino y la banda del naranja al
+  marino, todo por variables en el bloque "La Copa conserva SUS colores"), esquinas de 6 a
   10 px, chips oro/plata/bronce con degradado, podio en **tres cajas 2-1-3**
   (`.caja-podio`) y la **tabla carrera a carrera** (`table.cac`,
   `tablaCarreraACarrera()`): una columna por manga con la posición, punto
