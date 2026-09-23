@@ -169,6 +169,23 @@ interminable. La vista pública se reparte en tres secciones, con el hash como r
   cerca** de cada uno. Sin esto la pestaña serían tres ceros hasta que alguien
   llegue a 500.
 
+> **Desde el 23/09/2026 la liga va en modo app** (lo pidió Jorge tras ver la
+> Copa: "una actualización de semejante calibre en la liga Fast Toys"). Mismo
+> esqueleto que la Copa (`#vistaApp`, `#apHoja`, clases `.ap-*`), en un bloque
+> al final del JS de la liga que desactiva el enrutador anterior. Arriba, fijo,
+> un **filtro por moto** (no son divisiones: el puesto es siempre el de la
+> liga). Cuatro pestañas: **Clasificación** (líder con la barra de su ciclo,
+> "premio más cerca", "Tu piloto", y por piloto ▲▼ respecto a la semana
+> anterior, barras con sus vueltas de las últimas cuatro semanas y la línea
+> de su ciclo de 999 con los premios marcados), **Semanas** (calendario
+> deslizable y, de la elegida, quién rodó y cuánto cada día, con el
+> asterisco del tope), **Premios** (los tres hitos, cuántos entregados y los
+> tres más cerca) y **Mi piloto**. La ficha sube desde abajo: ciclo, "faltan
+> N vueltas para…", estado de cada premio, cupos, vueltas por semana y
+> tandas. Nunca tiempos. Lo que sigue en esta sección describe las pantallas
+> anteriores, que ya no se ven; la tarjeta de compartir (`generarTarjeta`)
+> sí se sigue usando.
+
 **General abre por defecto**: el tráfico llega de enlaces compartidos en redes y
 entra preguntando quién va ganando.
 

@@ -777,6 +777,86 @@
   .ap-hoja .ap-pf-grandes > div,.ap-hoja .ap-pf-stats div,.ap-hoja .ap-graf,.ap-hoja .ap-rxr{background:var(--fondo)}
   body.sin-scroll{overflow:hidden}
   @media (prefers-reduced-motion:reduce){.ap-hoja-panel,.ap-velo,.ap-cats button{transition:none}}
+
+  /* ----- Liga de vueltas en modo app (23/09/2026): lo que añade a la Copa ----- */
+  .navbar.cuatro{grid-template-columns:repeat(4,1fr)}
+  .navbar.cuatro .pest .pild{padding:6px 12px}
+  .ap-cats.chips{display:flex;overflow-x:auto;scrollbar-width:none;scroll-behavior:smooth}
+  .ap-cats.chips::-webkit-scrollbar{display:none}
+  .ap-cats.chips button{flex:0 0 auto;padding:8px 14px;white-space:nowrap}
+  /* Barra del ciclo con los premios marcados */
+  .ap-ciclo{position:relative;display:block;height:5px;border-radius:99px;background:var(--linea);overflow:visible}
+  .ap-ciclo > i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:var(--camp)}
+  .ap-ciclo > b{position:absolute;top:-2px;width:3px;height:9px;border-radius:2px;background:var(--tenue);transform:translateX(-50%)}
+  .ap-ciclo > b.ok{background:var(--camp)}
+  .ap-fila.v{grid-template-columns:22px 24px 36px minmax(0,1fr) 28px 58px;row-gap:6px}
+  .ap-fila.v .ap-pts small{white-space:nowrap}
+  /* Nombres con la letra de texto: la de titulares de Fast Toys (Archivo) es muy ancha para una fila */
+  .modo-vueltas .ap-fila .ap-nom b{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .ap-tit small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ap-fila.v > .ap-ciclo{grid-column:3 / -1;height:4px;margin-bottom:2px}
+  .ap-fila.v > .ap-ciclo > b{height:8px}
+  .ap-ciclo.claro{background:rgba(255,255,255,.25)}
+  .ap-ciclo.claro > i{background:var(--camp-txt)}
+  .ap-ciclo.claro > b{background:rgba(255,255,255,.55)}
+  .ap-ciclo.claro > b.ok{background:var(--camp-txt)}
+  .ap-ciclo.grande{height:10px;margin:10px 0 8px}
+  .ap-ciclo.grande > b{height:16px;top:-3px;width:4px}
+  .ap-lider-meta{position:relative;z-index:1;margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .ap-lider-meta span{font-size:12.5px;font-weight:700;opacity:.9}
+  .ap-gancho{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:12px;border:0;border-radius:18px;padding:12px 14px;
+    background:color-mix(in srgb, var(--camp) 9%, var(--sup));box-shadow:0 0 0 1px color-mix(in srgb, var(--camp) 25%, var(--linea));
+    color:var(--texto);font:inherit;font-size:14px;text-align:left;cursor:pointer}
+  .ap-gancho .ap-kicker{color:var(--camp)}
+  .ap-yo-f{font-size:12.5px;color:var(--tenue);font-weight:600}
+  .ap-yo-f b{color:var(--camp)}
+  .ap-yo .ap-ciclo{margin-top:2px}
+  /* Días de una semana */
+  .ap-dias{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+  .ap-dias i{font-style:normal;display:inline-flex;flex-direction:column;align-items:center;min-width:34px;padding:3px 5px;border-radius:8px;
+    background:var(--fondo);font-family:var(--tit);font-weight:800;font-size:14px;line-height:1.05}
+  .ap-dias em{font-style:normal;font-family:inherit;font-size:9px;font-weight:700;color:var(--tenue);letter-spacing:.04em}
+  .ap-hitos.tres{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ap-hitos > div{display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-radius:14px;padding:10px 12px;background:var(--sup);box-shadow:0 0 0 1px var(--linea);min-width:0}
+  .ap-hitos > div b{font-family:var(--tit);font-size:13px;color:var(--tenue)}
+  .ap-hitos > div i{font-style:normal;font-family:var(--tit);font-size:20px;font-weight:800;color:var(--camp)}
+  .ap-hitos > div span{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tenue)}
+  /* Premios */
+  .ap-premio{border-radius:20px;padding:16px;background:var(--sup);box-shadow:0 0 0 1px var(--linea);margin-bottom:12px}
+  .ap-premio.primero{box-shadow:0 0 0 2px var(--camp)}
+  .ap-premio-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .ap-premio-top .ap-kicker{color:var(--camp)}
+  .ap-premio h2{font-family:var(--tit);font-size:26px;font-weight:900;margin:4px 0 12px;line-height:1.05;border:0;padding:0;text-transform:none;letter-spacing:0;color:var(--texto)}
+  .ap-etq.on{background:var(--camp);color:var(--camp-txt)}
+  .ap-premio .ap-etq{margin-top:0;background:var(--fondo);color:var(--tenue)}
+  .ap-premio .ap-etq.on{background:var(--camp);color:var(--camp-txt)}
+  .ap-cercanos{display:flex;flex-direction:column;gap:6px}
+  .ap-cercanos button{display:grid;grid-template-columns:32px minmax(0,1fr) 80px;align-items:center;gap:10px;border:0;border-radius:12px;padding:8px 10px;
+    background:var(--fondo);font:inherit;color:var(--texto);text-align:left;cursor:pointer}
+  .ap-cercanos .avatar{width:32px;height:32px;font-size:11px}
+  .ap-mini{display:block;height:6px;border-radius:99px;background:var(--linea);overflow:hidden}
+  .ap-mini i{display:block;height:100%;border-radius:99px;background:var(--camp)}
+  /* Ficha: ciclo, premios, cupos y tandas */
+  .ap-pf-ciclo{margin-top:8px;border-radius:16px;padding:12px 14px;background:var(--fondo)}
+  .ap-pf-ciclo .ap-kicker{color:var(--tenue)}
+  .ap-pf-ciclo p{margin:0;font-size:15px;font-weight:600}
+  .ap-pf-ciclo p b{color:var(--camp)}
+  .ap-premios{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .ap-premios > div{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;padding:10px 12px;border-radius:14px;background:var(--fondo)}
+  .ap-premios span{grid-row:1 / 3;align-self:center;font-family:var(--tit);font-weight:900;font-size:16px;color:var(--tenue)}
+  .ap-premios b{font-size:14px}
+  .ap-premios small{font-size:12px;color:var(--tenue);font-weight:600}
+  .ap-premios .ok span,.ap-premios .va span{color:var(--camp)}
+  .ap-premios .ok{box-shadow:inset 3px 0 0 var(--camp)}
+  .ap-pf-grandes.cupos b{font-size:32px}
+  .ap-pf-grandes.cupos b i{font-style:normal;font-size:15px;color:var(--tenue)}
+  .ap-graf .b{fill:var(--camp)}
+  .ap-graf .z{fill:var(--linea)}
+  .ap-rxr > div.tanda{grid-template-columns:minmax(0,1fr) 52px 52px}
+  .ap-rxr .tanda .c{display:flex;flex-direction:column;white-space:normal}
+  .ap-rxr .tanda .c small{font-size:11px;color:var(--tenue);font-weight:600}
+  .ap-rxr .tanda b{color:var(--camp)}
+  .ap-rxr .tanda .acu{text-align:right;font-family:var(--tit);font-weight:700;color:var(--tenue)}
 </style>
 </head>
 <body>
@@ -2354,6 +2434,348 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
   if (!CAMP.pilotos.length) $('btnCompartir').closest('.acciones').classList.add('oculto');
   conectarCompartir($('btnCompartir'), null);
   // La semana elegida comparte la suya: el botón lo engancha pintarSemana().
+
+  // ===== Liga de vueltas en modo app (23/09/2026) ===========================
+  // Jorge, tras ver la Copa en modo app: "¿podríamos hacer una actualización de
+  // semejante calibre en la liga Fast Toys?". Mismo esqueleto que la Copa
+  // (#vistaApp, #apHoja, clases .ap-*), hablando en vueltas:
+  //   - arriba, fijo, un filtro por moto (no son divisiones: la liga es un
+  //     único ranking, así que el puesto que se ve es siempre el de la liga);
+  //   - abajo, cuatro pestañas: Clasificación, Semanas, Premios y Mi piloto;
+  //   - la ficha del piloto sube desde abajo.
+  // Las reglas de la liga siguen mandando: nunca tiempos ni proyecciones a
+  // fecha, y "faltan N vueltas para el premio" en vez de porcentajes.
+  // Todo va en este bloque y el código anterior de la liga sigue definiendo
+  // la tarjeta de compartir (generarTarjeta), que aquí se reutiliza.
+  {
+    removeEventListener('hashchange', ruta); // el enrutador de las pantallas anteriores
+    $('cabecera').classList.add('oculto');
+    $('vistaRanking').classList.add('oculto');
+    $('vistaPiloto').classList.add('oculto');
+    $('vistaApp').classList.remove('oculto');
+    document.body.classList.add('modo-app', 'modo-vueltas');
+
+    const PIL = CAMP.pilotos;
+    const SEM = [...(CAMP.semanas ?? [])].reverse(); // de la más antigua a la más reciente
+    const HITOS = CAMP.hitos ?? [];
+    const CICLO = CAMP.reglamento?.ciclo ?? 999;
+    const TOPE_DIA = CAMP.reglamento?.maxVueltasDia ?? null;
+    const TOPE_SEM = CAMP.reglamento?.maxVueltasSemana ?? null;
+    const TODAS = 'Todas';
+    const K = (s) => `pw:${CAMP.id}:${s}`;
+    const lee = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+    const guarda = (k, v) => { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } };
+    const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const norm = (s) => String(s ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+    const corto = (premio) => { const w = String(premio ?? '').split(' ').pop(); return w.charAt(0).toUpperCase() + w.slice(1); };
+    const DIAS = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+    const dia = (iso) => `${DIAS[new Date(iso + 'T12:00:00').getDay()]}${Number(iso.slice(8, 10))}`;
+
+    // Categorías de moto presentes, de la más poblada a la que menos.
+    const cuenta = new Map();
+    for (const p of PIL) if (p.categoria) cuenta.set(p.categoria, (cuenta.get(p.categoria) ?? 0) + 1);
+    const CATS = [TODAS, ...[...cuenta].sort((a, b) => b[1] - a[1]).map(([c]) => c)];
+
+    let cat = CATS.includes(lee(K('cat'))) ? lee(K('cat')) : TODAS;
+    let seguido = lee(K('piloto'));
+    if (!PIL.some((p) => p.id === seguido)) seguido = null;
+    let semSel = SEM.length - 1;
+    let tab = 'general';
+    let abierto = null;
+    const filtra = (lista) => (cat === TODAS ? lista : lista.filter((p) => p.categoria === cat));
+
+    // Vueltas por semana de cada piloto y el puesto antes de la última semana,
+    // para saber si ha subido o bajado.
+    const porSemana = new Map(PIL.map((p) => [p.id, SEM.map((s) => s.pilotos.find((x) => x.id === p.id)?.vueltas ?? null)]));
+    const ultima = SEM[SEM.length - 1];
+    const antes = new Map(PIL.map((p) => [p.id, p.vueltasTotales - (ultima?.pilotos.find((x) => x.id === p.id)?.vueltas ?? 0)]));
+    const rangoAntes = new Map([...PIL].sort((a, b) => antes.get(b.id) - antes.get(a.id) || a.nombre.localeCompare(b.nombre, 'es')).map((p, i) => [p.id, i + 1]));
+    const mov = (p) => {
+      if (SEM.length < 2 || !p.vueltasTotales) return { cls: 'igual', txt: '' };
+      if (!antes.get(p.id)) return { cls: 'nuevo', txt: 'NEW' };
+      const d = rangoAntes.get(p.id) - p.puesto;
+      return d > 0 ? { cls: 'sube', txt: `▲${d}` } : d < 0 ? { cls: 'baja', txt: `▼${-d}` } : { cls: 'igual', txt: '–' };
+    };
+
+    // Barra del ciclo hacia los premios, con una marca en cada hito.
+    const barraCiclo = (p, clase = 'ap-ciclo') => `<span class="${clase}"><i style="width:${Math.min(100, (100 * p.vueltasCiclo) / CICLO)}%"></i>${HITOS.map((h) => `<b style="left:${(100 * h.vueltas) / CICLO}%" class="${p.vueltasCiclo >= h.vueltas ? 'ok' : ''}"></b>`).join('')}</span>`;
+    const faltaTxt = (p) => (p.siguiente ? `A ${n(p.siguiente.faltan)} del ${esc(corto(p.siguiente.premio))}` : 'Ciclo completado');
+    const sub = (p) => esc(p.categoria ?? (p.dorsal != null ? '#' + p.dorsal : 'Sin categoría'));
+
+    // --- Clasificación ------------------------------------------------------
+    const fila = (p) => {
+      const d = mov(p);
+      const forma = (porSemana.get(p.id) ?? []).slice(-4);
+      return `<button class="ap-fila v${p.id === seguido ? ' yo' : ''}${p.puesto <= 3 ? ' top' + p.puesto : ''}" type="button" data-id="${p.id}">
+          <span class="ap-pos">${p.puesto}</span>
+          <span class="ap-mov ${d.cls}">${d.txt}</span>
+          ${avatar(p)}
+          <span class="ap-nom"><b>${esc(p.nombre)}</b><small>${sub(p)}</small></span>
+          <span class="ap-forma" title="Vueltas de las últimas semanas">${forma.map((v) => (v == null ? '<i class="nd"></i>' : `<i style="--h:${Math.max(10, Math.round((100 * v) / (TOPE_SEM ?? 200)))}%"></i>`)).join('')}</span>
+          <span class="ap-pts"><b>${n(p.vueltasTotales)}</b><small>${p.siguiente ? 'faltan ' + n(p.siguiente.faltan) : 'ciclo ✓'}</small></span>
+          ${barraCiclo(p)}
+        </button>`;
+    };
+
+    const vistaClasificacion = () => {
+      const lista = filtra(PIL);
+      if (!lista.length) return '<p class="ap-vacio">Nadie de esta categoría ha rodado todavía.</p>';
+      const [l, s, t] = lista;
+      const yo = seguido ? PIL.find((p) => p.id === seguido) : null;
+      const delante = yo && yo.puesto > 1 ? PIL[yo.puesto - 2] : null;
+      const cerca = [...PIL].filter((p) => p.siguiente).sort((a, b) => a.siguiente.faltan - b.siguiente.faltan)[0];
+      return `
+        <section class="ap-lider" data-id="${l.id}" role="button" tabindex="0">
+          <div class="ap-lider-top"><span class="ap-kicker">Líder · ${cat === TODAS ? 'Liga' : esc(cat)}</span><span class="ap-kicker">${ultima ? 'Semana ' + ultima.numero : ''}</span></div>
+          <div class="ap-lider-main">${avatar(l)}<div class="ap-lider-nom"><b>${esc(l.nombre)}</b><small>${sub(l)}</small></div></div>
+          <div class="ap-lider-pts"><b>${n(l.vueltasTotales)}</b><span>vueltas</span>${s ? `<em>+${n(l.vueltasTotales - s.vueltasTotales)} sobre el 2.º</em>` : ''}</div>
+          <div class="ap-lider-meta">${barraCiclo(l, 'ap-ciclo claro')}<span>${faltaTxt(l)}</span></div>
+          <div class="ap-escoltas">${[s, t].filter(Boolean).map((p) => `<button type="button" data-id="${p.id}"><i>${p.puesto}</i><span>${esc(p.nombre)}</span><b>${n(p.vueltasTotales)}</b></button>`).join('')}</div>
+        </section>
+        ${cerca && cat === TODAS && cerca.id !== l.id ? `<button class="ap-gancho" type="button" data-id="${cerca.id}"><span class="ap-kicker">Premio más cerca</span><span><b>${esc(cerca.nombre)}</b> está a <b>${n(cerca.siguiente.faltan)}</b> vueltas del ${esc(cerca.siguiente.premio)}</span></button>` : ''}
+        ${yo ? `<button class="ap-yo" type="button" data-id="${yo.id}">
+            <span class="ap-kicker">Tu piloto</span>
+            <span class="ap-yo-l">${avatar(yo)}<span><b>${esc(yo.nombre)}</b><small>${yo.puesto}.º · ${n(yo.vueltasTotales)} vueltas${delante ? ` · a ${n(delante.vueltasTotales - yo.vueltasTotales)} del ${delante.puesto}.º` : ' · líder'}</small></span></span>
+            ${barraCiclo(yo)}<small class="ap-yo-f">${yo.siguiente ? `Faltan <b>${n(yo.siguiente.faltan)}</b> vueltas para el ${esc(yo.siguiente.premio)}` : 'Ciclo completado'}</small>
+          </button>` : ''}
+        <div class="ap-cab"><span>Clasificación</span><button class="ap-compartir" type="button" data-compartir=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>Compartir</button></div>
+        <div class="ap-lista">${lista.map(fila).join('')}</div>
+        <p class="ap-nota">▲▼ puestos ganados o perdidos en la última semana · barras: vueltas de las últimas cuatro semanas · la línea de abajo es su ciclo de ${n(CICLO)} con los premios marcados</p>`;
+    };
+
+    // --- Semanas ------------------------------------------------------------
+    const vistaSemanas = () => {
+      if (!SEM.length) return '<p class="ap-vacio">Todavía no hay ninguna semana con vueltas.</p>';
+      const tiras = SEM.map((s, i) => `<button class="ap-ronda${i === semSel ? ' sel' : ''}" type="button" data-sem="${i}">
+          <span class="n">S${s.numero}</span><b>${n(s.vueltas)} v</b><small>${diaMes(s.desde)} – ${diaMes(s.hasta)}</small>
+          ${s.pilotos[0] ? `<span class="gan">${avatar(PIL.find((p) => p.id === s.pilotos[0].id) ?? s.pilotos[0])}</span>` : ''}
+        </button>`).join('');
+      const s = SEM[semSel];
+      const porDia = new Map();
+      const dias = new Set();
+      for (const p of PIL) for (const t of p.historial ?? []) {
+        if (t.fecha < s.desde || t.fecha > s.hasta) continue;
+        dias.add(t.fecha);
+        if (!porDia.has(p.id)) porDia.set(p.id, {});
+        porDia.get(p.id)[t.fecha] = t;
+      }
+      const fechas = [...dias].sort();
+      const filas = s.pilotos.filter((x) => cat === TODAS || x.categoria === cat);
+      const recorte = filas.some((x) => Object.values(porDia.get(x.id) ?? {}).some((t) => t.descartadas > 0));
+      const lider = s.pilotos[0];
+      return `
+        <div class="ap-rondas" id="apRondas">${tiras}</div>
+        <section class="ap-rcab">
+          <span class="ap-kicker">Semana ${s.numero} · ${diaMes(s.desde)} – ${diaMes(s.hasta)}</span>
+          <h2>${n(s.vueltas)} vueltas</h2>
+          <div class="ap-hitos tres">
+            <button type="button" data-id="${lider.id}"><span>Más vueltas</span><b>${esc(lider.nombre)}</b><i>${n(lider.vueltas)}</i></button>
+            <div><span>Pilotos</span><b>en pista</b><i>${n(s.pilotos.length)}</i></div>
+            <div><span>Días</span><b>con pista</b><i>${fechas.length}</i></div>
+          </div>
+        </section>
+        <div class="ap-cab"><span>Quién rodó${cat === TODAS ? '' : ' · ' + esc(cat)}</span><button class="ap-compartir" type="button" data-compartir="${s.semana}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>Compartir</button></div>
+        <div class="ap-lista">${filas.map((x, i) => {
+          const p = PIL.find((y) => y.id === x.id) ?? x;
+          const d = porDia.get(x.id) ?? {};
+          return `<button class="ap-fila ronda${x.id === seguido ? ' yo' : ''}${i < 3 ? ' top' + (i + 1) : ''}" type="button" data-id="${x.id}">
+              <span class="ap-pos">${i + 1}</span>
+              ${avatar(p)}
+              <span class="ap-nom"><b>${esc(p.nombre)}</b><small>${sub(p)}</small></span>
+              <span class="ap-dias">${fechas.filter((f) => d[f]).map((f) => `<i><em>${dia(f)}</em>${n(d[f].vueltas)}${d[f].descartadas > 0 ? '*' : ''}</i>`).join('')}</span>
+              <span class="ap-pts"><b>${n(x.vueltas)}</b></span>
+            </button>`;
+        }).join('') || '<p class="ap-vacio">Nadie de esta categoría rodó esa semana.</p>'}</div>
+        <p class="ap-nota">${TOPE_DIA ? `Tope: ${n(TOPE_DIA)} vueltas al día y ${n(TOPE_SEM)} a la semana.` : ''}${recorte ? ' * El tope recortó ese día.' : ''}</p>`;
+    };
+
+    // --- Premios ------------------------------------------------------------
+    const vistaPremios = () => HITOS.map((h, k) => {
+      const entregados = CAMP.resumen?.premiosEntregados?.find((x) => x.vueltas === h.vueltas)?.entregados ?? 0;
+      const cerca = PIL.filter((p) => p.vueltasCiclo < h.vueltas).sort((a, b) => b.vueltasCiclo - a.vueltasCiclo).slice(0, 3);
+      return `<section class="ap-premio${k === 0 ? ' primero' : ''}">
+          <div class="ap-premio-top"><span class="ap-kicker">${n(h.vueltas)} vueltas</span><span class="ap-etq${entregados ? ' on' : ''}">${entregados ? `${entregados} entregado${entregados > 1 ? 's' : ''}` : 'Sin entregar'}</span></div>
+          <h2>${esc(h.premio)}</h2>
+          <div class="ap-cercanos">${cerca.map((p) => `<button type="button" data-id="${p.id}">${avatar(p)}<span class="ap-nom"><b>${esc(p.nombre)}</b><small>faltan ${n(h.vueltas - p.vueltasCiclo)}</small></span><span class="ap-mini"><i style="width:${(100 * p.vueltasCiclo) / h.vueltas}%"></i></span></button>`).join('')}</div>
+        </section>`;
+    }).join('') + `<p class="ap-nota">Los premios van por vueltas, no por tiempos. Al llegar a ${n(CICLO)} el contador vuelve a cero y las vueltas sobrantes pasan al ciclo siguiente.</p>`;
+
+    // --- Mi piloto y ficha --------------------------------------------------
+    const listaElegir = (q) => PIL
+      .filter((p) => !q || norm(p.nombre).includes(norm(q)) || norm(p.apodo).includes(norm(q)) || String(p.dorsal ?? '') === q.trim())
+      .sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'))
+      .map((p) => `<button class="ap-fila elegir" type="button" data-seguir="${p.id}">${avatar(p)}<span class="ap-nom"><b>${esc(p.nombre)}</b><small>${esc([p.apodo && p.apodo !== p.nombre ? p.apodo : null, p.dorsal != null ? '#' + p.dorsal : null, p.categoria].filter(Boolean).join(' · '))}</small></span><span class="ap-mas">＋</span></button>`)
+      .join('') || '<p class="ap-vacio">Nadie con ese nombre.</p>';
+
+    const barrasSemana = (p) => {
+      const v = porSemana.get(p.id) ?? [];
+      const W = 320, H = 120, pad = 18, max = TOPE_SEM ?? Math.max(1, ...v.map((x) => x ?? 0));
+      const ancho = (W - 2 * pad) / Math.max(1, v.length);
+      return `<svg class="ap-graf" viewBox="0 0 ${W} ${H}" role="img" aria-label="Vueltas de cada semana">
+          ${v.map((x, k) => {
+            const h = x ? Math.max(3, ((H - 44) * x) / max) : 0;
+            const cx = pad + k * ancho + ancho / 2;
+            return `${x ? `<rect x="${cx - ancho * 0.3}" y="${H - 22 - h}" width="${ancho * 0.6}" height="${h}" rx="4" class="b"/><text x="${cx}" y="${H - 27 - h}" class="v">${n(x)}</text>` : `<rect x="${cx - ancho * 0.3}" y="${H - 24}" width="${ancho * 0.6}" height="2" class="z"/>`}<text x="${cx}" y="${H - 6}" class="r">S${SEM[k].numero}</text>`;
+          }).join('')}
+        </svg>`;
+    };
+
+    const perfil = (p) => {
+      const sigo = seguido === p.id;
+      const uj = p.ultimaJornada, us = p.semanaUltima;
+      const estado = { entregado: 'Entregado', 'en curso': 'En curso', bloqueado: 'Por llegar' };
+      return `
+        <div class="ap-pf-cab">${avatar(p)}
+          <div><h2>${esc(p.nombre)}</h2><small>${esc([p.apodo && p.apodo !== p.nombre ? p.apodo : null, p.dorsal != null ? '#' + p.dorsal : null].filter(Boolean).join(' · ') || '—')}</small>
+          ${p.categoria ? `<span class="ap-etq">${esc(p.categoria)}</span>` : ''}</div>
+        </div>
+        <div class="ap-pf-grandes">
+          <div><span>Liga</span><b>${p.puesto}.º</b><small>de ${PIL.length} pilotos</small></div>
+          <div class="cat"><span>Vueltas</span><b>${n(p.vueltasTotales)}</b><small>en total</small></div>
+        </div>
+        <div class="ap-pf-ciclo">
+          <span class="ap-kicker">Ciclo ${n((p.ciclosCompletados ?? 0) + 1)} · ${n(p.vueltasCiclo)} de ${n(CICLO)}</span>
+          ${barraCiclo(p, 'ap-ciclo grande')}
+          <p>${p.siguiente ? `Faltan <b>${n(p.siguiente.faltan)}</b> vueltas para el <b>${esc(p.siguiente.premio)}</b>` : 'Ciclo completado'}</p>
+        </div>
+        <div class="ap-premios">${(p.premios ?? []).map((pr) => `<div class="${pr.estado === 'entregado' ? 'ok' : pr.estado === 'en curso' ? 'va' : ''}"><span>${n(pr.vueltas)}</span><b>${esc(pr.premio)}</b><small>${pr.estado === 'entregado' ? (pr.entregados > 1 ? `Entregado ×${pr.entregados}` : 'Entregado') : pr.entregados > 0 ? `Ya lo tienes ×${pr.entregados} · faltan ${n(pr.faltan)}` : `${estado[pr.estado] ?? ''} · faltan ${n(pr.faltan)}`}</small></div>`).join('')}</div>
+        ${uj && (TOPE_DIA || TOPE_SEM) ? `<div class="ap-pf-grandes cupos">
+          <div><span>Última jornada</span><b>${n(uj.vueltas)}<i>/${n(TOPE_DIA)}</i></b><small>${fecha(uj.fecha)}${uj.descartadas > 0 ? ` · ${n(uj.descartadas)} fuera de tope` : ''}</small></div>
+          ${us ? `<div><span>Semana ${us.numero ?? (Number(String(us.semana ?? '').split('-W')[1]) || '')}</span><b>${n(us.vueltas)}<i>/${n(TOPE_SEM)}</i></b><small>${us.desde ? `${diaMes(us.desde)} – ${diaMes(us.hasta)}` : ''}</small></div>` : ''}
+        </div>` : ''}
+        ${SEM.length ? `<div class="ap-cab"><span>Vueltas por semana</span></div>${barrasSemana(p)}` : ''}
+        <div class="ap-cab"><span>Tandas</span><span class="ap-leyenda">VUELTAS · ACUMULADO</span></div>
+        <div class="ap-rxr">${[...(p.historial ?? [])].reverse().map((t) => `<div class="tanda"><span class="c">${fecha(t.fecha)}${t.descartadas > 0 ? `<small>Hizo ${n(t.registradas)}; el tope deja ${n(t.vueltas)}</small>` : ''}${t.reinicios ? '<small>Ciclo completado ✓</small>' : ''}</span><b>+${n(t.vueltas)}</b><span class="acu">${n(t.acumulado)}</span></div>`).join('') || '<p class="ap-vacio">Sin tandas todavía.</p>'}</div>
+        <button class="ap-seguir${sigo ? ' on' : ''}" type="button" data-seguir="${sigo ? '' : p.id}">${sigo ? '★ Es tu piloto · dejar de seguir' : '☆ Es mi piloto · seguirlo'}</button>`;
+    };
+
+    const vistaMiPiloto = () => {
+      const p = seguido ? PIL.find((x) => x.id === seguido) : null;
+      if (p) return `<section class="ap-perfil">${perfil(p)}</section>`;
+      return `<section class="ap-elegir">
+          <h2>¿Quién eres?</h2>
+          <p>Elige tu piloto, o al que quieras seguir. Saldrá destacado en la clasificación y en cada semana, con lo que le falta para su próximo premio.</p>
+          <input class="ap-buscar" id="apBuscar" type="search" placeholder="Busca por nombre, apodo o dorsal" autocomplete="off">
+          <div class="ap-lista" id="apElegir">${listaElegir('')}</div>
+        </section>`;
+    };
+
+    // --- Compartir: reutiliza la tarjeta de la liga (su manual) ---------------
+    const compartir = async (boton, clave) => {
+      const original = boton.innerHTML;
+      boton.disabled = true;
+      boton.textContent = 'Preparando…';
+      try {
+        const sem = clave ? (CAMP.semanas ?? []).find((s) => s.semana === clave) : null;
+        const blob = await generarTarjeta(clave || null);
+        const nombre = `liga-fast-toys-${sem ? `semana-${sem.numero}` : (CAMP.actualizado ?? 'clasificacion')}.png`;
+        const archivo = new File([blob], nombre, { type: 'image/png' });
+        const texto = sem ? `Clasificación de la semana ${sem.numero} · ${n(sem.vueltas)} vueltas` : `Clasificación de la ${CAMP.nombre} · ${n(CAMP.resumen.totalVueltas)} vueltas`;
+        if (navigator.canShare?.({ files: [archivo] })) {
+          await navigator.share({ files: [archivo], title: CAMP.nombre, text: texto });
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = nombre; a.click();
+          URL.revokeObjectURL(url);
+        }
+      } catch (e) {
+        if (e?.name !== 'AbortError') alert('No he podido generar la imagen: ' + e.message);
+      } finally {
+        boton.disabled = false;
+        boton.innerHTML = original;
+      }
+    };
+
+    // --- Pintar y navegar ---------------------------------------------------
+    $('apNombre').textContent = CAMP.nombre;
+    $('apSub').textContent = [`${PIL.length} pilotos`, `${SEM.length} semanas`].join(' · ');
+    $('apEscudo').innerHTML = CAMP.marca?.logo ? `<img src="${CAMP.marca.logo}" alt="${esc(CAMP.nombre)}">` : `<span style="background:${CAMP.color};color:${CAMP.colorTexto}">${esc(CAMP.siglas ?? iniciales(CAMP.nombre))}</span>`;
+    $('apAtras').addEventListener('click', () => { location.href = location.pathname; });
+    $('apCats').classList.add('chips');
+
+    // La barra inferior gana una cuarta pestaña, Mi piloto.
+    const nav = $('navbar');
+    nav.classList.add('cuatro');
+    const ETIQ = { general: 'Clasificación', semanas: 'Semanas', premios: 'Premios', mipiloto: 'Mi piloto' };
+    if (!nav.querySelector('[data-vista="mipiloto"]')) {
+      const b = document.createElement('button');
+      b.className = 'pest'; b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.vista = 'mipiloto';
+      b.innerHTML = '<span class="pild"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><span></span>';
+      b.addEventListener('click', () => { location.hash = 'mipiloto'; });
+      nav.appendChild(b);
+    }
+    for (const b of nav.querySelectorAll('.pest')) b.querySelector('span:not(.pild)').textContent = ETIQ[b.dataset.vista];
+
+    const hoja = $('apHoja');
+    const cerrarHoja = () => {
+      abierto = null;
+      hoja.classList.remove('abierta');
+      hoja.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('sin-scroll');
+      document.title = CAMP.nombre;
+    };
+    const pintarHoja = () => {
+      const p = PIL.find((x) => x.id === abierto);
+      if (!p) return cerrarHoja();
+      $('apHojaCuerpo').innerHTML = perfil(p);
+      hoja.classList.add('abierta');
+      hoja.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('sin-scroll');
+      document.title = `${p.nombre} · ${CAMP.nombre}`;
+    };
+
+    const pintar = () => {
+      $('apCats').innerHTML = CATS.map((c) => `<button type="button" data-cat="${esc(c)}" class="${c === cat ? 'on' : ''}">${esc(c)}</button>`).join('');
+      $('apCats').classList.toggle('oculto', tab === 'premios' || tab === 'mipiloto');
+      $('apCuerpo').innerHTML = tab === 'semanas' ? vistaSemanas() : tab === 'premios' ? vistaPremios() : tab === 'mipiloto' ? vistaMiPiloto() : vistaClasificacion();
+      for (const b of nav.querySelectorAll('.pest')) {
+        const a = b.dataset.vista === tab;
+        b.classList.toggle('activa', a);
+        b.setAttribute('aria-selected', a ? 'true' : 'false');
+      }
+      $('apBuscar')?.addEventListener('input', (e) => { $('apElegir').innerHTML = listaElegir(e.target.value); });
+      const tira = $('apRondas');
+      const sel = tira?.querySelector('.sel');
+      if (sel) tira.scrollLeft = sel.offsetLeft - tira.clientWidth / 2 + sel.clientWidth / 2;
+      const chip = $('apCats').querySelector('.on');
+      if (chip) $('apCats').scrollLeft = chip.offsetLeft - 16;
+    };
+
+    const TABS = ['general', 'semanas', 'premios', 'mipiloto'];
+    const rutaApp = () => {
+      const h = decodeURIComponent(location.hash.slice(1));
+      if (PIL.some((p) => p.id === h)) { abierto = h; pintarHoja(); return; }
+      cerrarHoja();
+      const nuevo = TABS.includes(h) ? h : 'general';
+      if (nuevo !== tab || !$('apCuerpo').innerHTML) { tab = nuevo; pintar(); scrollTo(0, 0); }
+    };
+
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (!t.closest('#vistaApp') && !t.closest('#apHoja')) return;
+      const c = t.closest('#apCats [data-cat]');
+      if (c) { cat = c.dataset.cat; guarda(K('cat'), cat); pintar(); return; }
+      const s = t.closest('[data-sem]');
+      if (s) { semSel = Number(s.dataset.sem); pintar(); return; }
+      const g = t.closest('[data-seguir]');
+      if (g) { seguido = g.dataset.seguir || null; guarda(K('piloto'), seguido); pintar(); if (abierto) pintarHoja(); return; }
+      const sh = t.closest('[data-compartir]');
+      if (sh) { compartir(sh, sh.dataset.compartir); return; }
+      if (t.closest('[data-cerrar]')) { location.hash = tab; return; }
+      const f = t.closest('[data-id]');
+      if (f) location.hash = f.dataset.id;
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && abierto) location.hash = tab;
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.matches?.('.ap-lider')) location.hash = e.target.dataset.id;
+    });
+    addEventListener('hashchange', rutaApp);
+    const inicial = location.hash.slice(1);
+    tab = TABS.includes(inicial) ? inicial : 'general';
+    pintar();
+    rutaApp();
+  }
 
   // --- Service worker (solo sirve por http/https, no con doble clic en el fichero) ---
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
