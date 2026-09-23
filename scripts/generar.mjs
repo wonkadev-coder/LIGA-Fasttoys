@@ -84,6 +84,8 @@ function paraWebCarreras(c) {
       pilotos: x.pilotos.map(piloto),
     })),
     pruebas: c.pruebas,
+    // Las seis rondas, corridas o no: la pestaña Rondas enseña también las que faltan.
+    calendario: c.calendario ?? null,
   };
 }
 

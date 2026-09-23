@@ -916,7 +916,36 @@
       "titulos": "Barlow Condensed",
       "google": "Barlow+Condensed:wght@600;700;800;900"
     },
-    "estilo": "broadcast",
-    "nota": "Colores de la Copa: naranja #F0641E de acento y azul marino #1b2440 sobre fondo cálido #f7f3ec, sacados de su escudo (Jorge, 22/09/2026: los colores se mantienen). La estructura es la de Karting League (estilo broadcast): Barlow Condensed, chips de metal, podio en cajas y tabla carrera a carrera."
-  }
+    "nota": "Colores de la Copa: naranja #F0641E de acento y azul marino #1b2440 sobre fondo cálido #f7f3ec, sacados de su escudo. Barlow Condensed en titulares. Desde el 23/09/2026 la Copa se ve en modo app (vistaApp)."
+  },
+  "calendario": [
+    {
+      "ronda": 1,
+      "prueba": "zkj"
+    },
+    {
+      "ronda": 2,
+      "prueba": "men-r"
+    },
+    {
+      "ronda": 3,
+      "prueba": "alc"
+    },
+    {
+      "ronda": 4,
+      "prueba": "men"
+    },
+    {
+      "ronda": 5,
+      "nombre": "KMO",
+      "fecha": null,
+      "nota": "Siglas de sus hojas; circuito y fecha por confirmar."
+    },
+    {
+      "ronda": 6,
+      "nombre": "MOR",
+      "fecha": null,
+      "nota": "Siglas de sus hojas; circuito y fecha por confirmar."
+    }
+  ]
 }

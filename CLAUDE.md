@@ -368,29 +368,43 @@ node scripts/prueba.mjs --alta "Nombre Apellido" --dorsal 12 --categoria Rookies
 
 Ver la clasificación sin tocar nada: `node scripts/prueba.mjs --ver`.
 
-### Lo que enseña la web
+### Lo que enseña la web: modo app (23/09/2026)
 
-- **General**: podio, filas con la etiqueta de categoría y el botón de
-  compartir, que dibuja una tarjeta 1080x1350 en estilo Pitbike World (no la
-  de Fast Toys) con el podio y los diez primeros.
-- **Pruebas**: fichas "R1 R2 R3 R4" para elegir la ronda (la última marcada),
-  una banda con la pole, el tiempo más rápido y quien más sumó, y **una sola
-  tabla** con cada piloto, su puesto en cada manga y los puntos de la ronda,
-  ordenada por esos puntos (tocar M1, M2 o Pts reordena). Rediseñado el
-  09/09/2026: antes cada manga era una lista de tarjetas y una ronda medía
-  cuatro pantallas de móvil. No lo devuelvas a listas por manga.
-- **Categorías**: un selector de dos mitades "Rookies · Master" arriba y
-  debajo solo la elegida (se recuerda en el navegador), con su podio de tres
-  avatares y sus fichas "Temporada · R1 · R2…". Antes iban apiladas y Master
-  quedaba debajo de los doce rookies (cambiado el 10/09/2026). Temporada es la tabla acumulada; una ronda es la misma tabla compacta
-  de Pruebas pero con **el puesto dentro de la categoría** en cada manga y los
-  puntos de la categoría (Daniel Martínez: 22 en la general de Menàrguens 2,
-  50 en Rookies). Sin pole ni tiempo más rápido, que son de la general. Si
-  alguien corrió la ronda sin puntuar en su categoría, se avisa en una línea.
-  Decidido el 09/09/2026; se descartó un filtro de categoría en Pruebas para
-  que cada pestaña cuente una sola verdad.
-- **Ficha del piloto**: puntos, puesto en la general y en su categoría,
-  victorias, poles y vueltas rápidas, y el detalle manga a manga.
+Jorge pidió "una estructura nueva, moderna, revolucionaria y fácil, pensada
+para app de móvil", y la Copa (todo campeonato de formato `carreras`) dejó de
+ser pestañas con tablas. Vive en `<main id="vistaApp">` y la rama de carreras
+del JS la pinta entera; la cabecera, la pizarra y los paneles del formato
+vueltas no se usan aquí.
+
+- **Barra fija arriba** con el escudo, el nombre y el **selector de categoría
+  General · Rookies · Master**, que manda en toda la app y se recuerda en el
+  navegador (`pw:<campeonato>:cat`).
+- **Clasificación**: tarjeta grande del líder (ventaja sobre el 2.º, 2.º y 3.º
+  debajo), la tarjeta **"Tu piloto"** si sigues a alguien (puesto y distancia al
+  de delante), y una lista donde cada piloto enseña **si sube o baja** respecto
+  a la ronda anterior (▲▼, calculado repitiendo la clasificación ronda a
+  ronda), su **forma** (barras con los puntos de las cuatro últimas rondas) y
+  la **distancia al líder**. Compartir sigue en la General.
+- **Rondas**: calendario deslizable con las **seis** rondas (`calendario` del
+  JSON; las que faltan salen como "Próxima" / "Pendiente"), y de la elegida
+  su pole, su tiempo más rápido y el resultado con las posiciones de cada
+  manga y los puntos. En Rookies o Master, las posiciones son las de dentro de
+  la categoría.
+- **Mi piloto**: "¿Quién eres?" con buscador; el elegido queda fijado
+  (`pw:<campeonato>:piloto`), destacado en todas las listas y con su ficha a un
+  toque.
+- **Ficha del piloto** en una **hoja que sube desde abajo** (`#apHoja`), con
+  la URL `#<id>` para que el botón atrás la cierre: puesto en la general y en
+  su categoría, victorias, podios, poles y vueltas rápidas, **gráfica de su
+  puesto tras cada ronda** y el detalle ronda a ronda.
+- La barra inferior pasa a Clasificación · Rondas · Mi piloto (los `data-vista`
+  siguen siendo general/semanas/premios). Los nombres, que la organización da
+  en mayúsculas, se enseñan en tipo título.
+
+Sustituye a la tabla carrera a carrera y al estilo "broadcast" de Karting
+League del 22/09, que se probaron y se retiraron. Los colores son los de la
+piel de la Copa; no hay oro, plata ni bronce: 1.º naranja, 2.º azul marino, 3.º
+crema con filo marino.
 
 ### Lo que dicen sus tablas oficiales (05/09/2026)
 
@@ -748,24 +762,9 @@ Reglas que salen de esa decisión:
   campeonato**: cada mejora tiene que llegar a todos a la vez. Añadir un
   campeonato sigue siendo rellenar su JSON. Ningún color va escrito a mano en
   el CSS salvo los chips blancos de los logos y las medallas.
-- **Estilo "broadcast" para la Copa Catalana** (Jorge, 22/09/2026: "más al
-  estilo de nuestro otro proyecto Karting League"). La piel declara
-  `estilo: "broadcast"` y va como clase `estilo-broadcast` en `<html>`: Barlow
-  Condensed en mayúsculas, **con los colores de la Copa** (fondo cálido
-  `#f7f3ec`, azul marino y naranja; el fondo oscuro de KL se probó y Jorge lo
-  descartó el 22/09/2026: "los colores se tienen que mantener"; y el 23/09
-  también fuera el oro/plata/bronce: 1.º naranja, 2.º azul marino, 3.º crema
-  con filo marino, cabecera de la tabla en marino y la banda del naranja al
-  marino, todo por variables en el bloque "La Copa conserva SUS colores"), esquinas de 6 a
-  10 px, chips oro/plata/bronce con degradado, podio en **tres cajas 2-1-3**
-  (`.caja-podio`) y la **tabla carrera a carrera** (`table.cac`,
-  `tablaCarreraACarrera()`): una columna por manga con la posición, punto
-  dorado de pole y verde de vuelta rápida sobre la manga 1, "·" si no la
-  disputó, PTS al final y leyenda debajo. En Categorías la misma tabla con las
-  posiciones de dentro de la categoría. La referencia visual está en
-  `karting-league-system/karting-league/output/tabla_general_k1.png` y
-  `docs/ESTETICA.md` de ese proyecto. Sigue siendo el mismo esqueleto: otro
-  campeonato de carreras sin `estilo` se ve con la piel neutra.
+- **La Copa (formato carreras) va en modo app** desde el 23/09/2026: ver
+  "Lo que enseña la web: modo app" en su sección. El estilo "broadcast" de
+  Karting League del 22/09 se retiró.
 - **Dirección «Escudo»**, elegida entre tres (`marca/propuestas/app/`):
   tarjetas redondeadas (20 px), sombras suaves, avatares circulares con
   iniciales —que son el sitio de las fotos cuando las haya— y el campeonato
