@@ -39,7 +39,10 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request)
+    // Sin la caché HTTP del navegador: GitHub Pages sirve con max-age=600 y,
+    // sin esto, el móvil enseñaba la versión anterior hasta diez minutos
+    // después de publicar (pasó con el aviso de instalar en iPhone, 24/09/2026).
+    fetch(e.request, { cache: 'no-cache' })
       .then((res) => {
         const copia = res.clone();
         caches.open(VERSION).then((c) => c.put(e.request, copia)).catch(() => {});
