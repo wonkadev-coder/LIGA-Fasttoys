@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" role="img" aria-label="Pitbike World">
+  <title>Pitbike World</title>
+  <!-- Símbolo de Pitbike World (24/09/2026), la C de las tres propuestas: una
+       rueda de tacos con un mundo dentro. Pit bike más World. Mismo rojo y
+       tinta que el logotipo. Lo dibujan igual scripts/icono-insignia.ps1 (iconos)
+       y el <symbol id="pwSimbolo"> de index.html: si cambia, cambian los tres. -->
+  <circle cx="60" cy="60" r="34" fill="none" stroke="#171A21" stroke-width="12"/>
+  <g fill="#171A21">
+    <rect x="55" y="13" width="10" height="9" rx="2"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(20 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(40 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(60 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(80 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(100 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(120 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(140 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(160 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(180 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(200 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(220 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(240 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(260 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(280 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(300 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(320 60 60)"/>
+    <rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(340 60 60)"/>
+  </g>
+  <circle cx="60" cy="60" r="24" fill="#E63A1E"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">
+    <ellipse cx="60" cy="60" rx="10" ry="24"/>
+    <path d="M37.5 60H82.5M40.7 48H79.3M40.7 72H79.3"/>
+  </g>
+</svg>

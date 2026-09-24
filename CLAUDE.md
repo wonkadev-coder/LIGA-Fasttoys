@@ -817,6 +817,17 @@ Reglas que salen de esa decisión:
 - **La portada es la lista de campeonatos.** Sin `?c=` en la URL se ve la
   portada; con `?c=<id>` se entra en uno. Cambiar de campeonato recarga, a
   propósito: son formatos que no comparten ni pantallas ni cálculo.
+  **Rehecha el 24/09/2026** (Jorge: "se ve sencilla y cutre"): el logotipo con
+  el símbolo, "Temporada 2026", un titular y las cifras de la temporada
+  (pilotos únicos, vueltas, mangas); una tarjeta por campeonato con la banda
+  de su color, el escudo entero, su última ronda o semana, sus tres primeros
+  y la próxima ronda; y **"Lo último"**, una línea por cosa que ha pasado
+  (ganador de la última ronda con pole y tiempo más rápido, líder de la copa,
+  quien más rodó la semana, quien está más cerca de un premio), cada una
+  enlazada a su pestaña. Todo sale de los datos: no hay texto que tocar a
+  mano. Detrás, una rueda de tacos gigante y apagada entra rodando al cargar.
+  De Fast Toys, tampoco aquí hay tiempos. La cabecera `#cabecera` no se usa
+  en la portada.
 - **Capa de acabado** (10/09/2026, "más calidad visual, no de estructura"):
   al final del `<style>` hay un bloque que manda sobre el resto y solo toca
   el acabado: sombra en capas más filo de 1 px (`--borde`, lo que define las
@@ -845,12 +856,29 @@ Reglas que salen de esa decisión:
   logotipo con la fuente incrustada, para usarlo fuera de la app. Archivo Black
   es la única excepción a Plus Jakarta Sans, y solo para el logotipo. La
   tarjeta de compartir lo dibuja en su pie con canvas.
-- **El icono de la PWA es el logotipo reducido**: la barra roja y PIT / BIKE
-  sobre el gris claro, sin WORLD ni rótulo, que en 48 px no se leen. Lo genera
-  `scripts/icono-logotipo.ps1` con System.Drawing y la fuente de
-  `marca/fuentes/ArchivoBlack-Regular.ttf` (licencia OFL). La corona anterior
-  sigue en `logos/pitbike-world.svg` y `scripts/icono.mjs`, pero **no hay que
-  ejecutar ese script**: pisaría los iconos.
+- **El símbolo es la rueda de tacos con un mundo dentro** (Jorge lo eligió el
+  24/09/2026 entre tres propuestas: la P de rueda, la placa de dorsal y esta).
+  Pit bike más World, en el rojo y la tinta del logotipo. Vive en tres sitios
+  con la misma geometría (lienzo de 120: aro r34 con trazo 12, 18 tacos de
+  10x9, mundo r24 con meridiano y dos paralelos): `logos/pitbike-world-simbolo.svg`,
+  el `<symbol id="pwSimbolo">` al principio del `<body>` (con los colores en
+  `--s-tinta`, `--s-rojo` y `--s-luz` para poder pintarlo en un solo tono) y
+  `dibujarSimbolo()` en canvas, que lo pone en el pie de la tarjeta de
+  compartir de la Copa en lugar de la barra roja. Si cambia, cambian los tres.
+  En la portada va delante de PIT / BIKE / WORLD, que ahí pierde la barra.
+- **El icono de la PWA es la insignia**: la rueda arriba y debajo PITBIKE, una
+  regla y WORLD espaciado, en Archivo Black, sobre el gris claro (`#F3F2F2`).
+  Jorge quería "la imagen y el texto fusionados" y eligió esta el 24/09/2026
+  entre tres (el nombre en el flanco del neumático, la rueda como O de WORLD
+  y esta). La genera `scripts/icono-insignia.ps1` con System.Drawing y la
+  fuente de `marca/fuentes/`, en dos juegos: `pitbike-world-{512,192,180}.png`
+  (el de siempre, algo más grande para llenar el cuadro del iPhone) y
+  `pitbike-world-enmascarable-512.png`, más pequeño para que Android pueda
+  recortarlo en círculo sin cortar letras (el `maskable` del manifiesto).
+  `scripts/icono-logotipo.ps1` (PIT / BIKE, del 10/09) y `scripts/icono.mjs`
+  (la corona) siguen en el repo, pero **no hay que ejecutarlos**: pisarían
+  los iconos. Quien ya tenga la app instalada ve el icono nuevo al quitarla y
+  volver a añadirla.
 
 El manual de marca de Fast Toys sigue en `marca/` y **sigue mandando sobre su
 material** (la tarjeta de compartir de esa liga, su PDF, sus logos), no sobre la

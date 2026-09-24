@@ -870,27 +870,137 @@
   .instalar .ico-ios{width:17px;height:17px;vertical-align:-3px;fill:none;stroke:#0a84ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   @keyframes instalarSube{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
   @media (prefers-reduced-motion:reduce){.instalar.flota{animation:none}}
+
+  /* ===== Portada nueva (24/09/2026) =================================================
+     Jorge: "la página de inicio se ve sencilla y cutre". La marca con el símbolo
+     y las cifras de la temporada, un campeonato por tarjeta con su banda, su
+     estado y sus tres primeros, y "Lo último" con lo que ha pasado en cada uno.
+     La rueda de tacos gigante del fondo entra rodando al cargar. */
+  :root{--pw-rojo:#E63A1E}
+  body.portada footer{display:none}
+  .pw-hero{position:relative;margin:0 -16px;padding:calc(24px + env(safe-area-inset-top)) 16px 2px;overflow:hidden}
+  .pw-rueda{position:absolute;width:340px;height:340px;right:-132px;top:-64px;pointer-events:none;
+    color:var(--texto);opacity:.055;--s-tinta:currentColor;--s-rojo:currentColor;--s-luz:var(--fondo);
+    animation:pwRueda 1.5s cubic-bezier(.16,.8,.24,1) both}
+  @keyframes pwRueda{from{transform:translateX(160px) rotate(200deg)}to{transform:none}}
+  .pw-logo{position:relative;display:flex;align-items:center;gap:12px}
+  .pw-logo-sim{width:60px;height:60px;flex:0 0 auto;animation:pwRueda 1.1s cubic-bezier(.16,.8,.24,1) both}
+  .pw-logo .wordmark{font-size:21px}
+  .pw-kicker{position:relative;display:flex;align-items:center;gap:8px;margin:30px 0 8px;font-size:11.5px;font-weight:800;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--pw-rojo)}
+  .pw-kicker::before{content:"";width:15px;height:10px;flex:0 0 auto;
+    background:repeating-conic-gradient(var(--texto) 0 25%, transparent 0 50%) 0 0/5px 5px}
+  .pw-titular{position:relative;margin:0;font-size:31px;line-height:1.06;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+  .pw-titular span{color:var(--tenue)}
+  .pw-cifras{position:relative;display:grid;margin:22px 0 4px;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea)}
+  .pw-cifras div{padding:12px 0 12px 12px;border-left:1px solid var(--linea);min-width:0}
+  .pw-cifras div:first-child{padding-left:0;border-left:0}
+  .pw-cifras b{display:block;font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .pw-cifras span{display:block;margin-top:2px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tenue)}
+  .pw-sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:28px 0 12px}
+  .pw-sec h2{margin:0;padding:0;border:0;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--texto)}
+  .pw-sec span{font-size:12px;font-weight:600;color:var(--tenue)}
+
+  /* Tarjeta de campeonato */
+  .portada{grid-template-columns:1fr;gap:14px}
+  @media (min-width:600px){.portada{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .pw-camp{display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:var(--sup);color:var(--texto);
+    text-decoration:none;box-shadow:var(--sombra-2), 0 0 0 1px var(--borde);transition:transform .2s;
+    animation:entra .4s cubic-bezier(.2,.7,.2,1) both}
+  .pw-camp:nth-child(2){animation-delay:.08s}
+  .pw-camp:hover{transform:translateY(-2px)}
+  .pw-camp:active{transform:scale(.99)}
+  .pw-camp-cab{position:relative;display:flex;align-items:center;gap:14px;padding:16px;color:var(--ct);overflow:hidden;
+    background:linear-gradient(150deg, var(--c), color-mix(in srgb, var(--c) 74%, #171a21))}
+  .pw-camp-cab::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-conic-gradient(rgba(255,255,255,.17) 0 25%, transparent 0 50%) 0 0/16px 16px;
+    -webkit-mask-image:linear-gradient(100deg, transparent 50%, #000 92%);mask-image:linear-gradient(100deg, transparent 50%, #000 92%)}
+  .pw-camp-cab>*{position:relative}
+  .pw-camp-cab .escudo{width:62px;height:62px;border-radius:18px;box-shadow:0 0 0 3px rgba(255,255,255,.3), 0 8px 18px rgba(0,0,0,.18)}
+  .pw-camp-tit{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .pw-camp-tit b{font-size:18px;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+  .pw-camp-tit span{font-size:12.5px;font-weight:600;opacity:.9}
+  .pw-camp .flecha{width:22px;height:22px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .pw-camp-estado{display:flex;align-items:center;gap:9px;padding:14px 18px 4px;font-size:12px;font-weight:700;color:var(--tenue)}
+  .pw-camp-estado i{width:7px;height:7px;flex:0 0 auto;border-radius:50%;background:var(--c);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent)}
+  .pw-top{list-style:none;margin:0;padding:6px 10px 2px;display:flex;flex-direction:column;gap:2px}
+  .pw-top li{display:grid;grid-template-columns:18px 34px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px;border-radius:14px}
+  .pw-top li:first-child{background:color-mix(in srgb, var(--c) 9%, var(--sup))}
+  .pw-top .pos{font-style:normal;font-weight:800;font-size:15px;text-align:center;color:var(--tenue)}
+  .pw-top li:first-child .pos{color:var(--c)}
+  .pw-top .avatar{width:34px;height:34px;font-size:11px}
+  .pw-top li:first-child .avatar{background:var(--c);color:var(--ct)}
+  .pw-top b{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pw-top em{font-style:normal;font-weight:800;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pw-top em small{margin-left:4px;font-size:11px;font-weight:700;color:var(--tenue)}
+  .pw-camp-pie{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 18px 0;padding:13px 0 15px;
+    border-top:1px solid var(--linea);font-size:12.5px;font-weight:600;color:var(--tenue)}
+  .pw-camp-pie strong{flex:0 0 auto;font-weight:800;color:var(--c)}
+
+  /* Lo último */
+  .pw-feed{background:var(--sup);border-radius:22px;overflow:hidden;box-shadow:var(--sombra-2), 0 0 0 1px var(--borde)}
+  .pw-nota{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px 16px;color:inherit;text-decoration:none}
+  .pw-nota+.pw-nota{border-top:1px solid var(--linea)}
+  .pw-nota:active{background:var(--fondo)}
+  .pw-nota .escudo{width:42px;height:42px;border-radius:13px;font-size:12px;box-shadow:0 0 0 1px var(--borde)}
+  .pw-nota .txt{min-width:0}
+  .pw-nota em{display:block;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+  .pw-nota b{display:block;margin-top:1px;font-size:14.5px;line-height:1.3;letter-spacing:-.01em}
+  .pw-nota span{display:block;margin-top:3px;font-size:12.5px;font-weight:600;color:var(--tenue);line-height:1.4}
+  .pw-nota time{font-size:11.5px;font-weight:700;color:var(--tenue);white-space:nowrap;padding-top:1px}
+  .pw-pie{display:flex;align-items:center;justify-content:center;gap:8px;margin:26px 0 0;font-size:12px;font-weight:600;color:var(--tenue)}
+  .pw-pie svg{width:18px;height:18px}
+  @media (prefers-reduced-motion:reduce){.pw-rueda,.pw-logo-sim,.pw-camp{animation:none}}
+
+  /* Portada, segunda versión (24/09/2026): cada campeonato con lo suyo */
+  .pw-titular{font-size:30px}
+  .pw-lema{position:relative;margin:8px 0 6px;max-width:34ch;font-size:14.5px;line-height:1.45;color:var(--tenue);font-weight:600}
+  .portada{margin-top:22px}
+  .pw-camp{animation:entra .4s cubic-bezier(.2,.7,.2,1) both}
+  .pw-camp:hover,.pw-camp:active{transform:none}
+  .pw-camp a{color:inherit;text-decoration:none}
+  .pw-camp-cab:active{filter:brightness(.96)}
+  .pw-camp-cifras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 18px;border-bottom:1px solid var(--linea)}
+  .pw-camp-cifras div{padding:12px 0 12px 12px;border-left:1px solid var(--linea);min-width:0}
+  .pw-camp-cifras div:first-child{padding-left:0;border-left:0}
+  .pw-camp-cifras b{display:block;font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .pw-camp-cifras b i{font-style:normal;font-size:14px;color:var(--tenue);font-weight:700}
+  .pw-camp-cifras span{display:block;margin-top:2px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tenue)}
+  a.pw-top{display:block;padding:8px 10px 0}
+  a.pw-top ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  a.pw-top ol li{display:grid;grid-template-columns:18px 34px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px;border-radius:14px}
+  .pw-camp-rot{margin:14px 18px 2px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue)}
+  .pw-notas{margin:0 18px}
+  .pw-camp .pw-nota{grid-template-columns:minmax(0,1fr) auto;padding:10px 0;gap:10px}
+  .pw-camp .pw-nota em{color:var(--c)}
+  .pw-camp .pw-nota:active{background:none;opacity:.7}
+  .pw-camp-pie{margin-top:4px}
+  .pw-camp a.pw-camp-cab{color:var(--ct)}
 </style>
 </head>
 <body>
+
+<!-- Símbolo de Pitbike World (24/09/2026): rueda de tacos con un mundo dentro.
+     Igual que logos/pitbike-world-simbolo.svg y la rueda de los iconos (scripts/icono-insignia.ps1).
+     Los colores van en variables (--s-tinta, --s-rojo, --s-luz) para poder
+     usarlo en un solo tono, como la rueda de fondo de la portada. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="pwSimbolo" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="34" fill="none" stroke-width="12" style="stroke:var(--s-tinta,#171A21)"/>
+    <g style="fill:var(--s-tinta,#171A21)"><rect x="55" y="13" width="10" height="9" rx="2"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(20 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(40 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(60 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(80 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(100 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(120 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(140 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(160 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(180 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(200 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(220 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(240 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(260 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(280 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(300 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(320 60 60)"/><rect x="55" y="13" width="10" height="9" rx="2" transform="rotate(340 60 60)"/></g>
+    <circle cx="60" cy="60" r="24" style="fill:var(--s-rojo,#E63A1E)"/>
+    <g fill="none" stroke-width="3" stroke-linecap="round" style="stroke:var(--s-luz,#FFFFFF)">
+      <ellipse cx="60" cy="60" rx="10" ry="24"/><path d="M37.5 60H82.5M40.7 48H79.3M40.7 72H79.3"/>
+    </g>
+  </symbol>
+</svg>
 
 <div id="aviso" class="aviso oculto">Datos de ejemplo. Los pilotos y las vueltas que se muestran son inventados.</div>
 
 <div class="contenedor">
 
   <header id="cabecera">
-    <div class="marca" id="marcaPW">
-      <!-- Logotipo de Pitbike World (10/09/2026), dibujado con HTML para que
-           escale nítido. El fichero equivalente es logos/pitbike-world-wordmark.svg. -->
-      <div class="wordmark" role="img" aria-label="Pitbike World · Campeonatos · ES">
-        <span class="wm-barra"></span>
-        <span class="wm-txt">
-          <b>PIT</b><b>BIKE</b>
-          <span class="wm-linea"></span>
-          <span class="wm-pie"><em>WORLD</em><small>CAMPEONATOS · ES</small></span>
-        </span>
-      </div>
-    </div>
     <button class="volverPortada oculto" id="btnPortada" type="button" aria-label="Volver a los campeonatos">
       <svg viewBox="0 0 24 24"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
     </button>
@@ -901,13 +1011,29 @@
     </div>
   </header>
 
-  <!-- Portada: un escudo por campeonato. -->
+  <!-- Portada (24/09/2026): la marca con sus cifras, un campeonato por
+       tarjeta con sus tres primeros, y lo último que ha pasado en cada uno. -->
   <main id="vistaPortada" class="oculto">
-    <div class="portada-titulo">
-      <h2>Campeonatos</h2>
-      <p>Elige el tuyo para ver quién va ganando.</p>
-    </div>
+    <section class="pw-hero">
+      <svg class="pw-rueda" aria-hidden="true" focusable="false"><use href="#pwSimbolo"/></svg>
+      <div class="pw-logo" role="img" aria-label="Pitbike World · Campeonatos · ES">
+        <svg class="pw-logo-sim" aria-hidden="true" focusable="false"><use href="#pwSimbolo"/></svg>
+        <div class="wordmark">
+          <span class="wm-txt">
+            <b>PIT</b><b>BIKE</b>
+            <span class="wm-linea"></span>
+            <span class="wm-pie"><em>WORLD</em><small>CAMPEONATOS · ES</small></span>
+          </span>
+        </div>
+      </div>
+      <p class="pw-kicker" id="pwTemporada">Temporada 2026</p>
+      <h1 class="pw-titular">Elige tu campeonato</h1>
+      <p class="pw-lema">Cada uno va a su aire: su formato, sus reglas y su clasificación.</p>
+    </section>
+
     <div class="portada" id="portada"></div>
+
+    <p class="pw-pie" id="pwPie"></p>
   </main>
 
   <main id="vistaRanking">
@@ -1178,29 +1304,112 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
     $('vistaRanking').classList.add('oculto');
     $('vistaPiloto').classList.add('oculto');
     $('navbar').classList.add('oculto');
-    $('cabecera').classList.add('soloMarca');
+    $('cabecera').classList.add('oculto');
     document.body.classList.add('portada');
     document.querySelector('.contenedor').style.paddingBottom = '40px';
 
+    // Los nombres de la Copa vienen en mayúsculas; aquí se leen en tipo título.
+    const MINUS = new Set(['de', 'del', 'la', 'las', 'los', 'i', 'y', 'e']);
+    const enTitulo = (s) => {
+      const t = String(s ?? '');
+      if (t !== t.toUpperCase()) return t;
+      return t.toLowerCase().split(' ').map((w, i) => (i && MINUS.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
+    };
+    const rango = (a, b) => {
+      const [, ma, da] = a.split('-'); const [, mb, db] = b.split('-');
+      return ma === mb ? `${Number(da)}–${Number(db)} ${MESES[Number(mb) - 1]}` : `${diaMes(a)} – ${diaMes(b)}`;
+    };
+    const esCarreras = (c) => c.formato === 'carreras';
+    const ultimaPrueba = (c) => [...(c.pruebas ?? [])].sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)))[0];
+    const ultimaSemana = (c) => [...(c.semanas ?? [])].sort((a, b) => b.semana.localeCompare(a.semana))[0];
+
+    // Jorge, 24/09/2026: nada de sumar datos entre campeonatos, "cada cosa es
+    // diferente e independiente". Cada tarjeta lleva sus cifras y lo suyo.
+    // toLocaleString no pone el punto en cuatro cifras (3556); aquí se quiere.
+    const miles = (v) => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const anyo = (LIGA.actualizado ?? '').slice(0, 4);
+    if (anyo) $('pwTemporada').textContent = `Temporada ${anyo}`;
+
+    const cifrasDe = (c) => {
+      if (esCarreras(c)) {
+        const hechas = (c.pruebas ?? []).length;
+        const total = (c.calendario ?? []).length || hechas;
+        const mangas = (c.pruebas ?? []).reduce((s, p) => s + (p.numMangas ?? p.mangas?.length ?? 0), 0);
+        return [[miles((c.general ?? []).length), 'pilotos'], [`${hechas}<i>/${total}</i>`, 'rondas'], [miles(mangas), 'mangas']];
+      }
+      return [[miles((c.pilotos ?? []).length), 'pilotos'], [miles(c.resumen?.totalVueltas ?? 0), 'vueltas'], [miles((c.semanas ?? []).length), 'semanas']];
+    };
+
+    const notasDe = (c) => {
+      const ir = (hash) => `?c=${c.id}#${hash}`;
+      const notas = [];
+      if (esCarreras(c)) {
+        const u = ultimaPrueba(c);
+        if (u?.ganador) {
+          const pole = u.poles?.find((p) => p.categoria === 'General');
+          const rap = u.vueltaRapida;
+          const datos = [
+            pole ? `Pole: ${enTitulo(pole.nombre)}${pole.tiempo ? ' · ' + pole.tiempo : ''}` : null,
+            rap ? `Más rápido: ${enTitulo(rap.nombre)}${rap.tiempo ? ' · ' + rap.tiempo : ''}` : null,
+          ].filter(Boolean).join(' — ');
+          notas.push({ cuando: diaMes(u.fecha), etq: 'Resultado', href: ir('semanas'),
+            tit: `${enTitulo(u.ganador.nombre)} gana la ${u.nombre}`, sub: datos || `${n(u.ganador.puntos)} puntos en la ronda` });
+        }
+        const [l1, l2] = c.general ?? [];
+        if (l1 && l2) notas.push({ cuando: '', etq: 'General', href: ir('general'),
+          tit: `${n(l1.puntos - l2.puntos)} puntos de ventaja para ${enTitulo(l1.nombre)}`,
+          sub: `${n(l1.puntos)} puntos; le sigue ${enTitulo(l2.nombre)} con ${n(l2.puntos)}` });
+      } else {
+        const s = ultimaSemana(c);
+        const t = s?.pilotos?.[0];
+        if (t) notas.push({ cuando: rango(s.desde, s.hasta), etq: `Semana ${s.numero}`, href: ir('semanas'),
+          tit: `${t.nombre}, quien más rodó la semana`,
+          sub: `${n(t.vueltas)} vueltas · ${n(s.vueltas)} entre ${n(s.pilotos.length)} pilotos` });
+        const cerca = [...(c.pilotos ?? [])].filter((p) => p.siguiente).sort((a, b) => a.siguiente.faltan - b.siguiente.faltan)[0];
+        if (cerca) notas.push({ cuando: '', etq: 'Premios', href: ir('premios'),
+          tit: `${cerca.nombre}, a ${n(cerca.siguiente.faltan)} vueltas de un premio`,
+          sub: `${cerca.siguiente.premio} · se entrega a las ${n(cerca.siguiente.vueltas)}` });
+      }
+      return notas;
+    };
+
+    // --- Un campeonato por tarjeta: banda, cifras, tres primeros, lo último y lo próximo ---
+    const FLECHA = '<svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
     $('portada').innerHTML = CAMPEONATOS.map((c) => {
-      const lider = c.formato === 'carreras' ? c.general?.[0] : c.pilotos?.[0];
-      const cifra = !lider ? null
-        : c.formato === 'carreras' ? `${n(lider.puntos)} pts` : `${n(lider.vueltasTotales)} vueltas`;
-      return `<button class="tarjeta" type="button" data-camp="${c.id}">
-          <div class="banda" style="background:${c.color}">
-            ${escudo(c).replace('class="escudo', 'class="escudo')}
-          </div>
-          <div class="cuerpo">
-            <div class="nom">${c.nombre}</div>
-            <div class="det">${c.formato === 'carreras' ? 'Carreras y puntos' : 'Vueltas'}${c.sede ? ' · ' + c.sede : ''}</div>
-            ${lider ? `<div class="lider">${avatar(lider)}<div class="txt"><b>${lider.nombre}</b><span class="num">${cifra}</span></div></div>` : ''}
-          </div>
-        </button>`;
+      const carreras = esCarreras(c);
+      const lista = (carreras ? c.general : c.pilotos) ?? [];
+      const top = lista.slice(0, 3).map((p, i) => `<li>
+          <i class="pos">${i + 1}</i>${avatar({ ...p, nombre: enTitulo(p.nombre) })}
+          <b>${enTitulo(p.nombre)}</b>
+          <em>${carreras ? n(p.puntos) : n(p.vueltasTotales)}<small>${carreras ? 'pts' : 'vueltas'}</small></em>
+        </li>`).join('');
+      let pie = 'Premios por vueltas: 500, 750 y 999';
+      if (carreras) {
+        const hechas = new Set((c.pruebas ?? []).map((p) => p.id));
+        const prox = (c.calendario ?? []).find((r) => !r.prueba || !hechas.has(r.prueba));
+        pie = prox ? `Próxima: ronda ${prox.ronda}${prox.nombre ? ' · ' + prox.nombre : ''}${prox.fecha ? ' · ' + diaMes(prox.fecha) : ''}` : 'Temporada terminada';
+      } else if (c.hitos?.length) {
+        pie = `Premios: ${c.hitos.map((x) => n(x.vueltas)).join(', ').replace(/, ([^,]*)$/, ' y $1')} vueltas`;
+      }
+      const notas = notasDe(c).map((x) => `<a class="pw-nota" href="${x.href}">
+          <div class="txt"><em>${x.etq}</em><b>${x.tit}</b><span>${x.sub}</span></div>
+          ${x.cuando ? `<time>${x.cuando}</time>` : ''}
+        </a>`).join('');
+      return `<article class="pw-camp" style="--c:${c.color};--ct:${c.colorTexto ?? '#fff'}">
+          <a class="pw-camp-cab" href="?c=${c.id}">
+            ${escudo(c)}
+            <div class="pw-camp-tit"><b>${c.nombre}</b><span>${carreras ? 'Carreras y puntos' : 'Liga de vueltas'}${c.sede ? ' · ' + c.sede : ''}</span></div>
+            ${FLECHA}
+          </a>
+          <div class="pw-camp-cifras num">${cifrasDe(c).map(([v, et]) => `<div><b>${v}</b><span>${et}</span></div>`).join('')}</div>
+          <a class="pw-top" href="?c=${c.id}#general"><ol>${top}</ol></a>
+          ${notas ? `<div class="pw-camp-rot">Lo último</div><div class="pw-notas">${notas}</div>` : ''}
+          <a class="pw-camp-pie" href="?c=${c.id}"><span>${pie}</span><strong>Ver clasificación</strong></a>
+        </article>`;
     }).join('');
-    $('portada').addEventListener('click', (e) => {
-      const t = e.target.closest('.tarjeta');
-      if (t) location.href = `?c=${t.dataset.camp}`;
-    });
+
+    $('pwPie').innerHTML = `<svg aria-hidden="true" focusable="false"><use href="#pwSimbolo"/></svg>` +
+      (LIGA.actualizado ? `Datos del ${diaMes(LIGA.actualizado)} · ` : '') + 'Pitbike World';
     document.title = LIGA.app ?? 'Pitbike World';
     registrarSW();
     return;
@@ -1233,7 +1442,6 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
   if (CAMP.datosDeEjemplo) $('aviso').classList.remove('oculto');
 
   // --- Cabecera: dentro de un campeonato, su escudo y la vuelta a la portada ---
-  $('marcaPW').classList.add('oculto');
   $('cabecera').classList.add('hero');
   $('btnPortada').classList.remove('oculto');
   $('btnPortada').addEventListener('click', () => { location.href = location.pathname; });
@@ -1800,9 +2008,9 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
       // --- Pie: el logotipo de Pitbike World ---
       const FB = '"Archivo Black", "Arial Black", Impact, sans-serif';
       try { await document.fonts.load(`400 26px ${FB}`); } catch { /* con la de reserva */ }
-      const bx0 = W / 2 - 128, by0 = H - 92;
+      const bx0 = W / 2 - 128 + 38, by0 = H - 92;
       c.textAlign = 'left';
-      c.fillStyle = '#E63A1E'; c.fillRect(bx0, by0, 6, 62);
+      dibujarSimbolo(c, bx0 - 76, by0, 62, TEXTO);
       c.fillStyle = TEXTO; c.font = `400 26px ${FB}`; espaciado(-0.5);
       c.fillText('PIT BIKE', bx0 + 18, by0 + 24);
       c.fillRect(bx0 + 18, by0 + 33, 236, 2);
@@ -1813,6 +2021,30 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
       espaciado(0);
 
       return new Promise((ok) => lienzo.toBlob(ok, 'image/png'));
+    }
+
+    // El símbolo de Pitbike World en canvas: la misma geometría que #pwSimbolo.
+    function dibujarSimbolo(c, x, y, lado, tinta) {
+      c.save();
+      c.translate(x + lado / 2, y + lado / 2);
+      c.scale(lado / 120, lado / 120);
+      c.strokeStyle = tinta; c.fillStyle = tinta; c.lineWidth = 12;
+      c.beginPath(); c.arc(0, 0, 34, 0, Math.PI * 2); c.stroke();
+      for (let i = 0; i < 18; i++) {
+        c.save(); c.rotate(i * Math.PI / 9);
+        c.beginPath(); c.roundRect(-5, -47, 10, 9, 2); c.fill();
+        c.restore();
+      }
+      c.fillStyle = '#E63A1E';
+      c.beginPath(); c.arc(0, 0, 24, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = '#FFFFFF'; c.lineWidth = 3; c.lineCap = 'round';
+      c.beginPath(); c.ellipse(0, 0, 10, 24, 0, 0, Math.PI * 2); c.stroke();
+      c.beginPath();
+      c.moveTo(-22.5, 0); c.lineTo(22.5, 0);
+      c.moveTo(-19.3, -12); c.lineTo(19.3, -12);
+      c.moveTo(-19.3, 12); c.lineTo(19.3, 12);
+      c.stroke();
+      c.restore();
     }
 
     async function compartirClasificacion(boton) {
