@@ -666,6 +666,29 @@ Por orden, y **solo cuando haga falta**:
 3. ~~Pipeline de ingesta desde CronoLaps~~ — hecho. Queda pendiente decidir si se
    automatiza como tarea nocturna; a una jornada por semana, ejecutarlo a mano basta.
 4. **Backend**: deliberadamente aplazado hasta que el flujo manual resulte gravoso.
+5. **Usuarios enlazados a su piloto y red social — decidido, NO empezado.**
+   Hablado con Jorge el 24/09/2026; pidió dejarlo guardado y no aplicarlo
+   todavía. **No lo empieces sin que lo pida.** Lo acordado:
+   - **Quién aprueba** que un usuario es un piloto: **Jorge**, a mano. Nada de
+     reclamar un piloto sin aprobación (el usuario lo pide y Jorge acepta).
+   - **Las organizaciones (Fast Toys, Copa Catalana) quieren** que sus pilotos
+     lo tengan.
+   - **Jorge acepta depender de un servicio externo** (tipo Supabase o
+     Firebase: cuentas, base de datos, almacén de fotos). Es el fin del "sin
+     backend" y la web debe seguir sin build: el servicio se llama desde el
+     navegador.
+   - **Orden propuesto**: (1) usuarios con piloto verificado, **foto propia**
+     (resuelve lo de los carteles, ver "Fotos de los pilotos") y **avisos al
+     móvil** ("te faltan 20 para el PMT", "te han adelantado", "ya están los
+     resultados"); (2) **muro automático** con publicaciones que genera la
+     app (premios alcanzados, poles, resumen de la semana) y reacciones o
+     comentarios; (3) **publicaciones propias** de los pilotos, con
+     moderación, denuncia y bloqueo.
+   - **Obligatorio desde el diseño**: política de privacidad y consentimiento,
+     y **permiso de los padres para menores de 14** (hay categoría Alevín
+     90). Alguien tiene que moderar.
+   - La identidad ya es global (`datos/pilotos.json`): un usuario enlaza con
+     un `id` de piloto y ve todos sus campeonatos juntos.
 
 ## Quién está en la liga
 
