@@ -857,6 +857,19 @@
   .ap-rxr .tanda .c small{font-size:11px;color:var(--tenue);font-weight:600}
   .ap-rxr .tanda b{color:var(--camp)}
   .ap-rxr .tanda .acu{text-align:right;font-family:var(--tit);font-weight:700;color:var(--tenue)}
+
+  /* Aviso de instalar, flotante sobre la barra inferior (24/09/2026) */
+  .instalar.flota{position:fixed;left:12px;right:12px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:45;
+    margin:0 auto;max-width:616px;box-shadow:0 16px 40px rgba(0,0,0,.22), 0 0 0 1px var(--linea);animation:instalarSube .35s cubic-bezier(.2,.8,.2,1)}
+  body.portada .instalar.flota{bottom:calc(16px + env(safe-area-inset-bottom))}
+  .instalar.flota{flex-wrap:nowrap;align-items:flex-start;padding:14px 46px 14px 14px}
+  .instalar.flota .ico{width:42px;height:42px;border-radius:12px}
+  .instalar.flota .acc{align-self:center}
+  .instalar.flota .cerrar{position:absolute;top:8px;right:8px}
+  .instalar.ios .txt span{font-size:13px;color:var(--texto)}
+  .instalar .ico-ios{width:17px;height:17px;vertical-align:-3px;fill:none;stroke:#0a84ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes instalarSube{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+  @media (prefers-reduced-motion:reduce){.instalar.flota{animation:none}}
 </style>
 </head>
 <body>
@@ -1101,10 +1114,27 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
   };
 
   // --- Instalar como app -----------------------------------------------------
-  // Dentro de la app instalada no se enseña; si se cerró con la X, tampoco
-  // durante un mes. Android/Chrome avisa con beforeinstallprompt y deja abrir
-  // la instalación desde el botón; iPhone/Safari no, así que se explican los
-  // dos toques. Sin Safari ni Chrome (Firefox, etc.) no se enseña nada.
+  // Aviso flotante sobre la barra inferior (antes iba al final de la página y
+  // en iPhone nadie lo veía). Dentro de la app instalada no sale; con la X se
+  // calla un mes.
+  //   - Android/Chrome: el navegador avisa con beforeinstallprompt y el botón
+  //     abre la instalación.
+  //   - iPhone: Apple no deja instalar desde un botón, así que se explican los
+  //     pasos según el navegador. Antes solo salía en Safari y la gente llega
+  //     desde WhatsApp o Instagram (Jorge, 24/09/2026: "en iPhone no me dice
+  //     ningún mensaje").
+  const COMPARTIR_IOS = '<svg class="ico-ios" viewBox="0 0 24 24" aria-label="Compartir"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+  function textoInstalarIOS(ua) {
+    const v = /OS (\d+)_(\d+)/.exec(ua);
+    const version = v ? Number(v[1]) + Number(v[2]) / 100 : 99;
+    const enApp = /FBAN|FBAV|Instagram|WhatsApp|Line\/|TikTok|musical_ly|Twitter|GSA\//.test(ua);
+    const otro = /CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+    const pasos = `toca ${COMPARTIR_IOS} <b>Compartir</b> y luego <b>Añadir a pantalla de inicio</b>.`;
+    if (enApp) return 'Estás dentro de otra app. Toca <b>···</b> y elige <b>Abrir en Safari</b>; allí ' + pasos;
+    if (otro && version < 16.4) return 'Ábrela en <b>Safari</b> y ' + pasos;
+    if (otro) return 'Arriba a la derecha, ' + pasos;
+    return 'Abajo, ' + pasos + ' Si no aparece, ábrela antes en Safari.';
+  }
   (() => {
     const caja = $('instalar');
     if (!caja) return;
@@ -1114,17 +1144,16 @@ const LIGA = {"app":"Pitbike World","actualizado":"2026-09-21","campeonatos":[{"
     if (instalada || callada) return;
     const ua = navigator.userAgent;
     const esIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const esSafari = esIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+    caja.classList.add('flota');
     const cerrar = () => {
       caja.classList.add('oculto');
       try { localStorage.setItem('pw:instalar:no', String(Date.now() + 30 * 864e5)); } catch { /* nada */ }
     };
     $('btnInstalarNo').addEventListener('click', cerrar);
     if (esIOS) {
-      if (!esSafari) return; // en Chrome de iPhone no se puede instalar: no se enseña
       caja.classList.add('ios');
-      $('instalarTexto').innerHTML = 'En Safari: toca <b>Compartir</b> (el cuadrado con la flecha) y luego <b>Añadir a pantalla de inicio</b>.';
-      caja.classList.remove('oculto');
+      $('instalarTexto').innerHTML = textoInstalarIOS(ua);
+      setTimeout(() => caja.classList.remove('oculto'), 1200);
       return;
     }
     let evento = null;

@@ -500,11 +500,15 @@ mano).
 
 Pitbike World **es una PWA**: se instala desde el navegador en Android y en
 iPhone, se abre a pantalla completa con su icono y se actualiza sola. Desde el
-22/09/2026 la web lo dice con una tarjeta `#instalar` sobre el pie: en
+22/09/2026 la web lo dice con un aviso `#instalar`, **flotante sobre la barra
+inferior** desde el 24/09 (al final de la página nadie lo veía): en
 Android/Chrome escucha `beforeinstallprompt` y el botón abre la instalación;
-en iPhone/Safari, que no lo permite, explica los dos toques (Compartir → Añadir
-a pantalla de inicio); dentro de la app instalada no sale, y la X la calla un
-mes (`localStorage`). Jorge pidió ese día "una aplicación descargable para
+en **cualquier navegador de iPhone** explica los pasos según dónde esté
+(`textoInstalarIOS()`): Safari (Compartir → Añadir a pantalla de inicio),
+Chrome o Firefox desde iOS 16.4 (el mismo menú, arriba a la derecha), y
+dentro de WhatsApp, Instagram y compañía, abrirla antes en Safari. Hasta el
+24/09 solo salía en Safari y Jorge no veía nada en su iPhone. Dentro de la app
+instalada no sale, y la X la calla un mes (`localStorage`). Jorge pidió ese día "una aplicación descargable para
 Android y iPhone".
 
 **Tiendas (Google Play, App Store): no hechas, y no dependen del código.**
