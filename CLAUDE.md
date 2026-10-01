@@ -66,7 +66,7 @@ Fuente: reglamento manuscrito de la organización, transcrito a
 
 - Liga de **conteo de vueltas** disputada exclusivamente en el **circuito DR7**.
 - Arranque de la liga: **sábado 8 de agosto de 2026**. **Eventos semanales.**
-- Escala actual: 24 inscritos.
+- Escala actual: 72 inscritos (tabla oficial del 01/10/2026).
 
 ### Categorías admitidas
 
@@ -741,6 +741,39 @@ en la tabla oficial. Es deliberado.
   por apodo (SH = Sergio Higueras, AM14 = Adolfo Mena, POLLITO = Vanessa
   Rodríguez, CONA = Pedro López, David11 = Jhonatan Villa Cañas…). La segunda
   "Alba" de CronoLaps (socio 87211, 56 vueltas) es Ariadna Septiem.
+
+### Lo que dijo la tabla oficial del 01/10/2026
+
+72 nombres, 5.002 vueltas, con Navarrete en 520: **primer premio de la liga**
+(el juego de neumáticos PMT, el 27/09). Cuadra **72 de 72** y al total,
+alineada como la anterior (descarga de toda la temporada con la liga
+abierta, comparación y recorte). Lo que hubo que resolver a mano, mirando
+las tandas por fecha:
+
+- **Jhonatan Villa Cañas es `segurajonas495`** (47 el 05/09 + 96 el 12/09 =
+  143), no David11, que se casó el 22/09 solo porque también tenía 96. David11
+  sale de la lista.
+- **Anderson Rendón es `PIKY`** (47 + 39 = 86). Su tanda a mano de 38 se
+  borra: el misterio del 22/09 queda resuelto.
+- **Arcos vuelve a 180**: la tabla le devuelve las 82 del 05/09 que antes le
+  dejaba en 72.
+- **Irene Sandini** es "Irene Sandín" (socio 79289) y rueda en la categoría
+  27, fuera de las seis, como Elías y Javier Cobos: está en la lista a mano.
+  La tabla solo le cuenta las 79 del 27/09; el 20/09 (62) va a 0 con la cifra
+  del cronómetro en `cronolaps`.
+- **Christian Ledesma** se escribe ahora con h; casar por nombre fallaba y lo
+  emparejaba con David11 por las 96. Forzado a su transpondedor.
+- **Empates por número de vueltas** resueltos por quién es nuevo: José
+  Valenciano es JOSITO (no Daniel Muñoz, que también tiene 100), León Barba es
+  LEO (José Carlos León ya tenía 26 el 22/09 y no salía), Rafael Cabezas es
+  NANO (y no Lucca 80, ambos con 41), Marcos Granero es GRANERO y Roberto
+  Estebaranz es ROBERT (ambos 48), Alberto Mancheño es HORMI. Los otros
+  nuevos casan por nombre o por vueltas sin duda: Sergio Barón, Pedro
+  Peñuelo, Ismael Martínez, Sergio Monzón, Ángel Escoriza, Alejandro Ocaña,
+  Alvin Ramírez, Juan Martín Vallejo y Jacobo Martínez.
+
+Desde ese día la pestaña Premios dice **quién ya tiene cada premio** y "Lo
+último" de la portada cuenta el premio conseguido más reciente.
 
 ### Nombres reales, como la tabla oficial
 

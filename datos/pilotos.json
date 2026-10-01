@@ -295,7 +295,8 @@
       "nombre": "SERGIO MONZO",
       "externos": {
         "cronolaps": "93517"
-      }
+      },
+      "nombreReal": "Sergio Monzón"
     },
     {
       "id": "alejandro-rodriguez",
@@ -346,14 +347,6 @@
       "externos": {}
     },
     {
-      "id": "david11",
-      "nombre": "David11",
-      "externos": {
-        "cronolaps": "98510"
-      },
-      "nombreReal": "Jhonatan Villa Cañas"
-    },
-    {
       "id": "dario-fernandez",
       "nombre": "DARIO FERNANDEZ",
       "externos": {
@@ -399,7 +392,7 @@
       "externos": {
         "cronolaps": "98712"
       },
-      "nombreReal": "Cristian Ledesma"
+      "nombreReal": "Christian Ledesma"
     },
     {
       "id": "asaco",
@@ -593,11 +586,140 @@
       "nota": "Comparte el transpondedor \"Jose Alcañiz\" (socio 98511) con José Alcañiz López. Sus tandas se meten a mano según la tabla oficial."
     },
     {
-      "id": "anderson-rendon",
-      "nombre": "Anderson Rendón",
-      "nombreReal": "Anderson Rendón",
-      "externos": {},
-      "nota": "No hay transpondedor que lo explique en CronoLaps. Cifra de la tabla oficial del 22/09/2026, metida a mano."
+      "id": "segurajonas495",
+      "nombre": "segurajonas495",
+      "externos": {
+        "cronolaps": "98710"
+      },
+      "nombreReal": "Jhonatan Villa Cañas"
+    },
+    {
+      "id": "piky",
+      "nombre": "PIKY",
+      "externos": {
+        "cronolaps": "98714"
+      },
+      "nombreReal": "Anderson Rendón"
+    },
+    {
+      "id": "josito",
+      "nombre": "JOSITO",
+      "externos": {
+        "cronolaps": "99338"
+      },
+      "nombreReal": "José Valenciano"
+    },
+    {
+      "id": "pincho",
+      "nombre": "PINCHO",
+      "externos": {
+        "cronolaps": "99340"
+      },
+      "nombreReal": "Jacobo Martínez"
+    },
+    {
+      "id": "baron",
+      "nombre": "BARÓN",
+      "externos": {
+        "cronolaps": "99348"
+      },
+      "nombreReal": "Sergio Barón"
+    },
+    {
+      "id": "pedro",
+      "nombre": "PEDRO",
+      "externos": {
+        "cronolaps": "99345"
+      },
+      "nombreReal": "Pedro Peñuelo"
+    },
+    {
+      "id": "martinez",
+      "nombre": "MARTINEZ",
+      "externos": {
+        "cronolaps": "99352"
+      },
+      "nombreReal": "Ismael Martínez"
+    },
+    {
+      "id": "robert",
+      "nombre": "ROBERT",
+      "externos": {
+        "cronolaps": "99341"
+      },
+      "nombreReal": "Roberto Estebaranz"
+    },
+    {
+      "id": "granero",
+      "nombre": "GRANERO",
+      "externos": {
+        "cronolaps": "99344"
+      },
+      "nombreReal": "Marcos Granero"
+    },
+    {
+      "id": "angel",
+      "nombre": "ANGEL",
+      "externos": {
+        "cronolaps": "99343"
+      },
+      "nombreReal": "Ángel Escoriza"
+    },
+    {
+      "id": "ocana",
+      "nombre": "OCAÑA",
+      "externos": {
+        "cronolaps": "99355"
+      },
+      "nombreReal": "Alejandro Ocaña"
+    },
+    {
+      "id": "nano",
+      "nombre": "NANO",
+      "externos": {
+        "cronolaps": "99353"
+      },
+      "nombreReal": "Rafael Cabezas"
+    },
+    {
+      "id": "hormi",
+      "nombre": "HORMI",
+      "externos": {
+        "cronolaps": "99356"
+      },
+      "nombreReal": "Alberto Mancheño"
+    },
+    {
+      "id": "rutchez06",
+      "nombre": "rutchez06",
+      "externos": {
+        "cronolaps": "99342"
+      },
+      "nombreReal": "Alvin Ramírez"
+    },
+    {
+      "id": "juanan",
+      "nombre": "JUANAN",
+      "externos": {
+        "cronolaps": "99354"
+      },
+      "nombreReal": "Juan Martín Vallejo"
+    },
+    {
+      "id": "leo",
+      "nombre": "LEO",
+      "externos": {
+        "cronolaps": "99346"
+      },
+      "nombreReal": "León Barba"
+    },
+    {
+      "id": "irene-sandin",
+      "nombre": "Irene Sandín",
+      "nombreReal": "Irene Sandini",
+      "externos": {
+        "cronolaps": "79289"
+      }
     }
   ]
 }
